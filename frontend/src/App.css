@@ -1,0 +1,42 @@
+.hover-underline {
+    text-decoration: none;
+    letter-spacing: 0.10rem;
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
+}
+
+.hover-underline:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: var(--underline-color, default-color);
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+.hover-underline:hover:after { 
+    width: 100%; 
+    left: 0; 
+}
+
+
+.icon-shadow-white:hover {
+    text-shadow: 0 0 5px white;
+}
+
+.icon-shadow-yellow:hover{
+    text-shadow: 0 0 15px yellow, 0 0 15px yellow, 0 0 15px yellow, 0 0 15px yellow, 0 0 15px yellow;
+}
+
+.dark-dropdown:after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.btn-shadow-white:hover {
+    box-shadow: 0 0 5px white;
+}
