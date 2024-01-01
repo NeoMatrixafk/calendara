@@ -1,6 +1,26 @@
 import React from "react";
 
+import HomeServicesCard from "./HomeServicesCard";
+
 const HomeServices = (props) => {
+    const servicesTexts = {
+        service1: {
+            text: "This is our first service",
+            imgUrl: "https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(1).webp",
+        },
+        service2: {
+            text: "This is our second service",
+            imgUrl: "https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(2).webp",
+        },
+        service3: {
+            text: "This is our third service",
+            imgUrl: "https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(3).webp",
+        },
+        service4: {
+            text: "This is our fourth service",
+            imgUrl: "https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(4).webp",
+        },
+    };
     return (
         <>
             <div className="container">
@@ -23,132 +43,24 @@ const HomeServices = (props) => {
                 <div className="container d-flex justify-content-center">
                     <div className="row">
                         <div className="col-6">
-                            <div
-                                className="card my-4 border-secondary"
-                                style={{ width: "25rem", overflow: "auto" }}
-                            >
-                                <img
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(2).webp"
-                                    className="card-img-top"
-                                    alt="..."
-                                />
-                                <div
-                                    className="card-body"
-                                    style={{
-                                        backgroundColor:
-                                            props.mode === "light"
-                                                ? "white"
-                                                : "#4E5259",
-                                    }}
-                                >
-                                    <p
-                                        className={`card-text text-${
-                                            props.mode === "light"
-                                                ? "black"
-                                                : "white"
-                                        }`}
-                                    >
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the
-                                        card's content.
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                className="card my-4 border-secondary"
-                                style={{ width: "25rem", overflow: "auto" }}
-                            >
-                                <img
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(2).webp"
-                                    className="card-img-top"
-                                    alt="..."
-                                />
-                                <div
-                                    className="card-body"
-                                    style={{
-                                        backgroundColor:
-                                            props.mode === "light"
-                                                ? "white"
-                                                : "#4E5259",
-                                    }}
-                                >
-                                    <p
-                                        className={`card-text text-${
-                                            props.mode === "light"
-                                                ? "black"
-                                                : "white"
-                                        }`}
-                                    >
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the
-                                        card's content.
-                                    </p>
-                                </div>
-                            </div>
+                            <HomeServicesCard
+                                mode={props.mode}
+                                service={servicesTexts.service1}
+                            />
+                            <HomeServicesCard
+                                mode={props.mode}
+                                service={servicesTexts.service2}
+                            />
                         </div>
                         <div className="col-6">
-                            <div
-                                className="card my-4 border-secondary"
-                                style={{ width: "25rem", overflow: "auto" }}
-                            >
-                                <img
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(2).webp"
-                                    className="card-img-top"
-                                    alt="..."
-                                />
-                                <div
-                                    className="card-body"
-                                    style={{
-                                        backgroundColor:
-                                            props.mode === "light"
-                                                ? "white"
-                                                : "#4E5259",
-                                    }}
-                                >
-                                    <p
-                                        className={`card-text text-${
-                                            props.mode === "light"
-                                                ? "black"
-                                                : "white"
-                                        }`}
-                                    >
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the
-                                        card's content.
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                className="card my-4 border-secondary"
-                                style={{ width: "25rem", overflow: "auto" }}
-                            >
-                                <img
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(2).webp"
-                                    className="card-img-top"
-                                    alt="..."
-                                />
-                                <div
-                                    className="card-body"
-                                    style={{
-                                        backgroundColor:
-                                            props.mode === "light"
-                                                ? "white"
-                                                : "#4E5259",
-                                    }}
-                                >
-                                    <p
-                                        className={`card-text text-${
-                                            props.mode === "light"
-                                                ? "black"
-                                                : "white"
-                                        }`}
-                                    >
-                                        Some quick example text to build on the
-                                        card title and make up the bulk of the
-                                        card's content.
-                                    </p>
-                                </div>
-                            </div>
+                            <HomeServicesCard
+                                mode={props.mode}
+                                service={servicesTexts.service2}
+                            />
+                            <HomeServicesCard
+                                mode={props.mode}
+                                service={servicesTexts.service4}
+                            />
                         </div>
                     </div>
                 </div>
