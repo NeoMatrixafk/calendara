@@ -56,3 +56,17 @@
     flex-grow: 1; /* Allow the main content to grow and take up remaining space */
     overflow-y: auto; /* Enable vertical scrolling for the main content */
 }
+
+.rbc-header {
+    background-color: var(--rbc-header-color, default-color);
+    color: white;
+}
+
+.rbc-off-range-bg {
+    background: var(--rbc-off-range-bg-color, default-color)!important;
+}
+
+.react-datepicker__input-container>input {
+    background-color: var(--datepicker-color, default-color);
+    color: white;
+}

@@ -44,14 +44,7 @@ function App() {
             "--underline-color",
             "black"
         );
-    } else {
-        document.documentElement.style.setProperty(
-            "--underline-color",
-            "white"
-        );
-    }
 
-    if (mode === "light") {
         document.documentElement.style.setProperty(
             "--scrollbar-track-color",
             "#D3D3D3"
@@ -68,7 +61,26 @@ function App() {
             "--scrollbar-button-color",
             "white"
         );
+
+        document.documentElement.style.setProperty(
+            "--rbc-header-color",
+            "#3498db"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-off-range-bg-color",
+            "#f0f0f0"
+        );
+
+        document.documentElement.style.setProperty(
+            "--datepicker-color",
+            "white"
+        );
     } else {
+        document.documentElement.style.setProperty(
+            "--underline-color",
+            "white"
+        );
+
         document.documentElement.style.setProperty(
             "--scrollbar-track-color",
             "#4D4D4D"
@@ -84,6 +96,20 @@ function App() {
         document.documentElement.style.setProperty(
             "--scrollbar-button-color",
             "#36393e"
+        );
+
+        document.documentElement.style.setProperty(
+            "--rbc-header-color",
+            "#607d8b"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-off-range-bg-color",
+            "#595959"
+        );
+
+        document.documentElement.style.setProperty(
+            "--datepicker-color",
+            "#666B74"
         );
     }
 

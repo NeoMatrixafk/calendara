@@ -46,7 +46,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -61,7 +61,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -76,7 +76,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -96,7 +96,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -111,7 +111,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -126,7 +126,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -141,7 +141,7 @@ const CustomToolbar = (toolbar) => {
                             backgroundColor:
                                 toolbar.mode === "light"
                                     ? "#ADD8E6"
-                                    : "#90EE90",
+                                    : "#f0f0f0",
                             color: "black",
                             margin: "2.50px",
                         }}
@@ -161,6 +161,23 @@ const AddEvent = (props) => {
         setEvents([...events, newEvent]);
     };
 
+    const dayPropGetter = (date) => {
+        const isCurrentDate = moment(date)
+            .startOf("day")
+            .isSame(moment(), "day");
+
+        if (isCurrentDate) {
+            return {
+                className: "current-date",
+                style: {
+                    backgroundColor: props.mode === "light" ? "" : "gray",
+                },
+            };
+        }
+
+        return {};
+    };
+
     return (
         <>
             <div className="container my-5">
@@ -177,6 +194,7 @@ const AddEvent = (props) => {
                             events={events}
                             startAccessor="start"
                             endAccessor="end"
+                            dayPropGetter={dayPropGetter}
                             style={{
                                 height: "35rem",
                                 backgroundColor:

@@ -47,7 +47,9 @@ const EventForm = (props) => {
                     </label>
                     <DatePicker
                         selected={startDate}
-                        className="ms-2 p-2 rounded-1 border-1"
+                        className={`ms-2 p-2 rounded-1 border-1 text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
                         onChange={(date) => setStartDate(date)}
                         dateFormat="dd/MM/yyyy h:mm aa"
                         showTimeSelect // Enables time selection
