@@ -181,10 +181,11 @@ const AddEvent = (props) => {
                                 height: "35rem",
                                 backgroundColor:
                                     props.mode === "light" ? "" : "#36393e",
+                                color:
+                                    props.mode === "light"
+                                        ? "black"
+                                        : "#f5f5f5",
                             }}
-                            className={`text-${
-                                props.mode === "light" ? "black" : "white"
-                            }`}
                             components={{
                                 toolbar: (toolbar) => (
                                     <CustomToolbar

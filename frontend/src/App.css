@@ -40,3 +40,19 @@
 .btn-shadow-white:hover {
     box-shadow: 0 0 5px white;
 }
+
+.categories {
+    /* display: flex; wrote it as a bootstrap class */
+    height: 100vh;
+    overflow: hidden; /* Hide overflow to prevent double scrollbars */
+}
+  
+.categories-side {
+    width: 13%;
+    overflow-y: auto; /* Enable vertical scrolling for the sidebar */
+}
+  
+.categories-main {
+    flex-grow: 1; /* Allow the main content to grow and take up remaining space */
+    overflow-y: auto; /* Enable vertical scrolling for the main content */
+}

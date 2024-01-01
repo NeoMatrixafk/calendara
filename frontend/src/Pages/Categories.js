@@ -1,7 +1,17 @@
 import React from "react";
 
-const Categories = () => {
-    return <>Categories</>;
+import CategoriesSidebar from "../Components/Categories/CategoriesSidebar";
+import CategoriesMainContent from "../Components/Categories/CategoriesMainContent";
+
+const Categories = (props) => {
+    return (
+        <>
+            <div className="categories d-flex">
+                <CategoriesSidebar mode={props.mode} />
+                <CategoriesMainContent mode={props.mode} />
+            </div>
+        </>
+    );
 };
 
 export default Categories;
