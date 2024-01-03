@@ -3,6 +3,9 @@ import { Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
+    const navigateToAuthPage = () => {
+        window.location.href = "/auth.html";
+    };
     return (
         <>
             <div className="my-3">
@@ -48,8 +51,12 @@ const ProfileLoggedIn = (props) => {
                     }}
                 >
                     <div className="col my-5 d-flex justify-content-center align-items-center">
-                        <Button variant="success" className="btn h-50">
-                            Update Profile
+                        <Button
+                            variant="success"
+                            className="btn h-50"
+                            onClick={navigateToAuthPage}
+                        >
+                            Auth
                         </Button>
                     </div>
                     <div className="col my-3 d-flex align-items-center justify-content-start">
@@ -107,14 +114,6 @@ const ProfileLoggedIn = (props) => {
                             className="btn-lg"
                         >
                             Security
-                        </Button>
-                        <Button
-                            variant={
-                                props.mode === "dark" ? "light" : "primary"
-                            }
-                            className="btn-lg"
-                        >
-                            Your Orders
                         </Button>
                         <Button
                             variant={

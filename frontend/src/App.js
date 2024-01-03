@@ -19,6 +19,8 @@ import About from "./Pages/About";
 
 import Error404 from "./Pages/Error404";
 
+import Login from "./Pages/Login";
+
 function App() {
     const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
 
@@ -151,6 +153,8 @@ function App() {
                             element={<AddEvent mode={mode} />}
                         />
                         <Route path="/about" element={<About mode={mode} />} />
+
+                        <Route path="/login" element={<Login mode={mode} />} />
 
                         <Route path="*" element={<Error404 mode={mode} />} />
                     </Routes>
