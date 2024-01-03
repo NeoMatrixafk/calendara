@@ -1,11 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SignInForm = () => {
+const SignInForm = (props) => {
     return (
         <>
             <div className="form-container sign-in">
-                <form action="/login" method="post">
+                <form
+                    action="/login"
+                    method="post"
+                    // style={{
+                    //     backgroundColor: props.mode === "light" ? "" : "gray",
+                    // }}
+                >
                     <h1>Log In</h1>
                     <div className="social-icons">
                         <Link to="/login" className="icon">

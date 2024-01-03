@@ -4,9 +4,9 @@ import SignUpForm from "../Components/Login/SignUpForm";
 import SignInForm from "../Components/Login/SignInForm";
 import ToggleContainer from "../Components/Login/ToggleContainer";
 
-import "../Login.css";
+import "../Auth.css";
 
-const Login = () => {
+const Auth = (props) => {
     useEffect(() => {
         const login_container = document.getElementById("login-container");
         const registerBtn = document.getElementById("register");
@@ -33,15 +33,20 @@ const Login = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-center my-5">
-                <div className="login-container" id="login-container">
-                    <SignUpForm />
-                    <SignInForm />
-                    <ToggleContainer />
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: "100vh" }}
+            >
+                <div className="">
+                    <div className="login-container" id="login-container">
+                        <SignUpForm mode={props.mode} />
+                        <SignInForm mode={props.mode} />
+                        <ToggleContainer mode={props.mode} />
+                    </div>
                 </div>
             </div>
         </>
     );
 };
 
-export default Login;
+export default Auth;

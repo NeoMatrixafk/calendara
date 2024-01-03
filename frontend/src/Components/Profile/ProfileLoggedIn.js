@@ -1,10 +1,9 @@
 import React from "react";
 import { Button, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
     const navigateToAuthPage = () => {
-        window.location.href = "/auth.html";
+        window.location.href = "/auth";
     };
     return (
         <>
@@ -51,12 +50,8 @@ const ProfileLoggedIn = (props) => {
                     }}
                 >
                     <div className="col my-5 d-flex justify-content-center align-items-center">
-                        <Button
-                            variant="success"
-                            className="btn h-50"
-                            onClick={navigateToAuthPage}
-                        >
-                            Auth
+                        <Button variant="success" className="btn h-50">
+                            Update Profile
                         </Button>
                     </div>
                     <div className="col my-3 d-flex align-items-center justify-content-start">
@@ -123,12 +118,12 @@ const ProfileLoggedIn = (props) => {
                         >
                             More
                         </Button>
-                        <Link
-                            to="/login"
+                        <Button
                             className="btn btn-lg btn-danger mb-5"
+                            onClick={navigateToAuthPage}
                         >
                             Sign Out
-                        </Link>
+                        </Button>
                     </div>
                     <div className="col d-flex align-items-center justify-content-center">
                         <h2 className="">

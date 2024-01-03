@@ -19,7 +19,7 @@ import About from "./Pages/About";
 
 import Error404 from "./Pages/Error404";
 
-import Login from "./Pages/Login";
+import Auth from "./Pages/Auth";
 
 function App() {
     const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
@@ -121,44 +121,62 @@ function App() {
                 <div
                     style={{
                         backgroundColor: mode === "light" ? "white" : "#36393E",
+                        display: "flex",
+                        flexDirection: "column",
+                        minHeight: "100vh",
                     }}
                 >
-                    <Navbar mode={mode} toggleMode={toggleMode} />
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                <Navigate replace to="/home" mode={mode} />
-                            }
-                        />
-                        <Route
-                            exacts
-                            path="/home"
-                            element={<Home mode={mode} />}
-                        />
-                        <Route
-                            path="/categories"
-                            element={<Categories mode={mode} />}
-                        />
-                        <Route
-                            path="/events"
-                            element={<Events mode={mode} />}
-                        />
-                        <Route
-                            path="/profile"
-                            element={<Profile mode={mode} />}
-                        />
-                        <Route
-                            path="/add-event"
-                            element={<AddEvent mode={mode} />}
-                        />
-                        <Route path="/about" element={<About mode={mode} />} />
+                    {/* Conditionally render Navbar */}
+                    {window.location.pathname !== "/auth" && (
+                        <Navbar mode={mode} toggleMode={toggleMode} />
+                    )}
 
-                        <Route path="/login" element={<Login mode={mode} />} />
+                    <div style={{ flex: 1 }}>
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={
+                                    <Navigate replace to="/home" mode={mode} />
+                                }
+                            />
+                            <Route
+                                exacts
+                                path="/home"
+                                element={<Home mode={mode} />}
+                            />
+                            <Route
+                                path="/categories"
+                                element={<Categories mode={mode} />}
+                            />
+                            <Route
+                                path="/events"
+                                element={<Events mode={mode} />}
+                            />
+                            <Route
+                                path="/profile"
+                                element={<Profile mode={mode} />}
+                            />
+                            <Route
+                                path="/add-event"
+                                element={<AddEvent mode={mode} />}
+                            />
+                            <Route
+                                path="/about"
+                                element={<About mode={mode} />}
+                            />
+                            <Route
+                                path="/auth"
+                                element={<Auth mode={mode} />}
+                            />
+                            <Route
+                                path="*"
+                                element={<Error404 mode={mode} />}
+                            />
+                        </Routes>
+                    </div>
 
-                        <Route path="*" element={<Error404 mode={mode} />} />
-                    </Routes>
-                    <Footer />
+                    {/* Conditionally render Footer */}
+                    {window.location.pathname !== "/auth" && <Footer />}
                 </div>
             </Router>
         </>
