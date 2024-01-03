@@ -55,4 +55,4 @@ $ npm start
 $ cd frontend
 $ npm start
 ```
-Open [http://localhost:4000](http://localhost:4000) to view it in your browser.
+Open [http://localhost:4444](http://localhost:4444) to view it in your browser.
