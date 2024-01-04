@@ -1,8 +1,17 @@
 const HomeAccordion = (props) => {
     const faqData = [
-        { question: "FAQ #1", answer: "Answer to the FAQ" },
-        { question: "FAQ #2", answer: "Answer to the FAQ" },
-        { question: "FAQ #3", answer: "Answer to the FAQ" },
+        {
+            question: "What is the purpose of calendara?",
+            answer: "calendara is designed to help users schedule, manage, and view events seamlessly. It allows you to create events, set details such as title, date, time, and location, and provides a convenient calendar view to keep track of your schedule.",
+        },
+        {
+            question: "How do I set up event reminders for upcoming events?",
+            answer: "To set up event reminders, simply create a new event or edit an existing one. During event creation or editing, you'll find an option to set a reminder. Enter the desired time for the reminder, and our system will notify you in advance of the scheduled event.",
+        },
+        {
+            question: "Is the calendara accessible on mobile devices?",
+            answer: "Currently, calendara is optimized for desktop use. However, we are actively working on a mobile version using React Native to provide a seamless mobile experience. The mobile version will be available soon.",
+        },
     ];
 
     return (
