@@ -8,39 +8,101 @@ const SignInForm = (props) => {
                 <form
                     action="/login"
                     method="post"
-                    // style={{
-                    //     backgroundColor: props.mode === "light" ? "" : "gray",
-                    // }}
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "#fff" : "#36393e",
+                    }}
                 >
-                    <h1>Log In</h1>
+                    <h1
+                        className={`text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                    >
+                        <b>Log In</b>
+                    </h1>
                     <div className="social-icons">
-                        <Link to="/login" className="icon">
+                        <Link
+                            to="/login"
+                            className={`icon text-${
+                                props.mode === "light" ? "white" : "black"
+                            } btn btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                        >
                             <i className="bi bi-google"></i>
                         </Link>
-                        <Link to="/login" className="icon">
+                        <Link
+                            to="/login"
+                            className={`icon text-${
+                                props.mode === "light" ? "white" : "black"
+                            } btn btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                        >
                             <i className="bi bi-facebook"></i>
                         </Link>
-                        <Link to="/login" className="icon">
+                        <Link
+                            to="/login"
+                            className={`icon text-${
+                                props.mode === "light" ? "white" : "black"
+                            } btn btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                        >
                             <i className="bi bi-microsoft"></i>
                         </Link>
-                        <Link to="/login" className="icon">
+                        <Link
+                            to="/login"
+                            className={`icon text-${
+                                props.mode === "light" ? "white" : "black"
+                            } btn btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                        >
                             <i className="bi bi-apple"></i>
                         </Link>
                     </div>
                     <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Name"
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Email"
+                        style={{
+                            backgroundColor:
+                                props.mode === "light" ? "" : "gray",
+                            WebkitTextFillColor:
+                                props.mode === "light" ? "black" : "white",
+                        }}
+                        required
                     />
                     <input
                         type="password"
                         id="password"
                         name="password"
                         placeholder="Password"
+                        style={{
+                            backgroundColor:
+                                props.mode === "light" ? "" : "gray",
+                            WebkitTextFillColor:
+                                props.mode === "light" ? "black" : "white",
+                        }}
+                        required
                     />
-                    <Link to="login">Forget Your Password?</Link>
-                    <button>Log In</button>
+                    <Link
+                        to="/login"
+                        className={`text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                    >
+                        Forgot Your Password?
+                    </Link>
+                    <button
+                        className={`btn btn-${
+                            props.mode === "light" ? "primary" : "danger"
+                        } mt-3`}
+                    >
+                        Log In
+                    </button>
                 </form>
             </div>
         </>

@@ -77,6 +77,15 @@ function App() {
             "--datepicker-color",
             "white"
         );
+
+        document.documentElement.style.setProperty(
+            "--toggle-first-color",
+            "#5c6bc0"
+        );
+        document.documentElement.style.setProperty(
+            "--toggle-last-color",
+            "#4758b8"
+        );
     } else {
         document.documentElement.style.setProperty(
             "--underline-color",
@@ -112,6 +121,15 @@ function App() {
         document.documentElement.style.setProperty(
             "--datepicker-color",
             "#666B74"
+        );
+
+        document.documentElement.style.setProperty(
+            "--toggle-first-color",
+            "#1d2349"
+        );
+        document.documentElement.style.setProperty(
+            "--toggle-last-color",
+            "#0e1225"
         );
     }
 
