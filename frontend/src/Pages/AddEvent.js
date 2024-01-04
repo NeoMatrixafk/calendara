@@ -182,13 +182,13 @@ const AddEvent = (props) => {
         <>
             <div className="container my-5">
                 <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <EventForm
                             onAddEvent={handleAddEvent}
                             mode={props.mode}
                         />
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-9">
                         <Calendar
                             localizer={localizer}
                             events={events}
