@@ -25,7 +25,7 @@ const Footer = () => {
 
                         <Link
                             className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.instagram.com/bookit.site"
+                            to="https://www.instagram.com/"
                             role="button"
                         >
                             <i className="bi bi-instagram"></i>
@@ -49,7 +49,7 @@ const Footer = () => {
 
                         <Link
                             className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.dicord.com/"
+                            to="https://www.discord.com/"
                             role="button"
                         >
                             <i className="bi bi-discord"></i>
