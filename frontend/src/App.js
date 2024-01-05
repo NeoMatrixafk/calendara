@@ -142,16 +142,37 @@ function App() {
     return (
         <>
                 <div
+
                     style={{
                         backgroundColor: mode === "light" ? "white" : "#36393E",
                         display: "flex",
                         flexDirection: "column",
-                        minHeight: "100vh",
+                        minHeight: "100vh"
+
                     }}
                 >
                     {shouldRenderNavbarFooter && <Navbar mode={mode} toggleMode={toggleMode} />}
+
                     <div style={{ flex: 1 }}>
+
                         <Routes>
+
+                            <Route
+                                path="*"
+                                element={
+                                    <Navigate replace to="/auth" mode={mode} />
+                                }
+                            />
+                            <Route
+                                path="/"
+                                element={
+                                    <Navigate replace to="/auth" mode={mode} />
+                                }
+                            />
+                            <Route
+                                path="/auth"
+                                element={<Auth mode={mode} />}
+                            />
                             {user && <Route
                                 path="/"
                                 element={
@@ -183,32 +204,16 @@ function App() {
                                 path="/about"
                                 element={<About mode={mode} />}
                             />}
-                            <Route
-                                path="/auth"
-                                element={<Auth mode={mode} />}
-                            />
                             {user && <Route
                                 path="*"
                                 element={<Error404 mode={mode} />}
                             />}
-                            <Route
-                                path="*"
-                                element={
-                                    <Navigate replace to="/auth" mode={mode} />
-                                }
-                            />
-                            <Route
-                                path="/"
-                                element={
-                                    <Navigate replace to="/auth" mode={mode} />
-                                }
-                            />
                         </Routes>
-                    </div>
-                    {shouldRenderNavbarFooter && <Footer />}
-                    <Routes>
                         
-                    </Routes>
+                    </div>
+
+                    {shouldRenderNavbarFooter && <Footer />}
+            
                 </div>
         </>
     );
