@@ -1,10 +1,9 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import {
-    BrowserRouter as Router,
     Routes,
     Route,
-    Navigate,
+    Navigate
 } from "react-router-dom";
 
 import Navbar from "./Components/Common/Navbar";
@@ -22,6 +21,9 @@ import Error404 from "./Pages/Error404";
 import Auth from "./Pages/Auth";
 
 function App() {
+
+    const user = localStorage.getItem("token");
+
     const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
 
     useEffect(() => {
@@ -77,6 +79,15 @@ function App() {
             "--datepicker-color",
             "white"
         );
+
+        document.documentElement.style.setProperty(
+            "--toggle-first-color",
+            "#5c6bc0"
+        );
+        document.documentElement.style.setProperty(
+            "--toggle-last-color",
+            "#4758b8"
+        );
     } else {
         document.documentElement.style.setProperty(
             "--underline-color",
@@ -113,11 +124,23 @@ function App() {
             "--datepicker-color",
             "#666B74"
         );
+
+        document.documentElement.style.setProperty(
+            "--toggle-first-color",
+            "#1d2349"
+        );
+        document.documentElement.style.setProperty(
+            "--toggle-last-color",
+            "#0e1225"
+        );
     }
+
+    const pathsWithoutNavbarFooter = ["/auth", "*", "/"];
+
+    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(window.location.pathname);
 
     return (
         <>
-            <Router>
                 <div
                     style={{
                         backgroundColor: mode === "light" ? "white" : "#36393E",
@@ -126,59 +149,67 @@ function App() {
                         minHeight: "100vh",
                     }}
                 >
-                    {/* Conditionally render Navbar */}
-                    {window.location.pathname !== "/auth" && (
-                        <Navbar mode={mode} toggleMode={toggleMode} />
-                    )}
-
+                    {shouldRenderNavbarFooter && <Navbar mode={mode} toggleMode={toggleMode} />}
                     <div style={{ flex: 1 }}>
                         <Routes>
-                            <Route
+                            {user && <Route
                                 path="/"
                                 element={
                                     <Navigate replace to="/home" mode={mode} />
                                 }
-                            />
-                            <Route
+                            />}
+                            {user && <Route
                                 exacts
                                 path="/home"
                                 element={<Home mode={mode} />}
-                            />
-                            <Route
+                            />}
+                            {user && <Route
                                 path="/categories"
                                 element={<Categories mode={mode} />}
-                            />
-                            <Route
+                            />}
+                            {user && <Route
                                 path="/events"
                                 element={<Events mode={mode} />}
-                            />
-                            <Route
+                            />}
+                            {user && <Route
                                 path="/profile"
                                 element={<Profile mode={mode} />}
-                            />
-                            <Route
+                            />}
+                            {user && <Route
                                 path="/add-event"
                                 element={<AddEvent mode={mode} />}
-                            />
-                            <Route
+                            />}
+                            {user && <Route
                                 path="/about"
                                 element={<About mode={mode} />}
-                            />
+                            />}
                             <Route
                                 path="/auth"
                                 element={<Auth mode={mode} />}
                             />
-                            <Route
+                            {user && <Route
                                 path="*"
                                 element={<Error404 mode={mode} />}
+                            />}
+                            <Route
+                                path="*"
+                                element={
+                                    <Navigate replace to="/auth" mode={mode} />
+                                }
+                            />
+                            <Route
+                                path="/"
+                                element={
+                                    <Navigate replace to="/auth" mode={mode} />
+                                }
                             />
                         </Routes>
                     </div>
-
-                    {/* Conditionally render Footer */}
-                    {window.location.pathname !== "/auth" && <Footer />}
+                    {shouldRenderNavbarFooter && <Footer />}
+                    <Routes>
+                        
+                    </Routes>
                 </div>
-            </Router>
         </>
     );
 }

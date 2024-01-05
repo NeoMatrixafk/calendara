@@ -11,14 +11,16 @@ const Navbar = (props) => {
     return (
         <>
             <nav
-                className="navbar navbar-expand-lg"
+                className={`navbar navbar-expand-lg sticky-top border-bottom border-${
+                    props.mode === "light" ? "" : "secondary"
+                }`}
                 style={
                     props.mode === "light"
                         ? { backgroundColor: "#fff" }
                         : { backgroundColor: "#36393e" }
                 }
             >
-                <div className="container justify-content-between">
+                <div className="container d-flex justify-content-between">
                     <div className="w-25">
                         <Link className="navbar-brand p-0 w-50" to="/home">
                             <img
