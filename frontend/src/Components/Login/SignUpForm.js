@@ -36,20 +36,10 @@ const SignUpForm = (props) => {
     }
 
 
-<<<<<<< HEAD
     return (
         <>
             <div className="form-container sign-up">
                 <form onSubmit={handleSubmit}
-=======
-const SignUpForm = (props) => {
-    return (
-        <>
-            <div className="form-container sign-up">
-                <form
-                    action="/signup"
-                    method="post"
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                     style={{
                         backgroundColor:
                             props.mode === "light" ? "#fff" : "#36393e",
@@ -64,11 +54,7 @@ const SignUpForm = (props) => {
                     </h1>
                     <div className="social-icons">
                         <Link
-<<<<<<< HEAD
                             to="#"
-=======
-                            to="/login"
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -78,11 +64,7 @@ const SignUpForm = (props) => {
                             <i className="bi bi-google"></i>
                         </Link>
                         <Link
-<<<<<<< HEAD
                             to="#"
-=======
-                            to="/login"
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -92,11 +74,7 @@ const SignUpForm = (props) => {
                             <i className="bi bi-facebook"></i>
                         </Link>
                         <Link
-<<<<<<< HEAD
                             to="#"
-=======
-                            to="/login"
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -106,11 +84,7 @@ const SignUpForm = (props) => {
                             <i className="bi bi-microsoft"></i>
                         </Link>
                         <Link
-<<<<<<< HEAD
                             to="#"
-=======
-                            to="/login"
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -125,11 +99,8 @@ const SignUpForm = (props) => {
                         id="name"
                         name="name"
                         placeholder="Name"
-<<<<<<< HEAD
                         value={data.name}
                         onChange={handleChange}
-=======
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                         style={{
                             backgroundColor:
                                 props.mode === "light" ? "" : "gray",
@@ -143,11 +114,8 @@ const SignUpForm = (props) => {
                         id="email"
                         name="email"
                         placeholder="Email"
-<<<<<<< HEAD
                         value={data.email}
                         onChange={handleChange}
-=======
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                         style={{
                             backgroundColor:
                                 props.mode === "light" ? "" : "gray",
@@ -162,11 +130,8 @@ const SignUpForm = (props) => {
                         id="password"
                         name="password"
                         placeholder="Password"
-<<<<<<< HEAD
                         value={data.password}
                         onChange={handleChange}
-=======
->>>>>>> 54104a4a183431bb4ffa09e237baae1acbdd5c34
                         style={{
                             backgroundColor:
                                 props.mode === "light" ? "" : "gray",
