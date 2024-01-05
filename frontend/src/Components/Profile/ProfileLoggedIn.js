@@ -2,9 +2,11 @@ import React from "react";
 import { Button, Image } from "react-bootstrap";
 
 const ProfileLoggedIn = (props) => {
-    const navigateToAuthPage = () => {
-        window.location.href = "/auth";
-    };
+    
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.pathname = "/auth";
+    }
     return (
         <>
             <div className="my-3">
@@ -120,7 +122,7 @@ const ProfileLoggedIn = (props) => {
                         </Button>
                         <Button
                             className="btn btn-lg btn-danger mb-5"
-                            onClick={navigateToAuthPage}
+                            onClick={handleLogout}
                         >
                             Sign Out
                         </Button>

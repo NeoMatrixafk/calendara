@@ -1,13 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { useState } from "react";
+
+import axios from "axios";
 
 const SignInForm = (props) => {
+
+    const [error, setError] = useState("");
+
+    const [data, setData] = useState({
+        email: "",
+        password: ""
+    });
+
+    const handleChange = ({currentTarget:input}) => {
+        setData({...data, [input.name]:input.value});
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const url = "http://localhost:8080/api/auth";
+            const {data: res} = await axios.post(url, data);
+            localStorage.setItem("token", res.data);
+            window.location.href = "/home";
+        } catch (error) {
+            if (error.response &&
+                error.response.status >=400 &&
+                error.response.status <=500
+                ){
+                    setError(error.response.data.message)
+                }
+        }
+    }
+
     return (
         <>
             <div className="form-container sign-in">
-                <form
-                    action="/login"
-                    method="post"
+                <form onSubmit={handleSubmit}
                     style={{
                         backgroundColor:
                             props.mode === "light" ? "#fff" : "#36393e",
@@ -22,7 +52,7 @@ const SignInForm = (props) => {
                     </h1>
                     <div className="social-icons">
                         <Link
-                            to="/login"
+                            to="#"
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -32,7 +62,7 @@ const SignInForm = (props) => {
                             <i className="bi bi-google"></i>
                         </Link>
                         <Link
-                            to="/login"
+                            to="#"
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -42,7 +72,7 @@ const SignInForm = (props) => {
                             <i className="bi bi-facebook"></i>
                         </Link>
                         <Link
-                            to="/login"
+                            to="#"
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -52,7 +82,7 @@ const SignInForm = (props) => {
                             <i className="bi bi-microsoft"></i>
                         </Link>
                         <Link
-                            to="/login"
+                            to="#"
                             className={`icon text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
@@ -67,6 +97,8 @@ const SignInForm = (props) => {
                         id="email"
                         name="email"
                         placeholder="Email"
+                        value={data.email}
+                        onChange={handleChange}
                         style={{
                             backgroundColor:
                                 props.mode === "light" ? "" : "gray",
@@ -80,6 +112,8 @@ const SignInForm = (props) => {
                         id="password"
                         name="password"
                         placeholder="Password"
+                        value={data.password}
+                        onChange={handleChange}
                         style={{
                             backgroundColor:
                                 props.mode === "light" ? "" : "gray",
@@ -89,7 +123,7 @@ const SignInForm = (props) => {
                         required
                     />
                     <Link
-                        to="/login"
+                        to="#"
                         className={`text-${
                             props.mode === "light" ? "black" : "white"
                         }`}
