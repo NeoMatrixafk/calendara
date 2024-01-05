@@ -1,6 +1,6 @@
-# Event Tracker web-app built using MERN stack
+# MERN Event Tracker Web-App
 
-This project used MERN stack and Bootstrap
+### Introduction 😊
 
 ### Pre-requirements 📋
 
