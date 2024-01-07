@@ -6,7 +6,7 @@ import CategoriesMainContent from "../Components/Categories/CategoriesMainConten
 const Categories = (props) => {
     return (
         <>
-            <div className="categories d-flex">
+            <div className="categories d-flex my-5">
                 <CategoriesSidebar mode={props.mode} />
                 <CategoriesMainContent mode={props.mode} />
             </div>
