@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import {
     Routes,
     Route,
-    Navigate
+    Navigate,
 } from "react-router-dom";
 
 import Navbar from "./Components/Common/Navbar";
+import Navbar2 from "./Components/Common/Navbar2";
 import Footer from "./Components/Common/Footer";
 
 import Home from "./Pages/Home";
+import Home2 from "./Pages/Home2";
 import Categories from "./Pages/Categories";
 import Events from "./Pages/Events";
 import Profile from "./Pages/Profile";
@@ -135,7 +137,7 @@ function App() {
         );
     }
 
-    const pathsWithoutNavbarFooter = ["/auth", "*", "/"];
+    const pathsWithoutNavbarFooter = ["/auth"];
 
     const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(window.location.pathname);
 
@@ -151,68 +153,80 @@ function App() {
 
                     }}
                 >
-                    {shouldRenderNavbarFooter && <Navbar mode={mode} toggleMode={toggleMode} />}
+                    {shouldRenderNavbarFooter && (
+                    <>
+                        {user ? (
+                            <Navbar mode={mode} toggleMode={toggleMode} />
+                        ) : (
+                            <Navbar2 />
+                        )}
+                    </>
+                )}
 
-                    <div style={{ flex: 1 }}>
-
-                        <Routes>
-
-                            <Route
-                                path="*"
-                                element={
-                                    <Navigate replace to="/auth" mode={mode} />
-                                }
-                            />
-                            <Route
-                                path="/"
-                                element={
-                                    <Navigate replace to="/auth" mode={mode} />
-                                }
-                            />
-                            <Route
-                                path="/auth"
-                                element={<Auth mode={mode} />}
-                            />
-                            {user && <Route
-                                path="/"
-                                element={
+                <div style={{ flex: 1 }}>
+                    <Routes>
+                        <Route
+                            path="/auth"
+                            element={
+                                user ? (
                                     <Navigate replace to="/home" mode={mode} />
-                                }
-                            />}
-                            {user && <Route
-                                exacts
-                                path="/home"
-                                element={<Home mode={mode} />}
-                            />}
-                            {user && <Route
-                                path="/categories"
-                                element={<Categories mode={mode} />}
-                            />}
-                            {user && <Route
-                                path="/events"
-                                element={<Events mode={mode} />}
-                            />}
-                            {user && <Route
-                                path="/profile"
-                                element={<Profile mode={mode} />}
-                            />}
-                            {user && <Route
-                                path="/add-event"
-                                element={<AddEvent mode={mode} />}
-                            />}
-                            {user && <Route
-                                path="/about"
-                                element={<About mode={mode} />}
-                            />}
-                            {user && <Route
-                                path="*"
-                                element={<Error404 mode={mode} />}
-                            />}
-                        </Routes>
-                        
-                    </div>
+                                ) : (
+                                    <Auth mode={mode} />
+                                )
+                            }
+                        />
+                        {user ? (
+                            <>
+                                <Route
+                                    path="/"
+                                    element={<Navigate replace to="/home" mode={mode} />}
+                                />
 
-                    {shouldRenderNavbarFooter && <Footer />}
+                                <Route
+                                    path="/home"
+                                    element={<Home mode={mode} />}
+                                />
+                                <Route
+                                    path="/categories"
+                                    element={<Categories mode={mode} />}
+                                />
+                                <Route
+                                    path="/events"
+                                    element={<Events mode={mode} />}
+                                />
+                                <Route
+                                    path="/profile"
+                                    element={<Profile mode={mode} />}
+                                />
+                                <Route
+                                    path="/add-event"
+                                    element={<AddEvent mode={mode} />}
+                                />
+                                <Route
+                                    path="/about"
+                                    element={<About mode={mode} />}
+                                />
+                                <Route
+                                    path="*"
+                                    element={<Error404 mode={mode} />}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <Route
+                                    path="*"
+                                    element={<Home2 mode={mode} />}
+                                />
+                                <Route
+                                    path="/"
+                                    element={<Home2 mode={mode} />}
+                                />
+                            </>
+                        )}
+                    </Routes>
+                </div>
+
+                {shouldRenderNavbarFooter && <Footer />}
             
                 </div>
         </>

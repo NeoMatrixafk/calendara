@@ -23,7 +23,7 @@ const HomeConclusion = (props) => {
                     <div className="row">
                         <div className="col-12 d-flex justify-content-center">
                             <Link
-                                to="/profile"
+                                to="/auth"
                                 className={`btn btn-${
                                     props.mode === "light"
                                         ? "primary"

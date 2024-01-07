@@ -5,7 +5,7 @@ const ProfileLoggedIn = (props) => {
     
     const handleLogout = () => {
         localStorage.removeItem("token");
-        window.location.pathname = "/auth";
+        window.location.pathname = "/";
     }
     return (
         <>
