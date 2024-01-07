@@ -1,11 +1,7 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import React from "react";
 
 const Navbar2 = (props) => {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     return (
         <>
@@ -21,15 +17,20 @@ const Navbar2 = (props) => {
             >
                 <div className="container d-flex justify-content-between">
                     <div className="w-25">
-                        <Link className="navbar-brand p-0 w-50" to="/home">
+                        <Link className="navbar-brand p-0 w-50" to="/">
                             <img
-                                src={`../Images/calendara_${props.mode}.png`}
+                                src={`../Images/calendara_dark.png`}
                                 className="img-fluid"
                                 alt=""
                             />
                         </Link>
                     </div>
 
+                    <div className="d-flex align-items-center">
+                        
+                    </div>
+                    <div className="d-flex align-items-center">
+                    
                         <Link
                             to="/auth"
                             className={`nav-link hover-navlink text-${
@@ -71,6 +72,7 @@ const Navbar2 = (props) => {
                             </label>
                         </div>
                     </div>
+                </div>
             </nav>
         </>
     );
