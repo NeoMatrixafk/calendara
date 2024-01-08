@@ -54,9 +54,9 @@ const Navbar = (props) => {
                                             : "white"
                                     }`}
                                     style={{ fontSize: "1.10rem" }}
-                                    to="/events"
+                                    to="/dashboard"
                                 >
-                                    Events
+                                    Dashboard
                                 </Link>
                             </li>
                             <li className="nav-item mx-2">

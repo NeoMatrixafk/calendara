@@ -1,10 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import {
-    Routes,
-    Route,
-    Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./Components/Common/Navbar";
 import Navbar2 from "./Components/Common/Navbar2";
@@ -13,7 +9,7 @@ import Footer from "./Components/Common/Footer";
 import Home from "./Pages/Home";
 import Home2 from "./Pages/Home2";
 import Categories from "./Pages/Categories";
-import Events from "./Pages/Events";
+import Dashboard from "./Pages/Dashboard";
 import Profile from "./Pages/Profile";
 import AddEvent from "./Pages/AddEvent";
 import About from "./Pages/About";
@@ -23,7 +19,6 @@ import Error404 from "./Pages/Error404";
 import Auth from "./Pages/Auth";
 
 function App() {
-
     const user = localStorage.getItem("token");
 
     const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
@@ -139,21 +134,21 @@ function App() {
 
     const pathsWithoutNavbarFooter = ["/auth"];
 
-    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(window.location.pathname);
+    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(
+        window.location.pathname
+    );
 
     return (
         <>
-                <div
-
-                    style={{
-                        backgroundColor: mode === "light" ? "white" : "#36393E",
-                        display: "flex",
-                        flexDirection: "column",
-                        minHeight: "100vh"
-
-                    }}
-                >
-                    {shouldRenderNavbarFooter && (
+            <div
+                style={{
+                    backgroundColor: mode === "light" ? "white" : "#36393E",
+                    display: "flex",
+                    flexDirection: "column",
+                    minHeight: "100vh",
+                }}
+            >
+                {shouldRenderNavbarFooter && (
                     <>
                         {user ? (
                             <Navbar mode={mode} toggleMode={toggleMode} />
@@ -179,7 +174,13 @@ function App() {
                             <>
                                 <Route
                                     path="/"
-                                    element={<Navigate replace to="/home" mode={mode} />}
+                                    element={
+                                        <Navigate
+                                            replace
+                                            to="/home"
+                                            mode={mode}
+                                        />
+                                    }
                                 />
 
                                 <Route
@@ -191,8 +192,8 @@ function App() {
                                     element={<Categories mode={mode} />}
                                 />
                                 <Route
-                                    path="/events"
-                                    element={<Events mode={mode} />}
+                                    path="/dashboard"
+                                    element={<Dashboard mode={mode} />}
                                 />
                                 <Route
                                     path="/profile"
@@ -227,8 +228,7 @@ function App() {
                 </div>
 
                 {shouldRenderNavbarFooter && <Footer />}
-            
-                </div>
+            </div>
         </>
     );
 }
