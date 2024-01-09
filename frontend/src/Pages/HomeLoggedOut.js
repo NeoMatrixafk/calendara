@@ -1,10 +1,10 @@
 import React from "react";
 
-import HomeConclusion from "../Components/Home2/HomeConclusion";
-import HomeServices from "../Components/Home2/HomeServices";
-import HomeFAQ from "../Components/Home2/HomeFAQ";
-import HomeAd from "../Components/Home2/HomeAd";
-import HomeMain from "../Components/Home2/HomeMain";
+import HomeConclusion from "../Components/HomeLoggedOut/HomeConclusion";
+import HomeServices from "../Components/HomeLoggedOut/HomeServices";
+import HomeFAQ from "../Components/HomeLoggedOut/HomeFAQ";
+import HomeAd from "../Components/HomeLoggedOut/HomeAd";
+import HomeMain from "../Components/HomeLoggedOut/HomeMain";
 
 const HomeLoggedOut = (props) => {
     console.log(props.mode);

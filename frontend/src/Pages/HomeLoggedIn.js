@@ -1,9 +1,9 @@
 import React from "react";
 
-import HomeServices from "../Components/Home/HomeServices";
-import HomeFAQ from "../Components/Home/HomeFAQ";
-import HomeAd from "../Components/Home/HomeAd";
-import HomeMain from "../Components/Home/HomeMain";
+import HomeServices from "../Components/HomeLoggedIn/HomeServices";
+import HomeFAQ from "../Components/HomeLoggedIn/HomeFAQ";
+import HomeAd from "../Components/HomeLoggedIn/HomeAd";
+import HomeMain from "../Components/HomeLoggedIn/HomeMain";
 
 const HomeLoggedIn = (props) => {
     console.log(props.mode);
