@@ -2,8 +2,8 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./App.css";
 
-import Navbar from "./Components/Common/Navbar";
-import Navbar2 from "./Components/Common/Navbar2";
+import NavbarLoggedIn from "./Components/Common/NavbarLoggedIn";
+import NavbarLoggedOut from "./Components/Common/NavbarLoggedOut";
 import Footer from "./Components/Common/Footer";
 
 import HomeLoggedIn from "./Pages/HomeLoggedIn";
@@ -156,9 +156,15 @@ function App() {
                 {shouldRenderNavbarFooter && (
                     <>
                         {user ? (
-                            <Navbar mode={mode} toggleMode={toggleMode} />
+                            <NavbarLoggedIn
+                                mode={mode}
+                                toggleMode={toggleMode}
+                            />
                         ) : (
-                            <Navbar2 mode={mode} toggleMode={toggleMode} />
+                            <NavbarLoggedOut
+                                mode={mode}
+                                toggleMode={toggleMode}
+                            />
                         )}
                     </>
                 )}

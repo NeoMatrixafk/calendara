@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 
-const Navbar = (props) => {
+const NavbarLoggedIn = (props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -244,4 +244,4 @@ const Navbar = (props) => {
     );
 };
 
-export default Navbar;
+export default NavbarLoggedIn;

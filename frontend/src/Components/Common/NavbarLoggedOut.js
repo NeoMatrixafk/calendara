@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 
-const Navbar2 = (props) => {
+const NavbarLoggedOut = (props) => {
     return (
         <>
             <nav
@@ -33,7 +33,7 @@ const Navbar2 = (props) => {
                                 props.mode === "light" ? "black" : "white"
                             } mx-2 hover-underline`}
                         >
-                            Login/Signup
+                            Login
                         </Link>
 
                         <div className="d-flex align-items-center">
@@ -74,4 +74,4 @@ const Navbar2 = (props) => {
     );
 };
 
-export default Navbar2;
+export default NavbarLoggedOut;

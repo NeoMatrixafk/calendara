@@ -1,43 +1,50 @@
 import React from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Button } from "react-bootstrap";
+import ErrorToast from "./ErrorToast";
 
 import axios from "axios";
 
 const SignInForm = (props) => {
+    const [showToast, setShowToast] = useState(false);
+
+    const toggleToast = () => setShowToast(!showToast);
 
     const [error, setError] = useState("");
 
     const [data, setData] = useState({
         email: "",
-        password: ""
+        password: "",
     });
 
-    const handleChange = ({currentTarget:input}) => {
-        setData({...data, [input.name]:input.value});
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const url = "http://localhost:8080/api/auth";
-            const {data: res} = await axios.post(url, data);
+            const { data: res } = await axios.post(url, data);
             localStorage.setItem("token", res.data);
             window.location.href = "/home";
         } catch (error) {
-            if (error.response &&
-                error.response.status >=400 &&
-                error.response.status <=500
-                ){
-                    setError(error.response.data.message)
-                }
+            if (
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message);
+            }
         }
-    }
+    };
 
     return (
         <>
             <div className="form-container sign-in">
-                <form onSubmit={handleSubmit}
+                <form
+                    onSubmit={handleSubmit}
                     style={{
                         backgroundColor:
                             props.mode === "light" ? "#fff" : "#36393e",
@@ -51,46 +58,52 @@ const SignInForm = (props) => {
                         <b>Log In</b>
                     </h1>
                     <div className="social-icons">
-                        <Link
-                            to="#"
-                            className={`icon text-${
+                        <Button
+                            className={`icon mx-1 text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
+                            onClick={toggleToast}
                         >
                             <i className="bi bi-google"></i>
-                        </Link>
-                        <Link
-                            to="#"
-                            className={`icon text-${
+                        </Button>
+                        <Button
+                            className={`icon mx-1 text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
+                            onClick={toggleToast}
                         >
                             <i className="bi bi-facebook"></i>
-                        </Link>
-                        <Link
-                            to="#"
-                            className={`icon text-${
+                        </Button>
+                        <Button
+                            className={`icon mx-1 text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
+                            onClick={toggleToast}
                         >
                             <i className="bi bi-microsoft"></i>
-                        </Link>
-                        <Link
-                            to="#"
-                            className={`icon text-${
+                        </Button>
+                        <Button
+                            className={`icon mx-1 text-${
                                 props.mode === "light" ? "white" : "black"
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
+                            onClick={toggleToast}
                         >
                             <i className="bi bi-apple"></i>
-                        </Link>
+                        </Button>
+
+                        <ErrorToast
+                            showToast={showToast}
+                            toggleToast={toggleToast}
+                            mode={props.mode}
+                        />
                     </div>
                     <input
                         type="email"
