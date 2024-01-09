@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
 const Navbar = (props) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.pathname = "/";
+    }
 
     return (
         <>
@@ -197,14 +203,29 @@ const Navbar = (props) => {
                             </Modal>
                         </div>
 
-                        <Link
-                            to="/profile"
+                        <Dropdown>
+                            <Dropdown.Toggle
+                            id="profile-dropdown"
                             className={`nav-link hover-navlink text-${
                                 props.mode === "light" ? "black" : "white"
                             } mx-2 hover-underline`}
                         >
-                            Profile
-                        </Link>
+                        Profile
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item
+                            onClick={() => {
+                                window.location.pathname = "/profile";
+                            }}
+                        >
+                            View Profile
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={handleLogout}>
+                                Logout
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
 
                         <div className="d-flex align-items-center">
                             <input
