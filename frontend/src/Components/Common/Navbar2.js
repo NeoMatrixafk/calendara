@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import React from "react";
 
 const Navbar2 = (props) => {
-
     return (
         <>
             <nav
@@ -19,18 +18,15 @@ const Navbar2 = (props) => {
                     <div className="w-25">
                         <Link className="navbar-brand p-0 w-50" to="/">
                             <img
-                                src={`../Images/calendara_dark.png`}
+                                src={`../Images/calendara_${props.mode}.png`}
                                 className="img-fluid"
                                 alt=""
                             />
                         </Link>
                     </div>
 
+                    <div className="d-flex align-items-center"></div>
                     <div className="d-flex align-items-center">
-                        
-                    </div>
-                    <div className="d-flex align-items-center">
-                    
                         <Link
                             to="/auth"
                             className={`nav-link hover-navlink text-${

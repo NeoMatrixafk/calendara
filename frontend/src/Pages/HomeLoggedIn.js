@@ -1,12 +1,11 @@
 import React from "react";
 
-import HomeConclusion from "../Components/Home2/HomeConclusion";
-import HomeServices from "../Components/Home2/HomeServices";
-import HomeFAQ from "../Components/Home2/HomeFAQ";
-import HomeAd from "../Components/Home2/HomeAd";
-import HomeMain from "../Components/Home2/HomeMain";
+import HomeServices from "../Components/Home/HomeServices";
+import HomeFAQ from "../Components/Home/HomeFAQ";
+import HomeAd from "../Components/Home/HomeAd";
+import HomeMain from "../Components/Home/HomeMain";
 
-const Home = (props) => {
+const HomeLoggedIn = (props) => {
     console.log(props.mode);
     return (
         <>
@@ -19,12 +18,10 @@ const Home = (props) => {
                     <HomeFAQ mode={props.mode} />
 
                     <HomeServices mode={props.mode} />
-
-                    <HomeConclusion mode={props.mode} />
                 </div>
             </div>
         </>
     );
 };
 
-export default Home;
+export default HomeLoggedIn;
