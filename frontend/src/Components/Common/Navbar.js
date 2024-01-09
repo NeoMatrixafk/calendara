@@ -209,6 +209,10 @@ const Navbar = (props) => {
                             className={`nav-link hover-navlink text-${
                                 props.mode === "light" ? "black" : "white"
                             } mx-2 hover-underline`}
+                            style={{
+                                backgroundColor: 'transparent',
+                                borderColor: 'transparent',
+                            }}
                         >
                         Profile
                     </Dropdown.Toggle>
