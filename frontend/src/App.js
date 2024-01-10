@@ -17,6 +17,10 @@ import About from "./Pages/About";
 import Error404 from "./Pages/Error404";
 
 import Auth from "./Pages/Auth";
+import MyCalendar from "./Components/Calendar";
+import AddEvents from "./Components/AddEvents";
+import UpdateEvent from "./Components/UpdateEvent";
+
 
 function App() {
     const user = localStorage.getItem("token");
@@ -210,6 +214,18 @@ function App() {
                                 <Route
                                     path="*"
                                     element={<Error404 mode={mode} />}
+                                />
+                                <Route  
+                                    path="/events" 
+                                    element={<MyCalendar/>} 
+                                />
+                                <Route 
+                                    path="/events/add" 
+                                    element={<AddEvents/>}
+                                />
+                                <Route 
+                                    path="/event/:id/update" 
+                                    element={<UpdateEvent/>}
                                 />
                             </>
                         ) : (
