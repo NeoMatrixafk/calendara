@@ -5,7 +5,6 @@ import axios from 'axios';
 
 const SignUpForm = (props) => {
 
-    const navigate = useNavigate();
     const [error, setError] = useState("");
 
     const [data, setData] = useState({
@@ -21,7 +20,7 @@ const SignUpForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://localhost:8080/api/users";
+            const url = "http://localhost:3001/api/users";
             const {data: res} = await axios.post(url, data);
             window.alert("User created successfully! Please login.");
             window.location.pathname = "/auth";
