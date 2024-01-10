@@ -9,7 +9,7 @@ import Footer from "./Components/Common/Footer";
 import HomeLoggedIn from "./Pages/HomeLoggedIn";
 import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
-import Dashboard from "./Pages/Dashboard";
+import Events from "./Pages/Events";
 import Profile from "./Pages/Profile";
 import AddEvent from "./Pages/AddEvent";
 import About from "./Pages/About";
@@ -203,8 +203,8 @@ function App() {
                                     element={<Categories mode={mode} />}
                                 />
                                 <Route
-                                    path="/dashboard"
-                                    element={<Dashboard mode={mode} />}
+                                    path="/events"
+                                    element={<Events mode={mode} />}
                                 />
                                 <Route
                                     path="/profile"

@@ -63,9 +63,9 @@ const NavbarLoggedIn = (props) => {
                                             : "white"
                                     }`}
                                     style={{ fontSize: "1.10rem" }}
-                                    to="/dashboard"
+                                    to="/events"
                                 >
-                                    Dashboard
+                                    Events
                                 </Link>
                             </li>
                             <li className="nav-item mx-2">
