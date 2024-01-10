@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Modal, Dropdown } from "react-bootstrap";
 
 const NavbarLoggedIn = (props) => {
     const [show, setShow] = useState(false);
@@ -8,12 +8,21 @@ const NavbarLoggedIn = (props) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.pathname = "/";
+    };
+
+    const navigate = useNavigate();
+
     return (
         <>
             <nav
                 className={`navbar navbar-expand-lg sticky-top border-bottom border-${
                     props.mode === "light" ? "" : "secondary"
-                }`}
+                } shadow`}
                 style={
                     props.mode === "light"
                         ? { backgroundColor: "#fff" }
@@ -197,14 +206,68 @@ const NavbarLoggedIn = (props) => {
                             </Modal>
                         </div>
 
-                        <Link
-                            to="/profile"
-                            className={`nav-link hover-navlink text-${
-                                props.mode === "light" ? "black" : "white"
-                            } mx-2 hover-underline`}
+                        <Dropdown
+                            show={showDropdown}
+                            onMouseEnter={() => setShowDropdown(true)}
+                            onMouseLeave={() => setShowDropdown(false)}
                         >
-                            Profile
-                        </Link>
+                            <Dropdown.Toggle
+                                id="profile-dropdown"
+                                className={`nav-link hover-navlink text-${
+                                    props.mode === "light" ? "black" : "white"
+                                } mx-2`}
+                                style={{
+                                    background: "transparent",
+                                    borderColor: "transparent",
+                                    letterSpacing: "0.10rem",
+                                    height: "3rem",
+                                }}
+                                onClick={() => {
+                                    navigate("/profile");
+                                }}
+                            >
+                                Profile
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu
+                                style={{
+                                    backgroundColor:
+                                        props.mode === "light" ? "" : "#36393e",
+                                }}
+                            >
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        setShowDropdown(false);
+                                        navigate("/profile");
+                                    }}
+                                    className={`dropdown-hover-${
+                                        props.mode
+                                    } text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    }`}
+                                    style={{
+                                        background: "transparent",
+                                    }}
+                                >
+                                    View Profile
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={handleLogout}
+                                    className={`dropdown-hover-${
+                                        props.mode
+                                    } text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    }`}
+                                    style={{ background: "transparent" }}
+                                >
+                                    Logout
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
 
                         <div className="d-flex align-items-center">
                             <input
