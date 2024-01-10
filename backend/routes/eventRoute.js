@@ -32,23 +32,15 @@ router.get("/:id/show", async(req, res)=>{
 });
 
 
-router.post("/", async(req, res)=>{
-   
-        const newEvent = await new Event(req.body)
-     
-        try{
-           await newEvent.save((err, event)=>{
-                if(err){
-                    handleError(err, res)
-                }else{
-                    res.status(200).json(event)
-                }
-            })
-        }catch(err){
-            handleError(err, res)
-        }
+router.post("/", async (req, res) => {
+    try {
+        const newEvent = new Event(req.body);
+        const savedEvent = await newEvent.save();
+        res.status(200).json(savedEvent);
+    } catch (err) {
+        handleError(err, res);
     }
-)
+});
 
 
 router.put("/:id/update", async (req, res)=>{

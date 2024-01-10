@@ -17,9 +17,10 @@ import About from "./Pages/About";
 import Error404 from "./Pages/Error404";
 
 import Auth from "./Pages/Auth";
-import MyCalendar from "./Components/Calendar";
-import AddEvents from "./Components/AddEvents";
-import UpdateEvent from "./Components/UpdateEvent";
+
+import MyCalendar from "./Components/Calendar/Calendar";
+import AddEvents from "./Components/Calendar/AddEvents";
+import UpdateEvent from "./Components/Calendar/UpdateEvent";
 
 
 function App() {
@@ -188,17 +189,6 @@ function App() {
                         {user ? (
                             <>
                                 <Route
-                                    path="/"
-                                    element={
-                                        <Navigate
-                                            replace
-                                            to="/home"
-                                            mode={mode}
-                                        />
-                                    }
-                                />
-
-                                <Route
                                     path="/home"
                                     element={<HomeLoggedIn mode={mode} />}
                                 />
@@ -227,8 +217,8 @@ function App() {
                                     element={<Error404 mode={mode} />}
                                 />
                                 <Route  
-                                    path="/events" 
-                                    element={<MyCalendar/>} 
+                                    path="/events"
+                                    exact element={<MyCalendar/>} 
                                 />
                                 <Route 
                                     path="/events/add" 
@@ -237,7 +227,7 @@ function App() {
                                 <Route 
                                     path="/event/:id/update" 
                                     element={<UpdateEvent/>}
-                                />
+                                    />
                             </>
                         ) : (
                             <>

@@ -3,8 +3,6 @@ import { event } from "../Axios/event"
 import * as moment from "moment"
 import { addError, removeError } from "./errorsAction"
 import { useNavigate } from "react-router-dom"
-
-
 export const showEvent = (event)=>{
     console.log("event to be shown on the modal: ", event)
     return{

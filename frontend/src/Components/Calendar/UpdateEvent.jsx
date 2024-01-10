@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { ShowEventsApi, updateEventApi } from "../Redux/actions";
+import { ShowEventsApi, updateEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import {useNavigate} from "react-router-dom"

@@ -1,9 +1,9 @@
 import { Modal, Button } from "react-bootstrap";
 import React, { useState } from "react";
-import "../style/model.scss"
+import "../../style/model.scss"
 import { connect } from "react-redux";
 import {Link} from "react-router-dom"
-import { deleteEventApi, ShowEventsApi, closeEvent } from "../Redux/actions";
+import { deleteEventApi, ShowEventsApi, closeEvent } from "../../Redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const Popping = ({open, handleClose, event, deleteEventApi, renderStatus, rerender})=> {

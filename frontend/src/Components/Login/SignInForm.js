@@ -25,8 +25,9 @@ const SignInForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://localhost:8080/api/auth";
+            const url = "http://localhost:3001/api/auth";
             const { data: res } = await axios.post(url, data);
+            window.alert("Welcome user!");
             localStorage.setItem("token", res.data);
             window.location.href = "/home";
         } catch (error) {

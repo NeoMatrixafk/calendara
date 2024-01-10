@@ -7,7 +7,7 @@ import getDay from 'date-fns/getDay'
 import enUS from 'date-fns/locale/en-US'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Popping from './Popping';
-import {closeEvent, ShowEventApi, ShowEventsApi} from "../Redux/actions"
+import {closeEvent, ShowEventApi, ShowEventsApi} from "../../Redux/actions"
 import { connect } from 'react-redux'
 
 const locales = {
