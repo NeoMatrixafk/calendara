@@ -1,13 +1,13 @@
-import "./App.css";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
 
-import Navbar from "./Components/Common/Navbar";
-import Navbar2 from "./Components/Common/Navbar2";
+import NavbarLoggedIn from "./Components/Common/NavbarLoggedIn";
+import NavbarLoggedOut from "./Components/Common/NavbarLoggedOut";
 import Footer from "./Components/Common/Footer";
 
-import Home from "./Pages/Home";
-import Home2 from "./Pages/Home2";
+import HomeLoggedIn from "./Pages/HomeLoggedIn";
+import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
 import Dashboard from "./Pages/Dashboard";
 import Profile from "./Pages/Profile";
@@ -43,6 +43,13 @@ function App() {
             setMode("light");
         }
     };
+
+    const location = useLocation();
+
+    const pathsWithoutNavbarFooter = ["/auth"];
+    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(
+        location.pathname
+    );
 
     if (mode === "light") {
         document.documentElement.style.setProperty(
@@ -89,6 +96,8 @@ function App() {
             "--toggle-last-color",
             "#4758b8"
         );
+
+        document.documentElement.style.setProperty("--inputColor", "");
     } else {
         document.documentElement.style.setProperty(
             "--underline-color",
@@ -134,13 +143,9 @@ function App() {
             "--toggle-last-color",
             "#0e1225"
         );
+
+        document.documentElement.style.setProperty("--inputColor", "gray");
     }
-
-    const pathsWithoutNavbarFooter = ["/auth"];
-
-    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(
-        window.location.pathname
-    );
 
     return (
         <>
@@ -155,9 +160,15 @@ function App() {
                 {shouldRenderNavbarFooter && (
                     <>
                         {user ? (
-                            <Navbar mode={mode} toggleMode={toggleMode} />
+                            <NavbarLoggedIn
+                                mode={mode}
+                                toggleMode={toggleMode}
+                            />
                         ) : (
-                            <Navbar2 />
+                            <NavbarLoggedOut
+                                mode={mode}
+                                toggleMode={toggleMode}
+                            />
                         )}
                     </>
                 )}
@@ -189,7 +200,7 @@ function App() {
 
                                 <Route
                                     path="/home"
-                                    element={<Home mode={mode} />}
+                                    element={<HomeLoggedIn mode={mode} />}
                                 />
                                 <Route
                                     path="/categories"
@@ -232,11 +243,11 @@ function App() {
                             <>
                                 <Route
                                     path="*"
-                                    element={<Home2 mode={mode} />}
+                                    element={<HomeLoggedOut mode={mode} />}
                                 />
                                 <Route
                                     path="/"
-                                    element={<Home2 mode={mode} />}
+                                    element={<HomeLoggedOut mode={mode} />}
                                 />
                             </>
                         )}

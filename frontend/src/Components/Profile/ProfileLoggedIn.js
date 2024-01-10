@@ -2,11 +2,10 @@ import React from "react";
 import { Button, Image } from "react-bootstrap";
 
 const ProfileLoggedIn = (props) => {
-    
     const handleLogout = () => {
         localStorage.removeItem("token");
         window.location.pathname = "/";
-    }
+    };
     return (
         <>
             <div className="my-3">
@@ -52,23 +51,9 @@ const ProfileLoggedIn = (props) => {
                     }}
                 >
                     <div className="col my-5 d-flex justify-content-center align-items-center">
-                        <Button variant="success" className="btn h-50">
+                        <Button variant="success" className="btn btn-lg ">
                             Update Profile
                         </Button>
-                    </div>
-                    <div className="col my-3 d-flex align-items-center justify-content-start">
-                        <div>
-                            <p
-                                className={`w-75 my-0 text-${
-                                    props.mode === "dark" ? "light" : "dark"
-                                }`}
-                                style={{ fontSize: "1.5rem" }}
-                            >
-                                Address: Ramrao Adik Institue of Technology, DY
-                                Patil Deemed to be University, Nerul, Navi
-                                Mumbai, Maharashtra, 400706
-                            </p>
-                        </div>
                     </div>
                 </div>
                 <div
