@@ -9,7 +9,6 @@ import Footer from "./Components/Common/Footer";
 import HomeLoggedIn from "./Pages/HomeLoggedIn";
 import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
-import Events from "./Pages/Events";
 import Profile from "./Pages/Profile";
 import AddEvent from "./Pages/AddEvent";
 import About from "./Pages/About";
@@ -17,6 +16,11 @@ import About from "./Pages/About";
 import Error404 from "./Pages/Error404";
 
 import Auth from "./Pages/Auth";
+
+import MyCalendar from "./Components/Calendar/Calendar";
+import AddEvents from "./Components/Calendar/AddEvents";
+import UpdateEvent from "./Components/Calendar/UpdateEvent";
+
 
 function App() {
     const user = localStorage.getItem("token");
@@ -184,27 +188,12 @@ function App() {
                         {user ? (
                             <>
                                 <Route
-                                    path="/"
-                                    element={
-                                        <Navigate
-                                            replace
-                                            to="/home"
-                                            mode={mode}
-                                        />
-                                    }
-                                />
-
-                                <Route
                                     path="/home"
                                     element={<HomeLoggedIn mode={mode} />}
                                 />
                                 <Route
                                     path="/categories"
                                     element={<Categories mode={mode} />}
-                                />
-                                <Route
-                                    path="/events"
-                                    element={<Events mode={mode} />}
                                 />
                                 <Route
                                     path="/profile"
@@ -222,6 +211,18 @@ function App() {
                                     path="*"
                                     element={<Error404 mode={mode} />}
                                 />
+                                <Route  
+                                    path="/events"
+                                    element={<MyCalendar mode={mode}/>} 
+                                />
+                                <Route 
+                                    path="/events/add" 
+                                    element={<AddEvents/>}
+                                />
+                                <Route 
+                                    path="/event/:id/update" 
+                                    element={<UpdateEvent/>}
+                                    />
                             </>
                         ) : (
                             <>

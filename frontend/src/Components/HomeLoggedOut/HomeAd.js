@@ -56,6 +56,7 @@ const HomeAd = (props) => {
                             <div className="row">
                                 <div className="col-8 mt-3">
                                     <Link
+                                        to={"/add-event"}
                                         className={`btn btn-${
                                             props.mode === "light"
                                                 ? "primary"
