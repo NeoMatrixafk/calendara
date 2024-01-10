@@ -21,7 +21,6 @@ import MyCalendar from "./Components/Calendar/Calendar";
 import AddEvents from "./Components/Calendar/AddEvents";
 import UpdateEvent from "./Components/Calendar/UpdateEvent";
 
-
 function App() {
     const user = localStorage.getItem("token");
 
@@ -188,6 +187,16 @@ function App() {
                         {user ? (
                             <>
                                 <Route
+                                    path="/"
+                                    element={
+                                        <Navigate
+                                            replace
+                                            to="/home"
+                                            mode={mode}
+                                        />
+                                    }
+                                />
+                                <Route
                                     path="/home"
                                     element={<HomeLoggedIn mode={mode} />}
                                 />
@@ -211,18 +220,18 @@ function App() {
                                     path="*"
                                     element={<Error404 mode={mode} />}
                                 />
-                                <Route  
+                                <Route
                                     path="/events"
-                                    element={<MyCalendar mode={mode}/>} 
+                                    element={<MyCalendar mode={mode} />}
                                 />
-                                <Route 
-                                    path="/events/add" 
-                                    element={<AddEvents/>}
+                                <Route
+                                    path="/events/add"
+                                    element={<AddEvents />}
                                 />
-                                <Route 
-                                    path="/event/:id/update" 
-                                    element={<UpdateEvent/>}
-                                    />
+                                <Route
+                                    path="/event/:id/update"
+                                    element={<UpdateEvent />}
+                                />
                             </>
                         ) : (
                             <>

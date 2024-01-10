@@ -1,46 +1,45 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
 const SignUpForm = (props) => {
-
-    const navigate = useNavigate();
     const [error, setError] = useState("");
 
     const [data, setData] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
     });
 
-    const handleChange = ({currentTarget:input}) => {
-        setData({...data, [input.name]:input.value});
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://localhost:8080/api/users";
-            const {data: res} = await axios.post(url, data);
+            const url = "http://localhost:3001/api/users";
+            const { data: res } = await axios.post(url, data);
             window.alert("User created successfully! Please login.");
             window.location.pathname = "/auth";
             console.log(res.message);
         } catch (error) {
-            if (error.response &&
-                error.response.status >=400 &&
-                error.response.status <=500
-                ){
-                    setError(error.response.data.message)
-                }
+            if (
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message);
+            }
         }
-    }
-
+    };
 
     return (
         <>
             <div className="form-container sign-up">
-                <form onSubmit={handleSubmit}
+                <form
+                    onSubmit={handleSubmit}
                     style={{
                         backgroundColor:
                             props.mode === "light" ? "#fff" : "#36393e",
