@@ -238,7 +238,7 @@ function App() {
                     </Routes>
                 </div>
 
-                {shouldRenderNavbarFooter && <Footer />}
+                {shouldRenderNavbarFooter && <Footer mode={mode} />}
             </div>
         </>
     );
