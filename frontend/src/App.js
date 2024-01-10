@@ -9,7 +9,6 @@ import Footer from "./Components/Common/Footer";
 import HomeLoggedIn from "./Pages/HomeLoggedIn";
 import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
-import Events from "./Pages/Events";
 import Profile from "./Pages/Profile";
 import AddEvent from "./Pages/AddEvent";
 import About from "./Pages/About";
@@ -197,10 +196,6 @@ function App() {
                                     element={<Categories mode={mode} />}
                                 />
                                 <Route
-                                    path="/events"
-                                    element={<Events mode={mode} />}
-                                />
-                                <Route
                                     path="/profile"
                                     element={<Profile mode={mode} />}
                                 />
@@ -218,7 +213,7 @@ function App() {
                                 />
                                 <Route  
                                     path="/events"
-                                    exact element={<MyCalendar/>} 
+                                    element={<MyCalendar mode={mode}/>} 
                                 />
                                 <Route 
                                     path="/events/add" 
