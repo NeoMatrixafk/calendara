@@ -70,3 +70,16 @@
     background-color: var(--datepicker-color, default-color);
     color: white;
 }
+
+.footer-social-btn-light:hover {
+    background: #2c346d;
+}
+
+
+.dropdown-hover-light:hover {
+    color: #007BFF !important
+}
+
+.dropdown-hover-dark:hover {
+    color: #edc9af !important
+}

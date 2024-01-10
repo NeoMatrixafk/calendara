@@ -1,59 +1,55 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+import FooterSocialButton from "./FooterSocialButton";
+
+const Footer = (props) => {
     return (
         <>
-            <footer className="bg-dark text-center text-white w-100 h-auto">
+            <footer
+                className="text-center text-white w-100 h-auto"
+                style={{
+                    backgroundColor:
+                        props.mode === "light" ? "#1d2349" : "#212529",
+                }}
+            >
                 <div className="container p-4">
                     <section className="mb-4">
-                        <Link
-                            className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.facebook.com/"
-                            role="button"
-                        >
-                            <i className="bi bi-facebook"></i>
-                        </Link>
+                        <FooterSocialButton
+                            site={"facebook"}
+                            btn={"facebook"}
+                            mode={props.mode}
+                        />
 
-                        <Link
-                            className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.whatsapp.com/"
-                            role="button"
-                        >
-                            <i className="bi bi-whatsapp"></i>
-                        </Link>
+                        <FooterSocialButton
+                            site={"whatsapp"}
+                            btn={"whatsapp"}
+                            mode={props.mode}
+                        />
 
-                        <Link
-                            className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.instagram.com/"
-                            role="button"
-                        >
-                            <i className="bi bi-instagram"></i>
-                        </Link>
+                        <FooterSocialButton
+                            site={"instagram"}
+                            btn={"instagram"}
+                            mode={props.mode}
+                        />
 
-                        <Link
-                            className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.twitter.com/"
-                            role="button"
-                        >
-                            <i className="bi bi-twitter-x"></i>
-                        </Link>
+                        <FooterSocialButton
+                            site={"twitter"}
+                            btn={"twitter-x"}
+                            mode={props.mode}
+                        />
 
-                        <Link
-                            className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.linkedin.com/"
-                            role="button"
-                        >
-                            <i className="bi bi-linkedin"></i>
-                        </Link>
+                        <FooterSocialButton
+                            site={"linkedin"}
+                            btn={"linkedin"}
+                            mode={props.mode}
+                        />
 
-                        <Link
-                            className="btn btn-dark btn-floating btn-shadow-white m-1"
-                            to="https://www.discord.com/"
-                            role="button"
-                        >
-                            <i className="bi bi-discord"></i>
-                        </Link>
+                        <FooterSocialButton
+                            site={"discord"}
+                            btn={"discord"}
+                            mode={props.mode}
+                        />
                     </section>
 
                     <section className="my-4">
@@ -157,8 +153,11 @@ const Footer = () => {
                 </div>
 
                 <div
-                    className="text-center  w-auto p-3"
-                    style={{ backgroundColor: "#1a1a1a" }}
+                    className="text-center w-auto p-3"
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "#0e1225" : "#1a1a1a",
+                    }}
                 >
                     © 2024 Copyright: calendara
                 </div>

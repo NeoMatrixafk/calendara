@@ -7,7 +7,7 @@ const NavbarLoggedOut = (props) => {
             <nav
                 className={`navbar navbar-expand-lg sticky-top border-bottom border-${
                     props.mode === "light" ? "" : "secondary"
-                }`}
+                } shadow`}
                 style={
                     props.mode === "light"
                         ? { backgroundColor: "#fff" }
