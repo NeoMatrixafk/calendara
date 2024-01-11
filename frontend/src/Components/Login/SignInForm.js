@@ -27,7 +27,10 @@ const SignInForm = (props) => {
         try {
             const url = "http://localhost:3001/api/auth";
             const { data: res } = await axios.post(url, data);
-            window.alert("Welcome user!");
+            ///const userurl = "http://localhost:3001/api/getData";
+            ///const { data: userRes } = await userurl.get("/", data);
+            ///window.alert(`Welcome ${userRes.data.name}!`);
+            window.alert(`Welcome ${data.email} !`);
             localStorage.setItem("token", res.data);
             window.location.href = "/home";
         } catch (error) {

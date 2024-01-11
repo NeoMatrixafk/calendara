@@ -47,16 +47,11 @@ router.put("/:id/update", async (req, res)=>{
     const id = req.params.id
      try{
         const event = await Event.findOne({_id : id})
-        if(event){
+        if (event) {
             Object.assign(event, req.body);
-             event.save((err, event)=>{
-                if(err){
-                    handleError(err, res)
-                }else{
-                    res.status(200).json(event)
-                }
-        })
-    }   
+            const updatedEvent = await event.save(); // Use save without a callback
+            res.status(200).json(updatedEvent);
+        }   
         if(!event){
             res.status(404).json({error: "event is not found"})
         }
@@ -70,14 +65,16 @@ router.put("/:id/update", async (req, res)=>{
 
 router.delete("/:id/delete", async(req, res)=>{
     const id = req.params.id;
+    const event = await Event.findById({_id: id})
     try{
-        await Event.findByIdAndRemove(id)
+        await event.deleteOne();
         res.status(200).json("Event has been deleted");
     }catch(err){
         handleError(err, res)
     }
 
-})
+});
+
 
 
 module.exports = router
