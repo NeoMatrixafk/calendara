@@ -21,7 +21,7 @@ const SignUpForm = (props) => {
         try {
             const url = "http://localhost:3001/api/users";
             const { data: res } = await axios.post(url, data);
-            window.alert("User created successfully! Please login.");
+            window.alert(`Account created successfully for ${data.name}. Please login!`);
             window.location.pathname = "/auth";
             console.log(res.message);
         } catch (error) {
