@@ -83,3 +83,11 @@
 .dropdown-hover-dark:hover {
     color: #edc9af !important
 }
+
+.datepicker-light::placeholder {
+    color: gray !important
+}
+
+.datepicker-dark::placeholder {
+    color:#e6e6e6 !important
+}

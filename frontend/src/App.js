@@ -10,7 +10,6 @@ import HomeLoggedIn from "./Pages/HomeLoggedIn";
 import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
 import Profile from "./Pages/Profile";
-import AddEvent from "./Pages/AddEvent";
 import About from "./Pages/About";
 
 import Error404 from "./Pages/Error404";
@@ -210,7 +209,7 @@ function App() {
                                 />
                                 <Route
                                     path="/add-event"
-                                    element={<AddEvent mode={mode} />}
+                                    element={<AddEvents mode={mode} />}
                                 />
                                 <Route
                                     path="/about"
@@ -224,10 +223,11 @@ function App() {
                                     path="/events"
                                     element={<MyCalendar mode={mode} />}
                                 />
-                                <Route
+                                {/* <Route
                                     path="/events/add"
                                     element={<AddEvents />}
-                                />
+                                /> */}
+                                {/* added this component in /add-event route */}
                                 <Route
                                     path="/event/:id/update"
                                     element={<UpdateEvent />}
