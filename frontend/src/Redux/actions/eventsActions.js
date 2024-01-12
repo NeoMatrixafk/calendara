@@ -26,13 +26,14 @@ export const ShowEventApi = id => async dispatch => {
     const result = await event.get(`/${id}/show`);
 
     try{
-        const {title, _id, start, end, describe} = await result.data;
+        const {title, _id, start, end, describe, color} = await result.data;
         const convertedEvent = {
             title,
             describe,
             id: _id,
             start: moment(start).format("ddd DD MMM YY LT"),
-            end: moment(end).format("ddd DD MMM YY LT")
+            end: moment(end).format("ddd DD MMM YY LT"),
+            color
         }
         await dispatch(showEvent(convertedEvent))
     }catch(err){
@@ -54,7 +55,8 @@ export const ShowEventsApi = () => async dispatch => {
               start: new Date(event.start) ,
               end: new Date(event.end) ,
               id: event._id,
-              describe: event.describe
+              describe: event.describe,
+              color: event.color
             }
           })
         await dispatch(showEvents(convertedDates))
@@ -101,7 +103,8 @@ export const addEventApi = (values) => async dispatch =>{
          title: values.title,
          start: values.start,
          end: values.end,
-         describe: values.describe
+         describe: values.describe,
+         color: values.color
        })
        .then(res=>{
         
