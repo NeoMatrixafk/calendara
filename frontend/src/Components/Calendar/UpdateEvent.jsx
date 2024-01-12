@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { ShowEventsApi, updateEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router-dom";
 
 
 //schema to validate event inputs 
@@ -18,11 +18,11 @@ const schema = yup.object({
 
 
 
-const UpdateEvent = ({updateEventApi, event, error}) => {
+const UpdateEvent = ({updateEventApi, event, error, mode}) => {
     const navigate = useNavigate();
     const [rerender, setRerender] = useState(false);
-    const [dbError, setError] = useState(false)
-    const [firstRender, setFirstRender] = useState(true)
+    const [dbError, setError] = useState(false);
+    const [firstRender, setFirstRender] = useState(true);
 
 
     useEffect( ()=>{
@@ -32,11 +32,11 @@ const UpdateEvent = ({updateEventApi, event, error}) => {
         
       }
         if(!error.start && !error.end && dbError !== false){
-          setTimeout(navigate("/")) 
+          setTimeout(navigate("/events")) 
         }
      }, [rerender])
     //using form-hook to register event data
-    const { register, handleSubmit, formState: {errors}, control } = useForm({
+    const { register, handleSubmit, formState: {errors}, control, setValue } = useForm({
       resolver: yupResolver(schema),
       defaultValues: {
         title: event.title,
@@ -44,16 +44,17 @@ const UpdateEvent = ({updateEventApi, event, error}) => {
         end: event.end? new Date(event.end) :"",
         describe: event.describe? event.describe : "No description was provided"
       }
-    });
+    }); 
    
      const onSubmit = async(values)=>{
+
       setFirstRender(false)
       updateEventApi(values, event.id)
       .then(res=> {
         console.log(res);
         setRerender(!rerender);
         if(res === "response was successful"){
-          navigate("/")
+          navigate("/events")
         }
       })
       

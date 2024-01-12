@@ -50,6 +50,13 @@ const MyCalendar = ({ events, ShowEventApi, closeEvent, ShowEventsApi }) => {
         setTimeout(() => closeEvent(), 300);
     };
 
+    const eventPropGetter = (event) => {
+        console.log("Event color:", event.color); // Log the color value
+        const backgroundColor = event.color || '#3174ad'; // Default color or custom color property
+        console.log("Background color:", backgroundColor);
+        return { style: { backgroundColor } };
+    };
+
     return (
         <div>
             <Popping
@@ -65,6 +72,7 @@ const MyCalendar = ({ events, ShowEventApi, closeEvent, ShowEventsApi }) => {
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500, margin: 50, fontFamily: "Patrick Hand" }}
+                eventPropGetter={eventPropGetter}
                 onSelectEvent={openEventClick}
             />
         </div>

@@ -7,6 +7,7 @@ import { addEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import ColorPalette from "./ColorPalette";
 // import { set } from "date-fns";
 
 //schema to validate event inputs
@@ -22,13 +23,14 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
+    const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
 
     useEffect(() => {
         if (error && !firstRender) {
             setError(error);
         }
         if (!error.start && !error.end && dbError !== false) {
-            setTimeout(navigate("/"));
+            setTimeout(navigate("/events"));
         }
     }, [rerender]);
     //using form-hook to register event data
@@ -41,10 +43,16 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         resolver: yupResolver(schema),
     });
 
+
     const onSubmit = async (values) => {
+        
+        values.color = selectedColor;
+
         setFirstRender(false);
         addEventApi(values).then(() => {
             setRerender(!rerender);
+            window.alert('Event created successfully!');
+            navigate("/events")
         });
     };
 
@@ -222,9 +230,20 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     }}
                                 />
                             </div>
+
+                            <div className="mb-4">
+                                <label
+                                htmlFor="color"
+                                className={`form-label me-4 text-${mode === "light" ? "black" : "white"}`}
+                                >
+                                    Event Color:
+                                </label>
+                                <ColorPalette onSelectColor={setSelectedColor} />
+                            </div>
                             <button
-                                type="submit"
-                                className="btn btn-success mt-4"
+                            type="submit"
+                            className="btn btn-success mt-4"
+                            onClick={handleSubmit(onSubmit)}
                             >
                                 Create
                             </button>
