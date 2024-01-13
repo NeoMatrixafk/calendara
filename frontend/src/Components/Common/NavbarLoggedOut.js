@@ -51,6 +51,8 @@ const NavbarLoggedOut = (props) => {
                                     type="checkbox"
                                     onClick={props.toggleMode}
                                     style={{ display: "none" }}
+                                    id="toggle-mode"
+                                    name="toggle-mode-checkbox"
                                 />
                                 <div className="container d-flex align-items-center">
                                     {props.mode === "light" ? (

@@ -51,6 +51,7 @@ const Contact = (props) => {
                                                             ? "#BEBEBE"
                                                             : "black",
                                                 }}
+                                                autoComplete="off"
                                             />
                                         </div>
                                     </div>
@@ -73,6 +74,7 @@ const Contact = (props) => {
                                                             ? "#BEBEBE"
                                                             : "black",
                                                 }}
+                                                autoComplete="off"
                                             />
                                         </div>
                                     </div>
