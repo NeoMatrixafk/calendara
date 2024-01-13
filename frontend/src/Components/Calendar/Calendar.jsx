@@ -35,12 +35,12 @@ const MyCalendar = ({
     useEffect(() => {
         ShowEventsApi();
         console.log("i renderd because of refresh or start");
-    }, []);
+    }, [ShowEventsApi]);
 
     useEffect(() => {
         ShowEventsApi();
         console.log("i renderd");
-    }, [renderStatus]);
+    }, [renderStatus, ShowEventsApi]);
 
     const openEventClick = (event) => {
         setOpen(true);
@@ -57,9 +57,7 @@ const MyCalendar = ({
     };
 
     const eventPropGetter = (event) => {
-        console.log("Event color:", event.color); // Log the color value
-        const backgroundColor = event.color || "#3174ad"; // Default color or custom color property
-        console.log("Background color:", backgroundColor);
+        const backgroundColor = event.color || '#3174ad'; // Default color or custom color property
         return { style: { backgroundColor } };
     };
 

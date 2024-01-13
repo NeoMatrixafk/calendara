@@ -11,12 +11,10 @@ import ColorPalette from "./ColorPalette";
 // import { set } from "date-fns";
 
 //schema to validate event inputs
-const schema = yup
-    .object({
+const schema = yup.object({
         title: yup.string().required("Can't Be Empty"),
         start: yup.date().required("Please specify the time to start"),
-    })
-    .required();
+    }).required();
 
 const AddEvents = ({ addEventApi, error, mode }) => {
     const navigate = useNavigate();
@@ -32,7 +30,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         if (!error.start && !error.end && dbError !== false) {
             setTimeout(navigate("/events"));
         }
-    }, [rerender]);
+    }, [rerender, error, dbError, firstRender, navigate]);
     //using form-hook to register event data
     const {
         register,

@@ -1,4 +1,3 @@
-const moment = require("moment");
 const mongoose = require("mongoose");
 
 
@@ -23,7 +22,7 @@ const EventSchema = new mongoose.Schema({
     },
     },
     describe: { type: String},
-    color: { type: String, default: '#3174ad' }
+    color: { type: String, default: '#3174ad' },
 })
 
 
