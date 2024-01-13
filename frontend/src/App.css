@@ -57,13 +57,45 @@
     overflow-y: auto; /* Enable vertical scrolling for the main content */
 }
 
-.rbc-header {
-    background-color: var(--rbc-header-color, default-color);
-    color: white;
+.rbc-toolbar-label  {
+    color: var(--rbc-toolbar-label-color, default-color);
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.rbc-header span {
+    color: var(--rbc-header-color, default-color);
+    letter-spacing: 0.10rem;
+    font-size: 1.15rem;
+}
+
+.rbc-date-cell {
+    color: var(--rbc-date-cell-color, default-color)
 }
 
 .rbc-off-range-bg {
     background: var(--rbc-off-range-bg-color, default-color)!important;
+}
+
+.rbc-today {
+    background: var(--rbc-today-color, default-color)!important;
+}
+
+.rbc-btn-group {
+    background-color: var(--rbc-btn-group-color, default-color);
+    border-radius: 5px
+}
+
+.rbc-btn-group button {
+    color: var(--rbc-btn-text-color, default-color)!important;
+}
+
+.rbc-btn-group button:hover {
+    background: var(--rbc-btn-hover-color)!important;
+}
+
+.rbc-active {
+    background-color: var(--rbc-active-color, default-color)!important;
 }
 
 .react-datepicker__input-container>input {

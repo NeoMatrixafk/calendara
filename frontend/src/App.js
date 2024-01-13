@@ -73,12 +73,40 @@ function App() {
         );
 
         document.documentElement.style.setProperty(
+            "--rbc-toolbar-label-color",
+            "black"
+        );
+        document.documentElement.style.setProperty(
             "--rbc-header-color",
-            "#3498db"
+            "black"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-date-cell-color",
+            "black"
         );
         document.documentElement.style.setProperty(
             "--rbc-off-range-bg-color",
-            "#f0f0f0"
+            "#e4e5e7"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-today-color",
+            "#c8cbd0"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-btn-group-color",
+            "white"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-active-color",
+            "#e4e5e7"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-btn-text-color",
+            "black"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-btn-hover-color",
+            "#f1f2f3"
         );
 
         document.documentElement.style.setProperty(
@@ -120,12 +148,40 @@ function App() {
         );
 
         document.documentElement.style.setProperty(
+            "--rbc-toolbar-label-color",
+            "white"
+        );
+        document.documentElement.style.setProperty(
             "--rbc-header-color",
-            "#607d8b"
+            "white"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-date-cell-color",
+            "#e6e6e6"
         );
         document.documentElement.style.setProperty(
             "--rbc-off-range-bg-color",
-            "#595959"
+            "#474b52"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-today-color",
+            "#242629"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-btn-group-color",
+            "#666B74"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-active-color",
+            "#242629"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-btn-text-color",
+            "#e6e6e6"
+        );
+        document.documentElement.style.setProperty(
+            "--rbc-btn-hover-color",
+            "#2f3237"
         );
 
         document.documentElement.style.setProperty(
