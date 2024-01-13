@@ -22,7 +22,13 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-const MyCalendar = ({ events, ShowEventApi, closeEvent, ShowEventsApi }) => {
+const MyCalendar = ({
+    events,
+    ShowEventApi,
+    closeEvent,
+    ShowEventsApi,
+    mode,
+}) => {
     const [open, setOpen] = useState(false);
     const [renderStatus, rerender] = useState(false);
 
@@ -65,6 +71,7 @@ const MyCalendar = ({ events, ShowEventApi, closeEvent, ShowEventsApi }) => {
                 handleClose={closeEventClick}
                 renderStatus={renderStatus}
                 rerender={rerender}
+                mode={mode}
             />
             <Calendar
                 localizer={localizer}
