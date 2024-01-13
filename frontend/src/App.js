@@ -11,6 +11,7 @@ import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
 import Profile from "./Pages/Profile";
 import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 
 import Error404 from "./Pages/Error404";
 
@@ -19,6 +20,9 @@ import Auth from "./Pages/Auth";
 import MyCalendar from "./Components/Calendar/Calendar";
 import AddEvents from "./Components/Calendar/AddEvents";
 import UpdateEvent from "./Components/Calendar/UpdateEvent";
+
+import LightMode from "./Logic/LightMode";
+import DarkMode from "./Logic/DarkMode";
 
 function App() {
     const user = localStorage.getItem("token");
@@ -50,99 +54,9 @@ function App() {
     );
 
     if (mode === "light") {
-        document.documentElement.style.setProperty(
-            "--underline-color",
-            "black"
-        );
-
-        document.documentElement.style.setProperty(
-            "--scrollbar-track-color",
-            "#D3D3D3"
-        );
-        document.documentElement.style.setProperty(
-            "--scrollbar-thumb-color",
-            "#0d6efd"
-        );
-        document.documentElement.style.setProperty(
-            "--scrollbar-thumb-hover-color",
-            "#7c95eb"
-        );
-        document.documentElement.style.setProperty(
-            "--scrollbar-button-color",
-            "white"
-        );
-
-        document.documentElement.style.setProperty(
-            "--rbc-header-color",
-            "#3498db"
-        );
-        document.documentElement.style.setProperty(
-            "--rbc-off-range-bg-color",
-            "#f0f0f0"
-        );
-
-        document.documentElement.style.setProperty(
-            "--datepicker-color",
-            "white"
-        );
-
-        document.documentElement.style.setProperty(
-            "--toggle-first-color",
-            "#5c6bc0"
-        );
-        document.documentElement.style.setProperty(
-            "--toggle-last-color",
-            "#4758b8"
-        );
-
-        document.documentElement.style.setProperty("--inputColor", "");
+        LightMode();
     } else {
-        document.documentElement.style.setProperty(
-            "--underline-color",
-            "white"
-        );
-
-        document.documentElement.style.setProperty(
-            "--scrollbar-track-color",
-            "#4D4D4D"
-        );
-        document.documentElement.style.setProperty(
-            "--scrollbar-thumb-color",
-            "gray"
-        );
-        document.documentElement.style.setProperty(
-            "--scrollbar-thumb-hover-color",
-            "gainsboro"
-        );
-        document.documentElement.style.setProperty(
-            "--scrollbar-button-color",
-            "#36393e"
-        );
-
-        document.documentElement.style.setProperty(
-            "--rbc-header-color",
-            "#607d8b"
-        );
-        document.documentElement.style.setProperty(
-            "--rbc-off-range-bg-color",
-            "#595959"
-        );
-
-        document.documentElement.style.setProperty(
-            "--datepicker-color",
-            "#666B74"
-        );
-
-        document.documentElement.style.setProperty(
-            "--toggle-first-color",
-            "#1d2349"
-        );
-        document.documentElement.style.setProperty(
-            "--toggle-last-color",
-            "#0e1225"
-        );
-
-        document.documentElement.style.setProperty("--inputColor", "gray");
+        DarkMode();
     }
 
     return (
@@ -216,21 +130,20 @@ function App() {
                                     element={<About mode={mode} />}
                                 />
                                 <Route
-                                    path="*"
-                                    element={<Error404 mode={mode} />}
+                                    path="/contact"
+                                    element={<Contact mode={mode} />}
                                 />
                                 <Route
                                     path="/events"
                                     element={<MyCalendar mode={mode} />}
                                 />
-                                {/* <Route
-                                    path="/events/add"
-                                    element={<AddEvents />}
-                                /> */}
-                                {/* added this component in /add-event route */}
                                 <Route
                                     path="/event/:id/update"
                                     element={<UpdateEvent />}
+                                />
+                                <Route
+                                    path="*"
+                                    element={<Error404 mode={mode} />}
                                 />
                             </>
                         ) : (

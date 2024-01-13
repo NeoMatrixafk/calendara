@@ -76,7 +76,7 @@ const MyCalendar = ({
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 500, margin: 50, fontFamily: "Patrick Hand" }}
+                style={{ height: 600, margin: 50 }}
                 eventPropGetter={eventPropGetter}
                 onSelectEvent={openEventClick}
             />

@@ -2,11 +2,15 @@
 
 ### Introduction 😊
 
+An event calendar using MERN stack for college project.
+
 ### Pre-requirements 📋
 
-* [Git](https://git-scm.com/)
+* [Node.js](https://nodejs.org/dist/v20.11.0/node-v20.11.0-x64.msi)
 * [npm](https://www.npmjs.com/)
-* [Mongo database](https://www.mongodb.com/)
+* [MongoDB: Compass](https://www.mongodb.com/try/download/compass)
+* [MongoDB: Community Server](https://www.mongodb.com/try/download/community)
+* [Git](https://git-scm.com/)
 
 ### Installation 🔧
 
