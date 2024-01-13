@@ -58,7 +58,7 @@ const MyCalendar = ({
 
     const eventPropGetter = (event) => {
         console.log("Event color:", event.color); // Log the color value
-        const backgroundColor = event.color || '#3174ad'; // Default color or custom color property
+        const backgroundColor = event.color || "#3174ad"; // Default color or custom color property
         console.log("Background color:", backgroundColor);
         return { style: { backgroundColor } };
     };
@@ -78,7 +78,7 @@ const MyCalendar = ({
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 500, margin: 50, fontFamily: "Patrick Hand" }}
+                style={{ height: 600, margin: 50 }}
                 eventPropGetter={eventPropGetter}
                 onSelectEvent={openEventClick}
             />

@@ -41,16 +41,14 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         resolver: yupResolver(schema),
     });
 
-
     const onSubmit = async (values) => {
-        
         values.color = selectedColor;
 
         setFirstRender(false);
         addEventApi(values).then(() => {
             setRerender(!rerender);
-            window.alert('Event created successfully!');
-            navigate("/events")
+            window.alert("Event created successfully!");
+            navigate("/events");
         });
     };
 
@@ -231,17 +229,21 @@ const AddEvents = ({ addEventApi, error, mode }) => {
 
                             <div className="mb-4">
                                 <label
-                                htmlFor="color"
-                                className={`form-label me-4 text-${mode === "light" ? "black" : "white"}`}
+                                    htmlFor="color"
+                                    className={`form-label me-4 text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}
                                 >
                                     Event Color:
                                 </label>
-                                <ColorPalette onSelectColor={setSelectedColor} />
+                                <ColorPalette
+                                    onSelectColor={setSelectedColor}
+                                />
                             </div>
                             <button
-                            type="submit"
-                            className="btn btn-success mt-4"
-                            onClick={handleSubmit(onSubmit)}
+                                type="submit"
+                                className="btn btn-success btn-lg mt-4"
+                                onClick={handleSubmit(onSubmit)}
                             >
                                 Create
                             </button>
