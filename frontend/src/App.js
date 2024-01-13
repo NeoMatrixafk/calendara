@@ -11,6 +11,7 @@ import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
 import Profile from "./Pages/Profile";
 import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 
 import Error404 from "./Pages/Error404";
 
@@ -129,21 +130,20 @@ function App() {
                                     element={<About mode={mode} />}
                                 />
                                 <Route
-                                    path="*"
-                                    element={<Error404 mode={mode} />}
+                                    path="/contact"
+                                    element={<Contact mode={mode} />}
                                 />
                                 <Route
                                     path="/events"
                                     element={<MyCalendar mode={mode} />}
                                 />
-                                {/* <Route
-                                    path="/events/add"
-                                    element={<AddEvents />}
-                                /> */}
-                                {/* added this component in /add-event route */}
                                 <Route
                                     path="/event/:id/update"
                                     element={<UpdateEvent />}
+                                />
+                                <Route
+                                    path="*"
+                                    element={<Error404 mode={mode} />}
                                 />
                             </>
                         ) : (
