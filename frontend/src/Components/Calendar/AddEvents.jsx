@@ -11,12 +11,10 @@ import ColorPalette from "./ColorPalette";
 // import { set } from "date-fns";
 
 //schema to validate event inputs
-const schema = yup
-    .object({
+const schema = yup.object({
         title: yup.string().required("Can't Be Empty"),
         start: yup.date().required("Please specify the time to start"),
-    })
-    .required();
+    }).required();
 
 const AddEvents = ({ addEventApi, error, mode }) => {
     const navigate = useNavigate();

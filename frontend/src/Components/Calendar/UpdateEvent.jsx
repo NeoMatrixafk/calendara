@@ -7,6 +7,7 @@ import { ShowEventsApi, updateEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import {useNavigate} from "react-router-dom";
+import ColorPalette from "./ColorPalette";
 
 
 //schema to validate event inputs 
@@ -23,6 +24,7 @@ const UpdateEvent = ({updateEventApi, event, error, mode}) => {
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
+    const [selectedColor, setSelectedColor] = useState(event.color || "#3174ad"); // Default color from the event or a default color
 
 
     useEffect( ()=>{
@@ -42,13 +44,15 @@ const UpdateEvent = ({updateEventApi, event, error, mode}) => {
         title: event.title,
         start: new Date(event.start) ,
         end: event.end? new Date(event.end) :"",
-        describe: event.describe? event.describe : "No description was provided"
+        describe: event.describe? event.describe : "No description was provided",
+        color: event.color || "#3174ad", // Default color from the event or a default color
       }
     }); 
    
      const onSubmit = async(values)=>{
 
-      setFirstRender(false)
+      setFirstRender(false);
+      values.color = selectedColor; // Add the color to the values object
       updateEventApi(values, event.id)
       .then(res=> {
         console.log(res);
@@ -125,6 +129,12 @@ const UpdateEvent = ({updateEventApi, event, error, mode}) => {
       </label>
       <input {...register("describe")}   type="text" placeholder="describe your event" className="form-control" id="describe" aria-describedby="describe" />
     </div>
+    <div className="mb-4">
+    <label htmlFor="color" className="form-label me-4">
+        Event Color:
+    </label>
+    <ColorPalette onSelectColor={setSelectedColor} initialColor={selectedColor} />
+</div>
     <button type="submit" className="btn btn-warning">Update</button>
   </form>
   )
