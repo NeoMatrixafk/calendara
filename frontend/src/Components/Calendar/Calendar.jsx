@@ -57,9 +57,7 @@ const MyCalendar = ({
     };
 
     const eventPropGetter = (event) => {
-        console.log("Event color:", event.color); // Log the color value
         const backgroundColor = event.color || '#3174ad'; // Default color or custom color property
-        console.log("Background color:", backgroundColor);
         return { style: { backgroundColor } };
     };
 
