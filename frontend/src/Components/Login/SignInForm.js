@@ -11,8 +11,6 @@ const SignInForm = (props) => {
 
     const toggleToast = () => setShowToast(!showToast);
 
-    const [setError] = useState("");
-
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -24,24 +22,11 @@ const SignInForm = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const url = "http://localhost:3001/api/auth";
-            const { data: res } = await axios.post(url, data);
-            ///const userurl = "http://localhost:3001/api/getData";
-            ///const { data: userRes } = await userurl.get("/", data);
-            ///window.alert(`Welcome ${userRes.data.name}!`);
-            window.alert(`Welcome ${data.email} !`);
-            localStorage.setItem("token", res.data);
-            window.location.href = "/home";
-        } catch (error) {
-            if (
-                error.response &&
-                error.response.status >= 400 &&
-                error.response.status <= 500
-            ) {
-                setError(error.response.data.message);
-            }
-        }
+        const url = "http://localhost:55555/api/auth";
+        const { data: res } = await axios.post(url, data);
+        window.alert(`Welcome ${data.email} !`);
+        localStorage.setItem("token", res.data);
+        window.location.href = "/home";
     };
 
     return (
