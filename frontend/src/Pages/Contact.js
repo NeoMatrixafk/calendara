@@ -25,7 +25,7 @@ const Contact = (props) => {
                         soon as possible to help you.
                     </p>
                     <div className="row">
-                        <div className="col-md-9 mb-md-0 mb-5">
+                        <div className="col-md-8 mb-md-0 mb-5">
                             <form
                                 id="contact-form"
                                 name="contact-form"
@@ -142,7 +142,7 @@ const Contact = (props) => {
                             </div>
                             <div className="status"></div>
                         </div>
-                        <div className="col-md-3 text-center my-3">
+                        <div className="col-md-4 text-center my-3">
                             <ul
                                 className={`list-unstyled text-${
                                     props.mode === "dark" ? "light" : "dark"
@@ -182,77 +182,89 @@ const Contact = (props) => {
                     Or contact/follow us on social media
                 </h4>
                 <section className="mb-4 my-3">
-                    <Link
+                    <a
                         className={`btn btn-${
                             props.mode === "dark" ? "dark" : "success"
                         } btn-floating m-1 mx-3 btn-shadow-${
                             props.mode === "dark" ? "white" : "green"
                         }`}
-                        to="https://www.facebook.com/"
+                        href="https://www.facebook.com/"
                         role="button"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         <i className="bi bi-facebook"></i>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         className={`btn btn-${
                             props.mode === "dark" ? "dark" : "success"
                         } btn-floating m-1 mx-3 btn-shadow-${
                             props.mode === "dark" ? "white" : "green"
                         }`}
-                        to="https://www.whatsapp.com/"
+                        href="https://www.whatsapp.com/"
                         role="button"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         <i className="bi bi-whatsapp"></i>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         className={`btn btn-${
                             props.mode === "dark" ? "dark" : "success"
                         } btn-floating m-1 mx-3 btn-shadow-${
                             props.mode === "dark" ? "white" : "green"
                         }`}
-                        to="https://www.instagram.com/"
+                        href="https://www.instagram.com/"
                         role="button"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         <i className="bi bi-instagram"></i>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         className={`btn btn-${
                             props.mode === "dark" ? "dark" : "success"
                         } btn-floating m-1 mx-3 btn-shadow-${
                             props.mode === "dark" ? "white" : "green"
                         }`}
-                        to="https://www.twitter.com/"
+                        href="https://www.twitter.com/"
                         role="button"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         <i className="bi bi-twitter-x"></i>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         className={`btn btn-${
                             props.mode === "dark" ? "dark" : "success"
                         } btn-floating m-1 mx-3 btn-shadow-${
                             props.mode === "dark" ? "white" : "green"
                         }`}
-                        to="https://www.linkedin.com/"
+                        href="https://www.linkedin.com/"
                         role="button"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         <i className="bi bi-linkedin"></i>
-                    </Link>
+                    </a>
 
-                    <Link
+                    <a
                         className={`btn btn-${
                             props.mode === "dark" ? "dark" : "success"
                         } btn-floating m-1 mx-3 btn-shadow-${
                             props.mode === "dark" ? "white" : "green"
                         }`}
-                        to="https://www.dicord.com/"
+                        href="https://www.discord.com/"
                         role="button"
+                        target="_blank"
+                        rel="noreferrer"
                     >
                         <i className="bi bi-discord"></i>
-                    </Link>
+                    </a>
                 </section>
             </div>
         </>
