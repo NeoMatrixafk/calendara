@@ -18,10 +18,11 @@ const Contact = (props) => {
                         className={`text-${
                             props.mode === "dark" ? "light" : "dark"
                         } text-center w-responsive mx-auto mb-5`}
+                        style={{ fontSize: "1.5rem" }}
                     >
                         Do you have any questions? Please do not hesitate to
-                        contact us directly. Our team will come back to you as
-                        soon as possible to help you.
+                        contact us. Our team will come back to you as soon as
+                        possible.
                     </p>
                     <div className="row">
                         <div className="col-md-8 mb-md-0 mb-5">
@@ -38,7 +39,7 @@ const Contact = (props) => {
                                                 type="text"
                                                 id="name"
                                                 name="name"
-                                                className="form-control quicksand-medium-500"
+                                                className="form-control"
                                                 placeholder="Your name"
                                                 style={{
                                                     backgroundColor:
@@ -60,7 +61,7 @@ const Contact = (props) => {
                                                 type="text"
                                                 id="email"
                                                 name="email"
-                                                className="form-control quicksand-medium-500"
+                                                className="form-control"
                                                 placeholder="Your email"
                                                 style={{
                                                     backgroundColor:
@@ -83,7 +84,7 @@ const Contact = (props) => {
                                                 type="text"
                                                 id="subject"
                                                 name="subject"
-                                                className="form-control quicksand-medium-500"
+                                                className="form-control"
                                                 placeholder="Subject"
                                                 style={{
                                                     backgroundColor:
@@ -107,7 +108,7 @@ const Contact = (props) => {
                                                 id="message"
                                                 name="message"
                                                 rows="2"
-                                                className="form-control md-textarea quicksand-medium-500"
+                                                className="form-control md-textarea"
                                                 placeholder="Your message"
                                                 style={{
                                                     backgroundColor:
@@ -133,7 +134,7 @@ const Contact = (props) => {
                                         props.mode === "light"
                                             ? "primary"
                                             : "light"
-                                    } quicksand-medium-500`}
+                                    }`}
                                     href="/"
                                 >
                                     Send
@@ -145,10 +146,9 @@ const Contact = (props) => {
                             <ul
                                 className={`list-unstyled text-${
                                     props.mode === "dark" ? "light" : "dark"
-                                } mb-0 quicksand-medium-500`}
+                                } mb-0`}
                             >
                                 <li>
-                                    <i className="fas fa-map-marker-alt fa-2x"></i>
                                     <p>
                                         Ramrao Adik Institue of Technology, DY
                                         Patil Deemed to be University, Nerul,
@@ -157,13 +157,16 @@ const Contact = (props) => {
                                 </li>
 
                                 <li>
-                                    <i className="fas fa-phone mt-4 fa-2x"></i>
                                     <p>+91 9876543210</p>
                                 </li>
 
                                 <li>
-                                    <i className="fas fa-envelope mt-4 fa-2x"></i>
-                                    <p>contact@calendara.com</p>
+                                    <a
+                                        href="mailto:user@example.com"
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        contact@calendara.com
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -175,7 +178,7 @@ const Contact = (props) => {
                 <h4
                     className={`text-${
                         props.mode === "dark" ? "light" : "dark"
-                    } quicksand-medium-500`}
+                    }`}
                     style={{ marginLeft: "1.1rem" }}
                 >
                     Or contact/follow us on social media
