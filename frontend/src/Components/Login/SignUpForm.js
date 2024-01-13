@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const SignUpForm = (props) => {
-    const [error, setError] = useState("");
+    
+    const [setError] = useState("");
 
     const [data, setData] = useState({
         name: "",

@@ -32,7 +32,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         if (!error.start && !error.end && dbError !== false) {
             setTimeout(navigate("/events"));
         }
-    }, [rerender]);
+    }, [rerender, error, dbError, firstRender, navigate]);
     //using form-hook to register event data
     const {
         register,

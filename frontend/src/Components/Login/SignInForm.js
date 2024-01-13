@@ -11,7 +11,7 @@ const SignInForm = (props) => {
 
     const toggleToast = () => setShowToast(!showToast);
 
-    const [error, setError] = useState("");
+    const [setError] = useState("");
 
     const [data, setData] = useState({
         email: "",

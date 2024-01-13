@@ -1,8 +1,7 @@
-const moment = require("moment");
-const mongoose = require("mongoose");
+const {Schema, model} = require("mongoose");
 
 
-const EventSchema = new mongoose.Schema({
+const EventSchema = Schema({
     title: {type: String, required: [true, "Please write a title for your event"]},
     start: {
      type: Date,
@@ -23,8 +22,13 @@ const EventSchema = new mongoose.Schema({
     },
     },
     describe: { type: String},
-    color: { type: String, default: '#3174ad' }
+    color: { type: String, default: '#3174ad' },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "User is required"]
+    }
 })
 
 
-module.exports = mongoose.model("Event", EventSchema)
+module.exports = model("Event", EventSchema)
