@@ -29,6 +29,9 @@ const Popping = ({
                     style={{
                         backgroundColor: mode === "light" ? "" : "#36393e",
                     }}
+                    className={`border border-${
+                        mode === "light" ? "" : "secondary"
+                    }`}
                 >
                     <Modal.Title
                         className={`text-capitalize text-${
@@ -42,6 +45,9 @@ const Popping = ({
                     style={{
                         backgroundColor: mode === "light" ? "" : "#36393e",
                     }}
+                    className={`border border-${
+                        mode === "light" ? "" : "secondary"
+                    }`}
                 >
                     {describe ? (
                         <p
@@ -71,7 +77,9 @@ const Popping = ({
                     style={{
                         backgroundColor: mode === "light" ? "" : "#36393e",
                     }}
-                    className="justify-content-center"
+                    className={`justify-content-center border border-${
+                        mode === "light" ? "" : "secondary"
+                    }`}
                 >
                     <Button variant="warning" onClick={handleClose}>
                         Close
