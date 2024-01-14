@@ -18,6 +18,7 @@ const Popping = ({
     const handleDelete = async () => {
         await deleteEventApi(event.id);
         rerender(!renderStatus);
+        window.alert("Event deleted successfully!");
     };
 
     const modal = () => {

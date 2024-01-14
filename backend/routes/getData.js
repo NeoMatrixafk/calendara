@@ -1,22 +1,22 @@
-const express = require('express');
-const router = express.Router();
-const { User } = require('../models/user'); // Import your User model or use your database schema directly
+const router = require("express").Router();
+const { User } = require("../models/user");
 
 
-router.get('/', async (req, res) => {
+router.get("/:email", async (req, res) => {
+    const userEmail = req.params.email;
+    let user;
     try {
-
-        const user = await User.findOne({ name: req.body.name });
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.json({ data: { name: user.name } });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+      user = await User.findOne({ email: userEmail }, "-password");  
+    } catch (err) {
+      return new Error(err);
     }
+    if (!user) {
+      return res.status(404).json({ messsage: "User Not FOund" });
+    }
+    const userName = user.name; // Save the user's name as a variable
+
+    return res.status(200).json({ name: userName }); // Return only the user's name
 });
+
 
 module.exports = router;

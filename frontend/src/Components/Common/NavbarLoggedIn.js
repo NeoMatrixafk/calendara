@@ -12,6 +12,8 @@ const NavbarLoggedIn = (props) => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("email");
         window.location.pathname = "/";
     };
 
