@@ -18,10 +18,24 @@ const SignUpForm = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
             const url = "http://localhost:55555/api/users";
-            const { data: res } = await axios.post(url, data);
-            window.alert(`Account created successfully for ${data.name}. Please login!`);
-            window.location.pathname = "/auth";
-            console.log(res.message);
+            
+            try {
+                const { data: res } = await axios.post(url, data);
+                window.alert(`Account created successfully for ${data.name}.`);
+                window.location.pathname = "/";
+                console.log(res.message);
+            } catch (error) {
+
+                if (error.response && error.response.status === 409) {
+                    alert('Email already exists!');
+                }
+                else if (error.response && error.response.status === 400) {
+                    alert("Password should be 8 characters long, must contain 1 number, 1 symbol and 1 uppercase letter !");
+                }
+                else {
+                    console.error('Error:', error);
+                }
+            }
     };
 
     return (

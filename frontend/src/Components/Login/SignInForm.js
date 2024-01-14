@@ -1,12 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import ErrorToast from "./ErrorToast";
 
 import axios from "axios";
 
 const SignInForm = (props) => {
+
+    const navigate = useNavigate();  // Initialize useHistory hook
     const [showToast, setShowToast] = useState(false);
 
     const toggleToast = () => setShowToast(!showToast);
@@ -14,19 +16,56 @@ const SignInForm = (props) => {
     const [data, setData] = useState({
         email: "",
         password: "",
-    });
+    }); 
+
+    const [userName, setUserName] = useState(localStorage.getItem("userName") || ""); // State to store the user's name
+    const [email, setEmail] = useState(localStorage.getItem("email") || "");
 
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
     };
 
+    useEffect(() => {
+        const fetchUserName = async () => {
+            try {
+                const nameURL = `http://localhost:55555/api/getData/${data.email}`;
+                const response = await axios.get(nameURL);
+                setUserName(response.data.name);
+            } catch (error) {
+                console.error('Error fetching user name:', error);
+            }
+        };
+
+        if (data.email) {
+            fetchUserName();
+        }
+    }, [data.email]); // Fetch user name when email changes
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = "http://localhost:55555/api/auth";
-        const { data: res } = await axios.post(url, data);
-        window.alert(`Welcome ${data.email} !`);
-        localStorage.setItem("token", res.data);
-        window.location.href = "/home";
+        try {
+            const { data: res } = await axios.post(url, data);
+            // Successful login
+            //localStorage.setItem("token", res.data);
+            //window.location.href = "/home";
+            //navigate(`/profile?email=${data.email}`);
+            setUserName(userName);
+            setEmail(data.email);
+            // Save userName to localStorage
+            localStorage.setItem("userName", userName);
+            localStorage.setItem("email", data.email);
+            window.alert(`Welcome ${userName || data.email} !`);
+            localStorage.setItem("token", res.data);
+            navigate("/");
+        } catch (error) {
+            // Handle invalid email or password
+            if (error.response && error.response.status === 401) {
+                alert('Invalid Email and Password!');
+            } else {
+                console.error('Error:', error);
+            }
+        }
     };
 
     return (

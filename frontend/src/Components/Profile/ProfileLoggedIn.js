@@ -1,9 +1,19 @@
 import React from "react";
+import { useState } from "react";
 import { Button, Image } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
+
+    const location = useLocation();
+    const userEmail = new URLSearchParams(location.search).get("email");  // Get email from URL parameter
+    const [userName, setUserName] = useState(localStorage.getItem("userName") || ""); // State to store the user's name
+    const [email, setEmail] = useState(localStorage.getItem("email") || "");
+    
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("email");
         window.location.pathname = "/";
     };
     return (
@@ -30,7 +40,7 @@ const ProfileLoggedIn = (props) => {
                             }`}
                         >
                             <p style={{ fontSize: "2rem" }}>
-                                Name: {props.userName}
+                                Name: {userName}
                             </p>
                             <br />
                             <p style={{ fontSize: "1.5rem" }}>
@@ -38,7 +48,7 @@ const ProfileLoggedIn = (props) => {
                             </p>
                             <br />
                             <p style={{ fontSize: "1.5rem" }}>
-                                Email: {props.userEmail}
+                                Email: {email}
                             </p>
                         </div>
                     </div>
