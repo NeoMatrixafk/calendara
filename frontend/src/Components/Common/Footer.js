@@ -60,7 +60,7 @@ const Footer = (props) => {
                                 <ul className="list-unstyled mb-0 my-3">
                                     <li>
                                         <Link
-                                            to="/about"
+                                            to="/about-us"
                                             className="text-white text-decoration-none"
                                         >
                                             About Us
@@ -74,6 +74,14 @@ const Footer = (props) => {
                                             T&C
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link
+                                            to="/about-site"
+                                            className="text-white text-decoration-none"
+                                        >
+                                            About Site
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -81,14 +89,6 @@ const Footer = (props) => {
                                 <h5 className="text-uppercase ">Help</h5>
 
                                 <ul className="list-unstyled mb-0 my-3">
-                                    <li>
-                                        <Link
-                                            to="/policy"
-                                            className="text-white text-decoration-none"
-                                        >
-                                            Policy
-                                        </Link>
-                                    </li>
                                     <li>
                                         <Link
                                             to="/faq"
@@ -122,7 +122,7 @@ const Footer = (props) => {
                                 <ul className="list-unstyled mb-0 my-3">
                                     <li>
                                         <Link
-                                            to="/policy"
+                                            to="/user-policy"
                                             className="text-white text-decoration-none"
                                         >
                                             User Policy
@@ -130,10 +130,10 @@ const Footer = (props) => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/policy"
+                                            to="/privacy-policy"
                                             className="text-white text-decoration-none"
                                         >
-                                            Privacy
+                                            Privacy Policy
                                         </Link>
                                     </li>
                                 </ul>

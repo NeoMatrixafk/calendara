@@ -11,10 +11,12 @@ import ColorPalette from "./ColorPalette";
 // import { set } from "date-fns";
 
 //schema to validate event inputs
-const schema = yup.object({
+const schema = yup
+    .object({
         title: yup.string().required("Can't Be Empty"),
         start: yup.date().required("Please specify the time to start"),
-    }).required();
+    })
+    .required();
 
 const AddEvents = ({ addEventApi, error, mode }) => {
     const navigate = useNavigate();
@@ -59,7 +61,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                     <div className="col-6">
                         <form
                             onSubmit={handleSubmit(onSubmit)}
-                            className=" align-content-center m-5"
+                            className="container m-5"
                         >
                             <div className="mb-4">
                                 <label
@@ -108,8 +110,6 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                 >
                                     Start Date:
                                 </label>
-                                {/* controllers are the way you can wrap and use datePicker inside react form-hook*/}
-                                {/* start date controller*/}
                                 <Controller
                                     control={control}
                                     name="start"

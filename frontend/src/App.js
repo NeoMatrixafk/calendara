@@ -10,8 +10,14 @@ import HomeLoggedIn from "./Pages/HomeLoggedIn";
 import HomeLoggedOut from "./Pages/HomeLoggedOut";
 import Categories from "./Pages/Categories";
 import Profile from "./Pages/Profile";
-import About from "./Pages/About";
+import AboutUs from "./Pages/AboutUs";
+import AboutSite from "./Pages/AboutSite";
 import Contact from "./Pages/Contact";
+import FAQ from "./Pages/FAQ";
+import UserPolicy from "./Pages/UserPolicy";
+import Terms from "./Pages/Terms";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import Help from "./Pages/Help";
 
 import Error404 from "./Pages/Error404";
 
@@ -126,12 +132,36 @@ function App() {
                                     element={<AddEvents mode={mode} />}
                                 />
                                 <Route
-                                    path="/about"
-                                    element={<About mode={mode} />}
+                                    path="/about-us"
+                                    element={<AboutUs mode={mode} />}
+                                />
+                                <Route
+                                    path="/about-site"
+                                    element={<AboutSite mode={mode} />}
                                 />
                                 <Route
                                     path="/contact"
                                     element={<Contact mode={mode} />}
+                                />
+                                <Route
+                                    path="/faq"
+                                    element={<FAQ mode={mode} />}
+                                />
+                                <Route
+                                    path="/user-policy"
+                                    element={<UserPolicy mode={mode} />}
+                                />
+                                <Route
+                                    path="/terms"
+                                    element={<Terms mode={mode} />}
+                                />
+                                <Route
+                                    path="/privacy-policy"
+                                    element={<PrivacyPolicy mode={mode} />}
+                                />
+                                <Route
+                                    path="/help"
+                                    element={<Help mode={mode} />}
                                 />
                                 <Route
                                     path="/events"
