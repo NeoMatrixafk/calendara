@@ -20,7 +20,9 @@ const schema = yup
     })
     .required();
 
-const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
+const UpdateEvent = ({ updateEventApi, event, error }) => {
+    const mode = localStorage.getItem("mode");
+
     const navigate = useNavigate();
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
@@ -99,6 +101,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                     WebkitTextFillColor:
                                         mode === "light" ? "gray" : "#e6e6e6",
                                 }}
+                                autoComplete="off"
                             />
                             <p
                                 className={`error text-warning position-absolute ${
@@ -137,6 +140,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                         dateFormat="MMMM d, yyyy h:mm aa"
                                         className="form-control"
                                         id="start"
+                                        autoComplete="off"
                                     />
                                 )}
                             />
@@ -191,6 +195,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                         showTimeSelect
                                         className="form-control"
                                         id="end"
+                                        autoComplete="off"
                                     />
                                 )}
                             />
@@ -245,6 +250,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                     WebkitTextFillColor:
                                         mode === "light" ? "gray" : "#e6e6e6",
                                 }}
+                                autoComplete="off"
                             />
                         </div>
                         <div className="mb-4">
