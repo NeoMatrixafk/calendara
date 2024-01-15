@@ -66,7 +66,19 @@ const UserPolicy = (props) => {
             <h4>6. Contact Information</h4>
             <p>
                 If you have any questions or concerns about this User Policy,
-                please contact us at calendara@gmail.com.
+                please contact us at{" "}
+                <a
+                    href="mailto:user@example.com"
+                    style={{
+                        textDecoration: "none",
+                    }}
+                    className={`text-${
+                        props.mode === "light" ? "primary" : "danger"
+                    }`}
+                >
+                    contact.calendara@gmail.com
+                </a>
+                .
             </p>
 
             <h3 className="my-5">

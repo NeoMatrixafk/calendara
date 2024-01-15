@@ -159,15 +159,20 @@ const Contact = (props) => {
                                 </li>
 
                                 <li>
-                                    <p>+91 9876543210</p>
+                                    <p>+91 8454960695</p>
                                 </li>
 
                                 <li>
                                     <a
                                         href="mailto:user@example.com"
                                         style={{ textDecoration: "none" }}
+                                        className={`text-${
+                                            props.mode === "light"
+                                                ? "primary"
+                                                : "danger"
+                                        }`}
                                     >
-                                        contact@calendara.com
+                                        contact.calendara@gmail.com
                                     </a>
                                 </li>
                             </ul>

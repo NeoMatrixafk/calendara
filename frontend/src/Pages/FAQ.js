@@ -36,7 +36,7 @@ const FAQ = (props) => {
         },
         {
             question: "How can I contact calendara support for assistance?",
-            answer: "If you have any questions or need assistance, you can reach out to our support team at calendara@gmail.com. We're here to help and ensure you have a smooth experience with calendara.",
+            answer: "If you have any questions or need assistance, you can reach out to our support team at contact.calendara@gmail.com or visit our Contact Us. We're here to help and ensure you have a smooth experience with calendara.",
         },
     ];
 
