@@ -29,23 +29,29 @@ const SignInForm = (props) => {
     ); // State to store the user's name
     const [email, setEmail] = useState(localStorage.getItem("email") || "");
 
+    
+    const [contact, setContact] = useState(
+        localStorage.getItem("contact") || ""
+    );
+
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
     };
 
     useEffect(() => {
-        const fetchUserName = async () => {
+        const fetchData = async () => {
             try {
                 const nameURL = `http://localhost:55555/api/getData/${data.email}`;
                 const response = await axios.get(nameURL);
                 setUserName(response.data.name);
+                setContact(response.data.contact);
             } catch (error) {
                 console.error("Error fetching user name:", error);
             }
         };
 
-        if (data.email) {
-            fetchUserName();
+        if (data.email, data.contact) {
+            fetchData();
         }
     }, [data.email]); // Fetch user name when email changes
 
@@ -59,9 +65,11 @@ const SignInForm = (props) => {
 
             setUserName(response.data.name);
             setEmail(data.email);
+            setContact(response.data.contact);
 
             localStorage.setItem("userName", response.data.name);
             localStorage.setItem("email", data.email);
+            localStorage.setItem("contact", response.data.contact);
             localStorage.setItem("token", res.data);
 
             window.alert(`Welcome ${response.data.name || data.email}!`);

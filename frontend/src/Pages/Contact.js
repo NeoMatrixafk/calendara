@@ -1,6 +1,43 @@
 import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Contact = (props) => {
+
+    const navigate = useNavigate();
+
+    const [data, setData] = useState({
+        name: "",
+        email: "",
+        subject: "",
+        message: ""
+    });
+
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const url = "http://localhost:55555/api/contactus";
+        try {
+            await axios.post(url, data);
+            window.alert("Form Submitted");
+            navigate("/");
+            
+
+        } catch (error) {
+            // Handle invalid email or password
+            if (error.response && error.response.status === 401) {
+                alert("Could not accept query!");
+            } else {
+                console.error("Error:", error);
+            }
+        }
+    };
+
     return (
         <>
             <div className="d-flex my-5 justify-content-center">
@@ -25,22 +62,19 @@ const Contact = (props) => {
                         possible.
                     </p>
                     <div className="row">
-                        <div className="col-md-8 mb-md-0 mb-5">
                             <form
                                 id="contact-form"
                                 name="contact-form"
-                                action="mail.php"
-                                method="POST"
+                                onSubmit={handleSubmit}
                             >
-                                <div className="row my-3">
-                                    <div className="col-md-6">
-                                        <div className="md-form mb-0">
                                             <input
                                                 type="text"
                                                 id="name"
                                                 name="name"
-                                                className="form-control"
+                                                className="form-control my-3"
                                                 placeholder="Your name"
+                                                value={data.name}
+                                                onChange={handleChange}
                                                 style={{
                                                     backgroundColor:
                                                         props.mode === "dark"
@@ -53,17 +87,15 @@ const Contact = (props) => {
                                                 }}
                                                 autoComplete="off"
                                             />
-                                        </div>
-                                    </div>
 
-                                    <div className="col-md-6 my-">
-                                        <div className="md-form mb-0">
                                             <input
                                                 type="text"
                                                 id="email"
                                                 name="email"
-                                                className="form-control"
+                                                className="form-control my-3"
                                                 placeholder="Your email"
+                                                value={data.email}
+                                                onChange={handleChange}
                                                 style={{
                                                     backgroundColor:
                                                         props.mode === "dark"
@@ -76,18 +108,15 @@ const Contact = (props) => {
                                                 }}
                                                 autoComplete="off"
                                             />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row my-3">
-                                    <div className="col-md-12">
-                                        <div className="md-form mb-0">
+
                                             <input
                                                 type="text"
                                                 id="subject"
                                                 name="subject"
-                                                className="form-control"
+                                                className="form-control my-3"
                                                 placeholder="Subject"
+                                                value={data.subject}
+                                                onChange={handleChange}
                                                 style={{
                                                     backgroundColor:
                                                         props.mode === "dark"
@@ -99,19 +128,16 @@ const Contact = (props) => {
                                                             : "black",
                                                 }}
                                             />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row my-3">
-                                    <div className="col-md-12">
-                                        <div className="md-form">
-                                            <textarea
+
+                                            <input
                                                 type="text"
                                                 id="message"
                                                 name="message"
                                                 rows="2"
                                                 className="form-control md-textarea"
                                                 placeholder="Your message"
+                                                value={data.message}
+                                                onChange={handleChange}
                                                 style={{
                                                     backgroundColor:
                                                         props.mode === "dark"
@@ -124,26 +150,17 @@ const Contact = (props) => {
                                                     minHeight: "5rem",
                                                     maxHeight: "10rem",
                                                 }}
-                                            ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                                            ></input>
+                                <button
+                        className={`btn btn-${
+                            props.mode === "light" ? "primary" : "success"
+                        } mt-3`}
+                    >
+                        Send
+                                </button>
                             </form>
-
-                            <div className="text-center text-md-left">
-                                <a
-                                    className={`btn my-2 btn-${
-                                        props.mode === "light"
-                                            ? "primary"
-                                            : "light"
-                                    }`}
-                                    href="/"
-                                >
-                                    Send
-                                </a>
-                            </div>
                             <div className="status"></div>
-                        </div>
+
                         <div className="col-md-4 text-center my-3">
                             <ul
                                 className={`list-unstyled text-${

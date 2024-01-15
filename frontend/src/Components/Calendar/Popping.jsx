@@ -1,7 +1,7 @@
 import { Modal, Button } from "react-bootstrap";
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteEventApi, closeEvent } from "../../Redux/actions";
 
 const Popping = ({
@@ -19,6 +19,12 @@ const Popping = ({
         await deleteEventApi(event.id);
         rerender(!renderStatus);
         window.alert("Event deleted successfully!");
+    };
+
+    const navigate = useNavigate();
+
+    const handleUpdate = async () => {
+       navigate(`/event/${id}/update`);
     };
 
     const modal = () => {
@@ -85,9 +91,7 @@ const Popping = ({
                     <Button variant="warning" onClick={handleClose}>
                         Close
                     </Button>
-                    <Link to={`/event/${id}/update`}>
-                        <Button variant="success">Update</Button>
-                    </Link>
+                    <Button variant="success" onClick={handleUpdate}>Update</Button>
                     <Button variant="danger" onClick={handleDelete}>
                         Delete
                     </Button>
