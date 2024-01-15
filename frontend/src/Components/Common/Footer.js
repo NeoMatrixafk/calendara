@@ -68,18 +68,18 @@ const Footer = (props) => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/terms"
-                                            className="text-white text-decoration-none"
-                                        >
-                                            T&C
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
                                             to="/about-site"
                                             className="text-white text-decoration-none"
                                         >
                                             About Site
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link
+                                            to="/terms"
+                                            className="text-white text-decoration-none"
+                                        >
+                                            T&C
                                         </Link>
                                     </li>
                                 </ul>

@@ -5,19 +5,19 @@ import HomeServicesCard from "./HomeServicesCard";
 const HomeServices = (props) => {
     const servicesTexts = {
         service1: {
-            text: "This is our first service",
+            text: "calendara, with its user-friendly interface, is crafted for simplicity and ease of use. The site's well-organized structure, marked by a clean design, facilitates a seamless experience for users. Our calendar is designed to be user friendly and intuitive.",
             imgUrl: "../Images/calendarOverview.png",
         },
         service2: {
-            text: "This is our second service",
+            text: "calendara simplifies event management with easy-to-use CRUD operations. Users can swiftly create new events, update details as plans evolve, and delete events when they're no longer relevant. This streamlined process ensures users have the flexibility and control they need for efficient and dynamic event tracking.",
             imgUrl: "../Images/crud.png",
         },
         service3: {
-            text: "calendara's new dashboard feature empowers users with insightful metrics, providing a comprehensive overview of their event management journey. The dashboard succinctly displays the number of completed events, showcasing the user's accomplishments and successful engagements. Additionally, it highlights the count of pending or uncompleted events, serving as a helpful reminder to stay organized and on top of upcoming responsibilities. This user-centric dashboard not only offers a visual snapshot of past achievements but also serves as a dynamic tool for planning and prioritizing future tasks. By presenting a clear and concise summary, Calendara's dashboard enhances users' event tracking experience, fostering a proactive and organized approach to their schedules.",
+            text: "calendara's new dashboard feature empowers users with insightful metrics, providing a comprehensive overview of their event management journey. The dashboard succinctly displays the number of completed events, not-completed events and an analysis upon the same.",
             imgUrl: "../Images/dashboard.png",
         },
         service4: {
-            text: "This is our fourth service",
+            text: "calendara enhances user productivity with its thoughtful event reminding feature. As an event approaches, calendara takes the initiative to send timely and helpful email reminders to users, ensuring they stay on top of their schedules. This proactive approach eliminates the risk of overlooking important commitments and adds an extra layer of convenience to the overall event management experience.",
             imgUrl: "../Images/eventReminders.png",
         },
     };

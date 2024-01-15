@@ -12,7 +12,7 @@ const getData = require("./routes/getData");
 connection();
 
 // middlewares
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({ limit: "50mb" }));
 app.use(cors());
 
 // routes

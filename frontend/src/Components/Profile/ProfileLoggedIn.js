@@ -4,16 +4,22 @@ import { Button, Image } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
-
     const location = useLocation();
-    const userEmail = new URLSearchParams(location.search).get("email");  // Get email from URL parameter
-    const [userName, setUserName] = useState(localStorage.getItem("userName") || ""); // State to store the user's name
+    const userEmail = new URLSearchParams(location.search).get("email"); // Get email from URL parameter
+    const [userName, setUserName] = useState(
+        localStorage.getItem("userName") || ""
+    );
+    const [contact, setContact] = useState(
+        localStorage.getItem("contact") || ""
+    );
     const [email, setEmail] = useState(localStorage.getItem("email") || "");
-    
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
+        localStorage.removeItem("contact");
         localStorage.removeItem("email");
+
         window.location.pathname = "/";
     };
     return (
@@ -39,17 +45,13 @@ const ProfileLoggedIn = (props) => {
                                 props.mode === "dark" ? "light" : "dark"
                             }`}
                         >
-                            <p style={{ fontSize: "2rem" }}>
-                                Name: {userName}
-                            </p>
+                            <p style={{ fontSize: "2rem" }}>Name: {userName}</p>
                             <br />
                             <p style={{ fontSize: "1.5rem" }}>
-                                Contact: {props.userContact}
+                                Contact: {contact}
                             </p>
                             <br />
-                            <p style={{ fontSize: "1.5rem" }}>
-                                Email: {email}
-                            </p>
+                            <p style={{ fontSize: "1.5rem" }}>Email: {email}</p>
                         </div>
                     </div>
                 </div>

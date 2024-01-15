@@ -8,7 +8,8 @@ const ErrorToast = (props) => {
             onClose={props.toggleToast}
             className="position-fixed bottom-0 end-0 m-3"
             style={{
-                zIndex: 9999,
+                position: "fixed",
+                zIndex: "9999",
                 overflow: "auto",
             }}
         >

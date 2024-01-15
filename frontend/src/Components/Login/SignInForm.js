@@ -7,18 +7,26 @@ import ErrorToast from "./ErrorToast";
 import axios from "axios";
 
 const SignInForm = (props) => {
-
-    const navigate = useNavigate();  // Initialize useHistory hook
+    const navigate = useNavigate(); // Initialize useHistory hook
     const [showToast, setShowToast] = useState(false);
+
+    const [viewPassword, setViewPassword] = useState(true);
+
+    const toggleViewPassword = () => {
+        setViewPassword(!viewPassword);
+    };
 
     const toggleToast = () => setShowToast(!showToast);
 
     const [data, setData] = useState({
         email: "",
+        contact: "",
         password: "",
-    }); 
+    });
 
-    const [userName, setUserName] = useState(localStorage.getItem("userName") || ""); // State to store the user's name
+    const [userName, setUserName] = useState(
+        localStorage.getItem("userName") || ""
+    ); // State to store the user's name
     const [email, setEmail] = useState(localStorage.getItem("email") || "");
 
     const handleChange = ({ currentTarget: input }) => {
@@ -32,7 +40,7 @@ const SignInForm = (props) => {
                 const response = await axios.get(nameURL);
                 setUserName(response.data.name);
             } catch (error) {
-                console.error('Error fetching user name:', error);
+                console.error("Error fetching user name:", error);
             }
         };
 
@@ -46,24 +54,24 @@ const SignInForm = (props) => {
         const url = "http://localhost:55555/api/auth";
         try {
             const { data: res } = await axios.post(url, data);
-            // Successful login
-            //localStorage.setItem("token", res.data);
-            //window.location.href = "/home";
-            //navigate(`/profile?email=${data.email}`);
-            setUserName(userName);
+            const nameURL = `http://localhost:55555/api/getData/${data.email}`;
+            const response = await axios.get(nameURL);
+
+            setUserName(response.data.name);
             setEmail(data.email);
-            // Save userName to localStorage
-            localStorage.setItem("userName", userName);
+
+            localStorage.setItem("userName", response.data.name);
             localStorage.setItem("email", data.email);
-            window.alert(`Welcome ${userName || data.email} !`);
             localStorage.setItem("token", res.data);
+
+            window.alert(`Welcome ${response.data.name || data.email}!`);
             navigate("/");
         } catch (error) {
             // Handle invalid email or password
             if (error.response && error.response.status === 401) {
-                alert('Invalid Email and Password!');
+                alert("Invalid Email and Password!");
             } else {
-                console.error('Error:', error);
+                console.error("Error:", error);
             }
         }
     };
@@ -133,6 +141,7 @@ const SignInForm = (props) => {
                             mode={props.mode}
                         />
                     </div>
+
                     <input
                         type="email"
                         id="email"
@@ -148,21 +157,42 @@ const SignInForm = (props) => {
                         }}
                         required
                     />
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Password"
-                        value={data.password}
-                        onChange={handleChange}
-                        style={{
-                            backgroundColor:
-                                props.mode === "light" ? "" : "gray",
-                            WebkitTextFillColor:
-                                props.mode === "light" ? "black" : "white",
-                        }}
-                        required
-                    />
+
+                    <div className="input-group w-100">
+                        <input
+                            type={viewPassword ? "password" : "text"}
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            value={data.password}
+                            onChange={handleChange}
+                            className="form-control"
+                            style={{
+                                backgroundColor:
+                                    props.mode === "light" ? "" : "gray",
+                                WebkitTextFillColor:
+                                    props.mode === "light" ? "black" : "white",
+                            }}
+                            required
+                        />
+                        <button
+                            type="button"
+                            className={`btn my-2 py-0 btn-${
+                                props.mode === "light" ? "primary" : "dark"
+                            }`}
+                            onClick={() => toggleViewPassword()}
+                        >
+                            <i
+                                className={`bi bi-eye${
+                                    viewPassword ? "-slash" : ""
+                                }`}
+                                style={{
+                                    color: "white",
+                                }}
+                            ></i>
+                        </button>
+                    </div>
+
                     <Link
                         to="#"
                         className={`text-${
