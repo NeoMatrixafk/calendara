@@ -17,7 +17,6 @@ import FAQ from "./Pages/FAQ";
 import UserPolicy from "./Pages/UserPolicy";
 import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
-import Help from "./Pages/Help";
 
 import Error404 from "./Pages/Error404";
 
@@ -158,10 +157,6 @@ function App() {
                                 <Route
                                     path="/privacy-policy"
                                     element={<PrivacyPolicy mode={mode} />}
-                                />
-                                <Route
-                                    path="/help"
-                                    element={<Help mode={mode} />}
                                 />
                                 <Route
                                     path="/events"

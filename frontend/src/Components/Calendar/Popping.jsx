@@ -65,7 +65,13 @@ const Popping = ({
                             {describe}
                         </p>
                     ) : (
-                        "No Descriptions Yet"
+                        <p
+                            className={`lead text-${
+                                mode === "light" ? "black" : "white"
+                            }`}
+                        >
+                            No Description Yet
+                        </p>
                     )}
                     <div
                         className={`row justify-content-between text-${

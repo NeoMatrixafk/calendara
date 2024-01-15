@@ -99,14 +99,6 @@ const Footer = (props) => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/help"
-                                            className="text-white text-decoration-none"
-                                        >
-                                            Help & Support
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
                                             to="/contact"
                                             className="text-white text-decoration-none"
                                         >

@@ -76,7 +76,9 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     {...register("title")}
                                     type="text"
                                     placeholder="Title of your Event"
-                                    className="form-control"
+                                    className={`form-control text-${
+                                        mode === "light" ? "secondary" : "light"
+                                    }`}
                                     id="title"
                                     aria-describedby="title"
                                     style={{
@@ -87,6 +89,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                                 ? "gray"
                                                 : "#e6e6e6",
                                     }}
+                                    autoComplete="off"
                                 />
                                 <p
                                     className={`error text-warning position-absolute ${
@@ -124,8 +127,16 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             showTimeSelect
                                             timeFormat="HH:mm"
                                             dateFormat="MMMM d, yyyy h:mm aa"
-                                            className={`form-control datepicker-${mode}`}
+                                            className={`form-control text-${
+                                                mode === "light"
+                                                    ? "secondary"
+                                                    : "light"
+                                            }`}
+                                            style={{
+                                                WebkitTextFillColor: "white",
+                                            }}
                                             id="start"
+                                            autoComplete="off"
                                         />
                                     )}
                                 />
@@ -179,8 +190,13 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             timeFormat="HH:mm"
                                             dateFormat="MMMM d, yyyy h:mm aa"
                                             showTimeSelect
-                                            className={`form-control datepicker-${mode}`}
+                                            className={`form-control text-${
+                                                mode === "light"
+                                                    ? "secondary"
+                                                    : "light"
+                                            }`}
                                             id="end"
+                                            autoComplete="off"
                                         />
                                     )}
                                 />
@@ -213,7 +229,9 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     {...register("describe")}
                                     type="text"
                                     placeholder="Describe your event"
-                                    className="form-control"
+                                    className={`form-control text-${
+                                        mode === "light" ? "secondary" : "light"
+                                    }`}
                                     id="describe"
                                     aria-describedby="describe"
                                     style={{
@@ -224,6 +242,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                                 ? "gray"
                                                 : "#e6e6e6",
                                     }}
+                                    autoComplete="off"
                                 />
                             </div>
 

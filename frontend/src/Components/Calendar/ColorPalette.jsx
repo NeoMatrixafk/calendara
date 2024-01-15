@@ -11,7 +11,7 @@ const ColorPalette = ({ onSelectColor, initialColor }) => {
     const handleSelect = (e) => {
         e.preventDefault(); // Prevent default form submission behavior
         onSelectColor(color);
-        alert(`Color selected: ${color}`);
+        console.log(`Color selected: ${color}`);
     };
 
     return (
