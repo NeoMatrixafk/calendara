@@ -18,6 +18,9 @@ import UserPolicy from "./Pages/UserPolicy";
 import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 
+import UpdateProfile from "./Components/Profile/UpdateProfile";
+import Dashboard from "./Components/Dashboard/Dashboard";
+
 import Error404 from "./Pages/Error404";
 
 import Auth from "./Pages/Auth";
@@ -127,8 +130,16 @@ function App() {
                                     element={<Profile mode={mode} />}
                                 />
                                 <Route
+                                    path="/profile/update-profile"
+                                    element={<UpdateProfile mode={mode} />}
+                                />
+                                <Route
                                     path="/add-event"
                                     element={<AddEvents mode={mode} />}
+                                />
+                                <Route
+                                    path="/dashboard"
+                                    element={<Dashboard mode={mode} />}
                                 />
                                 <Route
                                     path="/about-us"

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Image } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
     const location = useLocation();
@@ -22,6 +22,7 @@ const ProfileLoggedIn = (props) => {
 
         window.location.pathname = "/";
     };
+
     return (
         <>
             <div className="my-3">
@@ -33,11 +34,36 @@ const ProfileLoggedIn = (props) => {
                     }}
                 >
                     <div className="col my-5 d-flex justify-content-center">
-                        <Image
-                            src={props.profileImg}
-                            roundedCircle
-                            className=""
-                        />
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12 d-flex justify-content-center">
+                                    <img
+                                        src={
+                                            localStorage.getItem(
+                                                "userProfileImage"
+                                            ) || props.defaultProfileImg
+                                        }
+                                        className="img-fluid"
+                                        alt="user profile pic"
+                                        style={{
+                                            width: "14rem",
+                                            borderRadius: "7rem",
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="col-12 mt-4 d-flex justify-content-center">
+                                    <div className="col-12 mt-4 d-flex justify-content-center">
+                                        <Link
+                                            to="update-profile"
+                                            className="btn btn-lg btn-success"
+                                        >
+                                            Update Profile
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="col my-5 d-flex align-items-center justify-content-start">
                         <div
@@ -55,19 +81,7 @@ const ProfileLoggedIn = (props) => {
                         </div>
                     </div>
                 </div>
-                <div
-                    className="container d-flex mt-0 justify-content-center"
-                    style={{
-                        backgroundColor:
-                            props.mode === "light" ? "#e6f3ff" : "#474b52",
-                    }}
-                >
-                    <div className="col my-5 d-flex justify-content-center align-items-center">
-                        <Button variant="success" className="btn btn-lg ">
-                            Update Profile
-                        </Button>
-                    </div>
-                </div>
+
                 <div
                     className="container d-flex py-3 justify-content-center"
                     style={{
@@ -99,15 +113,7 @@ const ProfileLoggedIn = (props) => {
                             }
                             className="btn-lg"
                         >
-                            Notification
-                        </Button>
-                        <Button
-                            variant={
-                                props.mode === "dark" ? "light" : "primary"
-                            }
-                            className="btn-lg"
-                        >
-                            Security
+                            Notifications
                         </Button>
                         <Button
                             variant={
@@ -125,15 +131,59 @@ const ProfileLoggedIn = (props) => {
                         </Button>
                     </div>
                     <div className="col d-flex align-items-center justify-content-center">
-                        <h2 className="">
-                            <span
-                                className={`badge text-dark bg-${
-                                    props.mode === "dark" ? "warning" : "info"
-                                }`}
+                        <div className="container">
+                            <div
+                                className="row mx-0 rounded"
+                                style={{
+                                    backgroundColor:
+                                        props.mode === "light"
+                                            ? "#b3daff"
+                                            : "#5f646d",
+                                }}
                             >
-                                {props.userBadge}
-                            </span>
-                        </h2>
+                                <div className="col-12 mt-3">
+                                    <p
+                                        className={`text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{ fontSize: "1.5rem" }}
+                                    >
+                                        Events Completed: 5
+                                    </p>
+                                </div>
+                                <div className="col-12">
+                                    <p
+                                        className={`text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{ fontSize: "1.5rem" }}
+                                    >
+                                        Events Not Completed: 2
+                                    </p>
+                                </div>
+                                <hr />
+                                <div className="col-12 mb-3 d-flex justify-content-center">
+                                    <Link
+                                        to="/dashboard"
+                                        className={`text-${
+                                            props.mode === "light"
+                                                ? "success"
+                                                : "warning"
+                                        }`}
+                                        style={{
+                                            fontSize: "1.5rem",
+                                            textDecoration: "none",
+                                        }}
+                                    >
+                                        View Full Analysis
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

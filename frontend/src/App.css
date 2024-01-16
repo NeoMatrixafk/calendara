@@ -123,3 +123,8 @@
 .datepicker-dark::placeholder {
     color:#e6e6e6 !important
 }
+
+
+input::-webkit-file-upload-button {
+    background-color: var(--input-upload-color, default-color)!important;
+}
