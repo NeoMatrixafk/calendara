@@ -63,6 +63,14 @@
     text-transform: uppercase;
 }
 
+.rbc-header {
+    color: var(--rbc-header-color, default-color);
+}
+
+.rbc-label {
+    color: var(--rbc-header-color, default-color);
+}
+
 .rbc-header span {
     color: var(--rbc-header-color, default-color);
     letter-spacing: 0.10rem;
