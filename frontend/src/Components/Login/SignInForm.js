@@ -1,13 +1,14 @@
-import React from "react";
+import React from "react";  //imports
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import ErrorToast from "./ErrorToast";
-
 import axios from "axios";
 
 const SignInForm = (props) => {
-    const navigate = useNavigate(); // Initialize useHistory hook
+
+    const navigate = useNavigate();
+
     const [showToast, setShowToast] = useState(false);
 
     const [viewPassword, setViewPassword] = useState(true);
@@ -26,7 +27,7 @@ const SignInForm = (props) => {
 
     const [userName, setUserName] = useState(
         localStorage.getItem("userName") || ""
-    ); // State to store the user's name
+    );
     const [email, setEmail] = useState(localStorage.getItem("email") || "");
 
     
@@ -38,27 +39,39 @@ const SignInForm = (props) => {
         setData({ ...data, [input.name]: input.value });
     };
 
-    useEffect(() => {
+    useEffect(() => {   //This function gets user data to display on profile page.
+        
         const fetchData = async () => {
             try {
+
                 const nameURL = `http://localhost:55555/api/getData/${data.email}`;
                 const response = await axios.get(nameURL);
                 setUserName(response.data.name);
                 setContact(response.data.contact);
+
             } catch (error) {
+
                 console.error("Error fetching user name:", error);
+
             }
         };
 
-        if (data.email, data.contact) {
-            fetchData();
-        }
-    }, [data.email]); // Fetch user name when email changes
+        if (data.email && data.contact) {
 
-    const handleSubmit = async (e) => {
+            fetchData();
+
+        }
+
+    }, [data.email, data.contact]);
+
+    const handleSubmit = async (e) => {     // This function runs when Login button is clicked on.
+        
         e.preventDefault();
+        
         const url = "http://localhost:55555/api/auth";
+        
         try {
+
             const { data: res } = await axios.post(url, data);
             const nameURL = `http://localhost:55555/api/getData/${data.email}`;
             const response = await axios.get(nameURL);
@@ -74,12 +87,17 @@ const SignInForm = (props) => {
 
             window.alert(`Welcome ${response.data.name || data.email}!`);
             navigate("/");
+
         } catch (error) {
-            // Handle invalid email or password
+
             if (error.response && error.response.status === 401) {
-                alert("Invalid Email and Password!");
+
+                alert("Invalid Email or Password!");
+
             } else {
+
                 console.error("Error:", error);
+
             }
         }
     };
@@ -202,10 +220,10 @@ const SignInForm = (props) => {
                     </div>
 
                     <Link
-                        to="#"
                         className={`text-${
                             props.mode === "light" ? "black" : "white"
                         }`}
+                        onClick={toggleToast}
                     >
                         Forgot Your Password?
                     </Link>

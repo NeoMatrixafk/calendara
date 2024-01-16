@@ -10,6 +10,7 @@ import Popping from "./Popping";
 import { closeEvent, ShowEventApi, ShowEventsApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 
+
 const locales = {
     "en-US": enUS,
 };
@@ -31,14 +32,15 @@ const MyCalendar = ({
 }) => {
     const [open, setOpen] = useState(false);
     const [renderStatus, rerender] = useState(false);
+    const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
 
     useEffect(() => {
-        ShowEventsApi();
+        ShowEventsApi(userName);
         console.log("events shown - refresh/start");
     }, [ShowEventsApi]);
 
     useEffect(() => {
-        ShowEventsApi();
+        ShowEventsApi(userName);
         console.log("events shown");
     }, [renderStatus, ShowEventsApi]);
 

@@ -1,6 +1,8 @@
 import { event } from "../Axios/event"
 import * as moment from "moment"
 import { addError, removeError } from "./errorsAction"
+
+
 export const showEvent = (event)=>{
     console.log("event to be shown on the modal: ", event)
     return{
@@ -17,10 +19,8 @@ export const showEvents = (events)=>{
     }
 }
 
-export const ShowEventApi = id => async dispatch => {
+export const ShowEventApi = (id) => async dispatch => {
      
-    //i won't get the event from redux store as it is safer to
-    //keep updated with db.
     const result = await event.get(`/${id}/show`);
 
     try{
@@ -40,11 +40,11 @@ export const ShowEventApi = id => async dispatch => {
     }
 }
 
-export const ShowEventsApi = () => async dispatch => {
-     console.log("started fetching the api")
-    //i won't get the event from redux store as it is safer to
-    //keep updated with db.
-    const result = await event.get("/");
+export const ShowEventsApi = (userName) => async dispatch => {
+
+    console.log("started fetching the api")
+
+    const result = await event.get(`/${userName}`);
 
     try{
         const convertedDates = await result.data.map(event=>{
@@ -99,6 +99,7 @@ const addEvent = (newEvent)=>{
 export const addEventApi = (values) => async dispatch =>{
 
     const result = await event.post("/", {
+         admin: values.admin,
          title: values.title,
          start: values.start,
          end: values.end,

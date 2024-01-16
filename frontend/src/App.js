@@ -131,34 +131,6 @@ function App() {
                                     element={<AddEvents mode={mode} />}
                                 />
                                 <Route
-                                    path="/about-us"
-                                    element={<AboutUs mode={mode} />}
-                                />
-                                <Route
-                                    path="/about-site"
-                                    element={<AboutSite mode={mode} />}
-                                />
-                                <Route
-                                    path="/contact"
-                                    element={<Contact mode={mode} />}
-                                />
-                                <Route
-                                    path="/faq"
-                                    element={<FAQ mode={mode} />}
-                                />
-                                <Route
-                                    path="/user-policy"
-                                    element={<UserPolicy mode={mode} />}
-                                />
-                                <Route
-                                    path="/terms"
-                                    element={<Terms mode={mode} />}
-                                />
-                                <Route
-                                    path="/privacy-policy"
-                                    element={<PrivacyPolicy mode={mode} />}
-                                />
-                                <Route
                                     path="/events"
                                     element={<MyCalendar mode={mode} />}
                                 />
@@ -180,6 +152,34 @@ function App() {
                                 <Route
                                     path="/"
                                     element={<HomeLoggedOut mode={mode} />}
+                                />
+                                <Route
+                                    path="/faq"
+                                    element={<FAQ mode={mode} />}
+                                />
+                                <Route
+                                    path="/user-policy"
+                                    element={<UserPolicy mode={mode} />}
+                                />
+                                <Route
+                                    path="/terms"
+                                    element={<Terms mode={mode} />}
+                                />
+                                <Route
+                                    path="/privacy-policy"
+                                    element={<PrivacyPolicy mode={mode} />}
+                                />
+                                <Route
+                                    path="/about-us"
+                                    element={<AboutUs mode={mode} />}
+                                />
+                                <Route
+                                    path="/about-site"
+                                    element={<AboutSite mode={mode} />}
+                                />
+                                <Route
+                                    path="/contact"
+                                    element={<Contact mode={mode} />}
                                 />
                             </>
                         )}

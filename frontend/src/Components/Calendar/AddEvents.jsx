@@ -23,6 +23,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
+    const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
     const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
 
     useEffect(() => {
@@ -63,6 +64,38 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="container m-5"
                         >
+                            
+                            <div className="mb-4">
+                                <label
+                                    htmlFor="admin"
+                                    className={`form-label text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}
+                                >
+                                    Admin
+                                </label>
+                                <input
+                                    {...register("admin")}
+                                    type="text"
+                                    value={userName}
+                                    className={`form-control text-${
+                                        mode === "light" ? "secondary" : "light"
+                                    }`}
+                                    id="admin"
+                                    aria-describedby="admin"
+                                    style={{
+                                        backgroundColor:
+                                            mode === "light" ? "" : "#666B74",
+                                        WebkitTextFillColor:
+                                            mode === "light"
+                                                ? "gray"
+                                                : "#e6e6e6",
+                                    }}
+                                    autoComplete="off"
+                                    readOnly
+                                />
+                            </div>
+
                             <div className="mb-4">
                                 <label
                                     htmlFor="title"
