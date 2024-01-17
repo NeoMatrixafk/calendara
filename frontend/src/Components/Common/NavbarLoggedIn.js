@@ -36,7 +36,7 @@ const NavbarLoggedIn = (props) => {
                     <div className="w-25">
                         <Link className="navbar-brand p-0 w-50" to="/home">
                             <img
-                                src={`/Images/calendara_${props.mode}.png`}
+                                src={`/Images/Logo/calendara_${props.mode}.png`}
                                 // do not add .. before /Images -> it is causing error in UpdateEvent
                                 className="img-fluid"
                                 alt=""

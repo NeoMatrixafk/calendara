@@ -18,7 +18,7 @@ const NavbarLoggedOut = (props) => {
                     <div className="w-25">
                         <Link className="navbar-brand p-0 w-50" to="/">
                             <img
-                                src={`../Images/calendara_${props.mode}.png`}
+                                src={`../Images/Logo/calendara_${props.mode}.png`}
                                 className="img-fluid"
                                 alt=""
                             />
