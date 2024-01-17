@@ -99,7 +99,7 @@ const ProfileLoggedIn = (props) => {
                                 props.mode === "light" ? "primary" : "light"
                             }`}
                         >
-                            Upload Event Files
+                            Upload Data
                         </Link>
                         <Button
                             variant={

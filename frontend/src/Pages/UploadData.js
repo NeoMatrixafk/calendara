@@ -102,7 +102,7 @@ const UploadData = (props) => {
                         props.mode === "light" ? "black" : "white"
                     }`}
                 >
-                    .xles file
+                    .xlsx file
                 </label>
                 <input
                     type="file"
