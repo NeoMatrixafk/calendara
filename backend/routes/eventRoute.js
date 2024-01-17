@@ -2,8 +2,9 @@ const router = require("express").Router();
 const Event = require("../models/Event");
 const handleError = require("../utils/eventErrors");
 
-router.get("/", async (req, res) => {
-    const events = await Event.find({});
+router.get("/:userName", async (req, res) => {
+    const name = req.params.userName;
+    const events = await Event.find({ admin: name });
 
     try {
         res.status(200).json(events);
