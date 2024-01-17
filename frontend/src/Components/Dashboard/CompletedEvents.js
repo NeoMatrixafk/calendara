@@ -31,6 +31,15 @@ const CompletedEvents = (props) => {
                             <i className="bi bi-calendar-check"></i>
                         </div>
                     </div>
+                    <div className="col-12 d-flex justify-content-center mt-3">
+                        <p
+                            className={`p-0 text-${
+                                props.mode === "light" ? "black" : "white"
+                            }`}
+                        >
+                            Completed Events
+                        </p>
+                    </div>
                     <div className="col-12 p-0">
                         <PieChart width={306} height={400}>
                             <Pie

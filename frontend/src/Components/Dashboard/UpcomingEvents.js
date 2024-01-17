@@ -19,6 +19,15 @@ const UpcomingEvents = (props) => {
                             <i className="bi bi-clock"></i>
                         </div>
                     </div>
+                    <div className="col-12 d-flex justify-content-center mt-3">
+                        <p
+                            className={`p-0 text-${
+                                props.mode === "light" ? "black" : "white"
+                            }`}
+                        >
+                            Upcoming Events
+                        </p>
+                    </div>
                     <div
                         className="col-12 p-0 d-flex justify-content-center"
                         style={{ marginTop: "11rem" }}
