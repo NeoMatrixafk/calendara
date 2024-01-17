@@ -8,7 +8,7 @@ const HomeAd = (props) => {
                 <div className="row">
                     <div className="col-6 my-3 d-flex justify-content-center align-items-center">
                         <img
-                            src="../Images/home-rating.png"
+                            src="../Images/Home/home-rating.png"
                             alt=""
                             className="h-75"
                         />

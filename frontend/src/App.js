@@ -17,9 +17,9 @@ import FAQ from "./Pages/FAQ";
 import UserPolicy from "./Pages/UserPolicy";
 import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import Dashboard from "./Pages/Dashboard";
 
 import UpdateProfile from "./Components/Profile/UpdateProfile";
-import Dashboard from "./Components/Dashboard/Dashboard";
 
 import Error404 from "./Pages/Error404";
 

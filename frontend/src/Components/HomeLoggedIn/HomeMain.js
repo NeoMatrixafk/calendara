@@ -25,7 +25,7 @@ const HomeMain = (props) => {
             </div>
 
             <div className="container d-flex justify-content-center my-5">
-                <img src="../Images/home-pic1.png" alt="" />
+                <img src="../Images/Home/home-pic1.png" alt="" />
             </div>
         </>
     );
