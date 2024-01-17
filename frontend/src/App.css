@@ -63,6 +63,14 @@
     text-transform: uppercase;
 }
 
+.rbc-header {
+    color: var(--rbc-header-color, default-color);
+}
+
+.rbc-label {
+    color: var(--rbc-header-color, default-color);
+}
+
 .rbc-header span {
     color: var(--rbc-header-color, default-color);
     letter-spacing: 0.10rem;
@@ -122,4 +130,9 @@
 
 .datepicker-dark::placeholder {
     color:#e6e6e6 !important
+}
+
+
+input::-webkit-file-upload-button {
+    background-color: var(--input-upload-color, default-color)!important;
 }

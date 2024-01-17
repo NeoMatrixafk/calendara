@@ -55,6 +55,11 @@ const LightMode = () => {
     );
 
     document.documentElement.style.setProperty("--inputColor", "");
+
+    document.documentElement.style.setProperty(
+        "--input-upload-color",
+        "#f2f2f2"
+    );
 };
 
 export default LightMode;
