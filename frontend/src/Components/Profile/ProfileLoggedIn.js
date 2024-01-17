@@ -1,18 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
-    const location = useLocation();
-    const userEmail = new URLSearchParams(location.search).get("email"); // Get email from URL parameter
-    const [userName, setUserName] = useState(
+
+    const [userName] = useState(
         localStorage.getItem("userName") || ""
     );
-    const [contact, setContact] = useState(
+    const [contact] = useState(
         localStorage.getItem("contact") || ""
     );
-    const [email, setEmail] = useState(localStorage.getItem("email") || "");
+    const [email] = useState(localStorage.getItem("email") || "");
 
     const handleLogout = () => {
         localStorage.removeItem("token");

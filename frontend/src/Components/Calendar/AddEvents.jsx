@@ -23,7 +23,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
-    const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
+    const [userName] = useState(localStorage.getItem("userName") || "");
     const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
 
     useEffect(() => {

@@ -24,20 +24,36 @@ const SignUpForm = (props) => {
     };
 
     const handleChange = ({ currentTarget: input }) => {
+
         setData({ ...data, [input.name]: input.value });
+
     };
 
-    const handleSubmit = async (e) => {
-        // This function runs when Register button is clicked on.
+    const handleSubmit = async (e) => {     // This function runs when Register button is clicked on.
 
         e.preventDefault();
 
         const url = "http://localhost:55555/api/users";
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = emailRegex.test(data.email);
+        
+        if (!isValidEmail) {
+            alert("Enter a valid email!");
+            console.error('Invalid email format. Must contain "@" and at least one dot.');
+            return;
+    }
+
+    if (data.contact.length !== 10) {
+        alert("Contact must contain exactly 10 numbers!")
+        return;
+    }
+
         try {
             const { data: res } = await axios.post(url, data);
 
             setContact(data.contact);
+            console.log(contact)
 
             localStorage.setItem("contact", data.contact);
 

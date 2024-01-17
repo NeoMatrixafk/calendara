@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
-import enUS from "date-fns/locale/en-US";
+import enGB from "date-fns/locale/en-US";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Popping from "./Popping";
 import { closeEvent, ShowEventApi, ShowEventsApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 
 
-const locales = {
-    "en-US": enUS,
-};
 
 const localizer = dateFnsLocalizer({
     format,
     parse,
     startOfWeek,
     getDay,
-    locales,
+    locales: { "en-GB": enGB }
 });
 
 const MyCalendar = ({
@@ -32,17 +29,17 @@ const MyCalendar = ({
 }) => {
     const [open, setOpen] = useState(false);
     const [renderStatus, rerender] = useState(false);
-    const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
+    const [userName] = useState(localStorage.getItem("userName") || "");
 
     useEffect(() => {
         ShowEventsApi(userName);
         console.log("events shown - refresh/start");
-    }, [ShowEventsApi]);
+    }, [ShowEventsApi, userName]);
 
     useEffect(() => {
         ShowEventsApi(userName);
         console.log("events shown");
-    }, [renderStatus, ShowEventsApi]);
+    }, [renderStatus, ShowEventsApi, userName]);
 
     const openEventClick = (event) => {
         setOpen(true);

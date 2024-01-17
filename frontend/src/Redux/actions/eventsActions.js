@@ -97,8 +97,8 @@ const addEvent = (newEvent)=>{
 
 
 export const addEventApi = (values) => async dispatch =>{
-
-    const result = await event.post("/", {
+    
+    await event.post("/", {
          admin: values.admin,
          title: values.title,
          start: values.start,
@@ -147,7 +147,8 @@ export const updateEventApi = (values, id) => async dispatch =>{
           })
          console.log(result)
           const response = result.data;
-          dispatch(removeError())
+          dispatch(updateEvent(response));
+          dispatch(removeError());
           return "response was successful";
     }catch(err){
         console.log(err)
