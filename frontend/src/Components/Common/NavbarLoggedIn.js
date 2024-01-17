@@ -233,7 +233,17 @@ const NavbarLoggedIn = (props) => {
                                     navigate("/profile");
                                 }}
                             >
-                                Profile
+                                <img
+                                    src={localStorage.getItem(
+                                        "userProfileImage"
+                                    )}
+                                    alt="user profile"
+                                    style={{
+                                        width: "3rem",
+                                        borderRadius: "1.5rem",
+                                    }}
+                                    className="me-1"
+                                />
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu
