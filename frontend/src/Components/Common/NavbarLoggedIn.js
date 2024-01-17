@@ -271,6 +271,24 @@ const NavbarLoggedIn = (props) => {
                                     View Profile
                                 </Dropdown.Item>
                                 <Dropdown.Item
+                                    onClick={() => {
+                                        setShowDropdown(false);
+                                        navigate("/dashboard");
+                                    }}
+                                    className={`dropdown-hover-${
+                                        props.mode
+                                    } text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    }`}
+                                    style={{
+                                        background: "transparent",
+                                    }}
+                                >
+                                    Dashboard
+                                </Dropdown.Item>
+                                <Dropdown.Item
                                     onClick={handleLogout}
                                     className={`dropdown-hover-${
                                         props.mode
