@@ -38,6 +38,7 @@ const SignUpForm = (props) => {
             const { data: res } = await axios.post(url, data);
 
             setContact(data.contact);
+            console.log(contact)
 
             localStorage.setItem("contact", data.contact);
 

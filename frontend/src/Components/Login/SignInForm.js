@@ -51,7 +51,7 @@ const SignInForm = (props) => {
         if (data.email && data.contact) {
             fetchData();
         }
-    }, [data.email, data.contact]);
+    }, [data.email, data.contact, setContact, setUserName]);
 
     const handleSubmit = async (e) => {
         // This function runs when Login button is clicked on.
@@ -68,6 +68,9 @@ const SignInForm = (props) => {
             setUserName(response.data.name);
             setEmail(data.email);
             setContact(response.data.contact);
+            console.log(userName);
+            console.log(email);
+            console.log(contact);
 
             localStorage.setItem("userName", response.data.name);
             localStorage.setItem("email", data.email);

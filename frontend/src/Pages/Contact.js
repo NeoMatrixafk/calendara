@@ -20,20 +20,27 @@ const Contact = (props) => {
 
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
+
         const url = "http://localhost:55555/api/contactus";
+
         try {
+
             await axios.post(url, data);
             window.alert("Form Submitted");
             navigate("/");
             
-
         } catch (error) {
-            // Handle invalid email or password
+
             if (error.response && error.response.status === 401) {
+
                 alert("Could not accept query!");
+
             } else {
+
                 console.error("Error:", error);
+                
             }
         }
     };

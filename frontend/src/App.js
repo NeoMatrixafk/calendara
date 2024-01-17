@@ -57,9 +57,7 @@ function App() {
     const location = useLocation();
 
     const pathsWithoutNavbarFooter = ["/auth"];
-    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(
-        location.pathname
-    );
+    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(location.pathname);
 
     if (mode === "light") {
         LightMode();
