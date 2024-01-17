@@ -18,12 +18,11 @@ import UserPolicy from "./Pages/UserPolicy";
 import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Dashboard from "./Pages/Dashboard";
-
-import UpdateProfile from "./Components/Profile/UpdateProfile";
-
+import Auth from "./Pages/Auth";
+import UploadData from "./Pages/UploadData";
 import Error404 from "./Pages/Error404";
 
-import Auth from "./Pages/Auth";
+import UpdateProfile from "./Components/Profile/UpdateProfile";
 
 import MyCalendar from "./Components/Calendar/Calendar";
 import AddEvents from "./Components/Calendar/AddEvents";
@@ -57,7 +56,9 @@ function App() {
     const location = useLocation();
 
     const pathsWithoutNavbarFooter = ["/auth"];
-    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(location.pathname);
+    const shouldRenderNavbarFooter = !pathsWithoutNavbarFooter.includes(
+        location.pathname
+    );
 
     if (mode === "light") {
         LightMode();
@@ -130,6 +131,10 @@ function App() {
                                 <Route
                                     path="/profile/update-profile"
                                     element={<UpdateProfile mode={mode} />}
+                                />
+                                <Route
+                                    path="/profile/upload-data"
+                                    element={<UploadData mode={mode} />}
                                 />
                                 <Route
                                     path="/add-event"

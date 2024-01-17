@@ -4,13 +4,8 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
-
-    const [userName] = useState(
-        localStorage.getItem("userName") || ""
-    );
-    const [contact] = useState(
-        localStorage.getItem("contact") || ""
-    );
+    const [userName] = useState(localStorage.getItem("userName") || "");
+    const [contact] = useState(localStorage.getItem("contact") || "");
     const [email] = useState(localStorage.getItem("email") || "");
 
     const handleLogout = () => {
@@ -98,11 +93,19 @@ const ProfileLoggedIn = (props) => {
                     }}
                 >
                     <div className="d-grid gap-4 col-6 justify-content-center">
+                        <Link
+                            to="/profile/upload-data"
+                            className={`btn btn-lg mt-3 btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                        >
+                            Upload Event Files
+                        </Link>
                         <Button
                             variant={
                                 props.mode === "dark" ? "light" : "primary"
                             }
-                            className="btn-lg mt-3"
+                            className="btn-lg"
                         >
                             Account Settings
                         </Button>

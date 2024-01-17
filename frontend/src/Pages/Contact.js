@@ -4,43 +4,33 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Contact = (props) => {
-
     const navigate = useNavigate();
 
     const [data, setData] = useState({
         name: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
     });
 
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
     };
 
-
     const handleSubmit = async (e) => {
-
         e.preventDefault();
 
         const url = "http://localhost:55555/api/contactus";
 
         try {
-
             await axios.post(url, data);
             window.alert("Form Submitted");
             navigate("/");
-            
         } catch (error) {
-
             if (error.response && error.response.status === 401) {
-
                 alert("Could not accept query!");
-
             } else {
-
                 console.error("Error:", error);
-                
             }
         }
     };
@@ -68,107 +58,109 @@ const Contact = (props) => {
                         contact us. Our team will come back to you as soon as
                         possible.
                     </p>
-                    <div className="row">
-                            <form
-                                id="contact-form"
-                                name="contact-form"
-                                onSubmit={handleSubmit}
+                    <div className="row d-flex justify-content-around">
+                        <form
+                            id="contact-form"
+                            name="contact-form"
+                            onSubmit={handleSubmit}
+                            className="col-8 w-50"
+                        >
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                className="form-control my-3"
+                                placeholder="Your name"
+                                value={data.name}
+                                onChange={handleChange}
+                                style={{
+                                    backgroundColor:
+                                        props.mode === "dark"
+                                            ? "#4d4d4d"
+                                            : "white",
+                                    WebkitTextFillColor:
+                                        props.mode === "dark"
+                                            ? "#BEBEBE"
+                                            : "black",
+                                }}
+                                autoComplete="off"
+                            />
+
+                            <input
+                                type="text"
+                                id="email"
+                                name="email"
+                                className="form-control my-3"
+                                placeholder="Your email"
+                                value={data.email}
+                                onChange={handleChange}
+                                style={{
+                                    backgroundColor:
+                                        props.mode === "dark"
+                                            ? "#4d4d4d"
+                                            : "white",
+                                    WebkitTextFillColor:
+                                        props.mode === "dark"
+                                            ? "#BEBEBE"
+                                            : "black",
+                                }}
+                                autoComplete="off"
+                            />
+
+                            <input
+                                type="text"
+                                id="subject"
+                                name="subject"
+                                className="form-control my-3"
+                                placeholder="Subject"
+                                value={data.subject}
+                                onChange={handleChange}
+                                style={{
+                                    backgroundColor:
+                                        props.mode === "dark"
+                                            ? "#4d4d4d"
+                                            : "white",
+                                    WebkitTextFillColor:
+                                        props.mode === "dark"
+                                            ? "#BEBEBE"
+                                            : "black",
+                                }}
+                            />
+
+                            <input
+                                type="text"
+                                id="message"
+                                name="message"
+                                rows="2"
+                                className="form-control md-textarea"
+                                placeholder="Your message"
+                                value={data.message}
+                                onChange={handleChange}
+                                style={{
+                                    backgroundColor:
+                                        props.mode === "dark"
+                                            ? "#4d4d4d"
+                                            : "white",
+                                    WebkitTextFillColor:
+                                        props.mode === "dark"
+                                            ? "#BEBEBE"
+                                            : "black",
+                                    minHeight: "5rem",
+                                    maxHeight: "10rem",
+                                }}
+                            ></input>
+                            <button
+                                className={`btn btn-${
+                                    props.mode === "light"
+                                        ? "primary"
+                                        : "success"
+                                } mt-3`}
                             >
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                name="name"
-                                                className="form-control my-3"
-                                                placeholder="Your name"
-                                                value={data.name}
-                                                onChange={handleChange}
-                                                style={{
-                                                    backgroundColor:
-                                                        props.mode === "dark"
-                                                            ? "#4d4d4d"
-                                                            : "white",
-                                                    WebkitTextFillColor:
-                                                        props.mode === "dark"
-                                                            ? "#BEBEBE"
-                                                            : "black",
-                                                }}
-                                                autoComplete="off"
-                                            />
+                                Send
+                            </button>
+                        </form>
 
-                                            <input
-                                                type="text"
-                                                id="email"
-                                                name="email"
-                                                className="form-control my-3"
-                                                placeholder="Your email"
-                                                value={data.email}
-                                                onChange={handleChange}
-                                                style={{
-                                                    backgroundColor:
-                                                        props.mode === "dark"
-                                                            ? "#4d4d4d"
-                                                            : "white",
-                                                    WebkitTextFillColor:
-                                                        props.mode === "dark"
-                                                            ? "#BEBEBE"
-                                                            : "black",
-                                                }}
-                                                autoComplete="off"
-                                            />
-
-                                            <input
-                                                type="text"
-                                                id="subject"
-                                                name="subject"
-                                                className="form-control my-3"
-                                                placeholder="Subject"
-                                                value={data.subject}
-                                                onChange={handleChange}
-                                                style={{
-                                                    backgroundColor:
-                                                        props.mode === "dark"
-                                                            ? "#4d4d4d"
-                                                            : "white",
-                                                    WebkitTextFillColor:
-                                                        props.mode === "dark"
-                                                            ? "#BEBEBE"
-                                                            : "black",
-                                                }}
-                                            />
-
-                                            <input
-                                                type="text"
-                                                id="message"
-                                                name="message"
-                                                rows="2"
-                                                className="form-control md-textarea"
-                                                placeholder="Your message"
-                                                value={data.message}
-                                                onChange={handleChange}
-                                                style={{
-                                                    backgroundColor:
-                                                        props.mode === "dark"
-                                                            ? "#4d4d4d"
-                                                            : "white",
-                                                    WebkitTextFillColor:
-                                                        props.mode === "dark"
-                                                            ? "#BEBEBE"
-                                                            : "black",
-                                                    minHeight: "5rem",
-                                                    maxHeight: "10rem",
-                                                }}
-                                            ></input>
-                                <button
-                        className={`btn btn-${
-                            props.mode === "light" ? "primary" : "success"
-                        } mt-3`}
-                    >
-                        Send
-                                </button>
-                            </form>
-                            <div className="status"></div>
-
-                        <div className="col-md-4 text-center my-3">
+                        <div className="col-3 text-center my-3">
                             <ul
                                 className={`list-unstyled text-${
                                     props.mode === "dark" ? "light" : "dark"
