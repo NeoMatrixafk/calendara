@@ -234,9 +234,11 @@ const NavbarLoggedIn = (props) => {
                                 }}
                             >
                                 <img
-                                    src={localStorage.getItem(
-                                        "userProfileImage"
-                                    )}
+                                    src={
+                                        localStorage.getItem(
+                                            "userProfileImage"
+                                        ) || "Images/Misc/defaultProfile.jpg"
+                                    }
                                     alt="user profile"
                                     style={{
                                         width: "3rem",

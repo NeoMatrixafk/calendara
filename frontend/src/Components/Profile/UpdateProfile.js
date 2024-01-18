@@ -25,8 +25,6 @@ const UpdateProfile = (props) => {
         if (imageData) {
             localStorage.setItem("userProfileImage", imageData);
             setSuccessMessage("Image successfully updated!");
-            // Optionally, you can clear the image preview after storing
-            // setImagePreview(null);
         }
     };
 
