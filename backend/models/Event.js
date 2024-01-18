@@ -12,6 +12,7 @@ const EventSchema = new mongoose.Schema({
     end: {
      type: Date,
      //setting a min function to accept any date one hour ahead of start
+     required: [true, "Please Insert The End of your event" ],
      min: [function(){
        const date = new Date(this.start)
        const validDate = new Date(date.setHours(date.getHours()+1)) 
