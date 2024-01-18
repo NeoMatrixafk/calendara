@@ -8,7 +8,9 @@ const NavbarLoggedIn = (props) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
+    const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -70,9 +72,9 @@ const NavbarLoggedIn = (props) => {
                                             : "white"
                                     }`}
                                     style={{ fontSize: "1.10rem" }}
-                                    to="/events"
+                                    to="/dashboard"
                                 >
-                                    Events
+                                    Dashboard
                                 </Link>
                             </li>
                             <li className="nav-item mx-2">
@@ -88,18 +90,83 @@ const NavbarLoggedIn = (props) => {
                                     Categories
                                 </Link>
                             </li>
-                            <li className="nav-item mx-2">
-                                <Link
-                                    className={`nav-link hover-underline text-${
-                                        props.mode === "light"
-                                            ? "black"
-                                            : "white"
-                                    }`}
-                                    style={{ fontSize: "1.10rem" }}
-                                    to="/add-event"
+                            <li className="nav-item mx-2 d-flex align-items-center">
+                                <Dropdown
+                                    show={showCalendarDropdown}
+                                    onMouseEnter={() =>
+                                        setShowCalendarDropdown(true)
+                                    }
+                                    onMouseLeave={() =>
+                                        setShowCalendarDropdown(false)
+                                    }
                                 >
-                                    Add
-                                </Link>
+                                    <Dropdown.Toggle
+                                        id="profile-dropdown"
+                                        className={`nav-link hover-navlink text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        } mx-2`}
+                                        style={{
+                                            background: "transparent",
+                                            borderColor: "transparent",
+                                            letterSpacing: "0.10rem",
+                                            height: "3rem",
+                                            fontSize: "1.10rem",
+                                        }}
+                                        onClick={() => {
+                                            navigate("/events");
+                                        }}
+                                    >
+                                        Calendar
+                                    </Dropdown.Toggle>
+
+                                    <Dropdown.Menu
+                                        style={{
+                                            backgroundColor:
+                                                props.mode === "light"
+                                                    ? ""
+                                                    : "#36393e",
+                                        }}
+                                    >
+                                        <Dropdown.Item
+                                            onClick={() => {
+                                                setShowCalendarDropdown(false);
+                                                navigate("/add-event");
+                                            }}
+                                            className={`dropdown-hover-${
+                                                props.mode
+                                            } text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                            style={{
+                                                background: "transparent",
+                                            }}
+                                        >
+                                            Add Event
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            onClick={() => {
+                                                setShowCalendarDropdown(false);
+                                                navigate("/events");
+                                            }}
+                                            className={`dropdown-hover-${
+                                                props.mode
+                                            } text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                            style={{
+                                                background: "transparent",
+                                            }}
+                                        >
+                                            Calendar
+                                        </Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </li>
                         </ul>
                     </div>
@@ -214,9 +281,9 @@ const NavbarLoggedIn = (props) => {
                         </div>
 
                         <Dropdown
-                            show={showDropdown}
-                            onMouseEnter={() => setShowDropdown(true)}
-                            onMouseLeave={() => setShowDropdown(false)}
+                            show={showProfileDropdown}
+                            onMouseEnter={() => setShowProfileDropdown(true)}
+                            onMouseLeave={() => setShowProfileDropdown(false)}
                         >
                             <Dropdown.Toggle
                                 id="profile-dropdown"
@@ -256,7 +323,7 @@ const NavbarLoggedIn = (props) => {
                             >
                                 <Dropdown.Item
                                     onClick={() => {
-                                        setShowDropdown(false);
+                                        setShowProfileDropdown(false);
                                         navigate("/profile");
                                     }}
                                     className={`dropdown-hover-${
@@ -271,24 +338,6 @@ const NavbarLoggedIn = (props) => {
                                     }}
                                 >
                                     View Profile
-                                </Dropdown.Item>
-                                <Dropdown.Item
-                                    onClick={() => {
-                                        setShowDropdown(false);
-                                        navigate("/dashboard");
-                                    }}
-                                    className={`dropdown-hover-${
-                                        props.mode
-                                    } text-${
-                                        props.mode === "light"
-                                            ? "black"
-                                            : "white"
-                                    }`}
-                                    style={{
-                                        background: "transparent",
-                                    }}
-                                >
-                                    Dashboard
                                 </Dropdown.Item>
                                 <Dropdown.Item
                                     onClick={handleLogout}
