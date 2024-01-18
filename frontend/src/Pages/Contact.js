@@ -81,7 +81,7 @@ const Contact = (props) => {
                                     WebkitTextFillColor:
                                         props.mode === "dark"
                                             ? "#BEBEBE"
-                                            : "black",
+                                            : "gray",
                                 }}
                                 autoComplete="off"
                             />
@@ -102,7 +102,7 @@ const Contact = (props) => {
                                     WebkitTextFillColor:
                                         props.mode === "dark"
                                             ? "#BEBEBE"
-                                            : "black",
+                                            : "gray",
                                 }}
                                 autoComplete="off"
                             />
@@ -123,11 +123,11 @@ const Contact = (props) => {
                                     WebkitTextFillColor:
                                         props.mode === "dark"
                                             ? "#BEBEBE"
-                                            : "black",
+                                            : "gray",
                                 }}
                             />
 
-                            <input
+                            <textarea
                                 type="text"
                                 id="message"
                                 name="message"
@@ -144,11 +144,11 @@ const Contact = (props) => {
                                     WebkitTextFillColor:
                                         props.mode === "dark"
                                             ? "#BEBEBE"
-                                            : "black",
+                                            : "gray",
                                     minHeight: "5rem",
                                     maxHeight: "10rem",
                                 }}
-                            ></input>
+                            ></textarea>
                             <button
                                 className={`btn btn-${
                                     props.mode === "light"
