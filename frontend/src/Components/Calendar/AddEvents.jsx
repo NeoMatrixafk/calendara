@@ -8,15 +8,35 @@ import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
-// import { set } from "date-fns";
 
-//schema to validate event inputs
-const schema = yup
-    .object({
-        title: yup.string().required("Can't Be Empty"),
-        start: yup.date().required("Please specify the time to start"),
-    })
-    .required();
+
+
+const schema = yup.object({
+    title: yup.string().required("Can't Be Empty"),
+    start: yup
+      .date()
+      .required("Please specify the time to start")
+      .test({
+        name: 'startBeforeCurrent',
+        message: 'Start date must be before the current date and time',
+        test: function (value) {
+          // Validate that the start date is before the current date and time
+          return !value || value > new Date();
+        },
+      }),
+    end: yup
+      .date()
+      .required("Please specify the time to end")
+      .test({
+        name: 'endBeforeCurrent',
+        message: 'End date must be before the current date and time',
+        test: function (value) {
+          // Validate that the end date is before the current date and time
+          return !value || value > new Date();
+        },
+      }),
+  }).required();
+  
 
 const AddEvents = ({ addEventApi, error, mode }) => {
     const navigate = useNavigate();
@@ -45,6 +65,15 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     });
 
     const onSubmit = async (values) => {
+
+        try {
+            await schema.validate(values, { abortEarly: false });
+          } catch (validationError) {
+            // Yup validation failed, show alert or handle the error
+            window.alert(validationError.message);
+            return;
+          }
+
         values.color = selectedColor;
 
         setFirstRender(false);
@@ -233,6 +262,18 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                         />
                                     )}
                                 />
+                                <p
+                                    className={`error text-warning position-absolute ${
+                                        errors.end ? "active" : ""
+                                    }`}
+                                >
+                                    {errors.end ? (
+                                        <i className=" bi bi-info-circle me-2"></i>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {errors.end?.message}
+                                </p>
                                 <p
                                     className={`error text-warning position-absolute ${
                                         dbError.end ? "" : "d-none"
