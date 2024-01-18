@@ -79,9 +79,7 @@ const Contact = (props) => {
                                             ? "#4d4d4d"
                                             : "white",
                                     WebkitTextFillColor:
-                                        props.mode === "dark"
-                                            ? "#BEBEBE"
-                                            : "gray",
+                                        props.mode === "dark" ? "#BEBEBE" : "",
                                 }}
                                 autoComplete="off"
                             />
@@ -100,9 +98,7 @@ const Contact = (props) => {
                                             ? "#4d4d4d"
                                             : "white",
                                     WebkitTextFillColor:
-                                        props.mode === "dark"
-                                            ? "#BEBEBE"
-                                            : "gray",
+                                        props.mode === "dark" ? "#BEBEBE" : "",
                                 }}
                                 autoComplete="off"
                             />
@@ -121,9 +117,7 @@ const Contact = (props) => {
                                             ? "#4d4d4d"
                                             : "white",
                                     WebkitTextFillColor:
-                                        props.mode === "dark"
-                                            ? "#BEBEBE"
-                                            : "gray",
+                                        props.mode === "dark" ? "#BEBEBE" : "",
                                 }}
                             />
 
@@ -142,9 +136,7 @@ const Contact = (props) => {
                                             ? "#4d4d4d"
                                             : "white",
                                     WebkitTextFillColor:
-                                        props.mode === "dark"
-                                            ? "#BEBEBE"
-                                            : "gray",
+                                        props.mode === "dark" ? "#BEBEBE" : "",
                                     minHeight: "5rem",
                                     maxHeight: "10rem",
                                 }}
