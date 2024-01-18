@@ -94,7 +94,7 @@ const ProfileLoggedIn = (props) => {
                 >
                     <div className="d-grid gap-4 col-6 justify-content-center">
                         <Link
-                            to="/profile/upload-data"
+                            to="/profile/upload-events"
                             className={`btn btn-lg mt-3 btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}

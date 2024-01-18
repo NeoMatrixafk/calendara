@@ -19,7 +19,6 @@ import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Dashboard from "./Pages/Dashboard";
 import Auth from "./Pages/Auth";
-import UploadData from "./Pages/UploadData";
 import Error404 from "./Pages/Error404";
 
 import UpdateProfile from "./Components/Profile/UpdateProfile";
@@ -30,6 +29,7 @@ import UpdateEvent from "./Components/Calendar/UpdateEvent";
 
 import LightMode from "./Logic/LightMode";
 import DarkMode from "./Logic/DarkMode";
+import UploadEvents from "./Components/Calendar/UploadEvents";
 
 function App() {
     const user = localStorage.getItem("token");
@@ -133,8 +133,8 @@ function App() {
                                     element={<UpdateProfile mode={mode} />}
                                 />
                                 <Route
-                                    path="/profile/upload-data"
-                                    element={<UploadData mode={mode} />}
+                                    path="/profile/upload-events"
+                                    element={<UploadEvents mode={mode} />}
                                 />
                                 <Route
                                     path="/add-event"
