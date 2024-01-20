@@ -6,7 +6,7 @@ import App from "./App";
 import store, { persistor } from "./Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import ScrollToTop from "./ScrollToTop";
