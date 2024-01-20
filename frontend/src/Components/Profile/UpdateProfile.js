@@ -1,9 +1,18 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const UpdateProfile = (props) => {
     const [imageData, setImageData] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
+    const admin = localStorage.getItem("userName");
+    const imageData1 = localStorage.getItem("userProfileImage");
+    const [data, setData] = useState({
+        admin: admin,
+        imageData: imageData1
+
+    });
+
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -21,11 +30,29 @@ const UpdateProfile = (props) => {
         }
     };
 
-    const storeImage = () => {
+    const storeImage = async() => {
         if (imageData) {
             localStorage.setItem("userProfileImage", imageData);
             setSuccessMessage("Image successfully updated!");
         }
+
+        try {
+            
+            const url = "http://localhost:55555/api/profilepic";
+
+            // Send a POST request to the server with FormData
+            const response = await axios.post(url, data);
+            console.log(data)
+
+            if (response.data.success) {
+                setSuccessMessage("Image successfully updated!");
+            } else {
+                console.error("Failed to update image");
+            }
+        } catch (error) {
+            console.error("Error updating image:", error);
+        }
+
     };
 
     return (

@@ -62,7 +62,10 @@ const SignUpForm = (props) => {
 
             console.log(res.message);
         } catch (error) {
-            if (error.response && error.response.status === 409) {
+            
+            if (error.response && error.response.status === 408) {
+                alert("Contact already exists!");
+            } else if (error.response && error.response.status === 409) {
                 alert("Email already exists!");
             } else if (error.response && error.response.status === 400) {
                 alert(
