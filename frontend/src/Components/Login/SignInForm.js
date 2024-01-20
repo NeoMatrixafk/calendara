@@ -1,4 +1,4 @@
-import React from "react"; //imports
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
@@ -81,8 +81,10 @@ const SignInForm = (props) => {
             navigate("/");
         } catch (error) {
             if (error.response && error.response.status === 401) {
-                alert("Invalid Email or Password!");
-            } else {
+                alert("Invalid Email!");
+            } else if (error.response && error.response.status === 402) {
+                alert("Invalid Password!");
+            }else {
                 console.error("Error:", error);
             }
         }

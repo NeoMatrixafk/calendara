@@ -5,8 +5,8 @@ const passwordComplexity = require("joi-password-complexity");
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true },
     contact: { type: String, required: true },
+    email: { type: String, required: true },
     password: { type: String, required: true },
 });
 
@@ -21,10 +21,9 @@ const User = mongoose.model("user", userSchema);
 
 const validate = (data) => {
     const schema = Joi.object({
-        name: Joi.string().required().label("Name"),
-        email: Joi.string().email().required().label("Email"),
-        contact: Joi.string().required().label("Contact"),
-        password: passwordComplexity().required().label("Password"),
+
+        password: passwordComplexity().required().label("Password")
+        
     });
     return schema.validate(data);
 };
