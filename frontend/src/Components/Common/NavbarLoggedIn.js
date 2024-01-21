@@ -340,6 +340,24 @@ const NavbarLoggedIn = (props) => {
                                     View Profile
                                 </Dropdown.Item>
                                 <Dropdown.Item
+                                    onClick={() => {
+                                        setShowProfileDropdown(false);
+                                        navigate("/profile/update-profile");
+                                    }}
+                                    className={`dropdown-hover-${
+                                        props.mode
+                                    } text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    }`}
+                                    style={{
+                                        background: "transparent",
+                                    }}
+                                >
+                                    Update Profile
+                                </Dropdown.Item>
+                                <Dropdown.Item
                                     onClick={handleLogout}
                                     className={`dropdown-hover-${
                                         props.mode

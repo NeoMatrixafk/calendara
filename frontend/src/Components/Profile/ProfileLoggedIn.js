@@ -73,17 +73,26 @@ const ProfileLoggedIn = (props) => {
                                 className={`text-${
                                     props.mode === "dark" ? "light" : "dark"
                                 }`}
-                                style={{ marginTop: "40rem" }}
+                                style={{ marginTop: "43rem" }}
                             >
-                                <p style={{ fontSize: "2rem" }}>
+                                <p
+                                    className="montserrat-regular-400"
+                                    style={{ fontSize: "2.5rem" }}
+                                >
                                     Name: {userName}
                                 </p>
                                 <br />
-                                <p style={{ fontSize: "1.5rem" }}>
+                                <p
+                                    className="montserrat-regular-400"
+                                    style={{ fontSize: "2rem" }}
+                                >
                                     Contact: {contact}
                                 </p>
                                 <br />
-                                <p style={{ fontSize: "1.5rem" }}>
+                                <p
+                                    className="montserrat-regular-400"
+                                    style={{ fontSize: "2rem" }}
+                                >
                                     Email: {email}
                                 </p>
                             </div>
@@ -152,7 +161,7 @@ const ProfileLoggedIn = (props) => {
                         <div className="col d-flex align-items-center justify-content-center">
                             <div className="container">
                                 <div
-                                    className="row mx-0 rounded"
+                                    className="row mx-0 rounded w-75"
                                     style={{
                                         backgroundColor:
                                             props.mode === "light"
