@@ -17,7 +17,7 @@ const ProfileLoggedIn = (props) => {
         window.location.reload();
     };
 
-    const defaultBackgroundImage = "/Images/Misc/defaultBackgroundImage";
+    const defaultBackgroundImage = `/Images/Logo/calendara_${props.mode}.png`;
 
     return (
         <>

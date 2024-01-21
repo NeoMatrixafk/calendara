@@ -4,7 +4,7 @@ import axios from "axios";
 const UpdateProfile = (props) => {
     const [profileImageData, setProfileImageData] = useState(null);
     const [profileImagePreview, setProfileImagePreview] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null);
+    const [successProfileMesage, setSuccessProfileMesage] = useState(null);
     const admin = localStorage.getItem("userName");
     const profileImageData1 = localStorage.getItem("userProfileImage");
     const [profileData, seProfiletData] = useState({
@@ -31,7 +31,7 @@ const UpdateProfile = (props) => {
     const storeProfileImage = async () => {
         if (profileImageData) {
             localStorage.setItem("userProfileImage", profileImageData);
-            setSuccessMessage("Image successfully updated!");
+            setSuccessProfileMesage("Image successfully updated!");
         }
 
         try {
@@ -42,7 +42,7 @@ const UpdateProfile = (props) => {
             console.log(profileData);
 
             if (response.data.success) {
-                setSuccessMessage("Image successfully updated!");
+                setSuccessProfileMesage("Image successfully updated!");
             } else {
                 console.error("Failed to update image");
             }
@@ -54,6 +54,8 @@ const UpdateProfile = (props) => {
     const [backgroundImageData, setBackgroundImageData] = useState(null);
     const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
     const backgroundImageData1 = localStorage.getItem("userBackgroundImage");
+    const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
+        useState(null);
     const [backgroundData, setBackgroundData] = useState({
         admin: admin,
         backgroundImageData: backgroundImageData1,
@@ -78,7 +80,7 @@ const UpdateProfile = (props) => {
     const storeBackgroundImage = async () => {
         if (backgroundImageData) {
             localStorage.setItem("userBackgroundImage", backgroundImageData);
-            setSuccessMessage("Image successfully updated!");
+            setBackgroundSuccessMessage("Image successfully updated!");
         }
 
         try {
@@ -89,7 +91,7 @@ const UpdateProfile = (props) => {
             console.log(backgroundData);
 
             if (response.data.success) {
-                setSuccessMessage("Image successfully updated!");
+                setBackgroundSuccessMessage("Image successfully updated!");
             } else {
                 console.error("Failed to update image");
             }
@@ -146,14 +148,14 @@ const UpdateProfile = (props) => {
                             />
                         </div>
                     )}
-                    {successMessage && (
+                    {successProfileMesage && (
                         <div
                             className={`alert alert-${
                                 props.mode === "light" ? "primary" : "warning"
                             } mt-3`}
                             role="alert"
                         >
-                            {successMessage}
+                            {successProfileMesage}
                         </div>
                     )}
                 </div>
@@ -174,7 +176,7 @@ const UpdateProfile = (props) => {
                         props.mode === "light" ? "black" : "white"
                     }`}
                 >
-                    Update Bacground Picture
+                    Update Background Picture
                 </h3>
                 <div className="container mt-3" style={{ width: "50%" }}>
                     <div className="input-group mb-3">
@@ -213,14 +215,14 @@ const UpdateProfile = (props) => {
                             />
                         </div>
                     )}
-                    {successMessage && (
+                    {backgroundSuccessMessage && (
                         <div
                             className={`alert alert-${
                                 props.mode === "light" ? "primary" : "warning"
                             } mt-3`}
                             role="alert"
                         >
-                            {successMessage}
+                            {backgroundSuccessMessage}
                         </div>
                     )}
                 </div>
