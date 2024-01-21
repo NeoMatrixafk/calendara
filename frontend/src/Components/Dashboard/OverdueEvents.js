@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 
-const OvedueEvents = (props) => {
+const OverdueEvents = (props) => {
     const data = [
         { name: "Completed Events", value: 2400 },
         { name: "Total Events", value: 4567 },
@@ -118,4 +118,4 @@ const OvedueEvents = (props) => {
     );
 };
 
-export default OvedueEvents;
+export default OverdueEvents;

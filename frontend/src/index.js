@@ -16,10 +16,10 @@ root.render(
     <React.StrictMode>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <HashRouter>
+                <BrowserRouter>
                     <ScrollToTop />
                     <App />
-                </HashRouter>
+                </BrowserRouter>
             </PersistGate>
         </Provider>
     </React.StrictMode>
