@@ -9,34 +9,33 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
 
-
-
-const schema = yup.object({
-    title: yup.string().required("Can't Be Empty"),
-    start: yup
-      .date()
-      .required("Please specify the time to start")
-      .test({
-        name: 'startBeforeCurrent',
-        message: 'Start date must be before the current date and time',
-        test: function (value) {
-          // Validate that the start date is before the current date and time
-          return !value || value > new Date();
-        },
-      }),
-    end: yup
-      .date()
-      .required("Please specify the time to end")
-      .test({
-        name: 'endBeforeCurrent',
-        message: 'End date must be before the current date and time',
-        test: function (value) {
-          // Validate that the end date is before the current date and time
-          return !value || value > new Date();
-        },
-      }),
-  }).required();
-  
+const schema = yup
+    .object({
+        title: yup.string().required("Can't Be Empty"),
+        start: yup
+            .date()
+            .required("Please specify the time to start")
+            .test({
+                name: "startBeforeCurrent",
+                message: "Start date must be before the current date and time",
+                test: function (value) {
+                    // Validate that the start date is before the current date and time
+                    return !value || value > new Date();
+                },
+            }),
+        end: yup
+            .date()
+            .required("Please specify the time to end")
+            .test({
+                name: "endBeforeCurrent",
+                message: "End date must be before the current date and time",
+                test: function (value) {
+                    // Validate that the end date is before the current date and time
+                    return !value || value > new Date();
+                },
+            }),
+    })
+    .required();
 
 const AddEvents = ({ addEventApi, error, mode }) => {
     const navigate = useNavigate();
@@ -65,14 +64,14 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     });
 
     const onSubmit = async (values) => {
-
         try {
             await schema.validate(values, { abortEarly: false });
-          } catch (validationError) {
+            localStorage.setItem("categoryColor", selectedColor);
+        } catch (validationError) {
             // Yup validation failed, show alert or handle the error
             window.alert(validationError.message);
             return;
-          }
+        }
 
         values.color = selectedColor;
 
@@ -93,7 +92,6 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                             onSubmit={handleSubmit(onSubmit)}
                             className="container m-5"
                         >
-                            
                             <div className="mb-4">
                                 <label
                                     htmlFor="admin"
