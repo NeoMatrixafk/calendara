@@ -178,7 +178,7 @@ function App() {
                                 />
                                 <Route
                                     path="/event/:id/update"
-                                    element={<UpdateEvent />}
+                                    element={<UpdateEvent mode={mode} />}
                                 />
                                 <Route
                                     path="*"

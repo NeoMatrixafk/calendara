@@ -20,9 +20,7 @@ const schema = yup
     })
     .required();
 
-const UpdateEvent = ({ updateEventApi, event, error }) => {
-    const mode = localStorage.getItem("mode");
-
+const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
     const navigate = useNavigate();
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
@@ -138,9 +136,16 @@ const UpdateEvent = ({ updateEventApi, event, error }) => {
                                         showTimeSelect
                                         timeFormat="HH:mm"
                                         dateFormat="MMMM d, yyyy h:mm aa"
-                                        className="form-control"
                                         id="start"
                                         autoComplete="off"
+                                        className={`form-control text-${
+                                            mode === "light"
+                                                ? "secondary"
+                                                : "light"
+                                        }`}
+                                        style={{
+                                            WebkitTextFillColor: "white",
+                                        }}
                                     />
                                 )}
                             />
@@ -193,9 +198,16 @@ const UpdateEvent = ({ updateEventApi, event, error }) => {
                                         timeFormat="HH:mm"
                                         dateFormat="MMMM d, yyyy h:mm aa"
                                         showTimeSelect
-                                        className="form-control"
                                         id="end"
                                         autoComplete="off"
+                                        className={`form-control text-${
+                                            mode === "light"
+                                                ? "secondary"
+                                                : "light"
+                                        }`}
+                                        style={{
+                                            WebkitTextFillColor: "white",
+                                        }}
                                     />
                                 )}
                             />
