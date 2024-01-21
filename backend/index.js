@@ -16,7 +16,7 @@ connection();
 
 // middlewares
 app.use(express.json({ limit: "50mb" }));
-app.use(express.static(path.join(__dirname, 'build')));
+//app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors());
 
 // routes
@@ -28,13 +28,13 @@ app.use("/api/contactus", contactUs);
 app.use("/api/profilepic", profilepic);
 
 //hosting
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
+//app.get('/*', function (req, res) {
+//    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//  });
   
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+//app.get('*', function (req, res) {
+//    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//});
   
 
 const port = process.env.PORT || 5000;
