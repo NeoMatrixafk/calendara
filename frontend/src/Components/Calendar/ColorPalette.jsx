@@ -19,14 +19,11 @@ const ColorPalette = ({ onSelectColor, initialColor }) => {
             <div>
                 <CirclePicker color={color} onChange={handleChange} />
             </div>
-            <div
-                style={{ width: "51%" }}
-                className="d-flex justify-content-center"
-            >
+            <div className="d-flex justify-content-start">
                 <button
                     className="btn mt-3"
                     onClick={handleSelect}
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: color, marginLeft: "4rem" }}
                 >
                     Select Color
                 </button>
