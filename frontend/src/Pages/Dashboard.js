@@ -2,7 +2,7 @@ import React from "react";
 
 import Activity from "../Components/Dashboard/Activity";
 import CompletedEvents from "../Components/Dashboard/CompletedEvents";
-import NotCompletedEvents from "../Components/Dashboard/NotCompletedEvents";
+import OvedueEvents from "../Components/Dashboard/NotCompletedEvents";
 import UpcomingEvents from "../Components/Dashboard/UpcomingEvents";
 
 const Dashboard = (props) => {
@@ -26,7 +26,7 @@ const Dashboard = (props) => {
                         <CompletedEvents mode={props.mode} />
                     </div>
                     <div className="col-3 d-flex justify-content-center">
-                        <NotCompletedEvents mode={props.mode} />
+                        <OvedueEvents mode={props.mode} />
                     </div>
                     <div className="col-3 d-flex justify-content-center">
                         <UpcomingEvents mode={props.mode} />

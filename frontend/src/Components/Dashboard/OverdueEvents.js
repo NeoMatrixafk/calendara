@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 
-const NotCompletedEvents = (props) => {
+const OvedueEvents = (props) => {
     const data = [
         { name: "Completed Events", value: 2400 },
         { name: "Total Events", value: 4567 },
@@ -37,7 +37,7 @@ const NotCompletedEvents = (props) => {
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
-                            Not Completed Events
+                            Not Completed Events - Overdue
                         </p>
                     </div>
                     <div className="col-12 p-0">
@@ -118,4 +118,4 @@ const NotCompletedEvents = (props) => {
     );
 };
 
-export default NotCompletedEvents;
+export default OvedueEvents;
