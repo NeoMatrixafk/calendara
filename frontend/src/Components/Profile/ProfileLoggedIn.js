@@ -14,7 +14,7 @@ const ProfileLoggedIn = (props) => {
         localStorage.removeItem("contact");
         localStorage.removeItem("email");
 
-        window.location.pathname = "/";
+        window.location.reload();
     };
 
     return (
