@@ -58,7 +58,7 @@ const SignUpForm = (props) => {
             localStorage.setItem("contact", data.contact);
 
             window.alert(`Account created successfully for ${data.name}.`);
-            window.location.pathname = "/";
+            window.location.reload();
 
             console.log(res.message);
         } catch (error) {
