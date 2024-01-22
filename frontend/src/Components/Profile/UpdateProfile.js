@@ -25,6 +25,11 @@ const UpdateProfile = (props) => {
 
     const storeProfileImage = async () => {
         if (profileImageData) {
+
+        const email = localStorage.getItem("email");
+        const deleteurl = `http://localhost:55555/api/profilepic/${email}`;
+        await axios.delete(deleteurl);
+
         try {
            const url = "http://localhost:55555/api/profilepic";
 
@@ -76,6 +81,11 @@ const UpdateProfile = (props) => {
     const storeBackgroundImage = async () => {
 
         if (backgroundImageData) {
+
+            const email = localStorage.getItem("email");
+            const deleteurl = `http://localhost:55555/api/profilebgpic/${email}`;
+            await axios.delete(deleteurl);
+
             try {
                 
                 const url = "http://localhost:55555/api/profilebgpic";

@@ -48,13 +48,17 @@ const SignInForm = (props) => {
 
                 const imagenameURL = `http://localhost:55555/api/profilepic/${data.email}`;
                 const response1 = await axios.get(imagenameURL);
-                setImageData(response1.data.imageData);
-                localStorage.setItem("userProfileImage", response1.data.imageData);
+                if (response1.data.imageData) {
+                    setImageData(response1.data.imageData);
+                    localStorage.setItem("userProfileImage", response1.data.imageData);
+                }
 
                 const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${data.email}`;
                 const response2 = await axios.get(bgimagenameURL);
-                setbgImageData(response2.data.bgimageData);
-                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                if (response2.data.bgimageData) {
+                    setbgImageData(response2.data.bgimageData);
+                    localStorage.setItem("userBGImage", response2.data.bgimageData);
+                }
 
             } catch (error) {
                 console.error("Error fetching user name:", error);
@@ -94,18 +98,20 @@ const SignInForm = (props) => {
             const imagenameURL = `http://localhost:55555/api/profilepic/${data.email}`;
             const response1 = await axios.get(imagenameURL);
 
-            setImageData(response1.data.imageData);
-            console.log(imageData);
-
-            localStorage.setItem("userProfileImage", response1.data.imageData);
+            if (response1.data.imageData) {
+                setImageData(response1.data.imageData);
+                localStorage.setItem("userProfileImage", response1.data.imageData);
+                console.log(imageData);
+            }
 
             const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${data.email}`;
             const response2 = await axios.get(bgimagenameURL);
 
-            setbgImageData(response2.data.bgimageData);
-            console.log(bgimageData);
-
-            localStorage.setItem("userBGImage", response2.data.bgimageData);
+            if (response2.data.bgimageData) {
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                console.log(bgimageData);
+            }
 
             window.alert(`Welcome ${response.data.name || data.email}!`);
             window.location.reload();
