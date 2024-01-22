@@ -29,6 +29,9 @@ const SignInForm = (props) => {
         localStorage.getItem("contact") || ""
     );
 
+    const [imageData, setImageData] = useState(localStorage.getItem("userProfileImage") || "");
+    const [bgimageData, setbgImageData] = useState(localStorage.getItem("userBGImage") || "");
+
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
     };
@@ -42,6 +45,17 @@ const SignInForm = (props) => {
                 const response = await axios.get(nameURL);
                 setUserName(response.data.name);
                 setContact(response.data.contact);
+
+                const imagenameURL = `http://localhost:55555/api/profilepic/${data.email}`;
+                const response1 = await axios.get(imagenameURL);
+                setImageData(response1.data.imageData);
+                localStorage.setItem("userProfileImage", response1.data.imageData);
+
+                const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${data.email}`;
+                const response2 = await axios.get(bgimagenameURL);
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+
             } catch (error) {
                 console.error("Error fetching user name:", error);
             }
@@ -58,6 +72,7 @@ const SignInForm = (props) => {
         e.preventDefault();
 
         const url = "http://localhost:55555/api/auth";
+        
 
         try {
             const { data: res } = await axios.post(url, data);
@@ -76,8 +91,25 @@ const SignInForm = (props) => {
             localStorage.setItem("contact", response.data.contact);
             localStorage.setItem("token", res.data);
 
+            const imagenameURL = `http://localhost:55555/api/profilepic/${data.email}`;
+            const response1 = await axios.get(imagenameURL);
+
+            setImageData(response1.data.imageData);
+            console.log(imageData);
+
+            localStorage.setItem("userProfileImage", response1.data.imageData);
+
+            const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${data.email}`;
+            const response2 = await axios.get(bgimagenameURL);
+
+            setbgImageData(response2.data.bgimageData);
+            console.log(bgimageData);
+
+            localStorage.setItem("userBGImage", response2.data.bgimageData);
+
             window.alert(`Welcome ${response.data.name || data.email}!`);
             window.location.reload();
+
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 alert("Invalid Email!");

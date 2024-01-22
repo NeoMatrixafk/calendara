@@ -2,15 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const UpdateProfile = (props) => {
-    const [profileImageData, setProfileImageData] = useState(null);
+    const [profileImageData, setProfileImageData] = useState("");
     const [profileImagePreview, setProfileImagePreview] = useState(null);
     const [successProfileMesage, setSuccessProfileMesage] = useState(null);
-    const admin = localStorage.getItem("userName");
-    const profileImageData1 = localStorage.getItem("userProfileImage");
-    const [profileData, seProfiletData] = useState({
-        admin: admin,
-        profileImageData: profileImageData1,
-    });
 
     const handleProfileImageChange = (e) => {
         const file = e.target.files[0];
@@ -18,10 +12,11 @@ const UpdateProfile = (props) => {
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function (event) {
-                const profileData = event.target.result;
+            reader.onload = () => {
+                const profileData = reader.result;
                 setProfileImageData(profileData);
-                setProfileImagePreview(profileData); // Set image preview
+                localStorage.setItem("userProfileImage", profileData);
+                setProfileImagePreview(profileData);  // Set image preview
             };
 
             reader.readAsDataURL(file);
@@ -30,14 +25,17 @@ const UpdateProfile = (props) => {
 
     const storeProfileImage = async () => {
         if (profileImageData) {
-            localStorage.setItem("userProfileImage", profileImageData);
-            setSuccessProfileMesage("Image successfully updated!");
-        }
-
         try {
-            const url = "http://localhost:55555/api/profilepic";
+           const url = "http://localhost:55555/api/profilepic";
 
-            // Send a POST request to the server with FormData
+           const email = localStorage.getItem("email");
+           const imageData = localStorage.getItem("userProfileImage");
+
+           const profileData = {
+            email: email,
+            imageData: imageData,
+        };
+
             const response = await axios.post(url, profileData);
             console.log(profileData);
 
@@ -49,17 +47,14 @@ const UpdateProfile = (props) => {
         } catch (error) {
             console.error("Error updating image:", error);
         }
-    };
+     } else {
+        alert("Please enter an image!")
+    }
+};
 
-    const [backgroundImageData, setBackgroundImageData] = useState(null);
+    const [backgroundImageData, setBackgroundImageData] = useState("");
     const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
-    const backgroundImageData1 = localStorage.getItem("userBackgroundImage");
-    const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
-        useState(null);
-    const [backgroundData, setBackgroundData] = useState({
-        admin: admin,
-        backgroundImageData: backgroundImageData1,
-    });
+    const [backgroundSuccessMessage, setBackgroundSuccessMessage] = useState(null);
 
     const handleBackgroundImageChange = (e) => {
         const file = e.target.files[0];
@@ -67,9 +62,10 @@ const UpdateProfile = (props) => {
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function (event) {
-                const backgroundData = event.target.result;
+            reader.onload = () => {
+                const backgroundData = reader.result;
                 setBackgroundImageData(backgroundData);
+                localStorage.setItem("userBGImage", backgroundData);
                 setBackgroundImagePreview(backgroundData); // Set image preview
             };
 
@@ -78,26 +74,44 @@ const UpdateProfile = (props) => {
     };
 
     const storeBackgroundImage = async () => {
+
         if (backgroundImageData) {
-            localStorage.setItem("userBackgroundImage", backgroundImageData);
-            setBackgroundSuccessMessage("Image successfully updated!");
-        }
+            try {
+                
+                const url = "http://localhost:55555/api/profilebgpic";
 
-        try {
-            const url = "http://localhost:55555/api/profilepic";
-
-            // Send a POST request to the server with FormData
-            const response = await axios.post(url, backgroundData);
-            console.log(backgroundData);
-
-            if (response.data.success) {
-                setBackgroundSuccessMessage("Image successfully updated!");
-            } else {
-                console.error("Failed to update image");
+                const email = localStorage.getItem("email");
+                const bgimageData = localStorage.getItem("userBGImage");
+                
+                const profileData = {
+                    email: email,
+                    bgimageData: bgimageData,
+                };
+                const response = await axios.post(url, profileData);
+                console.log(profileData);
+                
+                if (response.data.success) {
+                    
+                    setBackgroundSuccessMessage("Image successfully updated!");
+                
+                } else {
+                    
+                    console.error("Failed to update image");
+                
+                }
+            
+            } catch (error) {
+                
+                console.error("Error updating image:", error);
+            
             }
-        } catch (error) {
-            console.error("Error updating image:", error);
+        
+        } else {
+            
+            alert("Please enter an image!")
+        
         }
+        
     };
 
     return (
@@ -126,6 +140,7 @@ const UpdateProfile = (props) => {
                                 WebkitTextFillColor:
                                     props.mode === "light" ? "" : "#e6e6e6",
                             }}
+                            required
                         />
                     </div>
                     {profileImagePreview && (
@@ -194,6 +209,7 @@ const UpdateProfile = (props) => {
                                 WebkitTextFillColor:
                                     props.mode === "light" ? "" : "#e6e6e6",
                             }}
+                            required
                         />
                     </div>
                     {backgroundImagePreview && (

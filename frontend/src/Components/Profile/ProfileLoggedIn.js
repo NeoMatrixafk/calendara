@@ -13,6 +13,8 @@ const ProfileLoggedIn = (props) => {
         localStorage.removeItem("userName");
         localStorage.removeItem("contact");
         localStorage.removeItem("email");
+        localStorage.removeItem("userProfileImage");
+        localStorage.removeItem("userBGImage");
 
         window.location.reload();
     };
@@ -27,7 +29,7 @@ const ProfileLoggedIn = (props) => {
                         className="container d-flex mt-5 mb-0 justify-content-center"
                         style={{
                             backgroundImage: `url(${
-                                localStorage.getItem("userBackgroundImage") ||
+                                localStorage.getItem("userBGImage") ||
                                 defaultBackgroundImage
                             })`,
                             height: "20rem",
