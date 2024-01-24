@@ -3,7 +3,7 @@ import { PieChart, Pie, Tooltip, Cell } from "recharts";
 
 const UpcomingEvents = (props) => {
     const data = [
-        { name: "Completed Events", value: 2400 },
+        { name: "Upcoming Events", value: 2400 },
         { name: "Total Events", value: 4567 },
     ];
 
