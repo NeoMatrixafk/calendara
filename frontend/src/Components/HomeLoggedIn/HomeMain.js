@@ -1,10 +1,11 @@
 import React from "react";
+import "./HomeAnimation.css";
 
 const HomeMain = (props) => {
     console.log(props.mode);
     return (
         <>
-            <div className="container row">
+            <div className="container row home-title-animation">
                 <p
                     className={`mt-5 fw-bold d-flex justify-content-center col-12}`}
                     style={{
