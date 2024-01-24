@@ -27,8 +27,8 @@ router.post('/:userName', upload.single('csvFile'), async (req, res) => {
           
         const apiCalls = results.map(async (row) => {
           const title = row.Title;
-          const startDate = row.StartDate;
-          const endDate = row.EndDate;
+          const startDate = row.Start;
+          const endDate = row.End;
           const describe = row.Describe;
 
           console.log(`Title: ${title}, StartDate: ${startDate}, EndDate: ${endDate}, Describe: ${describe}`);

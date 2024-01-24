@@ -65,7 +65,7 @@ const UploadEvents = (props) => {
                 </p>
             </div>
             <div className="container mb-5">
-                <input 
+                <input className="form-control"
                     type="file" 
                     accept=".csv" 
                     onChange={handleFileChange} />
