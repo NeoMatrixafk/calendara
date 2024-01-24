@@ -10,13 +10,15 @@ const eventRoute = require("./routes/eventRoute");
 const getData = require("./routes/getData");
 const contactUs = require("./routes/contactus");
 const profilepic = require("./routes/profilepic");
+const profilebgpic = require("./routes/profilebgpic");
+
+
 
 // database connection
 connection();
 
 // middlewares
 app.use(express.json({ limit: "50mb" }));
-//app.use(express.static(path.join(__dirname, 'build')));
 app.use(cors());
 
 // routes
@@ -26,16 +28,7 @@ app.use("/api/events", eventRoute);
 app.use("/api/getData", getData);
 app.use("/api/contactus", contactUs);
 app.use("/api/profilepic", profilepic);
-
-//hosting
-//app.get('/*', function (req, res) {
-//    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-//  });
-  
-//app.get('*', function (req, res) {
-//    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-//});
-  
+app.use("/api/profilebgpic", profilebgpic);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));

@@ -17,7 +17,9 @@ const NavbarLoggedIn = (props) => {
         localStorage.removeItem("userName");
         localStorage.removeItem("email");
         localStorage.removeItem("contact");
-        window.location.pathname = "/";
+        localStorage.removeItem("userProfileImage");
+        localStorage.removeItem("userBGImage");
+        window.location.reload();
     };
 
     const navigate = useNavigate();
