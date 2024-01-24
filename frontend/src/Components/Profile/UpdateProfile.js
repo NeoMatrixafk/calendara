@@ -16,7 +16,7 @@ const UpdateProfile = (props) => {
                 const profileData = reader.result;
                 setProfileImageData(profileData);
                 localStorage.setItem("userProfileImage", profileData);
-                setProfileImagePreview(profileData);  // Set image preview
+                setProfileImagePreview(profileData); // Set image preview
             };
 
             reader.readAsDataURL(file);
@@ -25,41 +25,41 @@ const UpdateProfile = (props) => {
 
     const storeProfileImage = async () => {
         if (profileImageData) {
+            const email = localStorage.getItem("email");
+            const deleteurl = `http://localhost:55555/api/profilepic/${email}`;
+            await axios.delete(deleteurl);
 
-        const email = localStorage.getItem("email");
-        const deleteurl = `http://localhost:55555/api/profilepic/${email}`;
-        await axios.delete(deleteurl);
+            try {
+                const url = "http://localhost:55555/api/profilepic";
 
-        try {
-           const url = "http://localhost:55555/api/profilepic";
+                const email = localStorage.getItem("email");
+                const imageData = localStorage.getItem("userProfileImage");
 
-           const email = localStorage.getItem("email");
-           const imageData = localStorage.getItem("userProfileImage");
+                const profileData = {
+                    email: email,
+                    imageData: imageData,
+                };
 
-           const profileData = {
-            email: email,
-            imageData: imageData,
-        };
+                const response = await axios.post(url, profileData);
+                console.log(profileData);
 
-            const response = await axios.post(url, profileData);
-            console.log(profileData);
-
-            if (response.data.success) {
-                setSuccessProfileMesage("Image successfully updated!");
-            } else {
-                console.error("Failed to update image");
+                if (response.data.success) {
+                    setSuccessProfileMesage("Image successfully updated!");
+                } else {
+                    console.error("Failed to update image");
+                }
+            } catch (error) {
+                console.error("Error updating image:", error);
             }
-        } catch (error) {
-            console.error("Error updating image:", error);
+        } else {
+            alert("Please upload an image!");
         }
-     } else {
-        alert("Please enter an image!")
-    }
-};
+    };
 
     const [backgroundImageData, setBackgroundImageData] = useState("");
     const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
-    const [backgroundSuccessMessage, setBackgroundSuccessMessage] = useState(null);
+    const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
+        useState(null);
 
     const handleBackgroundImageChange = (e) => {
         const file = e.target.files[0];
@@ -79,49 +79,35 @@ const UpdateProfile = (props) => {
     };
 
     const storeBackgroundImage = async () => {
-
         if (backgroundImageData) {
-
             const email = localStorage.getItem("email");
             const deleteurl = `http://localhost:55555/api/profilebgpic/${email}`;
             await axios.delete(deleteurl);
 
             try {
-                
                 const url = "http://localhost:55555/api/profilebgpic";
 
                 const email = localStorage.getItem("email");
                 const bgimageData = localStorage.getItem("userBGImage");
-                
+
                 const profileData = {
                     email: email,
                     bgimageData: bgimageData,
                 };
                 const response = await axios.post(url, profileData);
                 console.log(profileData);
-                
+
                 if (response.data.success) {
-                    
                     setBackgroundSuccessMessage("Image successfully updated!");
-                
                 } else {
-                    
                     console.error("Failed to update image");
-                
                 }
-            
             } catch (error) {
-                
                 console.error("Error updating image:", error);
-            
             }
-        
         } else {
-            
-            alert("Please enter an image!")
-        
+            alert("Please upload an image!");
         }
-        
     };
 
     return (
