@@ -7,7 +7,9 @@ const handleEventErrors = (error, res )=> {
     // schema validation errors
     if(error.errors){
         Object.values(error.errors).forEach(error=>{
-            SchemaErrors[error.properties.path] = error.properties.message
+            if (error.properties) {
+                SchemaErrors[error.properties.path] = error.properties.message;
+            }
         })
         return res.status(500).json(SchemaErrors);
     }
