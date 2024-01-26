@@ -19,6 +19,8 @@ import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Dashboard from "./Pages/Dashboard";
 import Auth from "./Pages/Auth";
+import AccountSettings from "./Pages/AccountSettings";
+import MoreSettings from "./Pages/MoreSettings";
 import Error404 from "./Pages/Error404";
 
 import UpdateProfile from "./Components/Profile/UpdateProfile";
@@ -135,6 +137,14 @@ function App() {
                                 <Route
                                     path="/profile/upload-events"
                                     element={<UploadEvents mode={mode} />}
+                                />
+                                <Route
+                                    path="/profile/account-settings"
+                                    element={<AccountSettings mode={mode} />}
+                                />
+                                <Route
+                                    path="/profile/more-settings"
+                                    element={<MoreSettings mode={mode} />}
                                 />
                                 <Route
                                     path="/add-event"

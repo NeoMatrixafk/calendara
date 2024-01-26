@@ -373,58 +373,6 @@ const UpdateProfile = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="container my-5">
-                <h3
-                    className={`text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    Update Password
-                </h3>
-                <div className="container mt-3" style={{ width: "50%" }}>
-                    <div className="mb-3">
-                        <input
-                            type="text"
-                            className={`form-control ${
-                                props.mode === "light" ? "" : "border-secondary"
-                            }`}
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "#4d4d4d",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "" : "#e6e6e6",
-                            }}
-                            placeholder="Enter Current Password"
-                        />
-                        <div className="input-group mt-3">
-                            <input
-                                type="text"
-                                className={`form-control ${
-                                    props.mode === "light"
-                                        ? ""
-                                        : "border-secondary"
-                                }`}
-                                style={{
-                                    backgroundColor:
-                                        props.mode === "light" ? "" : "#4d4d4d",
-                                    WebkitTextFillColor:
-                                        props.mode === "light" ? "" : "#e6e6e6",
-                                }}
-                                placeholder="Enter New Password"
-                            />
-                            <button
-                                className={`btn btn-${
-                                    props.mode === "light"
-                                        ? "primary"
-                                        : "warning"
-                                }`}
-                            >
-                                Update
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </>
     );
 };

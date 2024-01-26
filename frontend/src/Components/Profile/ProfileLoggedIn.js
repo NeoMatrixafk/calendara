@@ -129,30 +129,24 @@ const ProfileLoggedIn = (props) => {
                             >
                                 Upload Data
                             </Link>
-                            <Button
-                                variant={
+                            <Link
+                                to="/profile/account-settings"
+                                className={`btn btn-lg btn-${
                                     props.mode === "dark" ? "light" : "primary"
                                 }
-                                className="btn-lg"
+                                `}
                             >
                                 Account Settings
-                            </Button>
-                            <Button
-                                variant={
+                            </Link>
+                            <Link
+                                to="/profile/more-settings"
+                                className={`btn btn-lg btn-${
                                     props.mode === "dark" ? "light" : "primary"
                                 }
-                                className="btn-lg"
+                                `}
                             >
-                                Notifications
-                            </Button>
-                            <Button
-                                variant={
-                                    props.mode === "dark" ? "light" : "primary"
-                                }
-                                className="btn-lg"
-                            >
-                                More
-                            </Button>
+                                More Settings
+                            </Link>
                             <Button
                                 className="btn btn-lg btn-danger mb-5"
                                 onClick={handleLogout}
