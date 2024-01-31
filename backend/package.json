@@ -26,6 +26,7 @@
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.8",
     "nodemon": "^3.0.2",
     "streamifier": "^0.1.1",
     "validator": "^13.11.0"
