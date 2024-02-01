@@ -20,8 +20,10 @@ const mailOptions = {
     },
     to: [
         "ayush03neo@gmail.com",
-        "austinkv2022@gmail.com",
-        "sanjivaneesj18@gmail.com",
+        // "tushar.ghorpade@gmail.com",
+        // "austinkv2022@gmail.com",
+        // "sanjivaneesj18@gmail.com",
+        // "manyasahai9548@gmail.com",
     ],
     subject: "calendara Dummy Trial Email",
     text: `Hello User this is a reminder about your event`,
