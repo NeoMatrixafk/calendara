@@ -239,6 +239,7 @@ function App() {
                 </div>
 
                 {shouldRenderNavbarFooter && <Footer mode={mode} />}
+
             </div>
         </>
     );
