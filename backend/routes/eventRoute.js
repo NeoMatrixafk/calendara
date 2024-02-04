@@ -25,7 +25,6 @@ router.get("/:id/show", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    
     try {
         const newEvent = new Event(req.body);
         const savedEvent = await newEvent.save();

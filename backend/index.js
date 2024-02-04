@@ -12,8 +12,6 @@ const profilepic = require("./routes/profilepic");
 const profilebgpic = require("./routes/profilebgpic");
 const uploadEvents = require("./routes/uploadEvents");
 
-
-
 // database connection
 connection();
 

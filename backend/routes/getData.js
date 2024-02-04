@@ -15,7 +15,7 @@ router.get("/:email", async (req, res) => {
     const userName = user.name; // Save the user's name as a variable
     const userContact = user.contact; // Save the user's contact as a variable
 
-    return res.status(200).json({ name: userName, contact: userContact}); // Return only the user's name
+    return res.status(200).json({ name: userName, contact: userContact }); // Return only the user's name
 });
 
 module.exports = router;
