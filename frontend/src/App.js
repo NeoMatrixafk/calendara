@@ -21,6 +21,7 @@ import Dashboard from "./Pages/Dashboard";
 import Auth from "./Pages/Auth";
 import AccountSettings from "./Pages/AccountSettings";
 import MoreSettings from "./Pages/MoreSettings";
+import Reminders from "./Pages/Reminders";
 import Error404 from "./Pages/Error404";
 
 import UpdateProfile from "./Components/Profile/UpdateProfile";
@@ -155,6 +156,10 @@ function App() {
                                     element={<Dashboard mode={mode} />}
                                 />
                                 <Route
+                                    path="/reminders"
+                                    element={<Reminders mode={mode} />}
+                                />
+                                <Route
                                     path="/about-us"
                                     element={<AboutUs mode={mode} />}
                                 />
@@ -239,7 +244,6 @@ function App() {
                 </div>
 
                 {shouldRenderNavbarFooter && <Footer mode={mode} />}
-
             </div>
         </>
     );

@@ -17,7 +17,7 @@ const schema = yup
             .required("Please specify the time to start")
             .test({
                 name: "startBeforeCurrent",
-                message: "Start date must be before the current date and time",
+                message: "Start date must be after the current date and time",
                 test: function (value) {
                     // Validate that the start date is before the current date and time
                     return !value || value > new Date();
@@ -28,7 +28,7 @@ const schema = yup
             .required("Please specify the time to end")
             .test({
                 name: "endBeforeCurrent",
-                message: "End date must be before the current date and time",
+                message: "End date must be after the current date and time",
                 test: function (value) {
                     // Validate that the end date is before the current date and time
                     return !value || value > new Date();
