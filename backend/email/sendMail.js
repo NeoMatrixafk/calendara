@@ -1,6 +1,9 @@
 const nodemailer = require("nodemailer");
 const path = require("path");
 require("dotenv").config({ path: "../.env" });
+const axios = require("axios");
+
+
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
