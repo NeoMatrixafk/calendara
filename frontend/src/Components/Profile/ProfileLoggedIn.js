@@ -236,6 +236,7 @@ const ProfileLoggedIn = (props) => {
                                             <button
                                                 type="button"
                                                 onClick={sendEmail}
+                                                className="btn btn-secondary"
                                             >
                                                 Send Email
                                             </button>
