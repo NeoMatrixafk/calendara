@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
+import axios from "axios";
 
 const ProfileLoggedIn = (props) => {
     const [userName] = useState(localStorage.getItem("userName") || "");
@@ -20,6 +21,27 @@ const ProfileLoggedIn = (props) => {
     };
 
     const defaultBackgroundImage = `/Images/Logo/calendara_${props.mode}.png`;
+
+    const recipient = localStorage.getItem("email");
+
+    const sendEmail = async () => {
+        try {
+            const response = await axios.post(
+                "http://localhost:55555/api/sendMail",
+                {
+                    recipient,
+                }
+            );
+
+            if (response.status === 200) {
+                console.log("Email sent successfully");
+            } else {
+                console.error("Failed to send email");
+            }
+        } catch (error) {
+            console.error("Error sending email:", error);
+        }
+    };
 
     return (
         <>
@@ -147,12 +169,12 @@ const ProfileLoggedIn = (props) => {
                             >
                                 More Settings
                             </Link>
-                            <Button
+                            <button
                                 className="btn btn-lg btn-danger mb-5"
                                 onClick={handleLogout}
                             >
                                 Sign Out
-                            </Button>
+                            </button>
                         </div>
                         <div className="col d-flex align-items-center justify-content-center">
                             <div className="container">
@@ -206,6 +228,19 @@ const ProfileLoggedIn = (props) => {
                                         >
                                             View Full Analysis
                                         </Link>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <p>Email: {recipient}</p>
+
+                                            <button
+                                                type="button"
+                                                onClick={sendEmail}
+                                                className="btn btn-secondary"
+                                            >
+                                                Send Email
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -18,7 +18,9 @@ const EventSchema = new mongoose.Schema({
         min: [
             function () {
                 const date = new Date(this.start);
-                const validDate = new Date(date.setHours(date.getHours() + 1));
+                const validDate = new Date(
+                    date.setMinutes(date.getMinutes() + 1)
+                );
                 return validDate;
             },
             "Event End must be at least one hour a head of event time",
