@@ -29,6 +29,7 @@
     "nodemailer": "^6.9.8",
     "nodemon": "^3.0.2",
     "streamifier": "^0.1.1",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "xlsx": "^0.18.5"
   }
 }

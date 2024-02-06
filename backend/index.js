@@ -10,7 +10,8 @@ const getData = require("./routes/getData");
 const contactUs = require("./routes/contactus");
 const profilepic = require("./routes/profilepic");
 const profilebgpic = require("./routes/profilebgpic");
-const uploadEvents = require("./routes/uploadEvents");
+const uploadCSV = require("./routes/uploadCSV");
+const uploadXLSX = require("./routes/uploadXLSX");
 const sendMail = require("./routes/sendMail");
 
 // database connection
@@ -28,8 +29,9 @@ app.use("/api/getData", getData);
 app.use("/api/contactus", contactUs);
 app.use("/api/profilepic", profilepic);
 app.use("/api/profilebgpic", profilebgpic);
-app.use("/api/uploadEvents", uploadEvents);
+app.use("/api/uploadCSV", uploadCSV);
 app.use("/api/sendMail", sendMail);
+app.use("/api/uploadXLSX", uploadXLSX);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));

@@ -24,14 +24,19 @@ const UploadEvents = (props) => {
     };
 
     const [csvFile, setCsvFile] = useState(null);
+    const [excelFile, setExcelFile] = useState(null);
 
     const userName = localStorage.getItem("userName");
 
-    const handleFileChange = (e) => {
+    const handleCSVChange = (e) => {
         setCsvFile(e.target.files[0]);
     };
 
-    const handleCreate = async () => {
+    const handleExcelChange = (e) => {
+        setExcelFile(e.target.files[0]);
+    };
+
+    const handleCsvUpload = async () => {
         if (!csvFile) {
             alert("Please select a CSV file.");
             return;
@@ -43,7 +48,7 @@ const UploadEvents = (props) => {
         try {
             // Upload the CSV file to the server
             const uploadResponse = await axios.post(
-                `http://localhost:55555/api/uploadEvents/${userName}`,
+                `http://localhost:55555/api/uploadCSV/${userName}`,
                 formData,
                 {
                     headers: {
@@ -60,6 +65,39 @@ const UploadEvents = (props) => {
             navigate("/events");
         } catch (error) {
             console.error("Error uploading CSV file:", error.response.data);
+            // Handle the error as needed
+        }
+    };
+
+    const handleXlsxUpload = async () => {
+        if (!excelFile) {
+            alert("Please select a Excel file.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("excelFile", excelFile);
+
+        try {
+            // Upload the Excel file to the server
+            const uploadResponse = await axios.post(
+                `http://localhost:55555/api/uploadXLSX/${userName}`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            // Log the response from the server (API calls completion message)
+            console.log(uploadResponse.data);
+
+            // Optionally, you can handle the response or provide user feedback
+            alert("XLSX file uploaded and Events are created!");
+            navigate("/events");
+        } catch (error) {
+            console.error("Error uploading XLSX file:", error.response.data);
             // Handle the error as needed
         }
     };
@@ -115,13 +153,13 @@ const UploadEvents = (props) => {
                     }}
                     type="file"
                     accept=".csv"
-                    onChange={handleFileChange}
+                    onChange={handleCSVChange}
                     required
                 />
                 <button
                     type="submit"
                     className="btn btn-success btn-lg mt-3"
-                    onClick={handleCreate}
+                    onClick={handleCsvUpload}
                 >
                     Upload .csv
                 </button>
@@ -142,13 +180,13 @@ const UploadEvents = (props) => {
                     }}
                     type="file"
                     accept=".xlsx"
-                    onChange={handleFileChange}
+                    onChange={handleExcelChange}
                     required
                 />
                 <button
                     type="submit"
                     className="btn btn-success btn-lg mt-3"
-                    onClick={handleCreate}
+                    onClick={handleXlsxUpload}
                 >
                     Upload .xlsx
                 </button>
