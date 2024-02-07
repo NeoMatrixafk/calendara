@@ -282,6 +282,28 @@ const NavbarLoggedIn = (props) => {
                             </Modal>
                         </div>
 
+                        <Link
+                            to="/reminders"
+                            className="me-4 position-relative"
+                            type="button"
+                        >
+                            <i
+                                className={`bi bi-bell text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                                style={{ fontSize: "1.5rem" }}
+                            ></i>
+                            <span
+                                className={`badge position-absolute text-bg-${
+                                    props.mode === "light"
+                                        ? "danger"
+                                        : "warning"
+                                }`}
+                            >
+                                9
+                            </span>
+                        </Link>
+
                         <Dropdown
                             show={showProfileDropdown}
                             onMouseEnter={() => setShowProfileDropdown(true)}
