@@ -13,6 +13,7 @@ const profilebgpic = require("./routes/profilebgpic");
 const uploadCSV = require("./routes/uploadCSV");
 const uploadXLSX = require("./routes/uploadXLSX");
 const sendMail = require("./routes/sendMail");
+const reminders = require("./routes/remindersRoute");
 
 // database connection
 connection();
@@ -32,6 +33,7 @@ app.use("/api/profilebgpic", profilebgpic);
 app.use("/api/uploadCSV", uploadCSV);
 app.use("/api/sendMail", sendMail);
 app.use("/api/uploadXLSX", uploadXLSX);
+app.use("/api/reminders", reminders);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));
