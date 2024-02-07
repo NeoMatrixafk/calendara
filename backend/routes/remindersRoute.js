@@ -4,29 +4,57 @@ const handleError = require("../utils/eventErrors");
 
 
 
-router.get("/:userName", async (req, res) => {
+router.get("/3days/:userName", async (req, res) => {
 
     const name = req.params.userName;
 
     try {
-        // Get the current date
-        const currentDate = new Date();
+        // Calculate the start of the date three days from now (midnight)
+        const threeDaysLaterStart = new Date();
+        threeDaysLaterStart.setDate(threeDaysLaterStart.getDate() + 3);
+        threeDaysLaterStart.setHours(0, 0, 0, 0);
 
-        // Calculate the date 3 days from now
-        const threeDaysAway = new Date();
-        threeDaysAway.setDate(currentDate.getDate() + 3);
+        // Calculate the end of the date three days from now (end of day)
+        const threeDaysLaterEnd = new Date(threeDaysLaterStart);
+        threeDaysLaterEnd.setHours(23, 59, 59, 999);
 
-        // Find events for the given userName that are within 3 days from now
+        // Find events for the given userName that occur on the date three days from now
         const events = await Event.find({
             admin: name,
-            start: {
-                $gte: currentDate, // Start date is greater than or equal to current date
-                $lte: threeDaysAway, // Start date is less than or equal to 3 days from now
-            },
+            start: { $gte: threeDaysLaterStart, $lte: threeDaysLaterEnd },
         });
 
         res.status(200).json(events);
-        
+
+    } catch (err) {
+
+        handleError(err, res);
+
+    }
+});
+
+router.get("/1day/:userName", async (req, res) => {
+
+    const name = req.params.userName;
+
+    try {
+        // Calculate the start of the date three days from now (midnight)
+        const oneDayLaterStart = new Date();
+        oneDayLaterStart.setDate(oneDayLaterStart.getDate() + 1);
+        oneDayLaterStart.setHours(0, 0, 0, 0);
+
+        // Calculate the end of the date three days from now (end of day)
+        const oneDayLaterEnd = new Date(oneDayLaterStart);
+        oneDayLaterEnd.setHours(23, 59, 59, 999);
+
+        // Find events for the given userName that occur on the date three days from now
+        const events = await Event.find({
+            admin: name,
+            start: { $gte: oneDayLaterStart, $lte: oneDayLaterEnd },
+        });
+
+        res.status(200).json(events);
+
     } catch (err) {
 
         handleError(err, res);
