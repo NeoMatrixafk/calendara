@@ -300,7 +300,7 @@ const NavbarLoggedIn = (props) => {
                                         : "warning"
                                 }`}
                             >
-                                9
+                                7
                             </span>
                         </Link>
 
