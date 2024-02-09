@@ -300,7 +300,7 @@ const NavbarLoggedIn = (props) => {
                                         : "warning"
                                 }`}
                             >
-                                7
+                                {props.eventsCount}
                             </span>
                         </Link>
 

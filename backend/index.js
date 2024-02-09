@@ -14,6 +14,7 @@ const uploadCSV = require("./routes/uploadCSV");
 const uploadXLSX = require("./routes/uploadXLSX");
 const sendMail = require("./routes/sendMail");
 const reminders = require("./routes/remindersRoute");
+const categories = require("./routes/categories");
 
 // database connection
 connection();
@@ -34,6 +35,7 @@ app.use("/api/uploadCSV", uploadCSV);
 app.use("/api/sendMail", sendMail);
 app.use("/api/uploadXLSX", uploadXLSX);
 app.use("/api/reminders", reminders);
+app.use("/api/categories", categories);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));
