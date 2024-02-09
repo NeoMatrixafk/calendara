@@ -209,6 +209,24 @@ const AboutUs = (props) => {
                                     <i className="bi bi-github" />
                                 </a>
                             </button>
+                            <button
+                                className={`btn mx-2 btn-${
+                                    props.mode === "light" ? "dark" : "light"
+                                }`}
+                            >
+                                <a
+                                    href="https://www.linkedin.com/in/sanjivanee-jadhav-2006902b3/"
+                                    style={{
+                                        textDecoration: "none",
+                                        color:
+                                            props.mode === "light"
+                                                ? "white"
+                                                : "black",
+                                    }}
+                                >
+                                    <i className="bi bi-linkedin" />
+                                </a>
+                            </button>
                         </div>
                     </li>
                 </ul>
