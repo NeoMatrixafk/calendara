@@ -41,6 +41,11 @@ function App() {
 
     const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
 
+    const [eventsCount, setEventsCount] = useState(0);
+    const handleEventsCountChange = (count) => {
+        setEventsCount(count);
+    };
+
     useEffect(() => {
         const savedMode = localStorage.getItem("mode") || "light";
         setMode(savedMode);
@@ -87,6 +92,7 @@ function App() {
                             <NavbarLoggedIn
                                 mode={mode}
                                 toggleMode={toggleMode}
+                                eventsCount={eventsCount}
                             />
                         ) : (
                             <NavbarLoggedOut
@@ -159,7 +165,7 @@ function App() {
                                 />
                                 <Route
                                     path="/reminders"
-                                    element={<Reminders mode={mode} />}
+                                    element={<Reminders mode={mode} onEventsCountChange={handleEventsCountChange} />}
                                 />
                                 <Route
                                     path="/about-us"

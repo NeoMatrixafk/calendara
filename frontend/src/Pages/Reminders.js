@@ -7,6 +7,12 @@ const Reminders = (props) => {
     const [events1day, setEvents1day] = useState([]);
     const userName = localStorage.getItem("userName");
 
+
+    useEffect(() => {
+        const totalCount = events7days.length + events3days.length + events1day.length;
+        props.onEventsCountChange(totalCount);
+    }, [events7days, events3days, events1day, props]);
+
     useEffect(() => {
         async function fetch7daysEvents() {
             try {
@@ -53,6 +59,7 @@ const Reminders = (props) => {
     }, [userName]);
 
     return (
+        <>
         <div
             className={`container my-5 text-${
                 props.mode === "light" ? "black" : "white"
@@ -117,6 +124,7 @@ const Reminders = (props) => {
                 ))}
             </div>
         </div>
+        </>
     );
 };
 
