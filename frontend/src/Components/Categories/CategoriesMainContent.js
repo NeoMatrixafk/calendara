@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const CategoriesMainContent = (props) => {
-
-    const selectedColor  = useState(() => {
-        return localStorage.getItem("selectedColor") || "#ffeb3b";
-    });
-    
+    const selectedColor = localStorage.getItem("selectedColor") || "#ffeb3b";
 
     const [events, setEvents] = useState([]);
 
@@ -30,31 +26,30 @@ const CategoriesMainContent = (props) => {
     return (
         <>
             <div
-            className={`container my-5 text-${
-                props.mode === "light" ? "black" : "white"
-            }`}
-        >
-            <h1>Events</h1>
-            <div className="container my-5">
-                <h3>Category</h3>
-                {events.map((event) => (
-                    <li key={event._id}>
-                        <h2>{event.title}</h2>
-                        <p>
-                            <strong>Start:</strong>{" "}
-                            {new Date(event.start).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>End:</strong>{" "}
-                            {new Date(event.end).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>Description:</strong> {event.describe}
-                        </p>
-                    </li>
-                ))}
+                className={`container mb-5 ms-3 text-${
+                    props.mode === "light" ? "black" : "white"
+                }`}
+            >
+                <h1>Events</h1>
+                <div className="container my-5">
+                    {events.map((event) => (
+                        <li key={event._id} style={{ listStyleType: "none" }}>
+                            <h2>Title: {event.title}</h2>
+                            <p>
+                                <strong>Start:</strong>{" "}
+                                {new Date(event.start).toLocaleString()}
+                            </p>
+                            <p>
+                                <strong>End:</strong>{" "}
+                                {new Date(event.end).toLocaleString()}
+                            </p>
+                            <p>
+                                <strong>Description:</strong> {event.describe}
+                            </p>
+                        </li>
+                    ))}
+                </div>
             </div>
-        </div>
         </>
     );
 };
