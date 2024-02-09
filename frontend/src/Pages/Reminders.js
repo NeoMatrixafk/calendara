@@ -59,6 +59,7 @@ const Reminders = (props) => {
     }, [userName]);
 
     return (
+        <>
         <div
             className={`container my-5 text-${
                 props.mode === "light" ? "black" : "white"
@@ -123,6 +124,7 @@ const Reminders = (props) => {
                 ))}
             </div>
         </div>
+        </>
     );
 };
 
