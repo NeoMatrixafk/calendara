@@ -3,15 +3,13 @@ import axios from "axios";
 
 const CategoriesMainContent = (props) => {
 
-    const selectedColor  = useState(() => {
-        return localStorage.getItem("selectedColor") || "#ffeb3b";
-    });
+    const selectedColor = localStorage.getItem("selectedColor") || "#ffeb3b";
     
-
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
         async function fetchEvents() {
+            
             try {
                 // Encode the selectedColor value to ensure it's properly formatted for URL
                 const encodedColor = encodeURIComponent(selectedColor);
