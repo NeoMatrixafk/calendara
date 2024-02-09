@@ -1,13 +1,12 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import categoryColors from "./categoryColors";
 
 const CategoriesSidebar = (props) => {
+    const [selectedColor, setSelectedColor] = useState(
+        localStorage.getItem("selectedColor") || "#ffeb3b"
+    );
 
-    const [selectedColor, setSelectedColor] = useState(() => {
-        
-        return localStorage.getItem("selectedColor") || "#ffeb3b";
-    });
     localStorage.setItem("selectedColor", selectedColor);
 
     return (
