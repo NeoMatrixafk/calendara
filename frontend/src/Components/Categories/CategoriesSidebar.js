@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import categoryColors from "./categoryColors";
 
@@ -7,6 +7,9 @@ const CategoriesSidebar = (props) => {
 
     localStorage.setItem("categoryColor", "#ff5722");
     // console.log(categoryColor);
+
+    const [selectedColor, setSelectedColor] = useState("");
+    localStorage.setItem("selectedColor", selectedColor);
 
     return (
         <>
@@ -22,28 +25,29 @@ const CategoriesSidebar = (props) => {
                         </h3>
                     </div>
                     <div className="row d-flex justify-content-center mt-3 mb-5">
-                        {Object.keys(categoryColors).map((category, index) => {
-                            const colorValue = categoryColors[category];
-
+                        {categoryColors.map((colorValue, index) => {
                             if (colorValue !== 0) {
                                 return (
                                     <button
                                         key={index}
                                         className="btn w-75 my-2"
                                         style={{
-                                            backgroundColor: category,
+                                            backgroundColor: colorValue,
                                             color:
                                                 props.mode === "light"
                                                     ? "black"
                                                     : "white",
                                         }}
+                                        onClick={() =>
+                                            setSelectedColor(colorValue)
+                                        }
                                     >
                                         {colorValue}
                                     </button>
                                 );
                             }
 
-                            return null; // To satisfy the map function requirement of returning a value
+                            return null;
                         })}
                     </div>
                 </div>
