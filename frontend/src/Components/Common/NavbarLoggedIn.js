@@ -4,8 +4,7 @@ import { Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
 
 const NavbarLoggedIn = (props) => {
-    
-    const eventsCount = parseInt(localStorage.getItem('eventsCount')) || 0;
+    const eventsCount = parseInt(localStorage.getItem("eventsCount")) || 0;
 
     const [show, setShow] = useState(false);
 
@@ -38,7 +37,7 @@ const NavbarLoggedIn = (props) => {
     }, [userName]);
 
     const filterEventsByTitle = useCallback(() => {
-        const filtered = events.filter(event =>
+        const filtered = events.filter((event) =>
             event.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredEvents(filtered);
@@ -296,11 +295,31 @@ const NavbarLoggedIn = (props) => {
                                     }}
                                 >
                                     {filteredEvents.map((event) => (
-                                        <div key={event._id} className="my-3">
-                                            <h2>{event.title}</h2>
-                                            <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
-                                            <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
-                                            <p><strong>Description:</strong> {event.describe}</p>
+                                        <div
+                                            key={event._id}
+                                            className={`my-3 text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                        >
+                                            <h3>{event.title}</h3>
+                                            <p>
+                                                <strong>Start:</strong>{" "}
+                                                {new Date(
+                                                    event.start
+                                                ).toLocaleString()}
+                                            </p>
+                                            <p>
+                                                <strong>End:</strong>{" "}
+                                                {new Date(
+                                                    event.end
+                                                ).toLocaleString()}
+                                            </p>
+                                            <p>
+                                                <strong>Description:</strong>{" "}
+                                                {event.describe}
+                                            </p>
                                         </div>
                                     ))}
                                 </Modal.Body>
