@@ -3,6 +3,7 @@ import axios from "axios";
 
 const CategoriesMainContent = (props) => {
     const selectedColor = localStorage.getItem("selectedColor") || "#ffeb3b";
+    const userName = localStorage.getItem("userName");
 
     const [events, setEvents] = useState([]);
 
@@ -13,7 +14,7 @@ const CategoriesMainContent = (props) => {
                 // Encode the selectedColor value to ensure it's properly formatted for URL
                 const encodedColor = encodeURIComponent(selectedColor);
                 const response = await axios.get(
-                    `http://localhost:55555/api/categories/${encodedColor}`
+                    `http://localhost:55555/api/categories/${userName}/${encodedColor}`
                 );
                 setEvents(response.data);
             } catch (error) {
@@ -22,7 +23,7 @@ const CategoriesMainContent = (props) => {
         }
 
         fetchEvents();
-    }, [selectedColor]);
+    }, [selectedColor, userName]);
 
     return (
         <>
