@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
+import axios from "axios";
 
 const NavbarLoggedIn = (props) => {
+    
+    const eventsCount = parseInt(localStorage.getItem('eventsCount')) || 0;
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -11,6 +15,42 @@ const NavbarLoggedIn = (props) => {
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
     const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
+
+    const [events, setEvents] = useState([]);
+    const [filteredEvents, setFilteredEvents] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const userName = localStorage.getItem("userName");
+
+    useEffect(() => {
+        async function fetchallEvents() {
+            try {
+                const response = await axios.get(
+                    `http://localhost:55555/api/events/${userName}`
+                );
+                setEvents(response.data);
+                setFilteredEvents(response.data);
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        }
+
+        fetchallEvents();
+    }, [userName]);
+
+    const filterEventsByTitle = useCallback(() => {
+        const filtered = events.filter(event =>
+            event.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredEvents(filtered);
+    }, [searchQuery, events]);
+
+    useEffect(() => {
+        filterEventsByTitle();
+    }, [filterEventsByTitle]);
+
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -229,6 +269,8 @@ const NavbarLoggedIn = (props) => {
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="What are you looking for..."
+                                                value={searchQuery}
+                                                onChange={handleSearchChange}
                                                 aria-label="Search"
                                                 style={{
                                                     backgroundColor:
@@ -253,7 +295,14 @@ const NavbarLoggedIn = (props) => {
                                                 : "#36393e",
                                     }}
                                 >
-                                    <div style={{ height: "50vh" }}></div>
+                                    {filteredEvents.map((event) => (
+                                        <div key={event._id} className="my-3">
+                                            <h2>{event.title}</h2>
+                                            <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
+                                            <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
+                                            <p><strong>Description:</strong> {event.describe}</p>
+                                        </div>
+                                    ))}
                                 </Modal.Body>
 
                                 <Modal.Footer
@@ -300,7 +349,7 @@ const NavbarLoggedIn = (props) => {
                                         : "warning"
                                 }`}
                             >
-                                {props.eventsCount}
+                                {eventsCount}
                             </span>
                         </Link>
 
