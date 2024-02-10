@@ -29,6 +29,11 @@ const Categories = (props) => {
 
         fetchEvents();
     }, [selectedColor, userName]);
+
+    const handleCheckboxClick = (colorValue) => {
+        setSelectedColor(colorValue);
+    };
+
     return (
         <>
             {/* SIDEBAR */}
@@ -36,13 +41,13 @@ const Categories = (props) => {
                 <div className="categories-side">
                     <div className="container">
                         <div className="container p-0">
-                            <h3
-                                className={`mb-2 text-${
+                            <h1
+                                className={`mb-2 d-flex justify-content-center text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
                             >
                                 Categories
-                            </h3>
+                            </h1>
                         </div>
                         <div className="row d-flex justify-content-center mt-3 mb-5">
                             {categoryColors.map((colorValue, index) => {
@@ -50,19 +55,31 @@ const Categories = (props) => {
                                     return (
                                         <button
                                             key={index}
-                                            className="btn w-75 my-2"
+                                            className="btn w-75 my-2 mx-5"
                                             style={{
                                                 backgroundColor: colorValue,
                                                 color:
                                                     props.mode === "light"
                                                         ? "black"
                                                         : "white",
+                                                height: "2.5rem",
                                             }}
-                                            onClick={() =>
-                                                setSelectedColor(colorValue)
-                                            }
                                         >
-                                            {colorValue}
+                                            <div className="form-check d-flex justify-content-center align-items-center">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    checked={
+                                                        selectedColor ===
+                                                        colorValue
+                                                    }
+                                                    onChange={() =>
+                                                        handleCheckboxClick(
+                                                            colorValue
+                                                        )
+                                                    }
+                                                />
+                                            </div>
                                         </button>
                                     );
                                 }
