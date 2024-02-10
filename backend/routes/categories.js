@@ -4,10 +4,11 @@ const handleError = require("../utils/eventErrors");
 
 
 
-router.get("/:selectedColor", async (req, res) => {
+router.get("/:userName/:selectedColor", async (req, res) => {
 
+    const userName = req.params.userName;
     const color = req.params.selectedColor;
-    const events = await Event.find({ color: color });
+    const events = await Event.find({ admin: userName, color: color });
 
     try {
         res.status(200).json(events);
