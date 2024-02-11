@@ -52,10 +52,9 @@ const Reminders = (props) => {
         fetch1dayEvents();
     }, [userName]);
 
-    const totalCount =
-        events7days.length + events3days.length + events1day.length;
+    const totalCount = events7days.length + events3days.length + events1day.length;
     localStorage.setItem("eventsCount", totalCount);
-    props.onEventsCountChange(totalCount);
+    props.onEventsCountChange(totalCount); 
 
     return (
         <>

@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import axios from "axios";
+
+
 
 const UpcomingEvents = (props) => {
+    
+    const [upcomingEventsCount, setUpcomingEventsCount] = useState(0);
+    const userName = localStorage.getItem("userName");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`/api/reminders/upcoming/${userName}`);
+                const events = response.data;
+                setUpcomingEventsCount(events.length);
+            } catch (error) {
+                console.error("Error fetching upcoming events:", error);
+            }
+        };
+
+        fetchData();
+    }, [userName]);
+
+    const totalEventsCount = 10; // Assuming you have the total events count
+
     const data = [
-        { name: "Upcoming Events", value: 2400 },
-        { name: "Total Events", value: 4567 },
+        { name: "Upcoming Events", value: upcomingEventsCount },
+        { name: "Total Events", value: totalEventsCount },
     ];
 
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";

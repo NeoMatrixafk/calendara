@@ -4,36 +4,27 @@ import { Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
 
 const NavbarLoggedIn = (props) => {
-    const eventsCount = parseInt(localStorage.getItem("eventsCount")) || 0;
-
+    
     const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-
     const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
-
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const userName = localStorage.getItem("userName");
+    const eventsCount = parseInt(localStorage.getItem('eventsCount')) || 0;
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        async function fetchallEvents() {
-            try {
-                const response = await axios.get(
-                    `http://localhost:55555/api/events/${userName}`
-                );
-                setEvents(response.data);
-                setFilteredEvents(response.data);
-            } catch (error) {
-                console.error("Error fetching events:", error);
-            }
+    const fetchEvents = useCallback(async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:55555/api/events/${userName}`
+            );
+            setEvents(response.data);
+            setFilteredEvents(response.data);
+        } catch (error) {
+            console.error("Error fetching events:", error);
         }
-
-        fetchallEvents();
     }, [userName]);
 
     const filterEventsByTitle = useCallback(() => {
@@ -44,11 +35,25 @@ const NavbarLoggedIn = (props) => {
     }, [searchQuery, events]);
 
     useEffect(() => {
+        fetchEvents();
+    }, [fetchEvents]);
+
+    useEffect(() => {
         filterEventsByTitle();
-    }, [filterEventsByTitle]);
+    }, [searchQuery, events, filterEventsByTitle]);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+    };
+
+    const handleClose = () => {
+        setShow(false);
+        setSearchQuery(""); // Reset search query when modal is closed
+    };
+
+    const handleShow = () => {
+        setShow(true);
+        fetchEvents(); // Fetch events again when modal is shown
     };
 
     const handleLogout = () => {
@@ -60,8 +65,6 @@ const NavbarLoggedIn = (props) => {
         localStorage.removeItem("userBGImage");
         window.location.reload();
     };
-
-    const navigate = useNavigate();
 
     return (
         <>
