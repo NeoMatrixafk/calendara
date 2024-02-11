@@ -24,7 +24,7 @@ const Popping = ({
     const navigate = useNavigate();
 
     const handleUpdate = async () => {
-       navigate(`/event/${id}/update`);
+        navigate(`/event/${id}/update`);
     };
 
     const modal = () => {
@@ -85,6 +85,39 @@ const Popping = ({
                             to: {end}
                         </p>
                     </div>
+                    <div className="mb-1 mt-3">
+                        <p
+                            className={`lead text-${
+                                mode === "light" ? "black" : "white"
+                            }`}
+                        >
+                            Status:
+                        </p>
+                        <div className="d-flex justify-content-center">
+                            <p
+                                className={`text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Not Completed
+                            </p>
+                            <div className="form-check form-switch mx-4">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    role="switch"
+                                    id="flexSwitchCheckDefault"
+                                />
+                            </div>
+                            <p
+                                className={`text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Completed
+                            </p>
+                        </div>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer
                     style={{
@@ -97,7 +130,9 @@ const Popping = ({
                     <Button variant="warning" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="success" onClick={handleUpdate}>Update</Button>
+                    <Button variant="success" onClick={handleUpdate}>
+                        Update
+                    </Button>
                     <Button variant="danger" onClick={handleDelete}>
                         Delete
                     </Button>
