@@ -3,6 +3,24 @@ const Event = require("../models/Event");
 const handleError = require("../utils/eventErrors");
 
 
+router.get("/upcoming/:userName", async (req, res) => {
+    const name = req.params.userName;
+
+    try {
+        const currentDate = new Date();
+        
+        // Find events for the given userName that occur after the current date and time
+        const events = await Event.find({
+            admin: name,
+            start: { $gte: currentDate },
+        });
+
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
 
 router.get("/7days/:userName", async (req, res) => {
 
