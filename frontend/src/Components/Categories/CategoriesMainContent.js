@@ -11,7 +11,7 @@ const CategoriesMainContent = (props) => {
         async function fetchEvents() {
             
             try {
-                // Encode the selectedColor value to ensure it's properly formatted for URL
+                // Encode the selectedColor value to ensure it's properly formatted for  URL
                 const encodedColor = encodeURIComponent(selectedColor);
                 const response = await axios.get(
                     `http://localhost:55555/api/categories/${userName}/${encodedColor}`
