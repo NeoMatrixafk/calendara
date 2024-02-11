@@ -1,9 +1,11 @@
 const router = require("express").Router();
-const { profilebgpic } = require("../models/profilebgpic");
+const { profileBgPic } = require("../models/profileBgPic");
 
+
+//posting background picture from client to server
 router.post("/", async (req, res) => {
     try {
-        await new profilebgpic({ ...req.body }).save();
+        await new profileBgPic({ ...req.body }).save();
         res.status(201).send({
             success: true,
             message: "Image uploaded successfully.",
@@ -17,11 +19,12 @@ router.post("/", async (req, res) => {
     }
 });
 
+//getting background picture from server to client according to email
 router.get("/:email", async (req, res) => {
     const email = req.params.email;
 
     try {
-        const bgimageBody = await profilebgpic.findOne({ email: email });
+        const bgimageBody = await profileBgPic.findOne({ email: email });
         if (!bgimageBody) {
             console.log(
                 `No document found for email: ${email}. Nothing to get.`
@@ -35,11 +38,12 @@ router.get("/:email", async (req, res) => {
     }
 });
 
+//deleting background picture from server according to email
 router.delete("/:email", async (req, res) => {
     const email = req.params.email;
 
     try {
-        const bgimageBody = await profilebgpic.findOne({ email: email });
+        const bgimageBody = await profileBgPic.findOne({ email: email });
 
         if (!bgimageBody) {
             console.log(

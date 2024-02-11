@@ -1,11 +1,12 @@
 const router = require("express").Router();
-const { contactus } = require("../models/contactus");
+const { contactUs } = require("../models/contactUs");
 
+//posting contactus form from client to server
 router.post("/", async (req, res) => {
     const successMessage = "User created successfully";
 
     try {
-        await new contactus({ ...req.body }).save();
+        await new contactUs({ ...req.body }).save();
         res.status(201).json({ message: successMessage });
     } catch (error) {
         res.status(500).send({ message: "Internal Server Error" });

@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+
+//connecting to online mongodb atlas database
+//getting mongodb account username and password from .env file
 module.exports = () => {
     try {
         mongoose.connect(

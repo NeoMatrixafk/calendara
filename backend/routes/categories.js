@@ -3,7 +3,7 @@ const Event = require("../models/Event");
 const handleError = require("../utils/eventErrors");
 
 
-
+//getting events based on selected category color
 router.get("/:userName/:selectedColor", async (req, res) => {
 
     const userName = req.params.userName;

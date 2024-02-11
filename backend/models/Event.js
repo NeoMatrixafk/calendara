@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+//schema for events
 const EventSchema = new mongoose.Schema({
     admin: { type: String },
     title: {
@@ -33,5 +35,6 @@ const EventSchema = new mongoose.Schema({
     describe: { type: String },
     color: { type: String, default: "#3174ad" },
 });
+
 
 module.exports = mongoose.model("Event", EventSchema);

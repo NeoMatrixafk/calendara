@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { User } = require("../models/user");
 
+
+//getting username and contact number from server to client
 router.get("/:email", async (req, res) => {
     const userEmail = req.params.email;
     let user;
@@ -12,10 +14,10 @@ router.get("/:email", async (req, res) => {
     if (!user) {
         return res.status(404).json({ messsage: "User Not Found" });
     }
-    const userName = user.name; // Save the user's name as a variable
-    const userContact = user.contact; // Save the user's contact as a variable
+    const userName = user.name;
+    const userContact = user.contact;
 
-    return res.status(200).json({ name: userName, contact: userContact }); // Return only the user's name
+    return res.status(200).json({ name: userName, contact: userContact });
 });
 
 module.exports = router;

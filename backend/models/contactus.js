@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+//schema for contactus page
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -8,5 +10,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const contactus = mongoose.model("contactus", userSchema);
+
 
 module.exports = { contactus };
