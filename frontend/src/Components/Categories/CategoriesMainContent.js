@@ -36,7 +36,7 @@ const CategoriesMainContent = (props) => {
                 <div className="container my-5">
                     {events.map((event) => (
                         <li key={event._id} style={{ listStyleType: "none" }}>
-                            <h2>Title: {event.title}</h2>
+                            <h4>Title: {event.title}</h4>
                             <p>
                                 <strong>Start:</strong>{" "}
                                 {new Date(event.start).toLocaleString()}

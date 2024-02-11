@@ -34,8 +34,6 @@ import LightMode from "./Logic/LightMode";
 import DarkMode from "./Logic/DarkMode";
 import UploadEvents from "./Components/Calendar/UploadEvents";
 
-
-
 function App() {
     const user = localStorage.getItem("token");
 
@@ -165,7 +163,14 @@ function App() {
                                 />
                                 <Route
                                     path="/reminders"
-                                    element={<Reminders mode={mode} onEventsCountChange={handleEventsCountChange} />}
+                                    element={
+                                        <Reminders
+                                            mode={mode}
+                                            onEventsCountChange={
+                                                handleEventsCountChange
+                                            }
+                                        />
+                                    }
                                 />
                                 <Route
                                     path="/about-us"

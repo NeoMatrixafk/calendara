@@ -51,77 +51,121 @@ const Reminders = (props) => {
 
         fetch1dayEvents();
     }, [userName]);
-    
-    const totalCount = events7days.length + events3days.length + events1day.length;
-    localStorage.setItem('eventsCount', totalCount);
+
+    const totalCount =
+        events7days.length + events3days.length + events1day.length;
+    localStorage.setItem("eventsCount", totalCount);
     props.onEventsCountChange(totalCount);
 
     return (
         <>
-        <div
-            className={`container my-5 text-${
-                props.mode === "light" ? "black" : "white"
-            }`}
-        >
-            <h1>Reminders</h1>
-            <div className="container my-5">
-                <h3>Within 7 Days</h3>
-                {events7days.map((event) => (
-                    <li key={event._id}>
-                        <h2>{event.title}</h2>
-                        <p>
-                            <strong>Start:</strong>{" "}
-                            {new Date(event.start).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>End:</strong>{" "}
-                            {new Date(event.end).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>Description:</strong> {event.describe}
-                        </p>
-                    </li>
-                ))}
+            <div
+                className={`container my-5 text-${
+                    props.mode === "light" ? "black" : "white"
+                }`}
+            >
+                <h1>Reminders</h1>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-4">
+                            <div className="container my-5">
+                                <h2 className="my-4">Within 7 Days</h2>
+                                {events7days.map((event) => (
+                                    <li
+                                        key={event._id}
+                                        style={{ listStyleType: "none" }}
+                                        className="my-5"
+                                    >
+                                        <h4>Title: {event.title}</h4>
+                                        <p>
+                                            <strong>Start:</strong>{" "}
+                                            {new Date(
+                                                event.start
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p>
+                                            <strong>End:</strong>{" "}
+                                            {new Date(
+                                                event.end
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p>
+                                            <strong>Description:</strong>{" "}
+                                            {event.describe}
+                                        </p>
+                                    </li>
+                                ))}
+                            </div>
+                        </div>
+                        <div
+                            className="col-4"
+                            style={{
+                                borderRight: "1px solid gray",
+                                borderLeft: "1px solid gray",
+                            }}
+                        >
+                            <div className="container my-5">
+                                <h2 className="my-4">Within 3 Days</h2>
+                                {events3days.map((event) => (
+                                    <li
+                                        key={event._id}
+                                        style={{ listStyleType: "none" }}
+                                        className="my-5"
+                                    >
+                                        <h4>Title: {event.title}</h4>
+                                        <p>
+                                            <strong>Start:</strong>{" "}
+                                            {new Date(
+                                                event.start
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p>
+                                            <strong>End:</strong>{" "}
+                                            {new Date(
+                                                event.end
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p>
+                                            <strong>Description:</strong>{" "}
+                                            {event.describe}
+                                        </p>
+                                    </li>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="container my-5">
+                                <h2 className="my-4">Within 1 Day</h2>
+                                {events1day.map((event) => (
+                                    <li
+                                        key={event._id}
+                                        style={{ listStyleType: "none" }}
+                                        className="my-5"
+                                    >
+                                        <h4>Title: {event.title}</h4>
+                                        <p>
+                                            <strong>Start:</strong>{" "}
+                                            {new Date(
+                                                event.start
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p>
+                                            <strong>End:</strong>{" "}
+                                            {new Date(
+                                                event.end
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p>
+                                            <strong>Description:</strong>{" "}
+                                            {event.describe}
+                                        </p>
+                                    </li>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="container my-5">
-                <h3>Within 3 Days</h3>
-                {events3days.map((event) => (
-                    <li key={event._id}>
-                        <h2>{event.title}</h2>
-                        <p>
-                            <strong>Start:</strong>{" "}
-                            {new Date(event.start).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>End:</strong>{" "}
-                            {new Date(event.end).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>Description:</strong> {event.describe}
-                        </p>
-                    </li>
-                ))}
-            </div>
-            <div className="container my-5">
-                <h3>Within 1 Day</h3>
-                {events1day.map((event) => (
-                    <li key={event._id}>
-                        <h2>{event.title}</h2>
-                        <p>
-                            <strong>Start:</strong>{" "}
-                            {new Date(event.start).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>End:</strong>{" "}
-                            {new Date(event.end).toLocaleString()}
-                        </p>
-                        <p>
-                            <strong>Description:</strong> {event.describe}
-                        </p>
-                    </li>
-                ))}
-            </div>
-        </div>
         </>
     );
 };
