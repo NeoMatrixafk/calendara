@@ -28,7 +28,7 @@ const NavbarLoggedIn = (props) => {
     }, [userName]);
 
     const filterEventsByTitle = useCallback(() => {
-        const filtered = events.filter(event =>
+        const filtered = events.filter((event) =>
             event.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredEvents(filtered);
@@ -270,10 +270,10 @@ const NavbarLoggedIn = (props) => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="What are you looking for..."
+                                                placeholder="Search by Event Title..."
                                                 value={searchQuery}
                                                 onChange={handleSearchChange}
-                                                aria-label="Search"
+                                                aria-label="Search Event Title"
                                                 style={{
                                                     backgroundColor:
                                                         props.mode === "light"
@@ -295,16 +295,53 @@ const NavbarLoggedIn = (props) => {
                                             props.mode === "light"
                                                 ? "white"
                                                 : "#36393e",
+                                        height: "25rem",
                                     }}
                                 >
-                                    {filteredEvents.map((event) => (
-                                        <div key={event._id} className="my-3">
-                                            <h2>{event.title}</h2>
-                                            <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
-                                            <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
-                                            <p><strong>Description:</strong> {event.describe}</p>
-                                        </div>
-                                    ))}
+                                    {/* Add a conditional check for displaying events */}
+                                    {searchQuery !== "" ? (
+                                        filteredEvents.map((event) => (
+                                            <div
+                                                key={event._id}
+                                                className={`my-3 text-${
+                                                    props.mode === "light"
+                                                        ? "black"
+                                                        : "white"
+                                                }`}
+                                            >
+                                                <h3>{event.title}</h3>
+                                                <p>
+                                                    <strong>Start:</strong>{" "}
+                                                    {new Date(
+                                                        event.start
+                                                    ).toLocaleString()}
+                                                </p>
+                                                <p>
+                                                    <strong>End:</strong>{" "}
+                                                    {new Date(
+                                                        event.end
+                                                    ).toLocaleString()}
+                                                </p>
+                                                <p>
+                                                    <strong>
+                                                        Description:
+                                                    </strong>{" "}
+                                                    {event.describe}
+                                                </p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p
+                                            className={`text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "light"
+                                            }`}
+                                        >
+                                            Enter a search query to find events
+                                            by title.
+                                        </p>
+                                    )}
                                 </Modal.Body>
 
                                 <Modal.Footer
