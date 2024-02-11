@@ -31,7 +31,9 @@ const Categories = (props) => {
     }, [selectedColor, userName]);
 
     const handleCheckboxClick = (colorValue) => {
-        setSelectedColor(colorValue);
+        setSelectedColor((prevColor) =>
+            prevColor === colorValue ? null : colorValue
+        );
     };
 
     return (
@@ -64,6 +66,9 @@ const Categories = (props) => {
                                                         : "white",
                                                 height: "2.5rem",
                                             }}
+                                            onClick={() =>
+                                                handleCheckboxClick(colorValue)
+                                            }
                                         >
                                             <div className="form-check d-flex justify-content-center align-items-center">
                                                 <input
@@ -73,7 +78,7 @@ const Categories = (props) => {
                                                         selectedColor ===
                                                         colorValue
                                                     }
-                                                    onChange={() =>
+                                                    onClick={() =>
                                                         handleCheckboxClick(
                                                             colorValue
                                                         )
