@@ -4,7 +4,6 @@ import { Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
 
 const NavbarLoggedIn = (props) => {
-    
     const [show, setShow] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
@@ -12,7 +11,7 @@ const NavbarLoggedIn = (props) => {
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const userName = localStorage.getItem("userName");
-    const eventsCount = parseInt(localStorage.getItem('eventsCount')) || 0;
+    const eventsCount = parseInt(localStorage.getItem("eventsCount")) || 0;
     const navigate = useNavigate();
 
     const fetchEvents = useCallback(async () => {
@@ -296,6 +295,7 @@ const NavbarLoggedIn = (props) => {
                                                 ? "white"
                                                 : "#36393e",
                                         height: "25rem",
+                                        overflowY: "auto",
                                     }}
                                 >
                                     {/* Add a conditional check for displaying events */}
@@ -303,7 +303,7 @@ const NavbarLoggedIn = (props) => {
                                         filteredEvents.map((event) => (
                                             <div
                                                 key={event._id}
-                                                className={`my-3 text-${
+                                                className={`mt-2    mb-5 text-${
                                                     props.mode === "light"
                                                         ? "black"
                                                         : "white"
