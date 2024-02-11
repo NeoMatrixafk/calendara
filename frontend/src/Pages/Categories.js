@@ -78,11 +78,6 @@ const Categories = (props) => {
                                                         selectedColor ===
                                                         colorValue
                                                     }
-                                                    onClick={() =>
-                                                        handleCheckboxClick(
-                                                            colorValue
-                                                        )
-                                                    }
                                                 />
                                             </div>
                                         </button>
