@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
+import axios from "axios";
+
+
 
 const OverdueEvents = (props) => {
+
+    const [totalEventsCount, setTotalEventsCount] = useState(0);
+    const userName = localStorage.getItem("userName");
+
+    useEffect(() => {
+        const fetchTotalEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/reminders/total/${userName}`);
+                const events = response.data;
+                setTotalEventsCount(events.length);
+            } catch (error) {
+                console.error("Error fetching upcoming events:", error);
+            }
+        };
+
+        fetchTotalEventsData();
+    }, [userName]);
+
     const data = [
-        { name: "Overdue Events", value: 2400 },
-        { name: "Total Events", value: 4567 },
+        { name: "Overdue Events", value: 1 },
+        { name: "Total Events", value: totalEventsCount },
     ];
 
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";
