@@ -27,12 +27,11 @@ const ProfileLoggedIn = (props) => {
 
     const sendEmail = async () => {
         try {
-
             const response = await axios.get(
                 `http://localhost:55555/api/reminders/1day/${userName}`
             );
-            setEventTitle1Day(response.data[0].title)
-            console.log(response.data[0].title)
+            setEventTitle1Day(response.data[0].title);
+            console.log(response.data[0].title);
 
             const response1 = await axios.post(
                 "http://localhost:55555/api/sendMail",
@@ -43,6 +42,7 @@ const ProfileLoggedIn = (props) => {
             );
 
             if (response.status && response1.status === 200) {
+                window.alert("Email Sent");
                 console.log("Email sent successfully");
             } else {
                 console.error("Failed to send email");

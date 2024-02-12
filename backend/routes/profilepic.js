@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const { profilePic } = require("../models/profilePic");
-
+const { profilePic } = require("../models/profilepic");
 
 //posting profile picture from client to server
 router.post("/", async (req, res) => {
@@ -33,8 +32,12 @@ router.get("/:email", async (req, res) => {
             return;
         }
         res.status(200).json(imageBody);
-    } catch (err) {
-        handleError(err, res);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: "Internal Server Error.",
+        });
     }
 });
 
@@ -55,10 +58,13 @@ router.delete("/:email", async (req, res) => {
 
         await imageBody.deleteOne();
         res.status(200).json("Image has been deleted");
-    } catch (err) {
-        handleError(err, res);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: "Internal Server Error.",
+        });
     }
 });
-
 
 module.exports = router;

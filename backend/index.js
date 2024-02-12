@@ -5,22 +5,21 @@ const app = express();
 const cors = require("cors");
 
 //importing database
-const connection = require("./db"); 
+const connection = require("./db");
 
 //importing routes
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const eventRoute = require("./routes/eventRoute");
 const getData = require("./routes/getData");
-const contactUs = require("./routes/contactUs");
-const profilepic = require("./routes/profilePic");
-const profilebgpic = require("./routes/profileBgPic");
+const contactus = require("./routes/contactus");
+const profilepic = require("./routes/profilepic");
+const profilebgpic = require("./routes/profilebgpic");
 const uploadCSV = require("./routes/uploadCSV");
 const uploadXLSX = require("./routes/uploadXLSX");
 const sendMail = require("./routes/sendMail");
 const reminders = require("./routes/remindersRoute");
 const categories = require("./routes/categories");
-
 
 // connecting database
 connection();
@@ -34,7 +33,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoute);
 app.use("/api/getData", getData);
-app.use("/api/contactUs", contactUs);
+app.use("/api/contactus", contactus);
 app.use("/api/profilepic", profilepic);
 app.use("/api/profilebgpic", profilebgpic);
 app.use("/api/uploadCSV", uploadCSV);
