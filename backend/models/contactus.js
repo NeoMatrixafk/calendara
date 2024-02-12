@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+//schema for contactus page
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
@@ -7,6 +9,7 @@ const userSchema = new mongoose.Schema({
     message: { type: String, required: true },
 });
 
-const contactus = mongoose.model("contactus", userSchema);
+const contactUs = mongoose.model("contactUs", userSchema);
 
-module.exports = { contactus };
+
+module.exports = { contactUs };

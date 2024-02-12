@@ -2,7 +2,6 @@ const router = require("express").Router();
 const axios = require("axios");
 const multer = require("multer");
 const xlsx = require("xlsx");
-const moment = require("moment");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -25,8 +24,8 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
 
     const apiCalls = results.map(async (row) => {
         const title = row.Title;
-        const startDate = moment(row.Start, "YYYY-MM-DD").format("YYYY-MM-DD");
-        const endDate = moment(row.End, "YYYY-MM-DD").format("YYYY-MM-DD");
+        const startDate = row.Start;
+        const endDate = row.End;
         const describe = row.Describe;
 
         console.log(
@@ -42,7 +41,7 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
                     start: `${startDate}T00:00:00.000+00:00`,
                     end: `${endDate}T00:00:30.000+00:00`,
                     describe: describe,
-                    color: "#3174ad",
+                    color: "#2196f3",
                 }
             );
             console.log(`API Response for ${title}:`, response.data);

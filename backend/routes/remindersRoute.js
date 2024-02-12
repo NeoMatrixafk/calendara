@@ -3,6 +3,21 @@ const Event = require("../models/Event");
 const handleError = require("../utils/eventErrors");
 
 
+router.get("/total/:userName", async (req, res) => {
+    const name = req.params.userName;
+
+    try {
+        
+        const events = await Event.find({
+            admin: name
+        });
+
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
 router.get("/upcoming/:userName", async (req, res) => {
     const name = req.params.userName;
 

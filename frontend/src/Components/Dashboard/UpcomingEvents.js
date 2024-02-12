@@ -7,12 +7,27 @@ import axios from "axios";
 const UpcomingEvents = (props) => {
     
     const [upcomingEventsCount, setUpcomingEventsCount] = useState(0);
+    const [totalEventsCount, setTotalEventsCount] = useState(0);
     const userName = localStorage.getItem("userName");
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchTotalEventsData = async () => {
             try {
-                const response = await axios.get(`/api/reminders/upcoming/${userName}`);
+                const response = await axios.get(`http://localhost:55555/api/reminders/total/${userName}`);
+                const events = response.data;
+                setTotalEventsCount(events.length);
+            } catch (error) {
+                console.error("Error fetching upcoming events:", error);
+            }
+        };
+
+        fetchTotalEventsData();
+    }, [userName]);
+    
+    useEffect(() => {
+        const fetchUpcomingEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/reminders/upcoming/${userName}`);
                 const events = response.data;
                 setUpcomingEventsCount(events.length);
             } catch (error) {
@@ -20,10 +35,8 @@ const UpcomingEvents = (props) => {
             }
         };
 
-        fetchData();
+        fetchUpcomingEventsData();
     }, [userName]);
-
-    const totalEventsCount = 10; // Assuming you have the total events count
 
     const data = [
         { name: "Upcoming Events", value: upcomingEventsCount },

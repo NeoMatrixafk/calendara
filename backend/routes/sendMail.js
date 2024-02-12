@@ -17,17 +17,17 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/", async (req, res) => {
-    const { recipient } = req.body;
+    const { recipient, eventTitle1Day } = req.body;
 
     const mailOptions = {
         from: {
             name: "calendara Support",
             address: process.env.EMAIL_USER,
         },
-        to: [recipient] || "ayush03neo@gmail.com",
+        to: [recipient],
         subject: "calendara Reminder Email",
-        text: `Hello User this is a reminder about your event ${"xyz"}`,
-        html: `<b>Hello User</b> this is reminder about your event ${"xyz"}`,
+        text: `Hello User this is a reminder about your event ${eventTitle1Day}`,
+        html: `<b>Hello User</b> this is reminder about your event <b>"${eventTitle1Day}"</b>`,
     };
 
     try {

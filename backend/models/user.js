@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 
+
+//schema for account details
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     contact: { type: String, required: true },
@@ -10,6 +12,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
 });
 
+//creating jwt token for authentication
 userSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
         expiresIn: "12h",
@@ -28,5 +31,6 @@ const validate = (data) => {
     });
     return schema.validate(data);
 };
+
 
 module.exports = { User, validate };
