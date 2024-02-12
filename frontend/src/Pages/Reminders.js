@@ -14,6 +14,7 @@ const Reminders = (props) => {
                     `http://localhost:55555/api/reminders/7days/${userName}`
                 );
                 setEvents7days(response.data);
+                console.log(response.data)
             } catch (error) {
                 console.error("Error fetching events:", error);
             }

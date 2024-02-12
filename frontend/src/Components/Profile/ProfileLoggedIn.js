@@ -8,6 +8,7 @@ const ProfileLoggedIn = (props) => {
     const [userName] = useState(localStorage.getItem("userName") || "");
     const [contact] = useState(localStorage.getItem("contact") || "");
     const [email] = useState(localStorage.getItem("email") || "");
+    const [eventTitle1Day, setEventTitle1Day] = useState([]);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -26,14 +27,22 @@ const ProfileLoggedIn = (props) => {
 
     const sendEmail = async () => {
         try {
-            const response = await axios.post(
+
+            const response = await axios.get(
+                `http://localhost:55555/api/reminders/1day/${userName}`
+            );
+            setEventTitle1Day(response.data[0].title)
+            console.log(response.data[0].title)
+
+            const response1 = await axios.post(
                 "http://localhost:55555/api/sendMail",
                 {
                     recipient,
+                    eventTitle1Day,
                 }
             );
 
-            if (response.status === 200) {
+            if (response.status && response1.status === 200) {
                 console.log("Email sent successfully");
             } else {
                 console.error("Failed to send email");
