@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
         },
         to: [recipient],
         subject: "calendara Reminder Email",
-        text: `Hello User this is a reminder about your event "${eventTitle1Day}"`,
+        text: `Hello User this is a reminder about your event ${eventTitle1Day}`,
         html: `<b>Hello User</b> this is reminder about your event <b>"${eventTitle1Day}"</b>`,
     };
 
