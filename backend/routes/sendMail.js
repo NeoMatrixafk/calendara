@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
                                   .join("")
                             : ""
                     }
-        </ul>
+                    </ul>
                     <a href="https://calendara-65xh.onrender.com/#/events">View Your Events</a>
                     <p>Thank you for using calendara!</p>
                 </body>
