@@ -41,7 +41,7 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
                     start: `${startDate}T00:00:00.000+00:00`,
                     end: `${endDate}T00:00:30.000+00:00`,
                     describe: describe,
-                    color: "#3174ad",
+                    color: "#2196f3",
                 }
             );
             console.log(`API Response for ${title}:`, response.data);

@@ -1,14 +1,9 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
-const data = [
-    { name: "Group A", value: 500 },
-    { name: "Group B", value: 200 },
-];
+
 
 // these are the values and color of activity section in the dashboard
-
-const COLORS = ["#00e600", "#ff0000"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -38,6 +33,17 @@ const renderCustomizedLabel = ({
 };
 
 const Activity = (props) => {
+
+    const overdueEventsCount = parseInt(localStorage.getItem("overdueEventsCount") || 0, 10);
+    const completedEventsCount = parseInt(localStorage.getItem("completedEventsCount") || 0, 10);
+
+    const data = [
+        { name: "Group A", value: completedEventsCount },
+        { name: "Group B", value: overdueEventsCount },
+    ];
+
+    const COLORS = ["#00e600", "#ff0000"];
+
     return (
         <>
             <div className="container">

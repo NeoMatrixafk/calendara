@@ -7,6 +7,8 @@ import axios from "axios";
 const OverdueEvents = (props) => {
 
     const [totalEventsCount, setTotalEventsCount] = useState(0);
+    const overdueEventsCount = 1;
+    localStorage.setItem("overdueEventsCount", overdueEventsCount);
     const userName = localStorage.getItem("userName");
 
     useEffect(() => {
@@ -24,7 +26,7 @@ const OverdueEvents = (props) => {
     }, [userName]);
 
     const data = [
-        { name: "Overdue Events", value: 1 },
+        { name: "Overdue Events", value: overdueEventsCount },
         { name: "Total Events", value: totalEventsCount },
     ];
 

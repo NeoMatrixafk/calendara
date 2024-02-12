@@ -34,7 +34,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoute);
 app.use("/api/getData", getData);
-app.use("/api/contactus", contactUs);
+app.use("/api/contactUs", contactUs);
 app.use("/api/profilepic", profilepic);
 app.use("/api/profilebgpic", profilebgpic);
 app.use("/api/uploadCSV", uploadCSV);

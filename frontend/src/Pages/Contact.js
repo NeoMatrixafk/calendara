@@ -20,7 +20,7 @@ const Contact = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const url = "http://localhost:55555/api/contactus";
+        const url = "http://localhost:55555/api/contactUs";
 
         try {
             await axios.post(url, data);
