@@ -110,6 +110,76 @@ const UpdateProfile = (props) => {
         }
     };
 
+    const [newUserName, setNewUserName] = useState("");
+    const [newContactNumber, setNewContactNumber] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+
+    const updateUserName = async () => {
+        const email = localStorage.getItem("email");
+
+        try {
+            const url = `http://localhost:55555/api/updateUserName/${email}`;
+
+            const data = {
+                newUserName: newUserName,
+            };
+
+            const response = await axios.post(url, data);
+
+            if (response.data.success) {
+                console.log("User name successfully updated!");
+            } else {
+                console.error("Failed to update user name");
+            }
+        } catch (error) {
+            console.error("Error updating user name:", error);
+        }
+    };
+
+    const updateContactNumber = async () => {
+        const email = localStorage.getItem("email");
+
+        try {
+            const url = `http://localhost:55555/api/updateContactNumber/${email}`;
+
+            const data = {
+                newContactNumber: newContactNumber,
+            };
+
+            const response = await axios.post(url, data);
+
+            if (response.data.success) {
+                console.log("Contact number successfully updated!");
+            } else {
+                console.error("Failed to update contact number");
+            }
+        } catch (error) {
+            console.error("Error updating contact number:", error);
+        }
+    };
+
+    const updateEmail = async () => {
+        const email = localStorage.getItem("email");
+
+        try {
+            const url = `http://localhost:55555/api/updateEmail/${email}`;
+
+            const data = {
+                newEmail: newEmail,
+            };
+
+            const response = await axios.post(url, data);
+
+            if (response.data.success) {
+                console.log("Email successfully updated!");
+            } else {
+                console.error("Failed to update email");
+            }
+        } catch (error) {
+            console.error("Error updating email:", error);
+        }
+    };
+
     return (
         <>
             <div className="container my-5">
@@ -279,11 +349,14 @@ const UpdateProfile = (props) => {
                                     props.mode === "light" ? "" : "#e6e6e6",
                             }}
                             placeholder="New User Name"
+                            value={newUserName}
+                            onChange={(e) => setNewUserName(e.target.value)}
                         />
                         <button
                             className={`btn btn-${
                                 props.mode === "light" ? "primary" : "warning"
                             }`}
+                            onClick={updateUserName}
                         >
                             Update
                         </button>
@@ -321,11 +394,16 @@ const UpdateProfile = (props) => {
                                     props.mode === "light" ? "" : "#e6e6e6",
                             }}
                             placeholder="New Contact Number"
+                            value={newContactNumber}
+                            onChange={(e) =>
+                                setNewContactNumber(e.target.value)
+                            }
                         />
                         <button
                             className={`btn btn-${
                                 props.mode === "light" ? "primary" : "warning"
                             }`}
+                            onClick={updateContactNumber}
                         >
                             Update
                         </button>
@@ -362,11 +440,14 @@ const UpdateProfile = (props) => {
                                     props.mode === "light" ? "" : "#e6e6e6",
                             }}
                             placeholder="New Email"
+                            value={newEmail}
+                            onChange={(e) => setNewEmail(e.target.value)}
                         />
                         <button
                             className={`btn btn-${
                                 props.mode === "light" ? "primary" : "warning"
                             }`}
+                            onClick={updateEmail}
                         >
                             Update
                         </button>
