@@ -185,7 +185,7 @@ const ProfileLoggedIn = (props) => {
                                 Sign Out
                             </button>
                         </div>
-                        <div className="col d-flex align-items-center justify-content-center">
+                        <div className="col d-flex align-items-center justify-content-center mb-5">
                             <div className="container">
                                 <div
                                     className="row mx-0 rounded w-75"
@@ -238,18 +238,30 @@ const ProfileLoggedIn = (props) => {
                                             View Full Analysis
                                         </Link>
                                     </div>
+                                </div>
+                                <div className="my-5">
                                     <div>
-                                        <div>
-                                            <p>Email: {recipient}</p>
+                                        <p
+                                            className={`text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                        >
+                                            Email: {recipient}
+                                        </p>
 
-                                            <button
-                                                type="button"
-                                                onClick={sendEmail}
-                                                className="btn btn-secondary"
-                                            >
-                                                Send Email
-                                            </button>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={sendEmail}
+                                            className={`btn btn-${
+                                                props.mode === "light"
+                                                    ? "dark"
+                                                    : "light"
+                                            }`}
+                                        >
+                                            Send Email
+                                        </button>
                                     </div>
                                 </div>
                             </div>
