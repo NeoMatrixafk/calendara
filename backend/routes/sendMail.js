@@ -1,9 +1,6 @@
 const express = require("express");
-// do not remove it. removing it is causing error
 const nodemailer = require("nodemailer");
-const router = require("express").Router();
-
-
+const router = express.Router();
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -17,7 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post("/", async (req, res) => {
-    const { recipient, eventTitle1Day } = req.body;
+    const { recipient, eventTitles1Day } = req.body;
 
     const mailOptions = {
         from: {
@@ -25,13 +22,39 @@ router.post("/", async (req, res) => {
             address: process.env.EMAIL_USER,
         },
         to: [recipient],
-        subject: "calendara Reminder Email",
-        text: `Hello User this is a reminder about your event ${eventTitle1Day}`,
-        html: `<b>Hello User</b> this is reminder about your event <b>"${eventTitle1Day}"</b>`,
+        subject: "Calendara Reminder Email",
+        html: `
+            <html>
+                <head>
+                    <style>
+                        p { font-size: 18px; }
+                        ul { list-style-type: none; padding: 0; }
+                        li { margin-bottom: 8px; }
+                        a { display: inline-block; padding: 10px; background-color: #edc9af; color: #ffffff; text-decoration: none; border-radius: 5px; }
+                    </style>
+                </head>
+                <body>
+                    <img src="https://github.com/ayush-sharma11/calendara/blob/master/frontend/public/Images/Logo/calendara_light.png?raw=true" alt="Calendara Logo">
+                    <p>Hello User,</p>
+                    <p>This is a reminder about your upcoming events:</p>
+                    <ul>
+                    ${
+                        Array.isArray(eventTitles1Day)
+                            ? eventTitles1Day
+                                  .map((title) => `<li>${title}</li>`)
+                                  .join("")
+                            : ""
+                    }
+        </ul>
+                    <a href="https://calendara-65xh.onrender.com/#/events">View Your Events</a>
+                    <p>Thank you for using calendara!</p>
+                </body>
+            </html>
+        `,
     };
 
     try {
-        transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
         console.log("Email has been sent");
         res.status(200).send("Email sent successfully");
     } catch (error) {
