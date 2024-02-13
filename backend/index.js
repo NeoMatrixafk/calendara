@@ -18,7 +18,7 @@ const ProfilePic = require("./routes/ProfilePic");
 const ProfileBgPic = require("./routes/ProfileBgPic");
 const UploadCSV = require("./routes/UploadCSV");
 const UploadXLSX = require("./routes/UploadXLSX");
-const sendMail = require("./routes/sendMail");
+const SendMail = require("./routes/SendMail");
 const Reminders = require("./routes/Reminders");
 const Categories = require("./routes/Categories");
 
@@ -39,7 +39,7 @@ app.use("/api/contactus", ContactUs);
 app.use("/api/profilepic", ProfilePic);
 app.use("/api/profilebgpic", ProfileBgPic);
 app.use("/api/uploadcsv", UploadCSV);
-app.use("/api/sendMail", sendMail);
+app.use("/api/sendmail", SendMail);
 app.use("/api/uploadxlsx", UploadXLSX);
 app.use("/api/reminders", Reminders);
 app.use("/api/categories", Categories);

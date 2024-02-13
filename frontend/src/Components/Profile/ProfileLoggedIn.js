@@ -63,7 +63,7 @@ const ProfileLoggedIn = (props) => {
 
             if (Array.isArray(eventTitles1Day)) {
                 const response1 = await axios.post(
-                    "http://localhost:55555/api/sendMail",
+                    "http://localhost:55555/api/sendmail",
                     {
                         recipient,
                         eventTitles1Day,
