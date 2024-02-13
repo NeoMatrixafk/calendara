@@ -1,7 +1,8 @@
 import React, { useState } from "react"; //imports
 import { Button } from "react-bootstrap";
-
 import axios from "axios";
+
+
 
 const SignUpForm = (props) => {
     const [data, setData] = useState({
@@ -58,7 +59,7 @@ const SignUpForm = (props) => {
             localStorage.setItem("contact", data.contact);
 
             window.alert(`Account created successfully for ${data.name}.`);
-            window.location.reload();
+            window.location.reload(); 
 
             console.log(res.message);
         } catch (error) {
