@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../models/user");
+const { User } = require("../models/User");
 
 
 //getting username and contact number from server to client
@@ -19,5 +19,6 @@ router.get("/:email", async (req, res) => {
 
     return res.status(200).json({ name: userName, contact: userContact });
 });
+
 
 module.exports = router;

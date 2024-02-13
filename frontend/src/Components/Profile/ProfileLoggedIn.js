@@ -41,6 +41,11 @@ const ProfileLoggedIn = (props) => {
         localStorage.removeItem("email");
         localStorage.removeItem("userProfileImage");
         localStorage.removeItem("userBGImage");
+        localStorage.removeItem("completedEventsCount");
+        localStorage.removeItem("categoryColor");
+        localStorage.removeItem("overdueEventsCount");
+        localStorage.removeItem("eventsCount");
+        localStorage.removeItem("selectedColor");
 
         window.location.reload();
     };
@@ -58,7 +63,7 @@ const ProfileLoggedIn = (props) => {
 
             if (Array.isArray(eventTitles1Day)) {
                 const response1 = await axios.post(
-                    "http://localhost:55555/api/sendMail",
+                    "http://localhost:55555/api/sendmail",
                     {
                         recipient,
                         eventTitles1Day,

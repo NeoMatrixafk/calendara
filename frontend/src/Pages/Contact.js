@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
+
 const Contact = (props) => {
     const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ const Contact = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const url = "http://localhost:55555/api/contactUs";
+        const url = "http://localhost:55555/api/contactus";
 
         try {
             await axios.post(url, data);

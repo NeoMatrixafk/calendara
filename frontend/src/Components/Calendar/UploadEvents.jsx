@@ -48,7 +48,7 @@ const UploadEvents = (props) => {
         try {
             // Upload the CSV file to the server
             const uploadResponse = await axios.post(
-                `http://localhost:55555/api/uploadCSV/${userName}`,
+                `http://localhost:55555/api/uploadcsv/${userName}`,
                 formData,
                 {
                     headers: {
@@ -81,7 +81,7 @@ const UploadEvents = (props) => {
         try {
             // Upload the Excel file to the server
             const uploadResponse = await axios.post(
-                `http://localhost:55555/api/uploadXLSX/${userName}`,
+                `http://localhost:55555/api/uploadxlsx/${userName}`,
                 formData,
                 {
                     headers: {
