@@ -51,19 +51,28 @@ const ProfileLoggedIn = (props) => {
 
     const sendEmail = async () => {
         try {
-            const response1 = await axios.post(
-                "http://localhost:55555/api/sendMail",
-                {
-                    recipient,
-                    eventTitle1Day: eventTitles1Day.join(", "),
-                }
-            );
+            console.log("Data to be sent:", {
+                recipient,
+                eventTitles1Day,
+            });
 
-            if (response1.status === 200) {
-                window.alert("Email Sent");
-                console.log("Email sent successfully");
+            if (Array.isArray(eventTitles1Day)) {
+                const response1 = await axios.post(
+                    "http://localhost:55555/api/sendMail",
+                    {
+                        recipient,
+                        eventTitles1Day,
+                    }
+                );
+
+                if (response1.status === 200) {
+                    window.alert("Email Sent");
+                    console.log("Email sent successfully");
+                } else {
+                    console.error("Failed to send email");
+                }
             } else {
-                console.error("Failed to send email");
+                console.error("eventTitles1Day is not an array");
             }
         } catch (error) {
             console.error("Error sending email:", error);
