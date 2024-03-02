@@ -4,7 +4,7 @@ import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
-import enGB from "date-fns/locale/en-US";
+import enGB from "date-fns/locale/en-GB";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Popping from "./Popping";
 import { closeEvent, ShowEventApi, ShowEventsApi } from "../../Redux/actions";
