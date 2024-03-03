@@ -2,7 +2,6 @@ const router = require("express").Router();
 const { User } = require("../models/User");
 const bcrypt = require("bcrypt");
 
-
 //posting account details from client to server
 router.post("/", async (req, res) => {
     try {
@@ -33,6 +32,5 @@ router.post("/", async (req, res) => {
         res.status(500).send({ status: 500, message: "Internal Server Error" });
     }
 });
-
 
 module.exports = router;

@@ -2,7 +2,8 @@ import React, { useState } from "react"; //imports
 import { Button } from "react-bootstrap";
 import axios from "axios";
 
-
+import { auth } from "./firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const SignUpForm = (props) => {
     const [data, setData] = useState({
@@ -25,12 +26,11 @@ const SignUpForm = (props) => {
     };
 
     const handleChange = ({ currentTarget: input }) => {
-
         setData({ ...data, [input.name]: input.value });
-
     };
 
-    const handleSubmit = async (e) => {     // This function runs when Register button is clicked on.
+    const handleSubmit = async (e) => {
+        // This function runs when Register button is clicked on.
 
         e.preventDefault();
 
@@ -38,32 +38,33 @@ const SignUpForm = (props) => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(data.email);
-        
+
         if (!isValidEmail) {
             alert("Enter a valid email!");
-            console.error('Invalid email format. Must contain "@" and at least one dot.');
+            console.error(
+                'Invalid email format. Must contain "@" and at least one dot.'
+            );
             return;
-    }
+        }
 
-    if (data.contact.length !== 10) {
-        alert("Contact must contain exactly 10 numbers!")
-        return;
-    }
+        if (data.contact.length !== 10) {
+            alert("Contact must contain exactly 10 numbers!");
+            return;
+        }
 
         try {
             const { data: res } = await axios.post(url, data);
 
             setContact(data.contact);
-            console.log(contact)
+            console.log(contact);
 
             localStorage.setItem("contact", data.contact);
 
             window.alert(`Account created successfully for ${data.name}.`);
-            window.location.reload(); 
+            window.location.reload();
 
             console.log(res.message);
         } catch (error) {
-            
             if (error.response && error.response.status === 408) {
                 alert("Contact already exists!");
             } else if (error.response && error.response.status === 409) {
@@ -75,6 +76,27 @@ const SignUpForm = (props) => {
             } else {
                 console.error("Error:", error);
             }
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+
+            const email = result.user.email;
+            const name = result.user.displayName;
+            const contact = result.user.phoneNumber;
+            const profilePic = result.user.photoURL;
+
+            localStorage.setItem("email", email);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("contact", contact);
+            localStorage.setItem("userProfileImage", profilePic);
+
+            console.log("User signed in successfully");
+        } catch (error) {
+            console.error("Error:", error);
         }
     };
 
@@ -103,7 +125,7 @@ const SignUpForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleGoogleSignIn}
                         >
                             <i className="bi bi-google"></i>
                         </Button>
