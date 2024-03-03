@@ -27,7 +27,6 @@ import Error404 from "./Pages/Error404";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 
 import MyCalendar from "./Components/Calendar/Calendar";
-import MyCalendar1 from "./Components/Calendar/Calendar2";
 import AddEvents from "./Components/Calendar/AddEvents";
 import UpdateEvent from "./Components/Calendar/UpdateEvent";
 
@@ -37,6 +36,7 @@ import UploadEvents from "./Components/Calendar/UploadEvents";
 
 function App() {
     const user = localStorage.getItem("token");
+    const auth = localStorage.getItem("auth");
 
     const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
 
@@ -87,7 +87,7 @@ function App() {
             >
                 {shouldRenderNavbarFooter && (
                     <>
-                        {user ? (
+                        {user || auth ? (
                             <NavbarLoggedIn
                                 mode={mode}
                                 toggleMode={toggleMode}
@@ -107,14 +107,14 @@ function App() {
                         <Route
                             path="/auth"
                             element={
-                                user ? (
+                                user || auth ? (
                                     <Navigate replace to="/home" mode={mode} />
                                 ) : (
                                     <Auth mode={mode} />
                                 )
                             }
                         />
-                        {user ? (
+                        {user || auth ? (
                             <>
                                 <Route
                                     path="/"

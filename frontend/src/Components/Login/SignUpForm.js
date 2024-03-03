@@ -3,9 +3,23 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 const SignUpForm = (props) => {
+
+    const [authe, setAuthe] = useState(
+		false || window.localStorage.getItem('auth') === 'true'
+	);
+	const [token, setToken] = useState('');
+
+    let total = authe + token;
+    total = 'dasdasdasdads';
+    console.log(total)
+
+    const [bgimageData, setbgImageData] = useState(
+        localStorage.getItem("userBGImage") || ""
+    ); //remove this as this is signup page
+
     const [data, setData] = useState({
         name: "",
         contact: "",
@@ -94,11 +108,34 @@ const SignUpForm = (props) => {
             localStorage.setItem("contact", contact);
             localStorage.setItem("userProfileImage", profilePic);
 
+            const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+            console.log(bgimagenameURL);
+            const response2 = await axios.get(bgimagenameURL);
+
+            if (response2.data.bgimageData) {
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                console.log(bgimageData);
+            }
+
+            window.location.reload();
+
             console.log("User signed in successfully");
+            window.location.reload();
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setAuthe(true);
+          window.localStorage.setItem('auth', 'true');
+          user.getIdToken().then((token) => {
+            setToken(token);
+          });
+        }
+      });
 
     return (
         <>
