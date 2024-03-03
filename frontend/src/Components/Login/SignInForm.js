@@ -5,9 +5,19 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 const SignInForm = (props) => {
+
+    const [authe, setAuthe] = useState(
+		false || window.localStorage.getItem('auth') === 'true'
+	);
+	const [token, setToken] = useState('');
+
+    let total = authe + token;
+    total = 'dasdasdasdads';
+    console.log(total)
+
     const [viewPassword, setViewPassword] = useState(true);
 
     const toggleViewPassword = () => {
@@ -94,7 +104,7 @@ const SignInForm = (props) => {
             const response = await axios.get(nameURL);
 
             setUserName(response.data.name);
-            setEmail(data.email);
+            setEmail(response.data.email);
             setContact(response.data.contact);
             console.log(userName);
             console.log(email);
@@ -154,11 +164,32 @@ const SignInForm = (props) => {
             localStorage.setItem("contact", contact);
             localStorage.setItem("userProfileImage", profilePic);
 
+            const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+            console.log(bgimagenameURL);
+            const response2 = await axios.get(bgimagenameURL);
+
+            if (response2.data.bgimageData) {
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                console.log(bgimageData);
+            }
+
+            window.location.reload();
             console.log("User signed in successfully");
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setAuthe(true);
+          window.localStorage.setItem('auth', 'true');
+          user.getIdToken().then((token) => {
+            setToken(token);
+          });
+        }
+      });
 
     return (
         <>

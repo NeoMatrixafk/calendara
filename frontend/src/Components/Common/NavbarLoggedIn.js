@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
+import { auth } from "../Login/firebase";
 
 const NavbarLoggedIn = (props) => {
     const [show, setShow] = useState(false);
@@ -55,8 +56,21 @@ const NavbarLoggedIn = (props) => {
         fetchEvents(); // Fetch events again when modal is shown
     };
 
+    const handleSignOut = async () => {
+        try {
+            await auth.signOut();
+            localStorage.removeItem("auth");
+            console.log("User signed out successfully");
+            // Perform any additional actions after sign out if needed
+        } catch (error) {
+            console.error("Error signing out:", error);
+            // Display an appropriate error message to the user
+        }
+    };
+
     const handleLogout = () => {
         localStorage.removeItem("token");
+        handleSignOut();
         localStorage.removeItem("userName");
         localStorage.removeItem("email");
         localStorage.removeItem("contact");
