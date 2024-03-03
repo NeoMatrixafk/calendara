@@ -27,6 +27,7 @@ import Error404 from "./Pages/Error404";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 
 import MyCalendar from "./Components/Calendar/Calendar";
+import MyCalendar1 from "./Components/Calendar/Calendar2";
 import AddEvents from "./Components/Calendar/AddEvents";
 import UpdateEvent from "./Components/Calendar/UpdateEvent";
 
