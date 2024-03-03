@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 
-const SignInForm = (props) => {
+import { auth } from "./firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
+const SignInForm = (props) => {
     const [viewPassword, setViewPassword] = useState(true);
 
     const toggleViewPassword = () => {
@@ -29,8 +31,12 @@ const SignInForm = (props) => {
         localStorage.getItem("contact") || ""
     );
 
-    const [imageData, setImageData] = useState(localStorage.getItem("userProfileImage") || "");
-    const [bgimageData, setbgImageData] = useState(localStorage.getItem("userBGImage") || "");
+    const [imageData, setImageData] = useState(
+        localStorage.getItem("userProfileImage") || ""
+    );
+    const [bgimageData, setbgImageData] = useState(
+        localStorage.getItem("userBGImage") || ""
+    );
 
     const handleChange = ({ currentTarget: input }) => {
         setData({ ...data, [input.name]: input.value });
@@ -50,16 +56,21 @@ const SignInForm = (props) => {
                 const response1 = await axios.get(imagenameURL);
                 if (response1.data.imageData) {
                     setImageData(response1.data.imageData);
-                    localStorage.setItem("userProfileImage", response1.data.imageData);
+                    localStorage.setItem(
+                        "userProfileImage",
+                        response1.data.imageData
+                    );
                 }
 
                 const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${data.email}`;
                 const response2 = await axios.get(bgimagenameURL);
                 if (response2.data.bgimageData) {
                     setbgImageData(response2.data.bgimageData);
-                    localStorage.setItem("userBGImage", response2.data.bgimageData);
+                    localStorage.setItem(
+                        "userBGImage",
+                        response2.data.bgimageData
+                    );
                 }
-
             } catch (error) {
                 console.error("Error fetching user name:", error);
             }
@@ -76,7 +87,6 @@ const SignInForm = (props) => {
         e.preventDefault();
 
         const url = "http://localhost:55555/api/auth";
-        
 
         try {
             const { data: res } = await axios.post(url, data);
@@ -100,7 +110,10 @@ const SignInForm = (props) => {
 
             if (response1.data.imageData) {
                 setImageData(response1.data.imageData);
-                localStorage.setItem("userProfileImage", response1.data.imageData);
+                localStorage.setItem(
+                    "userProfileImage",
+                    response1.data.imageData
+                );
                 console.log(imageData);
             }
 
@@ -115,15 +128,35 @@ const SignInForm = (props) => {
 
             window.alert(`Welcome ${response.data.name || data.email}!`);
             window.location.reload();
-
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 alert("Invalid Email!");
             } else if (error.response && error.response.status === 402) {
                 alert("Invalid Password!");
-            }else {
+            } else {
                 console.error("Error:", error);
             }
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+
+            const email = result.user.email;
+            const name = result.user.displayName;
+            const contact = result.user.phoneNumber;
+            const profilePic = result.user.photoURL;
+
+            localStorage.setItem("email", email);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("contact", contact);
+            localStorage.setItem("userProfileImage", profilePic);
+
+            console.log("User signed in successfully");
+        } catch (error) {
+            console.error("Error:", error);
         }
     };
 
@@ -151,7 +184,7 @@ const SignInForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleGoogleSignIn}
                         >
                             <i className="bi bi-google"></i>
                         </Button>
