@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import {
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    OAuthProvider,
+} from "firebase/auth";
 
 const SignInForm = (props) => {
-
     const [authe, setAuthe] = useState(
-		false || window.localStorage.getItem('auth') === 'true'
-	);
-	const [token, setToken] = useState('');
+        false || window.localStorage.getItem("auth") === "true"
+    );
+    const [token, setToken] = useState("");
 
     let total = authe + token;
-    total = 'dasdasdasdads';
-    console.log(total)
+    total = "";
+    console.log(total);
 
     const [viewPassword, setViewPassword] = useState(true);
 
@@ -181,15 +184,35 @@ const SignInForm = (props) => {
         }
     };
 
+    const handleMicrosoftSignIn = async () => {
+        try {
+            const provider = new OAuthProvider("microsoft.com");
+            provider.addScope("user.read");
+
+            provider.setCustomParameters({
+                prompt: "consent",
+            });
+
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            const email = user.email;
+            const name = user.displayName;
+
+            console.log("Signed in with Microsoft:", email, name);
+        } catch (error) {
+            console.error("Error signing in with Microsoft:", error);
+        }
+    };
     onAuthStateChanged(auth, (user) => {
         if (user) {
-          setAuthe(true);
-          window.localStorage.setItem('auth', 'true');
-          user.getIdToken().then((token) => {
-            setToken(token);
-          });
+            setAuthe(true);
+            window.localStorage.setItem("auth", "true");
+            user.getIdToken().then((token) => {
+                setToken(token);
+            });
         }
-      });
+    });
 
     return (
         <>
@@ -235,7 +258,7 @@ const SignInForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleMicrosoftSignIn}
                         >
                             <i className="bi bi-microsoft"></i>
                         </Button>
@@ -253,7 +276,7 @@ const SignInForm = (props) => {
 
                     <input
                         type="email"
-                        id="email"
+                        id="signin-email"
                         name="email"
                         placeholder="Email"
                         value={data.email}
@@ -270,7 +293,7 @@ const SignInForm = (props) => {
                     <div className="input-group w-100">
                         <input
                             type={viewPassword ? "password" : "text"}
-                            id="password"
+                            id="signin-password"
                             name="password"
                             placeholder="Password"
                             value={data.password}

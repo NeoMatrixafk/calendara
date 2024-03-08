@@ -3,18 +3,21 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import {
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+} from "firebase/auth";
 
 const SignUpForm = (props) => {
-
     const [authe, setAuthe] = useState(
-		false || window.localStorage.getItem('auth') === 'true'
-	);
-	const [token, setToken] = useState('');
+        false || window.localStorage.getItem("auth") === "true"
+    );
+    const [token, setToken] = useState("");
 
     let total = authe + token;
-    total = 'dasdasdasdads';
-    console.log(total)
+    total = "";
+    console.log(total);
 
     const [bgimageData, setbgImageData] = useState(
         localStorage.getItem("userBGImage") || ""
@@ -129,13 +132,13 @@ const SignUpForm = (props) => {
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-          setAuthe(true);
-          window.localStorage.setItem('auth', 'true');
-          user.getIdToken().then((token) => {
-            setToken(token);
-          });
+            setAuthe(true);
+            window.localStorage.setItem("auth", "true");
+            user.getIdToken().then((token) => {
+                setToken(token);
+            });
         }
-      });
+    });
 
     return (
         <>
@@ -154,7 +157,6 @@ const SignUpForm = (props) => {
                     >
                         <b>Create Account</b>
                     </h1>
-
                     <div className="social-icons">
                         <Button
                             className={`icon mx-1 text-${
@@ -197,10 +199,9 @@ const SignUpForm = (props) => {
                             <i className="bi bi-apple"></i>
                         </Button>
                     </div>
-
                     <input
                         type="text"
-                        id="name"
+                        id="signup-name"
                         name="name"
                         placeholder="Name"
                         value={data.name}
@@ -213,7 +214,6 @@ const SignUpForm = (props) => {
                         }}
                         required
                     />
-
                     <input
                         type="text"
                         id="contact"
@@ -229,7 +229,6 @@ const SignUpForm = (props) => {
                         }}
                         required
                     />
-
                     <input
                         type="email"
                         id="email"
@@ -245,11 +244,10 @@ const SignUpForm = (props) => {
                         }}
                         required
                     />
-
                     <div className="input-group w-100">
                         <input
                             type={viewPassword ? "password" : "text"}
-                            id="password"
+                            id="signup-password"
                             name="password"
                             placeholder="Password"
                             value={data.password}
@@ -280,7 +278,6 @@ const SignUpForm = (props) => {
                             ></i>
                         </button>
                     </div>
-
                     <button
                         className={`btn btn-${
                             props.mode === "light" ? "primary" : "danger"
