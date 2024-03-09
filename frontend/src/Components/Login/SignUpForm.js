@@ -7,6 +7,7 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     onAuthStateChanged,
+    OAuthProvider,
 } from "firebase/auth";
 
 const SignUpForm = (props) => {
@@ -130,6 +131,47 @@ const SignUpForm = (props) => {
         }
     };
 
+    const handleMicrosoftSignIn = async () => {
+        try {
+            const provider = new OAuthProvider("microsoft.com");
+            provider.addScope("user.read");
+
+            provider.setCustomParameters({
+                prompt: "consent",
+            });
+
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            const email = user.email;
+            const name = user.displayName;
+            const contact = user.phoneNumber;
+            const profilePic = user.photoURL;
+
+            localStorage.setItem("email", email);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("contact", contact);
+            localStorage.setItem("userProfileImage", profilePic);
+
+            const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+            console.log(bgimagenameURL);
+            const response2 = await axios.get(bgimagenameURL);
+
+            if (response2.data.bgimageData) {
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                console.log(bgimageData);
+            }
+
+            window.location.reload();
+            console.log("User signed in successfully");
+
+            console.log("User signed in successfully with Microsoft");
+        } catch (error) {
+            console.error("Error signing in with Microsoft:", error);
+        }
+    };
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setAuthe(true);
@@ -184,7 +226,7 @@ const SignUpForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleMicrosoftSignIn}
                         >
                             <i className="bi bi-microsoft"></i>
                         </Button>

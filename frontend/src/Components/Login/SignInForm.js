@@ -178,7 +178,7 @@ const SignInForm = (props) => {
             }
 
             window.location.reload();
-            console.log("User signed in successfully");
+            console.log("User signed in successfully with Google");
         } catch (error) {
             console.error("Error:", error);
         }
@@ -198,8 +198,28 @@ const SignInForm = (props) => {
 
             const email = user.email;
             const name = user.displayName;
+            const contact = user.phoneNumber;
+            const profilePic = user.photoURL;
 
-            console.log("Signed in with Microsoft:", email, name);
+            localStorage.setItem("email", email);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("contact", contact);
+            localStorage.setItem("userProfileImage", profilePic);
+
+            const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+            console.log(bgimagenameURL);
+            const response2 = await axios.get(bgimagenameURL);
+
+            if (response2.data.bgimageData) {
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                console.log(bgimageData);
+            }
+
+            window.location.reload();
+            console.log("User signed in successfully");
+
+            console.log("User signed in successfully with Microsoft");
         } catch (error) {
             console.error("Error signing in with Microsoft:", error);
         }
