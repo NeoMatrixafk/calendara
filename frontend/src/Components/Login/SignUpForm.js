@@ -12,6 +12,7 @@ import {
     TwitterAuthProvider,
     linkWithCredential,
     unlink,
+    GithubAuthProvider,
 } from "firebase/auth";
 
 const SignUpForm = (props) => {
@@ -319,6 +320,93 @@ const SignUpForm = (props) => {
         }
     };
 
+    const handleGitHubSignIn = async () => {
+        try {
+            const provider = new GithubAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const credential = GithubAuthProvider.credentialFromResult(result);
+            const user = result.user;
+
+            if (user) {
+                // User is already signed in
+                try {
+                    // Try to link the GitHub account
+                    await linkWithCredential(user, credential);
+                    console.log("GitHub account linked successfully");
+
+                    // Retrieve and store user information
+                    const email = user.email;
+                    const name = user.displayName;
+                    const profilePic = user.photoURL || "";
+
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("userName", name);
+                    localStorage.setItem("userProfileImage", profilePic);
+
+                    window.location.reload();
+                    console.log("User signed in successfully wht GitHub");
+                } catch (error) {
+                    if (error.code === "auth/provider-already-linked") {
+                        // GitHub account is already linked to another account
+                        console.error(
+                            "GitHub account is already linked to another account."
+                        );
+
+                        // Attempt to unlink the GitHub account
+                        try {
+                            await unlink(user, "github.com");
+                            console.log("GitHub account unlinked successfully");
+
+                            // Link the GitHub account again
+                            await linkWithCredential(user, credential);
+                            console.log("GitHub account linked successfully");
+
+                            // Retrieve and store user information
+                            const email = user.email;
+                            const name = user.displayName;
+                            const profilePic = user.photoURL || "";
+
+                            localStorage.setItem("email", email);
+                            localStorage.setItem("userName", name);
+                            localStorage.setItem(
+                                "userProfileImage",
+                                profilePic
+                            );
+
+                            window.location.reload();
+                            console.log(
+                                "User signed in successfully wht GitHub"
+                            );
+                        } catch (unlinkError) {
+                            console.error(
+                                "Error unlinking GitHub account:",
+                                unlinkError
+                            );
+                        }
+                    } else {
+                        console.error("Error linking GitHub account:", error);
+                    }
+                }
+            } else {
+                // User is not signed in
+                // Proceed with the sign-in flow
+                const email = result.additionalUserInfo?.profile?.email;
+                const name = result.additionalUserInfo?.profile?.name;
+                const profilePic =
+                    result.additionalUserInfo?.profile?.profilePic;
+
+                localStorage.setItem("email", email);
+                localStorage.setItem("userName", name);
+                localStorage.setItem("userProfileImage", profilePic);
+
+                window.location.reload();
+                console.log("User signed in successfully wht GitHub");
+            }
+        } catch (error) {
+            console.error("Error signing in with GitHub:", error);
+        }
+    };
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setAuthe(true);
@@ -386,6 +474,16 @@ const SignUpForm = (props) => {
                             onClick={handleTwitterSignIn}
                         >
                             <i className="bi bi-twitter-x"></i>
+                        </Button>
+                        <Button
+                            className={`icon mx-1 text-${
+                                props.mode === "light" ? "white" : "black"
+                            } btn btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                            onClick={handleGitHubSignIn}
+                        >
+                            <i className="bi bi-github"></i>
                         </Button>
                     </div>
                     <input
