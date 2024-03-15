@@ -9,6 +9,7 @@ import {
     signInWithPopup,
     onAuthStateChanged,
     OAuthProvider,
+    FacebookAuthProvider,
 } from "firebase/auth";
 
 const SignInForm = (props) => {
@@ -228,6 +229,39 @@ const SignInForm = (props) => {
             console.error("Error signing in with Microsoft:", error);
         }
     };
+
+    const handleFacebookSignIn = async () => {
+        try {
+            const provider = new FacebookAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+
+            const email = result.user.email;
+            const name = result.user.displayName;
+            const contact = result.user.phoneNumber;
+            const profilePic = result.user.photoURL;
+
+            localStorage.setItem("email", email);
+            localStorage.setItem("userName", name);
+            localStorage.setItem("contact", contact);
+            localStorage.setItem("userProfileImage", profilePic);
+
+            const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+            console.log(bgimagenameURL);
+            const response2 = await axios.get(bgimagenameURL);
+
+            if (response2.data.bgimageData) {
+                setbgImageData(response2.data.bgimageData);
+                localStorage.setItem("userBGImage", response2.data.bgimageData);
+                console.log(bgimageData);
+            }
+
+            window.location.reload();
+            console.log("User signed in successfully with Facebook");
+        } catch (error) {
+            console.error("Error signing in with Facebook:", error);
+        }
+    };
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setAuthe(true);
@@ -272,7 +306,7 @@ const SignInForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleFacebookSignIn}
                         >
                             <i className="bi bi-facebook"></i>
                         </Button>
