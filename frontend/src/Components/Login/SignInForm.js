@@ -10,6 +10,9 @@ import {
     onAuthStateChanged,
     OAuthProvider,
     FacebookAuthProvider,
+    TwitterAuthProvider,
+    linkWithCredential,
+    unlink,
 } from "firebase/auth";
 
 const SignInForm = (props) => {
@@ -258,6 +261,119 @@ const SignInForm = (props) => {
         }
     };
 
+    const handleTwitterSignIn = async () => {
+        try {
+            const provider = new TwitterAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const credential = TwitterAuthProvider.credentialFromResult(result);
+            const user = result.user;
+
+            if (user) {
+                // User is already signed in
+                try {
+                    // Try to link the Twitter account
+                    await linkWithCredential(user, credential);
+                    console.log("Twitter account linked successfully");
+
+                    const email = user.email;
+                    const name = user.displayName;
+                    const contact = user.phoneNumber || "";
+                    const profilePic = user.photoURL || "";
+
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("userName", name);
+                    localStorage.setItem("contact", contact);
+                    localStorage.setItem("userProfileImage", profilePic);
+
+                    window.location.reload();
+                    console.log("User signed in successfully with Twitter");
+                } catch (error) {
+                    if (error.code === "auth/provider-already-linked") {
+                        // Twitter account is already linked to another account
+                        console.error(
+                            "Twitter account is already linked to another account."
+                        );
+
+                        // Attempt to unlink the Twitter account
+                        try {
+                            await unlink(user, "twitter.com");
+                            console.log(
+                                "Twitter account unlinked successfully"
+                            );
+
+                            // Link the Twitter account again
+                            await linkWithCredential(user, credential);
+                            console.log("Twitter account linked successfully");
+
+                            const email = user.email;
+                            const name = user.displayName;
+                            const contact = user.phoneNumber || "";
+                            const profilePic = user.photoURL || "";
+
+                            localStorage.setItem("email", email);
+                            localStorage.setItem("userName", name);
+                            localStorage.setItem("contact", contact);
+                            localStorage.setItem(
+                                "userProfileImage",
+                                profilePic
+                            );
+
+                            window.location.reload();
+                            console.log(
+                                "User signed in successfully with Twitter"
+                            );
+                        } catch (unlinkError) {
+                            console.error(
+                                "Error unlinking Twitter account:",
+                                unlinkError
+                            );
+                        }
+                    } else {
+                        console.error("Error linking Twitter account:", error);
+                    }
+                }
+            } else {
+                // User is not signed in
+                // Proceed with the sign-in flow
+                const email = result.additionalUserInfo?.profile?.email;
+                const name = result.additionalUserInfo?.profile?.name;
+                const contact = result.additionalUserInfo?.profile?.contact;
+                const profilePic =
+                    result.additionalUserInfo?.profile?.profilePic;
+
+                localStorage.setItem("email", email);
+                localStorage.setItem("userName", name);
+                localStorage.setItem("contact", contact);
+                localStorage.setItem("userProfileImage", profilePic);
+
+                const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+                console.log(bgimagenameURL);
+
+                // Error handling for API call
+                try {
+                    const response2 = await axios.get(bgimagenameURL);
+                    if (response2.data.bgimageData) {
+                        setbgImageData(response2.data.bgimageData); // Assuming state variable for background image
+                        localStorage.setItem(
+                            "userBGImage",
+                            response2.data.bgimageData
+                        );
+                    }
+                } catch (error) {
+                    console.error(
+                        "Error fetching user background image:",
+                        error
+                    );
+                }
+
+                window.location.reload();
+                console.log("User signed in successfully with Twitter");
+            }
+        } catch (error) {
+            console.error("Error signing in with Twitter:", error);
+        }
+    };
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setAuthe(true);
@@ -322,9 +438,9 @@ const SignInForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleTwitterSignIn}
                         >
-                            <i className="bi bi-apple"></i>
+                            <i className="bi bi-twitter-x"></i>
                         </Button>
                     </div>
 
