@@ -7,12 +7,15 @@ import listPlugin from '@fullcalendar/list';
 import multiMonthPlugin from '@fullcalendar/multimonth';
 import '../Calendar/calendar2.css';
 import axios from "axios";
+import { Modal } from "react-bootstrap";
+import moment from "moment";
 
 
 
 const Calendar = () => {
   
   const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     // Fetch events for the logged-in user
@@ -26,9 +29,17 @@ const Calendar = () => {
 
       // Fetch events for the specific user from the backend
       const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
+      const convertedEvents = response.data.map(event => ({
+        title: event.title,
+        start: new Date(event.start),
+        end: new Date(event.end),
+        id: event._id,
+        describe: event.describe,
+        color: event.color,
+      }));
       
       // Set the fetched events to the state
-      setEvents(response.data);
+      setEvents(convertedEvents);
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -44,6 +55,24 @@ const Calendar = () => {
     };
 
     setEvents((prevEvents) => [...prevEvents, newEvent]);
+  };
+
+  const handleEventClick = async (arg) => {
+    try {
+      const eventId = arg.event.id; // Assuming event id is available
+      const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
+      setSelectedEvent({
+        ...response.data,
+        start: moment(response.data.start).format("ddd DD MMM YY LT"),
+        end: moment(response.data.end).format("ddd DD MMM YY LT")
+      });
+    } catch (error) {
+      console.error('Error fetching event details:', error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedEvent(null);
   };
 
   return (
@@ -101,8 +130,28 @@ const Calendar = () => {
         
         events={events}
         select={handleDateSelect}
+        eventClick={handleEventClick}
 
       />
+
+{selectedEvent && (
+        <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
+          {/* Render your modal content here using selectedEvent */}
+          {/* Example: */}
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedEvent.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>{selectedEvent.describe}</p>
+            <p>From: {selectedEvent.start}</p>
+            <p>To: {selectedEvent.end}</p>
+            {/* Additional content and buttons */}
+          </Modal.Body>
+          <Modal.Footer>
+            {/* Your modal buttons here */}
+          </Modal.Footer>
+        </Modal>
+      )}
 
     </div>
   );
