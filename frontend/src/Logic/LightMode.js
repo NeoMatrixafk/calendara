@@ -1,4 +1,5 @@
 const LightMode = () => {
+    
     document.documentElement.style.setProperty("--underline-color", "black");
 
     document.documentElement.style.setProperty(
@@ -60,6 +61,7 @@ const LightMode = () => {
         "--input-upload-color",
         "#f2f2f2"
     );
+
 };
 
 export default LightMode;

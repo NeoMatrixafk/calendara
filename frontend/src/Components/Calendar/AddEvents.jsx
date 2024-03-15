@@ -9,6 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
 
+
+
 const schema = yup
     .object({
         title: yup.string().required("Can't Be Empty"),

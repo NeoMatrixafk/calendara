@@ -222,6 +222,24 @@ const NavbarLoggedIn = (props) => {
                                         >
                                             Calendar
                                         </Dropdown.Item>
+                                        <Dropdown.Item
+                                            onClick={() => {
+                                                setShowCalendarDropdown(false);
+                                                navigate("/events2");
+                                            }}
+                                            className={`dropdown-hover-${
+                                                props.mode
+                                            } text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                            style={{
+                                                background: "transparent",
+                                            }}
+                                        >
+                                            Calendar v2.0 (Beta)
+                                        </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </li>
