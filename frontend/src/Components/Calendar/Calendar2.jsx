@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { useForm } from "react-hook-form";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -7,7 +8,7 @@ import listPlugin from '@fullcalendar/list';
 import multiMonthPlugin from '@fullcalendar/multimonth';
 import '../Calendar/calendar2.css';
 import axios from "axios";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import moment from "moment";
 
 
@@ -16,6 +17,10 @@ const Calendar = () => {
   
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
+  const { register, handleSubmit } = useForm();
+  const [modalMode, setModalMode] = useState(null);
+
 
   useEffect(() => {
     // Fetch events for the logged-in user
@@ -54,6 +59,16 @@ const Calendar = () => {
       allDay: arg.allDay
     };
 
+    setSelectedEvent({
+      title: "No Title",
+      start: arg.startStr,
+      end: arg.endStr,
+      describe: "",
+      color: selectedColor // Set the default color from ColorPalette
+    });
+
+    setModalMode("create");
+
     setEvents((prevEvents) => [...prevEvents, newEvent]);
   };
 
@@ -66,13 +81,43 @@ const Calendar = () => {
         start: moment(response.data.start).format("ddd DD MMM YY LT"),
         end: moment(response.data.end).format("ddd DD MMM YY LT")
       });
+      setModalMode("view");
     } catch (error) {
       console.error('Error fetching event details:', error);
     }
   };
 
+  const handleDeleteEvent = async () => {
+    try {
+      if (selectedEvent && selectedEvent._id) {
+        // Ensure selectedEvent and its id are available
+        const eventId = selectedEvent._id;
+        await axios.delete(`http://localhost:55555/api/events/${eventId}/delete`);
+        // Filter out the deleted event from the events array
+        setEvents(events.filter(event => event.id !== eventId));
+        // Close the modal after deletion
+        handleCloseModal();
+        window.alert("Event deleted successfully!");
+      }
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+  };
+
   const handleCloseModal = () => {
+    if (modalMode === "create" && selectedEvent) {
+      // If the modal mode is "create" and an event is selected
+      // Remove the newly created event from the events array
+      const filteredEvents = events.filter(event => event !== selectedEvent);
+      setEvents(filteredEvents);
+    }
     setSelectedEvent(null);
+    setModalMode(null); // Reset modal mode
+  };
+  
+
+  const onSubmit = (data) => {
+    console.log(data)
   };
 
   return (
@@ -134,7 +179,7 @@ const Calendar = () => {
 
       />
 
-{selectedEvent && (
+{selectedEvent && modalMode === "view" && (
         <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
           {/* Render your modal content here using selectedEvent */}
           {/* Example: */}
@@ -148,10 +193,39 @@ const Calendar = () => {
             {/* Additional content and buttons */}
           </Modal.Body>
           <Modal.Footer>
-            {/* Your modal buttons here */}
+            <Button variant="danger" onClick={handleDeleteEvent}>Delete</Button>
           </Modal.Footer>
         </Modal>
       )}
+
+{selectedEvent && modalMode === "create" &&(
+  <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
+    {/* Render your modal content here using selectedEvent */}
+    <Modal.Header closeButton>
+      <Modal.Title>Create Event</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+    <form onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor="title" className={`form-label`}>
+            Event Title
+          </label>
+          <input
+            {...register("title")}
+            type="text"
+            placeholder="Title of your Event"
+            className={`form-control`}
+            id="title"
+            autoComplete="off"
+          />
+      </form>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="success" onClick={handleSubmit(onSubmit)}>Create</Button>
+      <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
+    </Modal.Footer>
+  </Modal>
+)}
+
 
     </div>
   );

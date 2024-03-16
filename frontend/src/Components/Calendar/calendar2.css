@@ -7,8 +7,9 @@
     color: inherit !important; /* Inherit color from parent */
 }
 
-.fc-event {
-    border-width: 3px !important; /* Change the border width */
-} 
+/*.fc-event {
+    border-color: yellow !important;
+    border-width: 3px !important;
+}*/
   
     
