@@ -9,6 +9,10 @@ import {
     onAuthStateChanged,
     OAuthProvider,
     FacebookAuthProvider,
+    TwitterAuthProvider,
+    linkWithCredential,
+    unlink,
+    GithubAuthProvider,
 } from "firebase/auth";
 
 const SignUpForm = (props) => {
@@ -37,8 +41,6 @@ const SignUpForm = (props) => {
     const [contact, setContact] = useState(
         localStorage.getItem("contact") || ""
     );
-
-    const showAlert = () => alert("This feature will be added shortly.");
 
     const toggleViewPassword = () => {
         setViewPassword(!viewPassword);
@@ -205,6 +207,206 @@ const SignUpForm = (props) => {
         }
     };
 
+    const handleTwitterSignIn = async () => {
+        try {
+            const provider = new TwitterAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const credential = TwitterAuthProvider.credentialFromResult(result);
+            const user = result.user;
+
+            if (user) {
+                // User is already signed in
+                try {
+                    // Try to link the Twitter account
+                    await linkWithCredential(user, credential);
+                    console.log("Twitter account linked successfully");
+
+                    const email = user.email;
+                    const name = user.displayName;
+                    const contact = user.phoneNumber || "";
+                    const profilePic = user.photoURL || "";
+
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("userName", name);
+                    localStorage.setItem("contact", contact);
+                    localStorage.setItem("userProfileImage", profilePic);
+
+                    window.location.reload();
+                    console.log("User signed in successfully with Twitter");
+                } catch (error) {
+                    if (error.code === "auth/provider-already-linked") {
+                        // Twitter account is already linked to another account
+                        console.error(
+                            "Twitter account is already linked to another account."
+                        );
+
+                        // Attempt to unlink the Twitter account
+                        try {
+                            await unlink(user, "twitter.com");
+                            console.log(
+                                "Twitter account unlinked successfully"
+                            );
+
+                            // Link the Twitter account again
+                            await linkWithCredential(user, credential);
+                            console.log("Twitter account linked successfully");
+
+                            const email = user.email;
+                            const name = user.displayName;
+                            const contact = user.phoneNumber || "";
+                            const profilePic = user.photoURL || "";
+
+                            localStorage.setItem("email", email);
+                            localStorage.setItem("userName", name);
+                            localStorage.setItem("contact", contact);
+                            localStorage.setItem(
+                                "userProfileImage",
+                                profilePic
+                            );
+
+                            window.location.reload();
+                            console.log(
+                                "User signed in successfully with Twitter"
+                            );
+                        } catch (unlinkError) {
+                            console.error(
+                                "Error unlinking Twitter account:",
+                                unlinkError
+                            );
+                        }
+                    } else {
+                        console.error("Error linking Twitter account:", error);
+                    }
+                }
+            } else {
+                // User is not signed in
+                // Proceed with the sign-in flow
+                const email = result.additionalUserInfo?.profile?.email;
+                const name = result.additionalUserInfo?.profile?.name;
+                const contact = result.additionalUserInfo?.profile?.contact;
+                const profilePic =
+                    result.additionalUserInfo?.profile?.profilePic;
+
+                localStorage.setItem("email", email);
+                localStorage.setItem("userName", name);
+                localStorage.setItem("contact", contact);
+                localStorage.setItem("userProfileImage", profilePic);
+
+                const bgimagenameURL = `http://localhost:55555/api/profilebgpic/${email}`;
+                console.log(bgimagenameURL);
+
+                // Error handling for API call
+                try {
+                    const response2 = await axios.get(bgimagenameURL);
+                    if (response2.data.bgimageData) {
+                        setbgImageData(response2.data.bgimageData); // Assuming state variable for background image
+                        localStorage.setItem(
+                            "userBGImage",
+                            response2.data.bgimageData
+                        );
+                    }
+                } catch (error) {
+                    console.error(
+                        "Error fetching user background image:",
+                        error
+                    );
+                }
+
+                window.location.reload();
+                console.log("User signed in successfully with Twitter");
+            }
+        } catch (error) {
+            console.error("Error signing in with Twitter:", error);
+        }
+    };
+
+    const handleGitHubSignIn = async () => {
+        try {
+            const provider = new GithubAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const credential = GithubAuthProvider.credentialFromResult(result);
+            const user = result.user;
+
+            if (user) {
+                // User is already signed in
+                try {
+                    // Try to link the GitHub account
+                    await linkWithCredential(user, credential);
+                    console.log("GitHub account linked successfully");
+
+                    // Retrieve and store user information
+                    const email = user.email;
+                    const name = user.displayName;
+                    const profilePic = user.photoURL || "";
+
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("userName", name);
+                    localStorage.setItem("userProfileImage", profilePic);
+
+                    window.location.reload();
+                    console.log("User signed in successfully wht GitHub");
+                } catch (error) {
+                    if (error.code === "auth/provider-already-linked") {
+                        // GitHub account is already linked to another account
+                        console.error(
+                            "GitHub account is already linked to another account."
+                        );
+
+                        // Attempt to unlink the GitHub account
+                        try {
+                            await unlink(user, "github.com");
+                            console.log("GitHub account unlinked successfully");
+
+                            // Link the GitHub account again
+                            await linkWithCredential(user, credential);
+                            console.log("GitHub account linked successfully");
+
+                            // Retrieve and store user information
+                            const email = user.email;
+                            const name = user.displayName;
+                            const profilePic = user.photoURL || "";
+
+                            localStorage.setItem("email", email);
+                            localStorage.setItem("userName", name);
+                            localStorage.setItem(
+                                "userProfileImage",
+                                profilePic
+                            );
+
+                            window.location.reload();
+                            console.log(
+                                "User signed in successfully wht GitHub"
+                            );
+                        } catch (unlinkError) {
+                            console.error(
+                                "Error unlinking GitHub account:",
+                                unlinkError
+                            );
+                        }
+                    } else {
+                        console.error("Error linking GitHub account:", error);
+                    }
+                }
+            } else {
+                // User is not signed in
+                // Proceed with the sign-in flow
+                const email = result.additionalUserInfo?.profile?.email;
+                const name = result.additionalUserInfo?.profile?.name;
+                const profilePic =
+                    result.additionalUserInfo?.profile?.profilePic;
+
+                localStorage.setItem("email", email);
+                localStorage.setItem("userName", name);
+                localStorage.setItem("userProfileImage", profilePic);
+
+                window.location.reload();
+                console.log("User signed in successfully wht GitHub");
+            }
+        } catch (error) {
+            console.error("Error signing in with GitHub:", error);
+        }
+    };
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             setAuthe(true);
@@ -269,9 +471,19 @@ const SignUpForm = (props) => {
                             } btn btn-${
                                 props.mode === "light" ? "primary" : "light"
                             }`}
-                            onClick={showAlert}
+                            onClick={handleTwitterSignIn}
                         >
-                            <i className="bi bi-apple"></i>
+                            <i className="bi bi-twitter-x"></i>
+                        </Button>
+                        <Button
+                            className={`icon mx-1 text-${
+                                props.mode === "light" ? "white" : "black"
+                            } btn btn-${
+                                props.mode === "light" ? "primary" : "light"
+                            }`}
+                            onClick={handleGitHubSignIn}
+                        >
+                            <i className="bi bi-github"></i>
                         </Button>
                     </div>
                     <input
