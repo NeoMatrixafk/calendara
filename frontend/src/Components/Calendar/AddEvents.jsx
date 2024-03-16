@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { addEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
 
 
@@ -40,12 +40,16 @@ const schema = yup
     .required();
 
 const AddEvents = ({ addEventApi, error, mode }) => {
+
     const navigate = useNavigate();
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
     const [userName] = useState(localStorage.getItem("userName") || "");
     const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
+
+    const location = useLocation();
+    const { defaultStartDate, defaultEndDate } = location.state || {};
 
     useEffect(() => {
         if (error && !firstRender) {
@@ -184,7 +188,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             onChange={(date) =>
                                                 field.onChange(date)
                                             }
-                                            selected={field.value}
+                                            selected={field.value || defaultStartDate}
                                             value={field.value}
                                             showTimeSelect
                                             timeFormat="HH:mm"
@@ -247,7 +251,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             onChange={(date) =>
                                                 field.onChange(date)
                                             }
-                                            selected={field.value}
+                                            selected={field.value || defaultEndDate}
                                             value={field.value}
                                             timeFormat="HH:mm"
                                             dateFormat="MMMM d, yyyy h:mm aa"

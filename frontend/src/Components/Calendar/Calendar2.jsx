@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import DatePicker from "react-datepicker";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -14,12 +16,14 @@ import moment from "moment";
 
 
 const Calendar = () => {
-  
+
+  const navigate = useNavigate();
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const [modalMode, setModalMode] = useState(null);
+  const [defaultStartDate, setDefaultStartDate] = useState(null); // State variable for default start date
+  const [defaultEndDate, setDefaultEndDate] = useState(null);
 
 
   useEffect(() => {
@@ -59,16 +63,17 @@ const Calendar = () => {
       allDay: arg.allDay
     };
 
+    setDefaultStartDate(new Date(arg.startStr));
+    setDefaultEndDate(new Date(arg.endStr));
+
     setSelectedEvent({
       title: "No Title",
       start: arg.startStr,
       end: arg.endStr,
-      describe: "",
-      color: selectedColor // Set the default color from ColorPalette
+      describe: ""
     });
 
     setModalMode("create");
-
     setEvents((prevEvents) => [...prevEvents, newEvent]);
   };
 
@@ -105,22 +110,70 @@ const Calendar = () => {
   };
 
   const handleCloseModal = () => {
-    if (modalMode === "create" && selectedEvent) {
-      // If the modal mode is "create" and an event is selected
-      // Remove the newly created event from the events array
-      const filteredEvents = events.filter(event => event !== selectedEvent);
-      setEvents(filteredEvents);
-    }
+          
+    const filteredEvents = events.slice(0, events.length - 1); // Remove the last event 
+    setEvents(filteredEvents);
     setSelectedEvent(null);
     setModalMode(null); // Reset modal mode
+
+    setDefaultStartDate(null);
+    setDefaultEndDate(null);
   };
   
+  
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const handleCreateEvent = async (data) => {
+    try {
+      // Get the admin (userName) from localStorage
+      const admin = localStorage.getItem("userName");
+      const title = data.title || "No Title"
+  
+      // Prepare the event data
+      const eventData = {
+        admin: admin,
+        title: title,
+        start: defaultStartDate.toISOString(),
+        end: defaultEndDate.toISOString(),
+        describe: data.describe,
+        // No need to include color here since it has a default value
+      };
+      // Send a POST request to your backend to create the event
+      const response = await axios.post("http://localhost:55555/api/events", eventData);
+  
+      const newEvent = {
+        title: response.data.title,
+        start: new Date(response.data.start),
+        end: new Date(response.data.end),
+        id: response.data._id,
+        describe: response.data.describe,
+        color: response.data.color,
+      };
+      setEvents([...events, newEvent]);
+
+      setModalMode("create");
+      fetchEvents();
+      handleCloseModal();
+
+      // Handle success responses
+      console.log("Event created successfully:", response.data);
+      window.alert("Event created successfully!");
+      navigate("/events2");
+  
+      // Additional logic if needed
+    } catch (error) {
+      // Handle error
+      console.error("Error creating event:", error);
+    }
+  };
+
+  const handleMoreOptions = () => {
+    // Navigate to the '/add-event' route
+    navigate('/add-event', { state: { defaultStartDate, defaultEndDate } });
   };
 
   return (
+   
+  <>
 
     <div>
 
@@ -202,10 +255,12 @@ const Calendar = () => {
   <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
     {/* Render your modal content here using selectedEvent */}
     <Modal.Header closeButton>
-      <Modal.Title>Create Event</Modal.Title>
+      <Modal.Title>Add Event</Modal.Title>
     </Modal.Header>
     <Modal.Body>
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleCreateEvent)}>
+      <div className="mb-4">
+                            
           <label htmlFor="title" className={`form-label`}>
             Event Title
           </label>
@@ -217,17 +272,104 @@ const Calendar = () => {
             id="title"
             autoComplete="off"
           />
+        </div>
+
+        <div className="mb-4" style={{ zIndex: "100" }}>
+                                <label
+                                    htmlFor="start"
+                                    className={`form-label me-3`}
+                                >
+                                    Start Date:
+                                </label>
+                                <Controller
+                                    control={control}
+                                    name="start"
+                                    render={({ field }) => (
+                                        <DatePicker
+                                            placeholderText="Select start date"
+                                            onChange={(date) =>
+                                                field.onChange(date)
+                                            }
+                                            selected={field.value || defaultStartDate}
+                                            value={field.value || defaultStartDate}
+                                            showTimeSelect
+                                            timeFormat="HH:mm"
+                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                            className={`form-control`}
+                                            style={{
+                                                WebkitTextFillColor: "white",
+                                            }}
+                                            id="start"
+                                            autoComplete="off"
+                                        />
+                                    )}
+                                />
+                            </div>
+                            <div className="mb-4" style={{ zIndex: "100" }}>
+                                <label
+                                    htmlFor="end"
+                                    className={`form-label me-4`}
+                                >
+                                    End Date:
+                                </label>
+                                {/* end date controller*/}
+                                <Controller
+                                    control={control}
+                                    name="end"
+                                    render={({ field }) => (
+                                        <DatePicker
+                                            placeholderText="Select end date"
+                                            onChange={(date) =>
+                                                field.onChange(date)
+                                            }
+                                            selected={field.value || defaultEndDate}
+                                            value={field.value || defaultEndDate}
+                                            timeFormat="HH:mm"
+                                            dateFormat="MMMM d, yyyy h:mm aa"
+                                            showTimeSelect
+                                            className={`form-control`}
+                                            id="end"
+                                            autoComplete="off"
+                                        />
+                                    )}
+                                />
+                            </div>
+
+                      <div className="mb-4">
+                                <label
+                                    htmlFor="describe"
+                                    className={`form-label`}
+                                >
+                                    Event Description{" "}
+                                    <span className="text-danger small">
+                                        (optional)
+                                    </span>
+                                </label>
+                                <input
+                                    {...register("describe")}
+                                    type="text"
+                                    placeholder="Describe your event"
+                                    className={`form-control`}
+                                    id="describe"
+                                    aria-describedby="describe"
+                                    autoComplete="off"
+                                />
+                            </div>
+
       </form>
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="success" onClick={handleSubmit(onSubmit)}>Create</Button>
-      <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
+    <Button variant="primary" onClick={handleMoreOptions}>More Options</Button>
+      <Button variant="success" onClick={handleSubmit(handleCreateEvent)}>Create</Button>
     </Modal.Footer>
   </Modal>
 )}
 
 
     </div>
+
+</>
+
   );
 };
 
