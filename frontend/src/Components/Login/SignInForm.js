@@ -167,6 +167,9 @@ const SignInForm = (props) => {
             const contact = result.user.phoneNumber;
             const profilePic = result.user.photoURL;
 
+            console.log(contact);
+            console.log(profilePic);
+
             localStorage.setItem("email", email);
             localStorage.setItem("userName", name);
             localStorage.setItem("contact", contact);
@@ -182,8 +185,9 @@ const SignInForm = (props) => {
                 console.log(bgimageData);
             }
 
-            window.location.reload();
             console.log("User signed in successfully with Google");
+            window.alert(`Welcome ${name || email}!`);
+            window.location.reload();
         } catch (error) {
             console.error("Error:", error);
         }

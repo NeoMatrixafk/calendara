@@ -27,6 +27,7 @@ import Error404 from "./Pages/Error404";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
 
 import MyCalendar from "./Components/Calendar/Calendar";
+import MyCalendar2 from "./Components/Calendar/Calendar2"
 import AddEvents from "./Components/Calendar/AddEvents";
 import UpdateEvent from "./Components/Calendar/UpdateEvent";
 
@@ -204,6 +205,10 @@ function App() {
                                 <Route
                                     path="/events"
                                     element={<MyCalendar mode={mode} />}
+                                />
+                                <Route
+                                    path="/events2"
+                                    element={<MyCalendar2 mode={mode} />}
                                 />
                                 <Route
                                     path="/event/:id/update"

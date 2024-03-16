@@ -1,0 +1,15 @@
+.fc-daygrid-day-number {
+    color: black !important; /* Change the color to black */
+    text-decoration: none !important; /* Remove underlines */
+}
+  
+.fc-nav-link {
+    color: inherit !important; /* Inherit color from parent */
+}
+
+/*.fc-event {
+    border-color: yellow !important;
+    border-width: 3px !important;
+}*/
+  
+    

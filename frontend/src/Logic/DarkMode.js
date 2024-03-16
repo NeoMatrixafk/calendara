@@ -1,4 +1,5 @@
 const DarkMode = () => {
+    
     document.documentElement.style.setProperty("--underline-color", "white");
 
     document.documentElement.style.setProperty(
@@ -60,6 +61,7 @@ const DarkMode = () => {
     document.documentElement.style.setProperty("--inputColor", "gray");
 
     document.documentElement.style.setProperty("--input-upload-color", "#666");
+
 };
 
 export default DarkMode;
