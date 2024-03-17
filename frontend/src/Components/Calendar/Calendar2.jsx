@@ -17,7 +17,7 @@ import '../Calendar/calendar2.css';
 
 
 
-const Calendar = () => {
+const Calendar = ({mode}) => {
 
   const navigate = useNavigate();
   const { register, handleSubmit, control } = useForm();
@@ -27,6 +27,7 @@ const Calendar = () => {
   const [modalMode, setModalMode] = useState(null);
   const [defaultStartDate, setDefaultStartDate] = useState(null);
   const [defaultEndDate, setDefaultEndDate] = useState(null);
+  const [selectedEventId, setSelectedEventId] = useState(null);
 
   useEffect(() => {
 
@@ -69,7 +70,7 @@ const Calendar = () => {
       title: 'No Title',
       start: arg.start,
       end: arg.end,
-      allDay: true
+      allDay: arg.allDay
 
     };
 
@@ -79,7 +80,7 @@ const Calendar = () => {
       start: arg.start,
       end: arg.end,
       describe: "",
-      allDay: true
+      allDay: arg.allDay
 
     });
 
@@ -95,6 +96,7 @@ const Calendar = () => {
     try {
 
       const eventId = arg.event.id;
+      setSelectedEventId(eventId);
       const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
 
       if (arg.event.allDay === true){
@@ -211,6 +213,12 @@ const Calendar = () => {
 
   };
 
+  const handleUpdateEvent = async (arg) => {
+
+    navigate(`/event/${selectedEventId}/update`);
+
+};
+
   return (
   
   <>
@@ -271,7 +279,7 @@ const Calendar = () => {
           meridiem: 'short'
 
         }}
-        
+
         events={events}
         select={handleDateSelect}
         eventClick={handleEventClick}
@@ -282,22 +290,76 @@ const Calendar = () => {
       
         <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
           
-          <Modal.Header closeButton>
+          <Modal.Header
+
+            closeButton
+            closeVariant={mode === "light" ? "black" : "white"}
+            style={{
+              backgroundColor: mode === "light" ? "" : "#36393e",
+            }}
+            className={`border border-${
+              mode === "light" ? "" : "secondary"
+            }`}
             
-            <Modal.Title>{selectedEvent.title}</Modal.Title>
+          >
+            
+            <Modal.Title 
+            
+              className={`text-capitalize text-${
+                mode === "light" ? "black" : "white"
+              }`} 
+            
+            >{selectedEvent.title}</Modal.Title>
             
           </Modal.Header>
           
-          <Modal.Body>
+          <Modal.Body
+          
+            style={{
+              backgroundColor: mode === "light" ? "" : "#36393e",
+            }}
+            className={`border border-${
+              mode === "light" ? "" : "secondary"
+            }`}
+
+          >
             
-            <p>{selectedEvent.describe}</p>
-            <p>From: {selectedEvent.start}</p>
-            <p>To: {selectedEvent.end}</p>
+            <p
+            
+              className={`lead text-${
+                mode === "light" ? "black" : "white"
+              }`}
+
+            >{selectedEvent.describe}</p>
+            <p
+            
+              className={`lead text-${
+                mode === "light" ? "black" : "white"
+              }`}
+
+            >From: {selectedEvent.start}</p>
+            <p
+            
+              className={`lead text-${
+                mode === "light" ? "black" : "white"
+              }`}
+
+            >To: {selectedEvent.end}</p>
 
           </Modal.Body>
 
-          <Modal.Footer>
+          <Modal.Footer
+          
+            style={{
+              backgroundColor: mode === "light" ? "" : "#36393e",
+            }}
+            className={`border border-${
+              mode === "light" ? "" : "secondary"
+            }`}
+          
+          >
             
+            <Button variant="success" onClick={handleUpdateEvent}>Update</Button>
             <Button variant="danger" onClick={handleDeleteEvent}>Delete</Button>
 
           </Modal.Footer>
@@ -310,25 +372,57 @@ const Calendar = () => {
 
         <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
           
-          <Modal.Header closeButton>
+          <Modal.Header
+
+            closeButton
+            closeVariant={mode === "light" ? "black" : "white"}
+            style={{
+              backgroundColor: mode === "light" ? "" : "#36393e",
+            }}
+            className={`border border-${
+              mode === "light" ? "" : "secondary"
+            }`}
             
-            <Modal.Title>Add Event</Modal.Title>
+          >
+            
+            <Modal.Title 
+            
+              className={`text-capitalize text-${
+                mode === "light" ? "black" : "white"
+              }`} 
+            
+            >Add Event</Modal.Title>
             
           </Modal.Header>
           
-          <Modal.Body>
+          <Modal.Body
+          
+            style={{
+              backgroundColor: mode === "light" ? "" : "#36393e",
+            }}
+            className={`border border-${
+              mode === "light" ? "" : "secondary"
+            }`}
+
+          >
             
             <form onSubmit={handleSubmit(handleCreateEvent)}>
 
               <div className="mb-4">
                 
-                <label htmlFor="title" className={`form-label`}>Event Title</label>
+                <label 
+                  htmlFor="title" 
+                  className={`form-label text-${
+                    mode === "light" ? "black" : "white"
+                    }`}>Event Title</label>
                 <input
 
                   {...register("title")}
                   type="text"
                   placeholder="Title of your Event"
-                  className={`form-control`}
+                  className={`form-control text-${
+                    mode === "light" ? "secondary" : "light"
+                }`}
                   id="title"
                   autoComplete="off"
 
@@ -338,7 +432,13 @@ const Calendar = () => {
 
               <div className="mb-2" style={{ zIndex: "100" }}>
 
-                <label htmlFor="start" className={`form-label me-3`}>Start Date:</label>
+                <label 
+                  htmlFor="start" 
+                  className={`form-label me-3 text-${
+                    mode === "light" ? "black" : "white"
+                }`}
+                  
+                >Start Date:</label>
                 
                 <Controller
                   control={control}
@@ -356,7 +456,11 @@ const Calendar = () => {
                       showTimeSelect
                       timeFormat="HH:mm"
                       dateFormat="MMMM d, yyyy h:mm aa"
-                      className={`form-control`}
+                      className={`form-control text-${
+                        mode === "light"
+                            ? "secondary"
+                            : "light"
+                    }`}
                       style={{ WebkitTextFillColor: "white" }}
                       id="start"
                       autoComplete="off"
@@ -371,7 +475,12 @@ const Calendar = () => {
 
               <div className="mb-1" style={{ zIndex: "100" }}>
         
-                <label htmlFor="allDay" className={`form-label me-4`}>All Day:</label>
+                <label 
+                  htmlFor="allDay" 
+                    className={`form-label me-4 text-${
+                      mode === "light" ? "black" : "white"
+                    }`}
+                >All Day:</label>
                   
                   <input
                     type="checkbox"
@@ -380,11 +489,17 @@ const Calendar = () => {
                     className={`form-check-input`}
                   />
 
-                </div>
+              </div>
               
               <div className="mb-4" style={{ zIndex: "100" }}>
                 
-                <label htmlFor="end" className={`form-label me-4`}>End Date:</label>
+                <label 
+                  htmlFor="end" 
+                  className={`form-label me-4 text-${
+                    mode === "light" ? "black" : "white"
+                }`}
+                  
+                >End Date:</label>
 
                   <Controller
                                   
@@ -405,7 +520,9 @@ const Calendar = () => {
                         timeFormat="HH:mm"
                         dateFormat="MMMM d, yyyy h:mm aa"
                         showTimeSelect
-                        className={`form-control`}
+                        className={`form-control text-${
+                          mode === "light" ? "black" : "white"
+                      }`}
                         id="end"
                         autoComplete="off"
                                               
@@ -418,7 +535,9 @@ const Calendar = () => {
               
               <div className="mb-4">
                 
-                <label htmlFor="describe" className={`form-label`}>Event Description{" "}
+                <label htmlFor="describe" className={`form-label text-${
+                    mode === "light" ? "black" : "white"
+                }`}>Event Description{" "}
                   
                   <span className="text-danger small">(optional)</span>
                                       
@@ -429,7 +548,9 @@ const Calendar = () => {
                     {...register("describe")}
                     type="text"
                     placeholder="Describe your event"
-                    className={`form-control`}
+                    className={`form-control text-${
+                      mode === "light" ? "black" : "white"
+                  }`}
                     id="describe"
                     aria-describedby="describe"
                     autoComplete="off"
@@ -442,7 +563,16 @@ const Calendar = () => {
 
           </Modal.Body>
 
-          <Modal.Footer>
+          <Modal.Footer
+          
+            style={{
+              backgroundColor: mode === "light" ? "" : "#36393e",
+            }}
+            className={`border border-${
+              mode === "light" ? "" : "secondary"
+            }`}
+          
+          >
 
             <Button variant="primary" onClick={handleMoreOptions}>More Options</Button>
             <Button variant="success" onClick={handleSubmit(handleCreateEvent)}>Create</Button>

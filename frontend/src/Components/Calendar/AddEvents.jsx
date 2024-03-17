@@ -56,7 +56,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
             setError(error);
         }
         if (!error.start && !error.end && dbError !== false) {
-            setTimeout(navigate("/events"));
+            setTimeout(navigate("/events2"));
         }
     }, [rerender, error, dbError, firstRender, navigate]);
     //using form-hook to register event data
@@ -89,7 +89,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         addEventApi(values).then(() => {
             setRerender(!rerender);
             window.alert("Event created successfully!");
-            navigate("/events");
+            navigate("/events2");
         });
     };
 
@@ -174,7 +174,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     {errors.title?.message}
                                 </p>
                             </div>
-                            <div className="mb-2" style={{ zIndex: "100" }}>
+                            <div className="mb-4" style={{ zIndex: "100" }}>
                                 <label
                                     htmlFor="start"
                                     className={`form-label me-3 text-${
@@ -237,9 +237,11 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                 </p>
                             </div>
 
-                            <div className="mb-1" style={{ zIndex: "100" }}>
+                            <div className="mb-3" style={{ zIndex: "100" }}>
         
-                                <label htmlFor="allDay" className={`form-label me-4`}>All Day:</label>
+                                <label htmlFor="allDay" className={`form-label me-4 text-${
+                      mode === "light" ? "black" : "white"
+                    }`}>All Day:</label>
           
                                     <input
                                         type="checkbox"

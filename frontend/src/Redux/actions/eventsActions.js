@@ -135,6 +135,7 @@ export const updateEventApi = (values, id) => async (dispatch) => {
             end: values.end,
             describe: values.describe,
             color: values.color,
+            allDay: values.allDay
         });
         console.log(result);
         const response = result.data;

@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
 
+
 //schema to validate event inputs
 const schema = yup
     .object({
@@ -35,7 +36,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
             setError(error);
         }
         if (!error.start && !error.end && dbError !== false) {
-            setTimeout(navigate("/events"));
+            setTimeout(navigate("/events2"));
         }
     }, [rerender, dbError, error, firstRender, navigate]);
     //using form-hook to register event data
@@ -52,8 +53,9 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
             end: event.end ? new Date(event.end) : "",
             describe: event.describe
                 ? event.describe
-                : "No description was provided",
-            color: event.color || "#3174ad", // Default color from the event or a default color
+                : " ",
+            color: event.color || "#3174ad",
+            allDay: event.allDay,
         },
     });
 
@@ -64,7 +66,8 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
             console.log(res);
             setRerender(!rerender);
             if (res === "response was successful") {
-                navigate("/events");
+                window.alert("Event updated successfully!");
+                navigate("/events2");
             }
         });
     };
@@ -175,6 +178,22 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                 {dbError.start}
                             </p>
                         </div>
+
+                        <div className="mb-3" style={{ zIndex: "100" }}>
+        
+                            <label htmlFor="allDay" className={`form-label me-4 text-${
+                      mode === "light" ? "black" : "white"
+                    }`}>All Day:</label>
+
+                                <input
+                                    type="checkbox"
+                                    {...register("allDay")}
+                                    id="allDay"
+                                    className={`form-check-input`} gb 
+                                />
+
+                        </div>
+
                         <div className="mb-4" style={{ zIndex: "100" }}>
                             <label
                                 htmlFor="end"
