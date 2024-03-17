@@ -34,6 +34,7 @@ const EventSchema = new mongoose.Schema({
     },
     describe: { type: String },
     color: { type: String, default: "#3174ad" },
+    allDay: { type: Boolean, default: true}
 });
 
 

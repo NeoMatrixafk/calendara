@@ -67,6 +67,10 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         control,
     } = useForm({
         resolver: yupResolver(schema),
+        defaultValues: {
+            start: defaultStartDate || null,
+            end: defaultEndDate || null,
+        },
     });
 
     const onSubmit = async (values) => {
@@ -170,7 +174,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     {errors.title?.message}
                                 </p>
                             </div>
-                            <div className="mb-4" style={{ zIndex: "100" }}>
+                            <div className="mb-2" style={{ zIndex: "100" }}>
                                 <label
                                     htmlFor="start"
                                     className={`form-label me-3 text-${
@@ -189,7 +193,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                                 field.onChange(date)
                                             }
                                             selected={field.value || defaultStartDate}
-                                            value={field.value}
+                                            value={field.value || defaultStartDate}
                                             showTimeSelect
                                             timeFormat="HH:mm"
                                             dateFormat="MMMM d, yyyy h:mm aa"
@@ -232,6 +236,20 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     {dbError.start}
                                 </p>
                             </div>
+
+                            <div className="mb-1" style={{ zIndex: "100" }}>
+        
+                                <label htmlFor="allDay" className={`form-label me-4`}>All Day:</label>
+          
+                                    <input
+                                        type="checkbox"
+                                        {...register("allDay")}
+                                        id="allDay"
+                                        className={`form-check-input`}
+                                    />
+
+                            </div>
+
                             <div className="mb-4" style={{ zIndex: "100" }}>
                                 <label
                                     htmlFor="end"
@@ -252,7 +270,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                                 field.onChange(date)
                                             }
                                             selected={field.value || defaultEndDate}
-                                            value={field.value}
+                                            value={field.value || defaultEndDate}
                                             timeFormat="HH:mm"
                                             dateFormat="MMMM d, yyyy h:mm aa"
                                             showTimeSelect
