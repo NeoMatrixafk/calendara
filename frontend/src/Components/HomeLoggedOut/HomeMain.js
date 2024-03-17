@@ -7,7 +7,7 @@ const HomeMain = (props) => {
         <>
             <div className="container row home-title-animation">
                 <p
-                    className={`mt-5 fw-bold d-flex justify-content-center col-12}`}
+                    className="mt-5 fw-bold d-flex justify-content-center col-12 montserrat-regular-400"
                     style={{
                         fontSize: "4.5rem",
                         color: props.mode === "light" ? "black" : "white",
@@ -16,7 +16,7 @@ const HomeMain = (props) => {
                     Events made easy!
                 </p>
                 <p
-                    className={`d-flex justify-content-center text-${
+                    className={`d-flex justify-content-center montserrat-regular-400 text-${
                         props.mode === "light" ? "black" : "white"
                     }`}
                     style={{ fontSize: "1.5rem" }}
