@@ -172,7 +172,7 @@ const NavbarLoggedIn = (props) => {
                                             fontSize: "1.10rem",
                                         }}
                                         onClick={() => {
-                                            navigate("/events");
+                                            navigate("/events2");
                                         }}
                                     >
                                         Calendar
