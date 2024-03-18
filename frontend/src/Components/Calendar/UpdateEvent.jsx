@@ -27,10 +27,10 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
-    const [selectedColor, setSelectedColor] = useState(
-        event.color || "#3174ad"
-    ); // Default color from the event or a default color
     const { selectedEvent, selectedEventId } = location.state || {};
+    const [selectedColor, setSelectedColor] = useState(
+        selectedEvent.color || "#3174ad"
+    ); // Default color from the event or a default color
 
     useEffect(() => {
         console.log(error);
@@ -191,7 +191,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                     type="checkbox"
                                     {...register("allDay")}
                                     id="allDay"
-                                    className={`form-check-input`} gb 
+                                    className={`form-check-input`} 
                                 />
 
                         </div>

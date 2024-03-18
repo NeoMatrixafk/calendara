@@ -24,17 +24,18 @@ import '../Calendar/calendar2.css';
 const Calendar = ({mode}) => {
   
 
-  const navigate = useNavigate();
-  const { register, handleSubmit, control } = useForm();
+    const navigate = useNavigate();
+    const { register, handleSubmit, control } = useForm();
 
-  //States
-  const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [modalMode, setModalMode] = useState(null);
-  const [defaultStartDate, setDefaultStartDate] = useState(null);
-  const [defaultEndDate, setDefaultEndDate] = useState(null);
-  const [selectedEventId, setSelectedEventId] = useState(null);
+    //States
+    const [events, setEvents] = useState([]);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [modalMode, setModalMode] = useState(null);
+    const [defaultStartDate, setDefaultStartDate] = useState(null);
+    const [defaultEndDate, setDefaultEndDate] = useState(null);
+    const [selectedEventId, setSelectedEventId] = useState(null);
 
+    //Handling Functions
 
     useEffect(() => {
         fetchEvents();
@@ -84,9 +85,9 @@ const Calendar = ({mode}) => {
     setModalMode("create");
     setEvents((prevEvents) => [...prevEvents, newEvent]);
 
-  };
+    };
 
-  const handleCreateEvent = async (data) => {
+    const handleCreateEvent = async (data) => {
 
     try {
 
@@ -132,7 +133,7 @@ const Calendar = ({mode}) => {
       console.error("Error creating event:", error);
 
     }
-  };
+    };
 
     const handleEventClick = async (arg) => {
         try {
@@ -165,20 +166,99 @@ const Calendar = ({mode}) => {
       console.error('Error fetching event details:', error);
 
     }
-  };
+    };
 
-  const handleMoreOptions = () => {
+    const handleMoreOptions = () => {
 
     navigate('/add-event', { state: { defaultStartDate, defaultEndDate } });
 
-  };
+    };
 
-  const handleUpdateEvent = async () => {
+    const handleUpdateEvent = async () => {
 
     navigate(`/event/${selectedEventId}/update`, { state: { selectedEvent, selectedEventId }});
 
-};
+    };
 
+    const handleEventResize = async (arg) => {
+
+        try {
+
+            const eventToUpdate = events.find(event => event.id === arg.event.id);
+            if (eventToUpdate) {
+                // Check if it's a resize within the day grid or time grid
+                const isAllDay = arg.event.allDay;
+                const start = arg.event.start;
+                const end = arg.event.end;
+
+                // Update start and end dates accordingly
+                if (isAllDay) {
+                    eventToUpdate.start = start;
+                    eventToUpdate.end = end;
+                } else {
+                    // Only update the time for non-all-day events
+                    eventToUpdate.start.setHours(start.getHours(), start.getMinutes());
+                    eventToUpdate.end.setHours(end.getHours(), end.getMinutes());
+                }
+
+                // Update the event in the events array
+                setEvents(prevEvents => prevEvents.map(event =>
+                    event.id === eventToUpdate.id ? eventToUpdate : event
+                ));
+
+                await axios.put(`http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate);
+
+                window.alert("Event updated successfully!");
+            }
+        } catch (error) {
+            console.error('Error updating event:', error);
+        }
+    };
+
+    const handleEventDrop = async (arg) => {
+        try {
+            const eventToUpdate = events.find(event => event.id === arg.event.id);
+            if (eventToUpdate) {
+                const isAllDay = arg.event.allDay;
+                const start = arg.event.start;
+                const end = arg.event.end || start;
+    
+                // Check if the event is dragged from all-day to a specific time slot or vice versa
+                if (isAllDay !== eventToUpdate.allDay) {
+                    if (!isAllDay) { // If the event is moved from all-day to a specific time slot
+                        const startDate = new Date(start);
+                        const endDate = end ? new Date(end) : new Date(start); // Set end time to start time if not provided
+                        eventToUpdate.start = startDate;
+                        eventToUpdate.end = endDate;
+                        eventToUpdate.allDay = false; // Update allDay property
+                    } else { // If the event is moved from a specific time slot to all-day
+                        const startDate = new Date(start);
+                        const endDate = end ? new Date(end) : new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1); // End date is set to start date + 1 day
+                        eventToUpdate.start = startDate;
+                        eventToUpdate.end = endDate;
+                        eventToUpdate.allDay = true; // Update allDay property
+                    }
+                } else {
+                    // If the event is dragged within the same view, update its start and end dates
+                    eventToUpdate.start = start;
+                    eventToUpdate.end = end;
+                }
+    
+                setEvents(prevEvents => prevEvents.map(event =>
+                    event.id === eventToUpdate.id ? eventToUpdate : event
+                ));
+    
+                // Make a PUT request to update the event
+                await axios.put(`http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate);
+    
+                window.alert("Event updated successfully!");
+            }
+        } catch (error) {
+            console.error('Error updating event:', error);
+        }
+    };
+    
+    
     const handleDeleteEvent = async () => {
         try {
             if (selectedEvent && selectedEvent._id) {
@@ -198,7 +278,7 @@ const Calendar = ({mode}) => {
         }
     };
 
-  const handleCloseModal = () => {
+    const handleCloseModal = () => {
           
     fetchEvents();
     setSelectedEvent(null);
@@ -206,12 +286,13 @@ const Calendar = ({mode}) => {
     setDefaultEndDate(null);
     setModalMode(null);
 
-  };
+    };
 
 
     return (
         <>
             <div>
+
                 <FullCalendar
                     plugins={[
                         dayGridPlugin,
@@ -262,6 +343,8 @@ const Calendar = ({mode}) => {
                     events={events}
                     select={handleDateSelect}
                     eventClick={handleEventClick}
+                    eventResize={handleEventResize}
+                    eventDrop={handleEventDrop}
                 />
 
                 {selectedEvent && modalMode === "view" && (
@@ -562,6 +645,7 @@ const Calendar = ({mode}) => {
                         </Modal.Footer>
                     </Modal>
                 )}
+
             </div>
         </>
     );
