@@ -33,7 +33,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
 
     const location = useLocation();
-    const { defaultStartDate, defaultEndDate } = location.state || {};
+    const { defaultTitle, defaultDesc, defaultStartDate, defaultEndDate } = location.state || {};
 
     useEffect(() => {
         if (error && !firstRender) {
@@ -52,8 +52,10 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
+            title: defaultTitle || "No Title",
             start: defaultStartDate || null,
             end: defaultEndDate || null,
+            describe: defaultDesc || "",
         },
     });
 
