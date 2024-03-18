@@ -6,11 +6,11 @@ import * as yup from "yup";
 import { ShowEventsApi, updateEventApi } from "../../Redux/actions";
 import { connect } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
 
 
-//schema to validate event inputs
+//validate event inputs
 const schema = yup
     .object({
         title: yup.string().required("Can't Be Empty"),
@@ -23,12 +23,14 @@ const schema = yup
 
 const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
     const [selectedColor, setSelectedColor] = useState(
         event.color || "#3174ad"
     ); // Default color from the event or a default color
+    const { selectedEvent, selectedEventId } = location.state || {};
 
     useEffect(() => {
         console.log(error);
@@ -48,21 +50,21 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
     } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            title: event.title,
-            start: new Date(event.start),
-            end: event.end ? new Date(event.end) : "",
-            describe: event.describe
-                ? event.describe
+            title: selectedEvent.title,
+            start: new Date(selectedEvent.start),
+            end: selectedEvent.end ? new Date(selectedEvent.end) : "",
+            describe: selectedEvent.describe
+                ? selectedEvent.describe
                 : " ",
-            color: event.color || "#3174ad",
-            allDay: event.allDay,
+            color: selectedEvent.color || "#3174ad",
+            allDay: selectedEvent.allDay,
         },
     });
 
     const onSubmit = async (values) => {
         setFirstRender(false);
         values.color = selectedColor; // Add the color to the values object
-        updateEventApi(values, event.id).then((res) => {
+        updateEventApi(values, selectedEventId).then((res) => {
             console.log(res);
             setRerender(!rerender);
             if (res === "response was successful") {

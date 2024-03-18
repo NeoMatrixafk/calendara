@@ -1,8 +1,11 @@
+//React imports
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { Modal, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+
+//FullCalendar imports
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -10,24 +13,28 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from '@fullcalendar/list';
 import multiMonthPlugin from '@fullcalendar/multimonth';
 
+//backend imports
 import axios from "axios";
 import moment from "moment";
 
+//styles imports
 import '../Calendar/calendar2.css';
 
 
-
 const Calendar = ({mode}) => {
+  
 
   const navigate = useNavigate();
   const { register, handleSubmit, control } = useForm();
 
+  //States
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [modalMode, setModalMode] = useState(null);
   const [defaultStartDate, setDefaultStartDate] = useState(null);
   const [defaultEndDate, setDefaultEndDate] = useState(null);
   const [selectedEventId, setSelectedEventId] = useState(null);
+
 
   useEffect(() => {
 
@@ -91,74 +98,6 @@ const Calendar = ({mode}) => {
 
   };
 
-  const handleEventClick = async (arg) => {
-
-    try {
-
-      const eventId = arg.event.id;
-      setSelectedEventId(eventId);
-      const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
-
-      if (arg.event.allDay === true){
-
-        setSelectedEvent({
-
-          ...response.data,
-          start: moment(response.data.start).format("ddd DD MMM YY"),
-          end: moment(response.data.end).format("ddd DD MMM YY"),
-        
-        });
-
-      }
-
-      else {
-
-        setSelectedEvent({
-
-          ...response.data,
-          start: moment(response.data.start).format("ddd DD MMM YY LT"),
-          end: moment(response.data.end).format("ddd DD MMM YY LT"),
-        
-        });
-
-      }
-
-      setModalMode("view");
-
-    } catch (error) {
-
-      console.error('Error fetching event details:', error);
-
-    }
-  };
-
-  const handleDeleteEvent = async () => {
-    try {
-      if (selectedEvent && selectedEvent._id) {
-        // Ensure selectedEvent and its id are available
-        const eventId = selectedEvent._id;
-        await axios.delete(`http://localhost:55555/api/events/${eventId}/delete`);
-        // Filter out the deleted event from the events array
-        setEvents(events.filter(event => event.id !== eventId));
-        // Close the modal after deletion
-        handleCloseModal();
-        window.alert("Event deleted successfully!");
-      }
-    } catch (error) {
-      console.error('Error deleting event:', error);
-    }
-  };
-
-  const handleCloseModal = () => {
-          
-    fetchEvents();
-    setSelectedEvent(null);
-    setDefaultStartDate(null);
-    setDefaultEndDate(null);
-    setModalMode(null);
-
-  };
-  
   const handleCreateEvent = async (data) => {
 
     try {
@@ -207,17 +146,86 @@ const Calendar = ({mode}) => {
     }
   };
 
+  const handleEventClick = async (arg) => {
+
+    try {
+
+      const eventId = arg.event.id;
+      setSelectedEventId(eventId);
+      const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
+
+      if (arg.event.allDay === true){
+
+        setSelectedEvent({
+
+          ...response.data,
+          start: moment(response.data.start).format("ddd DD MMM YY"),
+          end: moment(response.data.end).format("ddd DD MMM YY"),
+        
+        });
+
+      }
+
+      else {
+
+        setSelectedEvent({
+
+          ...response.data,
+          start: moment(response.data.start).format("ddd DD MMM YY LT"),
+          end: moment(response.data.end).format("ddd DD MMM YY LT"),
+        
+        });
+
+      }
+
+      setModalMode("view");
+
+    } catch (error) {
+
+      console.error('Error fetching event details:', error);
+
+    }
+  };
+
   const handleMoreOptions = () => {
 
     navigate('/add-event', { state: { defaultStartDate, defaultEndDate } });
 
   };
 
-  const handleUpdateEvent = async (arg) => {
+  const handleUpdateEvent = async () => {
 
-    navigate(`/event/${selectedEventId}/update`);
+    navigate(`/event/${selectedEventId}/update`, { state: { selectedEvent, selectedEventId }});
 
 };
+
+  const handleDeleteEvent = async () => {
+    try {
+      if (selectedEvent && selectedEvent._id) {
+        // Ensure selectedEvent and its id are available
+        const eventId = selectedEvent._id;
+        await axios.delete(`http://localhost:55555/api/events/${eventId}/delete`);
+        // Filter out the deleted event from the events array
+        setEvents(events.filter(event => event.id !== eventId));
+        // Close the modal after deletion
+        handleCloseModal();
+        window.alert("Event deleted successfully!");
+      }
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+  };
+
+  const handleCloseModal = () => {
+          
+    fetchEvents();
+    setSelectedEvent(null);
+    setDefaultStartDate(null);
+    setDefaultEndDate(null);
+    setModalMode(null);
+
+  };
+
 
   return (
   
