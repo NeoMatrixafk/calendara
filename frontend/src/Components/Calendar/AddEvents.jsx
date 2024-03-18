@@ -16,26 +16,10 @@ const schema = yup
         title: yup.string().required("Can't Be Empty"),
         start: yup
             .date()
-            .required("Please specify the time to start")
-            .test({
-                name: "startBeforeCurrent",
-                message: "Start date must be after the current date and time",
-                test: function (value) {
-                    // Validate that the start date is before the current date and time
-                    return !value || value > new Date();
-                },
-            }),
+            .required("Please specify the time to start"),
         end: yup
             .date()
-            .required("Please specify the time to end")
-            .test({
-                name: "endBeforeCurrent",
-                message: "End date must be after the current date and time",
-                test: function (value) {
-                    // Validate that the end date is before the current date and time
-                    return !value || value > new Date();
-                },
-            }),
+            .required("Please specify the time to end"),
     })
     .required();
 
