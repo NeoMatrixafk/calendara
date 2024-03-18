@@ -42,11 +42,11 @@ const LightMode = () => {
     document.documentElement.style.setProperty("--fc-list-day-text", "black");
     document.documentElement.style.setProperty(
         "--fc-button-background",
-        "#666B74"
+        "#606060"
     );
     document.documentElement.style.setProperty(
         "--fc-button-active-background",
-        "#1e1e1e"
+        "#909090"
     );
     document.documentElement.style.setProperty("--fc-button-color,", "white");
 

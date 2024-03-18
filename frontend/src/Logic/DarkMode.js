@@ -46,7 +46,7 @@ const DarkMode = () => {
     );
     document.documentElement.style.setProperty(
         "--fc-button-active-background",
-        "#666b74"
+        "#696969"
     );
     document.documentElement.style.setProperty("--fc-button-color,", "white");
 
