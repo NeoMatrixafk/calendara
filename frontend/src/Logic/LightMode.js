@@ -1,5 +1,4 @@
 const LightMode = () => {
-    
     document.documentElement.style.setProperty("--underline-color", "black");
 
     document.documentElement.style.setProperty(
@@ -19,30 +18,37 @@ const LightMode = () => {
         "white"
     );
 
+    document.documentElement.style.setProperty("--fc-toolbar-title", "black");
     document.documentElement.style.setProperty(
-        "--rbc-toolbar-label-color",
-        "black"
-    );
-    document.documentElement.style.setProperty("--rbc-header-color", "black");
-    document.documentElement.style.setProperty(
-        "--rbc-date-cell-color",
+        "--fc-col-header-cell-cushion",
         "black"
     );
     document.documentElement.style.setProperty(
-        "--rbc-off-range-bg-color",
-        "#e4e5e7"
+        "--fc-daygrid-day-number",
+        "black"
     );
-    document.documentElement.style.setProperty("--rbc-today-color", "#c8cbd0");
     document.documentElement.style.setProperty(
-        "--rbc-btn-group-color",
+        "--fc-multimonth-title",
         "white"
     );
-    document.documentElement.style.setProperty("--rbc-active-color", "#e4e5e7");
-    document.documentElement.style.setProperty("--rbc-btn-text-color", "black");
     document.documentElement.style.setProperty(
-        "--rbc-btn-hover-color",
-        "#f1f2f3"
+        "--fc-scrollgrid-shrink-cushion",
+        "black"
     );
+    document.documentElement.style.setProperty(
+        "--fc-list-day-side-text",
+        "black"
+    );
+    document.documentElement.style.setProperty("--fc-list-day-text", "black");
+    document.documentElement.style.setProperty(
+        "--fc-button-background",
+        "#666B74"
+    );
+    document.documentElement.style.setProperty(
+        "--fc-button-active-background",
+        "#1e1e1e"
+    );
+    document.documentElement.style.setProperty("--fc-button-color,", "white");
 
     document.documentElement.style.setProperty("--datepicker-color", "white");
 
@@ -61,7 +67,6 @@ const LightMode = () => {
         "--input-upload-color",
         "#f2f2f2"
     );
-
 };
 
 export default LightMode;
