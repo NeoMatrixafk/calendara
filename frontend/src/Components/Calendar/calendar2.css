@@ -12,13 +12,45 @@
     border-width: 3px !important;
 }*/
 
+.fc-toolbar-title {
+    color: var(--fc-toolbar-title, default-color);
+    font-size: 2rem!important;
+}
 .fc-col-header-cell-cushion {
-    color: var(--rbc-header-color, default-color);
+    color: var(--fc-col-header-cell-cushion, default-color);
     text-decoration: none;
+    font-weight: normal;
     font-size: 1.25rem;
 }
-
-.fc-toolbar-title {
-    color: var(--rbc-header-color, default-color);
+.fc-daygrid-day-number {
+    color: var(--fc-daygrid-day-number, default-color)!important;
 }
-    
+.fc-multimonth-title {
+    color: var(--fc-multimonth-title, default-color)!important;
+    font-size: 1.50rem!important;
+    letter-spacing: 0.075rem;
+}
+.fc-scrollgrid-shrink-cushion {
+    color: var(--fc-scrollgrid-shrink-cushion, default-color);
+    text-transform: capitalize;
+}
+.fc-timegrid-slot-label-frame {
+    display: flex;
+    justify-content: center;
+}
+.fc-list-day-side-text{
+    color: var(--fc-list-day-side-text, default-color);
+    text-decoration: none;
+}
+.fc-list-day-text {
+    color: var(--fc-list-day-text, default-color);
+    text-decoration: none;
+}
+.fc-button {
+    background: var(--fc-button-background, default-color)!important;
+    color: var(--fc-button-color)
+}
+
+.fc-button-active{
+    background-color: var(--fc-button-active-background, default-color)!important;
+}

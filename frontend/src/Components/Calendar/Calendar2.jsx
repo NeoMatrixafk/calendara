@@ -1,5 +1,5 @@
 //React imports
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { Modal, Button } from "react-bootstrap";
@@ -18,12 +18,9 @@ import axios from "axios";
 import moment from "moment";
 
 //styles imports
-import '../Calendar/calendar2.css';
+import "../Calendar/calendar2.css";
 
-
-const Calendar = ({mode}) => {
-  
-
+const Calendar = ({ mode }) => {
     const navigate = useNavigate();
     const { register, handleSubmit, control } = useForm();
 
@@ -105,24 +102,25 @@ const Calendar = ({mode}) => {
 
       };
 
-      const response = await axios.post("http://localhost:55555/api/events", eventData);
-  
-      const newEvent = {
+            const response = await axios.post(
+                "http://localhost:55555/api/events",
+                eventData
+            );
 
-        title: response.data.title,
-        start: new Date(response.data.start),
-        end: new Date(response.data.end),
-        id: response.data._id,
-        describe: response.data.describe,
-        color: response.data.color,
-        allDay: response.data.allDay,
+            const newEvent = {
+                title: response.data.title,
+                start: new Date(response.data.start),
+                end: new Date(response.data.end),
+                id: response.data._id,
+                describe: response.data.describe,
+                color: response.data.color,
+                allDay: response.data.allDay,
+            };
 
-      };
-
-      setEvents([...events, newEvent]);
-      setModalMode("create");
-      fetchEvents();
-      handleCloseModal();
+            setEvents([...events, newEvent]);
+            setModalMode("create");
+            fetchEvents();
+            handleCloseModal();
 
       console.log("Event created successfully:", response.data);
       window.alert("Event created successfully!");
@@ -302,7 +300,7 @@ const Calendar = ({mode}) => {
                     ]}
                     //Properties
                     initialView={"dayGridMonth"}
-                    themeSystem="standard"
+                    themeSystem="bootstrap5"
                     height={"100vh"}
                     selectable="true"
                     selectMirror="true"
@@ -481,6 +479,14 @@ const Calendar = ({mode}) => {
                                                 ? "secondary"
                                                 : "light"
                                         }`}
+                                        style={{
+                                            backgroundColor:
+                                                mode === "dark"
+                                                    ? "#666B74"
+                                                    : "white",
+                                            WebkitTextFillColor:
+                                                mode === "dark" ? "white" : "",
+                                        }}
                                         id="title"
                                         autoComplete="off"
                                     />
@@ -518,7 +524,7 @@ const Calendar = ({mode}) => {
                                                 dateFormat="MMMM d, yyyy h:mm aa"
                                                 className={`form-control text-${
                                                     mode === "light"
-                                                        ? "secondary"
+                                                        ? "black"
                                                         : "light"
                                                 }`}
                                                 style={{
@@ -547,6 +553,7 @@ const Calendar = ({mode}) => {
                                         {...register("allDay")}
                                         id="allDay"
                                         className={`form-check-input`}
+                                        style={{ marginLeft: "3%" }}
                                     />
                                 </div>
 
@@ -612,6 +619,14 @@ const Calendar = ({mode}) => {
                                         className={`form-control text-${
                                             mode === "light" ? "black" : "white"
                                         }`}
+                                        style={{
+                                            backgroundColor:
+                                                mode === "dark"
+                                                    ? "#666B74"
+                                                    : "white",
+                                            WebkitTextFillColor:
+                                                mode === "dark" ? "white" : "",
+                                        }}
                                         id="describe"
                                         aria-describedby="describe"
                                         autoComplete="off"
