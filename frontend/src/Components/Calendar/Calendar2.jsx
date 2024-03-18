@@ -10,8 +10,8 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from '@fullcalendar/list';
-import multiMonthPlugin from '@fullcalendar/multimonth';
+import listPlugin from "@fullcalendar/list";
+import multiMonthPlugin from "@fullcalendar/multimonth";
 
 //backend imports
 import axios from "axios";
@@ -36,60 +36,48 @@ const Calendar = ({mode}) => {
   const [selectedEventId, setSelectedEventId] = useState(null);
 
 
-  useEffect(() => {
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
-    fetchEvents();
+    const fetchEvents = async () => {
+        try {
+            const userName = localStorage.getItem("userName");
+            const response = await axios.get(
+                `http://localhost:55555/api/events/${userName}`
+            );
 
-  }, []);
+            const convertedEvents = response.data.map((event) => ({
+                title: event.title,
+                start: new Date(event.start),
+                end: new Date(event.end),
+                id: event._id,
+                describe: event.describe,
+                color: event.color,
+                allDay: event.allDay,
+            }));
 
-  const fetchEvents = async () => {
-
-    try {
-
-      const userName = localStorage.getItem('userName');
-      const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
-
-      const convertedEvents = response.data.map(event => ({
-
-        title: event.title,
-        start: new Date(event.start),
-        end: new Date(event.end),
-        id: event._id,
-        describe: event.describe,
-        color: event.color,
-        allDay: event.allDay,
-
-      }));
-
-      setEvents(convertedEvents);
-
-    } catch (error) {
-
-      console.error('Error fetching events:', error);
-
-    }
-  };
-
-  const handleDateSelect = (arg) => {
-
-    const newEvent = {
-
-      title: 'No Title',
-      start: arg.start,
-      end: arg.end,
-      allDay: arg.allDay
-
+            setEvents(convertedEvents);
+        } catch (error) {
+            console.error("Error fetching events:", error);
+        }
     };
 
-    setSelectedEvent({
+    const handleDateSelect = (arg) => {
+        const newEvent = {
+            title: "No Title",
+            start: arg.start,
+            end: arg.end,
+            allDay: arg.allDay,
+        };
 
-      title: "No Title",
-      start: arg.start,
-      end: arg.end,
-      describe: "",
-      allDay: arg.allDay
-
-    });
+        setSelectedEvent({
+            title: "No Title",
+            start: arg.start,
+            end: arg.end,
+            describe: "",
+            allDay: arg.allDay,
+        });
 
     setDefaultStartDate(new Date(arg.start));
     setDefaultEndDate(new Date(arg.end));
@@ -146,37 +134,29 @@ const Calendar = ({mode}) => {
     }
   };
 
-  const handleEventClick = async (arg) => {
+    const handleEventClick = async (arg) => {
+        try {
+            const eventId = arg.event.id;
+            setSelectedEventId(eventId);
+            const response = await axios.get(
+                `http://localhost:55555/api/events/${eventId}/show`
+            );
 
-    try {
-
-      const eventId = arg.event.id;
-      setSelectedEventId(eventId);
-      const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
-
-      if (arg.event.allDay === true){
-
-        setSelectedEvent({
-
-          ...response.data,
-          start: moment(response.data.start).format("ddd DD MMM YY"),
-          end: moment(response.data.end).format("ddd DD MMM YY"),
-        
-        });
-
-      }
-
-      else {
-
-        setSelectedEvent({
-
-          ...response.data,
-          start: moment(response.data.start).format("ddd DD MMM YY LT"),
-          end: moment(response.data.end).format("ddd DD MMM YY LT"),
-        
-        });
-
-      }
+            if (arg.event.allDay === true) {
+                setSelectedEvent({
+                    ...response.data,
+                    start: moment(response.data.start).format("ddd DD MMM YY"),
+                    end: moment(response.data.end).format("ddd DD MMM YY"),
+                });
+            } else {
+                setSelectedEvent({
+                    ...response.data,
+                    start: moment(response.data.start).format(
+                        "ddd DD MMM YY LT"
+                    ),
+                    end: moment(response.data.end).format("ddd DD MMM YY LT"),
+                });
+            }
 
       setModalMode("view");
 
@@ -199,22 +179,24 @@ const Calendar = ({mode}) => {
 
 };
 
-  const handleDeleteEvent = async () => {
-    try {
-      if (selectedEvent && selectedEvent._id) {
-        // Ensure selectedEvent and its id are available
-        const eventId = selectedEvent._id;
-        await axios.delete(`http://localhost:55555/api/events/${eventId}/delete`);
-        // Filter out the deleted event from the events array
-        setEvents(events.filter(event => event.id !== eventId));
-        // Close the modal after deletion
-        handleCloseModal();
-        window.alert("Event deleted successfully!");
-      }
-    } catch (error) {
-      console.error('Error deleting event:', error);
-    }
-  };
+    const handleDeleteEvent = async () => {
+        try {
+            if (selectedEvent && selectedEvent._id) {
+                // Ensure selectedEvent and its id are available
+                const eventId = selectedEvent._id;
+                await axios.delete(
+                    `http://localhost:55555/api/events/${eventId}/delete`
+                );
+                // Filter out the deleted event from the events array
+                setEvents(events.filter((event) => event.id !== eventId));
+                // Close the modal after deletion
+                handleCloseModal();
+                window.alert("Event deleted successfully!");
+            }
+        } catch (error) {
+            console.error("Error deleting event:", error);
+        }
+    };
 
   const handleCloseModal = () => {
           
@@ -227,376 +209,362 @@ const Calendar = ({mode}) => {
   };
 
 
-  return (
-  
-  <>
-  
-    <div>
-
-      <FullCalendar
-
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin, multiMonthPlugin]}
-        //Properties
-        initialView={"dayGridMonth"}
-        themeSystem="standard"
-        height={"100vh"}
-        selectable="true"
-        selectMirror="true"
-        eventMaxStack={2}
-        dayMaxEvents="true"
-        dayMaxEventRows={3}
-        editable={true}
-        navLinks="true"
-        eventResizableFromStart={true}
-        nowIndicator="true"
-
-        headerToolbar={{
-
-          start: "today prev,next",
-          center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay,multiMonthYear,listMonth"
-
-        }}
-
-        views={{
-
-          dayGridMonth: {
-            titleFormat: { month: 'long', year: 'numeric' },
-          },
-          timeGridWeek: {
-            titleFormat: { month: 'long', year: 'numeric' },
-          },
-
-        }}
-
-        buttonText={{
-
-          today: "Today",
-          month: "Month",
-          week: "Week",
-          day: "Day",
-          multiMonthYear: "Year",
-          listMonth: "Schedule"
-
-        }}
-
-        eventTimeFormat={{
-
-          hour: 'numeric',
-          minute: '2-digit',
-          meridiem: 'short'
-
-        }}
-
-        events={events}
-        select={handleDateSelect}
-        eventClick={handleEventClick}
-
-      />
-
-      {selectedEvent && modalMode === "view" && (
-      
-        <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
-          
-          <Modal.Header
-
-            closeButton
-            closeVariant={mode === "light" ? "black" : "white"}
-            style={{
-              backgroundColor: mode === "light" ? "" : "#36393e",
-            }}
-            className={`border border-${
-              mode === "light" ? "" : "secondary"
-            }`}
-            
-          >
-            
-            <Modal.Title 
-            
-              className={`text-capitalize text-${
-                mode === "light" ? "black" : "white"
-              }`} 
-            
-            >{selectedEvent.title}</Modal.Title>
-            
-          </Modal.Header>
-          
-          <Modal.Body
-          
-            style={{
-              backgroundColor: mode === "light" ? "" : "#36393e",
-            }}
-            className={`border border-${
-              mode === "light" ? "" : "secondary"
-            }`}
-
-          >
-            
-            <p
-            
-              className={`lead text-${
-                mode === "light" ? "black" : "white"
-              }`}
-
-            >{selectedEvent.describe}</p>
-            <p
-            
-              className={`lead text-${
-                mode === "light" ? "black" : "white"
-              }`}
-
-            >From: {selectedEvent.start}</p>
-            <p
-            
-              className={`lead text-${
-                mode === "light" ? "black" : "white"
-              }`}
-
-            >To: {selectedEvent.end}</p>
-
-          </Modal.Body>
-
-          <Modal.Footer
-          
-            style={{
-              backgroundColor: mode === "light" ? "" : "#36393e",
-            }}
-            className={`border border-${
-              mode === "light" ? "" : "secondary"
-            }`}
-          
-          >
-            
-            <Button variant="success" onClick={handleUpdateEvent}>Update</Button>
-            <Button variant="danger" onClick={handleDeleteEvent}>Delete</Button>
-
-          </Modal.Footer>
-
-        </Modal>
-
-      )}
-
-      {selectedEvent && modalMode === "create" &&(
-
-        <Modal show={selectedEvent !== null} onHide={handleCloseModal}>
-          
-          <Modal.Header
-
-            closeButton
-            closeVariant={mode === "light" ? "black" : "white"}
-            style={{
-              backgroundColor: mode === "light" ? "" : "#36393e",
-            }}
-            className={`border border-${
-              mode === "light" ? "" : "secondary"
-            }`}
-            
-          >
-            
-            <Modal.Title 
-            
-              className={`text-capitalize text-${
-                mode === "light" ? "black" : "white"
-              }`} 
-            
-            >Add Event</Modal.Title>
-            
-          </Modal.Header>
-          
-          <Modal.Body
-          
-            style={{
-              backgroundColor: mode === "light" ? "" : "#36393e",
-            }}
-            className={`border border-${
-              mode === "light" ? "" : "secondary"
-            }`}
-
-          >
-            
-            <form onSubmit={handleSubmit(handleCreateEvent)}>
-
-              <div className="mb-4">
-                
-                <label 
-                  htmlFor="title" 
-                  className={`form-label text-${
-                    mode === "light" ? "black" : "white"
-                    }`}>Event Title</label>
-                <input
-
-                  {...register("title")}
-                  type="text"
-                  placeholder="Title of your Event"
-                  className={`form-control text-${
-                    mode === "light" ? "secondary" : "light"
-                }`}
-                  id="title"
-                  autoComplete="off"
-
+    return (
+        <>
+            <div>
+                <FullCalendar
+                    plugins={[
+                        dayGridPlugin,
+                        timeGridPlugin,
+                        interactionPlugin,
+                        listPlugin,
+                        multiMonthPlugin,
+                    ]}
+                    //Properties
+                    initialView={"dayGridMonth"}
+                    themeSystem="standard"
+                    height={"100vh"}
+                    selectable="true"
+                    selectMirror="true"
+                    eventMaxStack={2}
+                    dayMaxEvents="true"
+                    dayMaxEventRows={3}
+                    editable={true}
+                    navLinks="true"
+                    eventResizableFromStart={true}
+                    nowIndicator="true"
+                    headerToolbar={{
+                        start: "today prev,next",
+                        center: "title",
+                        end: "dayGridMonth,timeGridWeek,timeGridDay,multiMonthYear,listMonth",
+                    }}
+                    views={{
+                        dayGridMonth: {
+                            titleFormat: { month: "long", year: "numeric" },
+                        },
+                        timeGridWeek: {
+                            titleFormat: { month: "long", year: "numeric" },
+                        },
+                    }}
+                    buttonText={{
+                        today: "Today",
+                        month: "Month",
+                        week: "Week",
+                        day: "Day",
+                        multiMonthYear: "Year",
+                        listMonth: "Schedule",
+                    }}
+                    eventTimeFormat={{
+                        hour: "numeric",
+                        minute: "2-digit",
+                        meridiem: "short",
+                    }}
+                    events={events}
+                    select={handleDateSelect}
+                    eventClick={handleEventClick}
                 />
 
-              </div>
+                {selectedEvent && modalMode === "view" && (
+                    <Modal
+                        show={selectedEvent !== null}
+                        onHide={handleCloseModal}
+                    >
+                        <Modal.Header
+                            closeButton
+                            closeVariant={mode === "light" ? "black" : "white"}
+                            style={{
+                                backgroundColor:
+                                    mode === "light" ? "" : "#36393e",
+                            }}
+                            className={`border border-${
+                                mode === "light" ? "" : "secondary"
+                            }`}
+                        >
+                            <Modal.Title
+                                className={`text-capitalize text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                {selectedEvent.title}
+                            </Modal.Title>
+                        </Modal.Header>
 
-              <div className="mb-2" style={{ zIndex: "100" }}>
+                        <Modal.Body
+                            style={{
+                                backgroundColor:
+                                    mode === "light" ? "" : "#36393e",
+                            }}
+                            className={`border border-${
+                                mode === "light" ? "" : "secondary"
+                            }`}
+                        >
+                            <p
+                                className={`lead text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                {selectedEvent.describe}
+                            </p>
+                            <p
+                                className={`lead text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                From: {selectedEvent.start}
+                            </p>
+                            <p
+                                className={`lead text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                To: {selectedEvent.end}
+                            </p>
+                        </Modal.Body>
 
-                <label 
-                  htmlFor="start" 
-                  className={`form-label me-3 text-${
-                    mode === "light" ? "black" : "white"
-                }`}
-                  
-                >Start Date:</label>
-                
-                <Controller
-                  control={control}
-                  name="start"
-                  render={({ field }) => (
-                  
-                    <DatePicker
+                        <Modal.Footer
+                            style={{
+                                backgroundColor:
+                                    mode === "light" ? "" : "#36393e",
+                            }}
+                            className={`border border-${
+                                mode === "light" ? "" : "secondary"
+                            }`}
+                        >
+                            <Button
+                                variant="success"
+                                onClick={handleUpdateEvent}
+                            >
+                                Update
+                            </Button>
+                            <Button
+                                variant="danger"
+                                onClick={handleDeleteEvent}
+                            >
+                                Delete
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                )}
 
-                      placeholderText="Select start date"
-                      onChange={(date) =>
-                        field.onChange(date)
-                      }
-                      selected={field.value || defaultStartDate}
-                      value={field.value || defaultStartDate}
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      className={`form-control text-${
-                        mode === "light"
-                            ? "secondary"
-                            : "light"
-                    }`}
-                      style={{ WebkitTextFillColor: "white" }}
-                      id="start"
-                      autoComplete="off"
-                    
-                    />
-                  
-                  )}
+                {selectedEvent && modalMode === "create" && (
+                    <Modal
+                        show={selectedEvent !== null}
+                        onHide={handleCloseModal}
+                    >
+                        <Modal.Header
+                            closeButton
+                            closeVariant={mode === "light" ? "black" : "white"}
+                            style={{
+                                backgroundColor:
+                                    mode === "light" ? "" : "#36393e",
+                            }}
+                            className={`border border-${
+                                mode === "light" ? "" : "secondary"
+                            }`}
+                        >
+                            <Modal.Title
+                                className={`text-capitalize text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Add Event
+                            </Modal.Title>
+                        </Modal.Header>
 
-                />
-              
-              </div>
+                        <Modal.Body
+                            style={{
+                                backgroundColor:
+                                    mode === "light" ? "" : "#36393e",
+                            }}
+                            className={`border border-${
+                                mode === "light" ? "" : "secondary"
+                            }`}
+                        >
+                            <form onSubmit={handleSubmit(handleCreateEvent)}>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="title"
+                                        className={`form-label text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        Event Title
+                                    </label>
+                                    <input
+                                        {...register("title")}
+                                        type="text"
+                                        placeholder="Title of your Event"
+                                        className={`form-control text-${
+                                            mode === "light"
+                                                ? "secondary"
+                                                : "light"
+                                        }`}
+                                        id="title"
+                                        autoComplete="off"
+                                    />
+                                </div>
 
-              <div className="mb-1" style={{ zIndex: "100" }}>
-        
-                <label 
-                  htmlFor="allDay" 
-                    className={`form-label me-4 text-${
-                      mode === "light" ? "black" : "white"
-                    }`}
-                >All Day:</label>
-                  
-                  <input
-                    type="checkbox"
-                    {...register("allDay")}
-                    id="allDay"
-                    className={`form-check-input`}
-                  />
+                                <div className="mb-2" style={{ zIndex: "100" }}>
+                                    <label
+                                        htmlFor="start"
+                                        className={`form-label me-3 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        Start Date:
+                                    </label>
 
-              </div>
-              
-              <div className="mb-4" style={{ zIndex: "100" }}>
-                
-                <label 
-                  htmlFor="end" 
-                  className={`form-label me-4 text-${
-                    mode === "light" ? "black" : "white"
-                }`}
-                  
-                >End Date:</label>
+                                    <Controller
+                                        control={control}
+                                        name="start"
+                                        render={({ field }) => (
+                                            <DatePicker
+                                                placeholderText="Select start date"
+                                                onChange={(date) =>
+                                                    field.onChange(date)
+                                                }
+                                                selected={
+                                                    field.value ||
+                                                    defaultStartDate
+                                                }
+                                                value={
+                                                    field.value ||
+                                                    defaultStartDate
+                                                }
+                                                showTimeSelect
+                                                timeFormat="HH:mm"
+                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                className={`form-control text-${
+                                                    mode === "light"
+                                                        ? "secondary"
+                                                        : "light"
+                                                }`}
+                                                style={{
+                                                    WebkitTextFillColor:
+                                                        "white",
+                                                }}
+                                                id="start"
+                                                autoComplete="off"
+                                            />
+                                        )}
+                                    />
+                                </div>
 
-                  <Controller
-                                  
-                    control={control}
-                    name="end"
-                    render={({ field }) => (
+                                <div className="mb-1" style={{ zIndex: "100" }}>
+                                    <label
+                                        htmlFor="allDay"
+                                        className={`form-label me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        All Day:
+                                    </label>
 
-                      <DatePicker 
+                                    <input
+                                        type="checkbox"
+                                        {...register("allDay")}
+                                        id="allDay"
+                                        className={`form-check-input`}
+                                    />
+                                </div>
 
-                        placeholderText="Select end date"
-                        onChange={(date) =>
+                                <div className="mb-4" style={{ zIndex: "100" }}>
+                                    <label
+                                        htmlFor="end"
+                                        className={`form-label me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        End Date:
+                                    </label>
 
-                          field.onChange(date)
+                                    <Controller
+                                        control={control}
+                                        name="end"
+                                        render={({ field }) => (
+                                            <DatePicker
+                                                placeholderText="Select end date"
+                                                onChange={(date) =>
+                                                    field.onChange(date)
+                                                }
+                                                selected={
+                                                    field.value ||
+                                                    defaultEndDate
+                                                }
+                                                value={
+                                                    field.value ||
+                                                    defaultEndDate
+                                                }
+                                                timeFormat="HH:mm"
+                                                dateFormat="MMMM d, yyyy h:mm aa"
+                                                showTimeSelect
+                                                className={`form-control text-${
+                                                    mode === "light"
+                                                        ? "black"
+                                                        : "white"
+                                                }`}
+                                                id="end"
+                                                autoComplete="off"
+                                            />
+                                        )}
+                                    />
+                                </div>
 
-                        }
-                        selected={field.value || defaultEndDate}
-                        value={field.value || defaultEndDate}
-                        timeFormat="HH:mm"
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        showTimeSelect
-                        className={`form-control text-${
-                          mode === "light" ? "black" : "white"
-                      }`}
-                        id="end"
-                        autoComplete="off"
-                                              
-                      />
-                                          
-                    )}
-                                      
-                  />
-              </div>
-              
-              <div className="mb-4">
-                
-                <label htmlFor="describe" className={`form-label text-${
-                    mode === "light" ? "black" : "white"
-                }`}>Event Description{" "}
-                  
-                  <span className="text-danger small">(optional)</span>
-                                      
-                </label>
-                                      
-                  <input
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="describe"
+                                        className={`form-label text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        Event Description{" "}
+                                        <span className="text-danger small">
+                                            (optional)
+                                        </span>
+                                    </label>
 
-                    {...register("describe")}
-                    type="text"
-                    placeholder="Describe your event"
-                    className={`form-control text-${
-                      mode === "light" ? "black" : "white"
-                  }`}
-                    id="describe"
-                    aria-describedby="describe"
-                    autoComplete="off"
+                                    <input
+                                        {...register("describe")}
+                                        type="text"
+                                        placeholder="Describe your event"
+                                        className={`form-control text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                        id="describe"
+                                        aria-describedby="describe"
+                                        autoComplete="off"
+                                    />
+                                </div>
+                            </form>
+                        </Modal.Body>
 
-                  />
-
-              </div>
-
-            </form>
-
-          </Modal.Body>
-
-          <Modal.Footer
-          
-            style={{
-              backgroundColor: mode === "light" ? "" : "#36393e",
-            }}
-            className={`border border-${
-              mode === "light" ? "" : "secondary"
-            }`}
-          
-          >
-
-            <Button variant="primary" onClick={handleMoreOptions}>More Options</Button>
-            <Button variant="success" onClick={handleSubmit(handleCreateEvent)}>Create</Button>
-
-          </Modal.Footer>
-
-        </Modal>
-
-      )}
-
-    </div>
-
-  </>
-
-  );
-
+                        <Modal.Footer
+                            style={{
+                                backgroundColor:
+                                    mode === "light" ? "" : "#36393e",
+                            }}
+                            className={`border border-${
+                                mode === "light" ? "" : "secondary"
+                            }`}
+                        >
+                            <Button
+                                variant="primary"
+                                onClick={handleMoreOptions}
+                            >
+                                More Options
+                            </Button>
+                            <Button
+                                variant="success"
+                                onClick={handleSubmit(handleCreateEvent)}
+                            >
+                                Create
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default Calendar;
