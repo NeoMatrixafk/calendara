@@ -184,7 +184,7 @@ const Calendar = ({ mode }) => {
 
     return (
         <>
-            <div>
+            <div className="container my-5">
                 <FullCalendar
                     plugins={[
                         dayGridPlugin,

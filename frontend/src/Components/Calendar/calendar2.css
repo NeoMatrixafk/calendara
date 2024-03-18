@@ -11,5 +11,14 @@
     border-color: yellow !important;
     border-width: 3px !important;
 }*/
-  
+
+.fc-col-header-cell-cushion {
+    color: var(--rbc-header-color, default-color);
+    text-decoration: none;
+    font-size: 1.25rem;
+}
+
+.fc-toolbar-title {
+    color: var(--rbc-header-color, default-color);
+}
     
