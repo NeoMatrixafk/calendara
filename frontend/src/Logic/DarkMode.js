@@ -53,6 +53,10 @@ const DarkMode = () => {
         "--fc-daygrid-day-frame",
         "#36393e"
     );
+    document.documentElement.style.setProperty(
+        "--fc-timegrid-axis-color",
+        "#36393e"
+    );
 
     document.documentElement.style.setProperty("--datepicker-color", "#666B74");
 

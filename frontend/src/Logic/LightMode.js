@@ -53,6 +53,10 @@ const LightMode = () => {
         "--fc-daygrid-day-frame",
         "white"
     );
+    document.documentElement.style.setProperty(
+        "--fc-timegrid-axis-color",
+        "white"
+    );
 
     document.documentElement.style.setProperty("--datepicker-color", "white");
 

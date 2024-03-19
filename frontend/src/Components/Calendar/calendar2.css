@@ -62,3 +62,7 @@
 .fc-scrollgrid-sync-inner {
     background-color: gray;
 }
+
+.fc-timegrid-axis-cushion {
+    background-color: var(--fc-timegrid-axis-color, default-color)!important;
+}
