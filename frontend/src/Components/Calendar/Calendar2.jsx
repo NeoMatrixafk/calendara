@@ -21,29 +21,35 @@ import moment from "moment";
 import "../Calendar/calendar2.css";
 
 const Calendar = ({ mode }) => {
+
     const navigate = useNavigate();
     const { register, handleSubmit, control } = useForm();
 
     //States
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [selectedEventId, setSelectedEventId] = useState(null);
     const [modalMode, setModalMode] = useState(null);
+
+    const [defaultTitle, setDefaultTitle] = useState(null);
+    const [defaultDesc, setDefaultDesc] = useState(null);
     const [defaultStartDate, setDefaultStartDate] = useState(null);
     const [defaultEndDate, setDefaultEndDate] = useState(null);
-    const [selectedEventId, setSelectedEventId] = useState(null);
 
+    //Handling Functions
     useEffect(() => {
         fetchEvents();
     }, []);
 
     const fetchEvents = async () => {
+
         try {
+
             const userName = localStorage.getItem("userName");
-            const response = await axios.get(
-                `http://localhost:55555/api/events/${userName}`
-            );
+            const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
 
             const convertedEvents = response.data.map((event) => ({
+
                 title: event.title,
                 start: new Date(event.start),
                 end: new Date(event.end),
@@ -51,144 +57,288 @@ const Calendar = ({ mode }) => {
                 describe: event.describe,
                 color: event.color,
                 allDay: event.allDay,
+
             }));
 
             setEvents(convertedEvents);
+
         } catch (error) {
+
             console.error("Error fetching events:", error);
+
         }
     };
 
     const handleDateSelect = (arg) => {
+
         const newEvent = {
+
             title: "No Title",
             start: arg.start,
             end: arg.end,
             allDay: arg.allDay,
+
         };
 
         setSelectedEvent({
+
             title: "No Title",
             start: arg.start,
             end: arg.end,
             describe: "",
             allDay: arg.allDay,
+
         });
 
         setDefaultStartDate(new Date(arg.start));
         setDefaultEndDate(new Date(arg.end));
         setModalMode("create");
         setEvents((prevEvents) => [...prevEvents, newEvent]);
+
     };
 
     const handleCreateEvent = async (data) => {
-        try {
-            const admin = localStorage.getItem("userName");
-            const title = data.title || "No Title";
 
-            const eventData = {
-                admin: admin,
-                title: title,
-                start: defaultStartDate.toISOString(),
-                end: defaultEndDate.toISOString(),
-                describe: data.describe,
-                allDay: data.allDay,
-            };
+    try {
+        
+        const admin = localStorage.getItem("userName");
+        const title = data.title || "No Title"
+        
+        const eventData = {
+            
+            admin: admin,
+            title: title,
+            start: defaultStartDate.toISOString(),
+            end: defaultEndDate.toISOString(),
+            describe: data.describe,
+            allDay: data.allDay,
 
-            const response = await axios.post(
-                "http://localhost:55555/api/events",
-                eventData
-            );
+        };
+      
+        const response = await axios.post("http://localhost:55555/api/events", eventData);
+      
+        const newEvent = {
 
-            const newEvent = {
-                title: response.data.title,
-                start: new Date(response.data.start),
-                end: new Date(response.data.end),
-                id: response.data._id,
-                describe: response.data.describe,
-                color: response.data.color,
-                allDay: response.data.allDay,
-            };
+            title: response.data.title,
+            start: new Date(response.data.start),
+            end: new Date(response.data.end),
+            id: response.data._id,
+            describe: response.data.describe,
+            color: response.data.color,
+            allDay: response.data.allDay,
+            
+        };
+        
+        setEvents([...events, newEvent]);
+        setModalMode("create");
+        fetchEvents();
+        handleCloseModal();
+        console.log("Event created successfully:", response.data);
+        window.alert("Event created successfully!");
+        navigate("/events2");
 
-            setEvents([...events, newEvent]);
-            setModalMode("create");
-            fetchEvents();
-            handleCloseModal();
+    } catch (error) {
 
-            console.log("Event created successfully:", response.data);
-            window.alert("Event created successfully!");
-            navigate("/events2");
-        } catch (error) {
-            console.error("Error creating event:", error);
+      console.error("Error creating event:", error);
+
         }
     };
 
+    const handleChange = (event) => { //To show entered values in add event modal to add event page
+
+        const { name, value } = event.target;
+
+        if (name === "title") {
+
+            setDefaultTitle(value);
+
+        } else if (name === "describe") {
+
+            setDefaultDesc(value);
+
+        }
+
+    };
+ 
     const handleEventClick = async (arg) => {
+
         try {
+
             const eventId = arg.event.id;
             setSelectedEventId(eventId);
-            const response = await axios.get(
-                `http://localhost:55555/api/events/${eventId}/show`
-            );
+
+            const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
 
             if (arg.event.allDay === true) {
+
                 setSelectedEvent({
+
                     ...response.data,
                     start: moment(response.data.start).format("ddd DD MMM YY"),
                     end: moment(response.data.end).format("ddd DD MMM YY"),
+
                 });
+
             } else {
+
                 setSelectedEvent({
+
                     ...response.data,
                     start: moment(response.data.start).format(
                         "ddd DD MMM YY LT"
                     ),
                     end: moment(response.data.end).format("ddd DD MMM YY LT"),
+
                 });
+
             }
 
-            setModalMode("view");
-        } catch (error) {
-            console.error("Error fetching event details:", error);
+      setModalMode("view");
+
+    } catch (error) {
+        
+        console.error('Error fetching event details:', error);
+    
         }
     };
 
     const handleMoreOptions = () => {
-        navigate("/add-event", { state: { defaultStartDate, defaultEndDate } });
+        
+        navigate('/add-event', { state: { defaultDesc, defaultTitle, defaultStartDate, defaultEndDate } });
+
     };
 
     const handleUpdateEvent = async () => {
-        navigate(`/event/${selectedEventId}/update`, {
-            state: { selectedEvent, selectedEventId },
-        });
+        
+        navigate(`/event/${selectedEventId}/update`, { state: { selectedEvent, selectedEventId }});
+
     };
 
-    const handleDeleteEvent = async () => {
+    const handleEventResize = async (arg) => {
+
         try {
-            if (selectedEvent && selectedEvent._id) {
-                // Ensure selectedEvent and its id are available
-                const eventId = selectedEvent._id;
-                await axios.delete(
-                    `http://localhost:55555/api/events/${eventId}/delete`
-                );
-                // Filter out the deleted event from the events array
-                setEvents(events.filter((event) => event.id !== eventId));
-                // Close the modal after deletion
-                handleCloseModal();
-                window.alert("Event deleted successfully!");
+
+            const eventToUpdate = events.find(event => event.id === arg.event.id);
+
+            if (eventToUpdate) {
+                // Check if it's a resize within the day grid or time grid
+                const isAllDay = arg.event.allDay;
+                const start = arg.event.start;
+                const end = arg.event.end;
+
+                if (isAllDay) {
+
+                    eventToUpdate.start = start;
+                    eventToUpdate.end = end;
+
+                } else {// Only update the time for non-all-day events
+
+                    eventToUpdate.start.setHours(start.getHours(), start.getMinutes());
+                    eventToUpdate.end.setHours(end.getHours(), end.getMinutes());
+
+                }
+
+                setEvents(prevEvents => prevEvents.map(event =>
+                    event.id === eventToUpdate.id ? eventToUpdate : event
+                ));
+
+                await axios.put(`http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate);
+
+                window.alert("Event updated successfully!");
             }
         } catch (error) {
+
+            console.error('Error updating event:', error);
+
+        }
+    };
+
+    const handleEventDrop = async (arg) => {
+
+        try {
+
+            const eventToUpdate = events.find(event => event.id === arg.event.id);
+
+            if (eventToUpdate) {
+
+                const isAllDay = arg.event.allDay;
+                const start = arg.event.start;
+                const end = arg.event.end || start;
+
+                if (isAllDay !== eventToUpdate.allDay) {
+
+                    if (!isAllDay) { // If the event is moved from all-day to a specific time slot
+
+                        const startDate = new Date(start);
+                        const endDate = end ? new Date(end) : new Date(start);
+                        eventToUpdate.start = startDate;
+                        eventToUpdate.end = endDate;
+                        eventToUpdate.allDay = false;
+
+                    } else { // If the event is moved from a specific time slot to all-day
+
+                        const startDate = new Date(start);
+                        const endDate = end ? new Date(end) : new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
+                        eventToUpdate.start = startDate;
+                        eventToUpdate.end = endDate;
+                        eventToUpdate.allDay = true;
+
+                    }
+                } else {// If the event is dragged within the same view, update its start and end dates
+
+                    eventToUpdate.start = start;
+                    eventToUpdate.end = end;
+                    
+                }
+
+                setEvents(prevEvents => prevEvents.map(event =>
+                    event.id === eventToUpdate.id ? eventToUpdate : event
+                ));
+
+                await axios.put(`http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate);
+
+                window.alert("Event updated successfully!");
+            }
+        } catch (error) {
+
+            console.error('Error updating event:', error);
+
+        }
+    };
+    
+    const handleDeleteEvent = async () => {
+
+        try {
+
+            if (selectedEvent && selectedEvent._id) {
+
+                const eventId = selectedEvent._id;
+                await axios.delete(`http://localhost:55555/api/events/${eventId}/delete`);
+
+                setEvents(events.filter((event) => event.id !== eventId));
+
+                handleCloseModal();
+                window.alert("Event deleted successfully!");
+
+            }
+        } catch (error) {
+
             console.error("Error deleting event:", error);
+
         }
     };
 
     const handleCloseModal = () => {
+        
         fetchEvents();
         setSelectedEvent(null);
+        setDefaultTitle(null);
         setDefaultStartDate(null);
         setDefaultEndDate(null);
         setModalMode(null);
+
     };
+
 
     return (
         <>
@@ -243,6 +393,8 @@ const Calendar = ({ mode }) => {
                     events={events}
                     select={handleDateSelect}
                     eventClick={handleEventClick}
+                    eventResize={handleEventResize}
+                    eventDrop={handleEventDrop}
                 />
 
                 {selectedEvent && modalMode === "view" && (
@@ -374,7 +526,7 @@ const Calendar = ({ mode }) => {
                                     <input
                                         {...register("title")}
                                         type="text"
-                                        placeholder="Title of your Event"
+                                        placeholder="No Title"
                                         className={`form-control text-${
                                             mode === "light"
                                                 ? "secondary"
@@ -390,6 +542,7 @@ const Calendar = ({ mode }) => {
                                         }}
                                         id="title"
                                         autoComplete="off"
+                                        onChange={handleChange}
                                     />
                                 </div>
 
@@ -531,6 +684,7 @@ const Calendar = ({ mode }) => {
                                         id="describe"
                                         aria-describedby="describe"
                                         autoComplete="off"
+                                        onChange={handleChange}
                                     />
                                 </div>
                             </form>
@@ -560,6 +714,7 @@ const Calendar = ({ mode }) => {
                         </Modal.Footer>
                     </Modal>
                 )}
+
             </div>
         </>
     );

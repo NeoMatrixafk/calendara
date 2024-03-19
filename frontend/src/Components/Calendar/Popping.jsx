@@ -24,7 +24,8 @@ const Popping = ({
     const navigate = useNavigate();
 
     const handleUpdate = async () => {
-        navigate(`/event/${id}/update`);
+        window.alert("Please use FullCalendar to update events!")
+        navigate(`/events2`);
     };
 
     const modal = () => {
