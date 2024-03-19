@@ -50,7 +50,15 @@
     background: var(--fc-button-background, default-color)!important;
     color: var(--fc-button-color)
 }
-
-.fc-button-active{
+.fc-button-active {
     background-color: var(--fc-button-active-background, default-color)!important;
+}
+.fc-daygrid-day-frame {
+    background-color: var(--fc-daygrid-day-frame, default-color)!important;
+}
+.fc-daygrid-day-top {
+    background: var(--fc-daygrid-day-frame, default-color);
+}
+.fc-scrollgrid-sync-inner {
+    background-color: gray;
 }

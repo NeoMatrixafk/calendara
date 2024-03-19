@@ -48,7 +48,11 @@ const DarkMode = () => {
         "--fc-button-active-background",
         "#696969"
     );
-    document.documentElement.style.setProperty("--fc-button-color,", "white");
+    document.documentElement.style.setProperty("--fc-button-color", "white");
+    document.documentElement.style.setProperty(
+        "--fc-daygrid-day-frame",
+        "#36393e"
+    );
 
     document.documentElement.style.setProperty("--datepicker-color", "#666B74");
 

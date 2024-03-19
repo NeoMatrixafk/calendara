@@ -49,6 +49,10 @@ const LightMode = () => {
         "#909090"
     );
     document.documentElement.style.setProperty("--fc-button-color,", "white");
+    document.documentElement.style.setProperty(
+        "--fc-daygrid-day-frame",
+        "white"
+    );
 
     document.documentElement.style.setProperty("--datepicker-color", "white");
 
