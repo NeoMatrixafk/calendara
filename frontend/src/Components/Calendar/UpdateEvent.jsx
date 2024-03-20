@@ -31,6 +31,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
     const [selectedColor, setSelectedColor] = useState(
         selectedEvent.color || "#3174ad"
     ); // Default color from the event or a default color
+    const [status, setStatus] = useState(selectedEvent.status || "Unresolved");
 
     useEffect(() => {
         console.log(error);
@@ -58,12 +59,14 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                 : " ",
             color: selectedEvent.color || "#3174ad",
             allDay: selectedEvent.allDay,
+            status: status,
         },
     });
 
     const onSubmit = async (values) => {
         setFirstRender(false);
         values.color = selectedColor; // Add the color to the values object
+        values.status = status;
         updateEventApi(values, selectedEventId).then((res) => {
             console.log(res);
             setRerender(!rerender);
@@ -258,6 +261,54 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                 {dbError.end}
                             </p>
                         </div>
+
+                        <div className="mb-4">
+                                <label
+                                    className={`form-label text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}
+                                >
+                                    Status:
+                                </label>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="completed"
+                                        name="status"
+                                        value="Completed"
+                                        checked={status === "Completed"}
+                                        onChange={(e) =>
+                                            setStatus(e.target.value)
+                                        }
+                                    />
+                                    <label htmlFor="completed" className="ms-2 me-4">Completed</label>
+
+                                    <input
+                                        type="radio"
+                                        id="overdue"
+                                        name="status"
+                                        value="Overdue"
+                                        checked={status === "Overdue"}
+                                        onChange={(e) =>
+                                            setStatus(e.target.value)
+                                        }
+                                    />
+                                    <label htmlFor="overdue" className="ms-2 me-4">Overdue</label>
+
+                                    <input
+                                        type="radio"
+                                        id="upcoming"
+                                        name="status"
+                                        value="Upcoming"
+                                        checked={status === "Upcoming"}
+                                        onChange={(e) =>
+                                            setStatus(e.target.value)
+                                        }
+                                    />
+                                    <label htmlFor="upcoming" className="ms-2">Upcoming</label>
+                                </div>
+                            </div>
+
                         <div className="mb-4">
                             <label
                                 htmlFor="describe"

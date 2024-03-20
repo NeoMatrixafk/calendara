@@ -97,7 +97,8 @@ export const addEventApi = (values) => async (dispatch) => {
             end: values.end,
             describe: values.describe,
             color: values.color,
-            allDay: values.allDay
+            allDay: values.allDay,
+            status: values.status,
         })
         .then((res) => {
             if (res && res.data) {
@@ -135,7 +136,8 @@ export const updateEventApi = (values, id) => async (dispatch) => {
             end: values.end,
             describe: values.describe,
             color: values.color,
-            allDay: values.allDay
+            allDay: values.allDay,
+            status: values.status,
         });
         console.log(result);
         const response = result.data;

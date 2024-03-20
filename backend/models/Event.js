@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 //schema for events
 const EventSchema = new mongoose.Schema({
+
     admin: { type: String },
     title: {
         type: String,
@@ -14,16 +15,16 @@ const EventSchema = new mongoose.Schema({
     },
     end: {
         type: Date,
-        //setting a min function to accept any date one hour ahead of start
         required: [true, "Please Insert The End of your event"],
         default: function () {
             const date = new Date(this.start);
-            return date.setDate(date.getDate() + 1);
         },
     },
     describe: { type: String },
     color: { type: String, default: "#3174ad" },
-    allDay: { type: Boolean, default: true}
+    allDay: { type: Boolean, default: true},
+    status: { type: String, default: "Unresolved" }
+
 });
 
 

@@ -8,36 +8,38 @@ const UpcomingEvents = (props) => {
     
     const [upcomingEventsCount, setUpcomingEventsCount] = useState(0);
     const [totalEventsCount, setTotalEventsCount] = useState(0);
+
     const userName = localStorage.getItem("userName");
 
-    useEffect(() => {
-        const fetchTotalEventsData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:55555/api/reminders/total/${userName}`);
-                const events = response.data;
-                setTotalEventsCount(events.length);
-            } catch (error) {
-                console.error("Error fetching upcoming events:", error);
-            }
-        };
 
-        fetchTotalEventsData();
-    }, [userName]);
-    
     useEffect(() => {
         const fetchUpcomingEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/reminders/upcoming/${userName}`);
+                const response = await axios.get(`http://localhost:55555/api/events/resolved/upcoming/${userName}`);
                 const events = response.data;
                 setUpcomingEventsCount(events.length);
             } catch (error) {
-                console.error("Error fetching upcoming events:", error);
+                console.error("Error fetching length of upcoming events:", error);
             }
         };
 
         fetchUpcomingEventsData();
     }, [userName]);
 
+    useEffect(() => {
+        const fetchTotalEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
+                const events = response.data;
+                setTotalEventsCount(events.length);
+            } catch (error) {
+                console.error("Error fetching length of total events:", error);
+            }
+        };
+
+        fetchTotalEventsData();
+    }, [userName]);
+    
     const data = [
         { name: "Upcoming Events", value: upcomingEventsCount },
         { name: "Total Events", value: totalEventsCount },
@@ -71,7 +73,7 @@ const UpcomingEvents = (props) => {
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
-                            Not Completed Events - Upcoming
+                            To be Resolved - Upcoming 
                         </p>
                     </div>
                     <div className="col-12 p-0">
@@ -112,11 +114,11 @@ const UpcomingEvents = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : not completed events
+                                    : Upcoming events
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 d-flex ps-5 mb-1">
+                        <div className="col-12 d-flex ps-5 my-3">
                             <div
                                 style={{
                                     height: "1.5rem",
@@ -132,18 +134,9 @@ const UpcomingEvents = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : total events
+                                    : Total Events
                                 </p>
                             </div>
-                        </div>
-                        <div className="col-12 d-flex justify-content-center mt-2 mb-5">
-                            <p
-                                className={`m-0 text-${
-                                    props.mode === "light" ? "black" : "white"
-                                }`}
-                            >
-                                (overall)
-                            </p>
                         </div>
                     </div>
                 </div>

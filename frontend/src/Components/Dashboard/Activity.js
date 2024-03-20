@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-
+import axios from "axios";
 
 
 // these are the values and color of activity section in the dashboard
-
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
     cx,
@@ -34,12 +33,42 @@ const renderCustomizedLabel = ({
 
 const Activity = (props) => {
 
-    const overdueEventsCount = parseInt(localStorage.getItem("overdueEventsCount") || 0, 10);
-    const completedEventsCount = parseInt(localStorage.getItem("completedEventsCount") || 0, 10);
+    const [resolvedEvents, setResolvedEvents] = useState();
+    const [unresolvedEvents, setUnResolvedEvents] = useState();
+
+    const userName = localStorage.getItem("userName");
+
+    useEffect(() => {
+        const fetchTotalEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/events/resolved/${userName}`);
+                const events = response.data;
+                setResolvedEvents(events.length);
+            } catch (error) {
+                console.error("Error fetching length of resolved events:", error);
+            }
+        };
+
+        fetchTotalEventsData();
+    }, [userName]);
+
+    useEffect(() => {
+        const fetchTotalEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/events/unresolved/${userName}`);
+                const events = response.data;
+                setUnResolvedEvents(events.length);
+            } catch (error) {
+                console.error("Error fetching length of unresolved events:", error);
+            }
+        };
+
+        fetchTotalEventsData();
+    }, [userName]);
 
     const data = [
-        { name: "Group A", value: completedEventsCount },
-        { name: "Group B", value: overdueEventsCount },
+        { name: "Group A", value: resolvedEvents },
+        { name: "Group B", value: unresolvedEvents },
     ];
 
     const COLORS = ["#00e600", "#ff0000"];
@@ -68,7 +97,7 @@ const Activity = (props) => {
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
-                            Activity
+                            Activity - Current Month
                         </p>
                     </div>
                     <div className="col-12 p-0">
@@ -108,11 +137,11 @@ const Activity = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : completed events
+                                    : Resolved events
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 d-flex ps-5 my-1">
+                        <div className="col-12 d-flex ps-5 my-3">
                             <div
                                 style={{
                                     height: "1.5rem",
@@ -128,18 +157,9 @@ const Activity = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : not completed events
+                                    : Unresolved events
                                 </p>
                             </div>
-                        </div>
-                        <div className="col-12 d-flex justify-content-center mt-2 mb-5">
-                            <p
-                                className={`m-0 text-${
-                                    props.mode === "light" ? "black" : "white"
-                                }`}
-                            >
-                                (in the current month)
-                            </p>
                         </div>
                     </div>
                 </div>

@@ -2,22 +2,38 @@ import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Tooltip, Cell } from "recharts";
 import axios from "axios";
 
+
+
 const CompletedEvents = (props) => {
 
+    const [completedEventsCount, setCompletedEventsCount] = useState(0);
     const [totalEventsCount, setTotalEventsCount] = useState(0);
-    const completedEventsCount = 1;
-    localStorage.setItem("completedEventsCount", completedEventsCount);
     
     const userName = localStorage.getItem("userName");
+
+
+    useEffect(() => {
+        const fetchCompletedEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/events/resolved/completed/${userName}`);
+                const events = response.data;
+                setCompletedEventsCount(events.length);
+            } catch (error) {
+                console.error("Error fetching length of completed events:", error);
+            }
+        };
+
+        fetchCompletedEventsData();
+    }, [userName]);
 
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/reminders/total/${userName}`);
+                const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
                 const events = response.data;
                 setTotalEventsCount(events.length);
             } catch (error) {
-                console.error("Error fetching upcoming events:", error);
+                console.error("Error fetching length of total events:", error);
             }
         };
 
@@ -32,8 +48,6 @@ const CompletedEvents = (props) => {
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";
 
     const COLORS = ["#00e600", totalEventsColor];
-
-    // the data for the events
 
     return (
         <>
@@ -59,7 +73,7 @@ const CompletedEvents = (props) => {
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
-                            Completed Events
+                            Resolved - Completed
                         </p>
                     </div>
                     <div className="col-12 p-0">
@@ -100,11 +114,11 @@ const CompletedEvents = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : completed events
+                                    : Completed Events
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 d-flex ps-5 mb-1">
+                        <div className="col-12 d-flex ps-5 my-3">
                             <div
                                 style={{
                                     height: "1.5rem",
@@ -120,18 +134,9 @@ const CompletedEvents = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : total events
+                                    : Total Events
                                 </p>
                             </div>
-                        </div>
-                        <div className="col-12 d-flex justify-content-center mt-2 mb-5">
-                            <p
-                                className={`m-0 text-${
-                                    props.mode === "light" ? "black" : "white"
-                                }`}
-                            >
-                                (overall)
-                            </p>
                         </div>
                     </div>
                 </div>

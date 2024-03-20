@@ -5,6 +5,8 @@ import CompletedEvents from "../Components/Dashboard/CompletedEvents";
 import OverdueEvents from "../Components/Dashboard/OverdueEvents";
 import UpcomingEvents from "../Components/Dashboard/UpcomingEvents";
 
+
+
 const Dashboard = (props) => {
     return (
         <>
@@ -14,7 +16,7 @@ const Dashboard = (props) => {
                         props.mode === "light" ? "black" : "white"
                     }`}
                 >
-                    User Dashboard Analysis
+                    Event Status Overview
                 </h1>
             </div>
             <div className="container">
@@ -31,6 +33,7 @@ const Dashboard = (props) => {
                     <div className="col-3 d-flex justify-content-center">
                         <UpcomingEvents mode={props.mode} />
                     </div>
+                    <div className="my-5"></div>
                 </div>
             </div>
         </>

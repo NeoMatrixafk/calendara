@@ -27,6 +27,62 @@ router.get("/:id/show", async (req, res) => {
     }
 });
 
+router.get("/unresolved/:userName", async (req, res) => {
+    const name = req.params.userName;
+    const events = await Event.find({ admin: name, status: "Unresolved" });
+
+    try {
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
+router.get("/resolved/:userName", async (req, res) => {
+    const name = req.params.userName;
+
+    try {
+        const events = await Event.find({ admin: name, status: { $in: ["Completed", "Upcoming", "Overdue"] } });
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
+router.get("/resolved/completed/:userName", async (req, res) => {
+    const name = req.params.userName;
+    const events = await Event.find({ admin: name, status: "Completed" });
+
+    try {
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
+router.get("/resolved/upcoming/:userName", async (req, res) => {
+    const name = req.params.userName;
+    const events = await Event.find({ admin: name, status: "Upcoming" });
+
+    try {
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
+router.get("/resolved/overdue/:userName", async (req, res) => {
+    const name = req.params.userName;
+    const events = await Event.find({ admin: name, status: "Overdue" });
+
+    try {
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
+
 //posting events based from server to client
 router.post("/", async (req, res) => {
     try {
