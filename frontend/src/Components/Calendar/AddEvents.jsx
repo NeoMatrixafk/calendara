@@ -33,7 +33,9 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
 
     const location = useLocation();
-    const { defaultTitle, defaultDesc, defaultStartDate, defaultEndDate } = location.state || {};
+    const { defaultTitle, defaultDesc, defaultStartDate, defaultEndDate, defaultStatus } = location.state || {};
+    
+    const [status, setStatus] = useState(defaultStatus || "Unresolved");
 
     useEffect(() => {
         if (error && !firstRender) {
@@ -56,6 +58,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
             start: defaultStartDate || null,
             end: defaultEndDate || null,
             describe: defaultDesc || "",
+            status: defaultStatus || "Unresolved",
         },
     });
 
@@ -70,6 +73,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
         }
 
         values.color = selectedColor;
+        values.status = status;
 
         setFirstRender(false);
         addEventApi(values).then(() => {
@@ -297,6 +301,54 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     {dbError.end}
                                 </p>
                             </div>
+
+                            <div className="mb-4">
+                                <label
+                                    className={`form-label text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}
+                                >
+                                    Status:
+                                </label>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="completed"
+                                        name="status"
+                                        value="Completed"
+                                        checked={status === "Completed"}
+                                        onChange={(e) =>
+                                            setStatus(e.target.value)
+                                        }
+                                    />
+                                    <label htmlFor="completed" className="ms-2 me-4">Completed</label>
+
+                                    <input
+                                        type="radio"
+                                        id="overdue"
+                                        name="status"
+                                        value="Overdue"
+                                        checked={status === "Overdue"}
+                                        onChange={(e) =>
+                                            setStatus(e.target.value)
+                                        }
+                                    />
+                                    <label htmlFor="overdue" className="ms-2 me-4">Overdue</label>
+
+                                    <input
+                                        type="radio"
+                                        id="upcoming"
+                                        name="status"
+                                        value="Upcoming"
+                                        checked={status === "Upcoming"}
+                                        onChange={(e) =>
+                                            setStatus(e.target.value)
+                                        }
+                                    />
+                                    <label htmlFor="upcoming" className="ms-2">Upcoming</label>
+                                </div>
+                            </div>
+
                             <div className="mb-4">
                                 <label
                                     htmlFor="describe"
@@ -343,6 +395,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                     onSelectColor={setSelectedColor}
                                 />
                             </div>
+                            
                             <button
                                 type="submit"
                                 className="btn btn-success btn-lg mt-4"

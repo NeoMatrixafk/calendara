@@ -30,11 +30,13 @@ const Calendar = ({ mode }) => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedEventId, setSelectedEventId] = useState(null);
     const [modalMode, setModalMode] = useState(null);
+    const [ status, setStatus] = useState("Unresolved");
 
     const [defaultTitle, setDefaultTitle] = useState(null);
     const [defaultDesc, setDefaultDesc] = useState(null);
     const [defaultStartDate, setDefaultStartDate] = useState(null);
     const [defaultEndDate, setDefaultEndDate] = useState(null);
+    const [defaultStatus, setDefaultStatus] = useState(null);
 
     //Handling Functions
     useEffect(() => {
@@ -112,6 +114,7 @@ const Calendar = ({ mode }) => {
             end: defaultEndDate.toISOString(),
             describe: data.describe,
             allDay: data.allDay,
+            status: data.status,
 
         };
       
@@ -126,6 +129,7 @@ const Calendar = ({ mode }) => {
             describe: response.data.describe,
             color: response.data.color,
             allDay: response.data.allDay,
+            status: response.data.status
             
         };
         
@@ -155,6 +159,11 @@ const Calendar = ({ mode }) => {
         } else if (name === "describe") {
 
             setDefaultDesc(value);
+
+        } else if (name === "status") {
+
+            setStatus(value);
+            setDefaultStatus(value);
 
         }
 
@@ -204,7 +213,7 @@ const Calendar = ({ mode }) => {
 
     const handleMoreOptions = () => {
         
-        navigate('/add-event', { state: { defaultDesc, defaultTitle, defaultStartDate, defaultEndDate } });
+        navigate('/add-event', { state: { defaultDesc, defaultTitle, defaultStartDate, defaultEndDate, defaultStatus } });
 
     };
 
@@ -218,41 +227,58 @@ const Calendar = ({ mode }) => {
 
         try {
 
-            const eventToUpdate = events.find(event => event.id === arg.event.id);
-
+            const eventToUpdate = events.find((event) => event.id === arg.event.id);
+    
             if (eventToUpdate) {
                 // Check if it's a resize within the day grid or time grid
                 const isAllDay = arg.event.allDay;
                 const start = arg.event.start;
                 const end = arg.event.end;
+    
+                if (!isAllDay && isMultiDayEvent(start, end)) {
+                    // Prevent resizing by resetting the event's start and end times to their original values
+                    arg.revert();
 
-                if (isAllDay) {
+                } else {
+                    // Update the event normally for other cases
+                    if (isAllDay) {
 
-                    eventToUpdate.start = start;
-                    eventToUpdate.end = end;
+                        eventToUpdate.start = start;
+                        eventToUpdate.end = end;
 
-                } else {// Only update the time for non-all-day events
+                    } else {
 
-                    eventToUpdate.start.setHours(start.getHours(), start.getMinutes());
-                    eventToUpdate.end.setHours(end.getHours(), end.getMinutes());
+                        eventToUpdate.start.setHours(start.getHours(), start.getMinutes());
+                        eventToUpdate.end.setHours(end.getHours(), end.getMinutes());
+
+                    }
+    
+                    setEvents((prevEvents) =>
+                        prevEvents.map((event) => (event.id === eventToUpdate.id ? eventToUpdate : event))
+                    );
+    
+                    await axios.put(
+                        `http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate
+                        );
+    
+                    window.alert("Event updated successfully!");
 
                 }
-
-                setEvents(prevEvents => prevEvents.map(event =>
-                    event.id === eventToUpdate.id ? eventToUpdate : event
-                ));
-
-                await axios.put(`http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate);
-
-                window.alert("Event updated successfully!");
             }
+
         } catch (error) {
 
-            console.error('Error updating event:', error);
+            console.error("Error updating event:", error);
 
         }
     };
+    
+    const isMultiDayEvent = (start, end) => {
+        // Check if the event spans multiple days
+        return start.toDateString() !== end.toDateString();
 
+    };
+    
     const handleEventDrop = async (arg) => {
 
         try {
@@ -352,6 +378,7 @@ const Calendar = ({ mode }) => {
                         multiMonthPlugin,
                     ]}
                     //Properties
+                    locale='en'
                     initialView={"dayGridMonth"}
                     themeSystem="bootstrap5"
                     height={"100vh"}
@@ -389,7 +416,10 @@ const Calendar = ({ mode }) => {
                         hour: "numeric",
                         minute: "2-digit",
                         meridiem: "short",
+                        //omitZeroMinute: false, // Include zero minutes
+                        //hour12: false, // Use 24-hour format
                     }}
+                    
                     events={events}
                     select={handleDateSelect}
                     eventClick={handleEventClick}
@@ -451,6 +481,13 @@ const Calendar = ({ mode }) => {
                                 }`}
                             >
                                 To: {selectedEvent.end}
+                            </p>
+                            <p
+                                className={`lead text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Status: {selectedEvent.status}
                             </p>
                         </Modal.Body>
 
@@ -652,6 +689,47 @@ const Calendar = ({ mode }) => {
                                         )}
                                     />
                                 </div>
+
+                                <div className="mb-4">
+                                <label
+                                    className={`form-label text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}
+                                >
+                                    Status:
+                                </label>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="completed"
+                                        name="status"
+                                        value="Completed"
+                                        checked={status === "Completed"}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="completed" className="ms-2 me-4">Completed</label>
+
+                                    <input
+                                        type="radio"
+                                        id="overdue"
+                                        name="status"
+                                        value="Overdue"
+                                        checked={status === "Overdue"}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="overdue" className="ms-2 me-4">Overdue</label>
+
+                                    <input
+                                        type="radio"
+                                        id="upcoming"
+                                        name="status"
+                                        value="Upcoming"
+                                        checked={status === "Upcoming"}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="upcoming" className="ms-2">Upcoming</label>
+                                </div>
+                            </div>
 
                                 <div className="mb-4">
                                     <label

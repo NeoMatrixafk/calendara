@@ -6,19 +6,34 @@ import axios from "axios";
 
 const OverdueEvents = (props) => {
 
+    const [overdueEventsCount, setOverdueEventsCount] = useState(0);
     const [totalEventsCount, setTotalEventsCount] = useState(0);
-    const overdueEventsCount = 1;
-    localStorage.setItem("overdueEventsCount", overdueEventsCount);
+
     const userName = localStorage.getItem("userName");
+
+
+    useEffect(() => {
+        const fetchOverdueEventsData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:55555/api/events/resolved/overdue/${userName}`);
+                const events = response.data;
+                setOverdueEventsCount(events.length);
+            } catch (error) {
+                console.error("Error fetching length of overdue events:", error);
+            }
+        };
+
+        fetchOverdueEventsData();
+    }, [userName]);
 
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/reminders/total/${userName}`);
+                const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
                 const events = response.data;
                 setTotalEventsCount(events.length);
             } catch (error) {
-                console.error("Error fetching upcoming events:", error);
+                console.error("Error fetching length of total events:", error);
             }
         };
 
@@ -60,7 +75,7 @@ const OverdueEvents = (props) => {
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
-                            Not Completed Events - Overdue
+                            Unresolved - Overdue
                         </p>
                     </div>
                     <div className="col-12 p-0">
@@ -101,11 +116,11 @@ const OverdueEvents = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : not completed events
+                                    : Overdue Events
                                 </p>
                             </div>
                         </div>
-                        <div className="col-12 d-flex ps-5 mb-1">
+                        <div className="col-12 d-flex ps-5 my-3">
                             <div
                                 style={{
                                     height: "1.5rem",
@@ -121,18 +136,9 @@ const OverdueEvents = (props) => {
                                             : "white"
                                     }`}
                                 >
-                                    : total events
+                                    : Total Events
                                 </p>
                             </div>
-                        </div>
-                        <div className="col-12 d-flex justify-content-center mt-2 mb-5">
-                            <p
-                                className={`m-0 text-${
-                                    props.mode === "light" ? "black" : "white"
-                                }`}
-                            >
-                                (overall)
-                            </p>
                         </div>
                     </div>
                 </div>
