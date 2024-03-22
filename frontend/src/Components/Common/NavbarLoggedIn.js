@@ -1,3 +1,4 @@
+//React imports
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
@@ -8,6 +9,10 @@ import { auth } from "../Login/firebase";
 
 const NavbarLoggedIn = (props) => {
 
+    //Hooks
+    const navigate = useNavigate();
+
+    //States
     const [show, setShow] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
@@ -16,9 +21,8 @@ const NavbarLoggedIn = (props) => {
     const [searchQuery, setSearchQuery] = useState("");
     const userName = localStorage.getItem("userName");
     const eventsCount = parseInt(localStorage.getItem("eventsCount")) || 0;
-    const navigate = useNavigate();
 
-    
+    //Handling Functions
     const fetchEvents = useCallback(async () => {
         try {
             const response = await axios.get(
@@ -212,24 +216,6 @@ const NavbarLoggedIn = (props) => {
                                         <Dropdown.Item
                                             onClick={() => {
                                                 setShowCalendarDropdown(false);
-                                                navigate("/events");
-                                            }}
-                                            className={`dropdown-hover-${
-                                                props.mode
-                                            } text-${
-                                                props.mode === "light"
-                                                    ? "black"
-                                                    : "white"
-                                            }`}
-                                            style={{
-                                                background: "transparent",
-                                            }}
-                                        >
-                                            Calendar
-                                        </Dropdown.Item>
-                                        <Dropdown.Item
-                                            onClick={() => {
-                                                setShowCalendarDropdown(false);
                                                 navigate("/events2");
                                             }}
                                             className={`dropdown-hover-${
@@ -243,7 +229,7 @@ const NavbarLoggedIn = (props) => {
                                                 background: "transparent",
                                             }}
                                         >
-                                            Calendar v2.0 (Beta)
+                                            Calendar
                                         </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -306,7 +292,7 @@ const NavbarLoggedIn = (props) => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Search by Event Title..."
+                                                placeholder="Search by Event Title or Search..."
                                                 value={searchQuery}
                                                 onChange={handleSearchChange}
                                                 aria-label="Search Event Title"
@@ -382,7 +368,7 @@ const NavbarLoggedIn = (props) => {
                                             }`}
                                         >
                                             Enter a search query to find events
-                                            by title.
+                                            by title or status.
                                         </p>
                                     )}
                                 </Modal.Body>

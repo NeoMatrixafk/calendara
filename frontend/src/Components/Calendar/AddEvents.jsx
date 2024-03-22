@@ -322,7 +322,9 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             setStatus(e.target.value)
                                         }
                                     />
-                                    <label htmlFor="completed" className="ms-2 me-4">Completed</label>
+                                    <label htmlFor="completed" className={`form-label ms-2 me-4 text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}>Completed</label>
 
                                     <input
                                         type="radio"
@@ -334,7 +336,9 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             setStatus(e.target.value)
                                         }
                                     />
-                                    <label htmlFor="overdue" className="ms-2 me-4">Overdue</label>
+                                    <label htmlFor="overdue" className={`form-label ms-2 me-4 text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}>Overdue</label>
 
                                     <input
                                         type="radio"
@@ -346,7 +350,9 @@ const AddEvents = ({ addEventApi, error, mode }) => {
                                             setStatus(e.target.value)
                                         }
                                     />
-                                    <label htmlFor="upcoming" className="ms-2">Upcoming</label>
+                                    <label htmlFor="upcoming" className={`form-label ms-2 me-4 text-${
+                                        mode === "light" ? "black" : "white"
+                                    }`}>Upcoming</label>
                                 </div>
                             </div>
 

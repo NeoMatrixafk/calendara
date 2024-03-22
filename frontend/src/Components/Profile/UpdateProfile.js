@@ -1,11 +1,23 @@
+//React imports
 import React, { useState } from "react";
 import axios from "axios";
 
+
+
 const UpdateProfile = (props) => {
+
+    //States
     const [profileImageData, setProfileImageData] = useState("");
     const [profileImagePreview, setProfileImagePreview] = useState(null);
     const [successProfileMesage, setSuccessProfileMesage] = useState(null);
 
+    const [backgroundImageData, setBackgroundImageData] = useState("");
+    const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
+    const [backgroundSuccessMessage, setBackgroundSuccessMessage] = useState(null);
+
+    const [newUserContact, setNewUserContact] = useState("");
+
+    //Handling functions
     const handleProfileImageChange = (e) => {
         const file = e.target.files[0];
 
@@ -56,11 +68,6 @@ const UpdateProfile = (props) => {
         }
     };
 
-    const [backgroundImageData, setBackgroundImageData] = useState("");
-    const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
-    const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
-        useState(null);
-
     const handleBackgroundImageChange = (e) => {
         const file = e.target.files[0];
 
@@ -109,8 +116,6 @@ const UpdateProfile = (props) => {
             alert("Please upload an image!");
         }
     };
-
-    const [newUserContact, setNewUserContact] = useState("");
 
     const updateUserContact = async () => {
         try {
