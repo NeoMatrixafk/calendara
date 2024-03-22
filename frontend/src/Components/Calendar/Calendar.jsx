@@ -614,7 +614,7 @@ const Calendar = ({ mode }) => {
                                     />
                                 </div>
 
-                                <div className="mb-2" style={{ zIndex: "100" }}>
+                                <div className="mb-3" style={{ zIndex: "100" }}>
                                     <label
                                         htmlFor="start"
                                         className={`form-label me-3 text-${
@@ -660,7 +660,7 @@ const Calendar = ({ mode }) => {
                                     />
                                 </div>
 
-                                <div className="mb-1" style={{ zIndex: "100" }}>
+                                <div className="mb-3" style={{ zIndex: "100" }}>
                                     <label
                                         htmlFor="allDay"
                                         className={`form-label me-4 text-${
@@ -679,7 +679,7 @@ const Calendar = ({ mode }) => {
                                     />
                                 </div>
 
-                                <div className="mb-4" style={{ zIndex: "100" }}>
+                                <div className="mb-3" style={{ zIndex: "100" }}>
                                     <label
                                         htmlFor="end"
                                         className={`form-label me-4 text-${
@@ -721,7 +721,7 @@ const Calendar = ({ mode }) => {
                                     />
                                 </div>
 
-                                <div className="mb-4">
+                                <div className="mb-3">
                                 <label
                                     className={`form-label text-${
                                         mode === "light" ? "black" : "white"
@@ -738,7 +738,9 @@ const Calendar = ({ mode }) => {
                                         checked={status === "Completed"}
                                         onChange={handleChange}
                                     />
-                                    <label htmlFor="completed" className="ms-2 me-4">Completed</label>
+                                    <label htmlFor="completed" className={`form-label ms-2 me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}>Completed</label>
 
                                     <input
                                         type="radio"
@@ -748,7 +750,9 @@ const Calendar = ({ mode }) => {
                                         checked={status === "Overdue"}
                                         onChange={handleChange}
                                     />
-                                    <label htmlFor="overdue" className="ms-2 me-4">Overdue</label>
+                                    <label htmlFor="overdue" className={`form-label ms-2 me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}>Overdue</label>
 
                                     <input
                                         type="radio"
@@ -758,11 +762,13 @@ const Calendar = ({ mode }) => {
                                         checked={status === "Upcoming"}
                                         onChange={handleChange}
                                     />
-                                    <label htmlFor="upcoming" className="ms-2">Upcoming</label>
+                                    <label htmlFor="upcoming" className={`form-label ms-2 me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}>Upcoming</label>
                                 </div>
                             </div>
 
-                                <div className="mb-4">
+                                <div className="mb-3">
                                     <label
                                         htmlFor="describe"
                                         className={`form-label text-${
