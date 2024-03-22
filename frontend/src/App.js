@@ -21,7 +21,7 @@ import MoreSettings from "./Pages/MoreSettings";
 import Reminders from "./Pages/Reminders";
 import Error404 from "./Pages/Error404";
 import UpdateProfile from "./Components/Profile/UpdateProfile";
-import MyCalendar from "./Components/Calendar/Calendar"
+import MyCalendar from "./Components/Calendar/Calendar";
 import AddEvents from "./Components/Calendar/AddEvents";
 import UpdateEvent from "./Components/Calendar/UpdateEvent";
 import UploadEvents from "./Components/Calendar/UploadEvents";
@@ -36,13 +36,13 @@ import Footer from "./Components/Common/Footer";
 import LightMode from "./Logic/LightMode";
 import DarkMode from "./Logic/DarkMode";
 
-
+//ForgotPassword
+import ForgotPassword from "./Pages/ForgotPassword";
 
 function App() {
-
     //Hooks
     const location = useLocation();
-    
+
     //States
     const user = localStorage.getItem("token");
     const auth = localStorage.getItem("auth");
@@ -92,22 +92,23 @@ function App() {
                     minHeight: "100vh",
                 }}
             >
-                {shouldRenderNavbarFooter && (
-                    <>
-                        {user || auth ? (
-                            <NavbarLoggedIn
-                                mode={mode}
-                                toggleMode={toggleMode}
-                                eventsCount={eventsCount}
-                            />
-                        ) : (
-                            <NavbarLoggedOut
-                                mode={mode}
-                                toggleMode={toggleMode}
-                            />
-                        )}
-                    </>
-                )}
+                {location.pathname !== "/forgot-password" &&
+                    shouldRenderNavbarFooter && (
+                        <>
+                            {user || auth ? (
+                                <NavbarLoggedIn
+                                    mode={mode}
+                                    toggleMode={toggleMode}
+                                    eventsCount={eventsCount}
+                                />
+                            ) : (
+                                <NavbarLoggedOut
+                                    mode={mode}
+                                    toggleMode={toggleMode}
+                                />
+                            )}
+                        </>
+                    )}
 
                 <div style={{ flex: 1 }}>
                     <Routes>
@@ -259,12 +260,18 @@ function App() {
                                     path="/contact"
                                     element={<Contact mode={mode} />}
                                 />
+
+                                <Route
+                                    path="/forgot-password"
+                                    element={<ForgotPassword mode={mode} />}
+                                />
                             </>
                         )}
                     </Routes>
                 </div>
 
-                {shouldRenderNavbarFooter && <Footer mode={mode} />}
+                {location.pathname !== "/forgot-password" &&
+                    shouldRenderNavbarFooter && <Footer mode={mode} />}
             </div>
         </>
     );

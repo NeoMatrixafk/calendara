@@ -136,3 +136,8 @@
 input::-webkit-file-upload-button {
     background-color: var(--input-upload-color, default-color)!important;
 }
+
+
+.forgot-password-link:hover {
+    color: #007BFF!important;
+}

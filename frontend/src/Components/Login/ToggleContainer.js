@@ -13,7 +13,7 @@ const ToggleContainer = (props) => {
                     }}
                 >
                     <div className="toggle-panel toggle-left">
-                        <h1>
+                        <h1 className="montserrat-regular-400">
                             <b>Welcome Back!</b>
                         </h1>
                         <p>Log in to use all of site features</p>
@@ -27,7 +27,7 @@ const ToggleContainer = (props) => {
                         </button>
                     </div>
                     <div className="toggle-panel toggle-right">
-                        <h1>
+                        <h1 className="montserrat-regular-400">
                             <b>Hello, User!</b>
                         </h1>
                         <p>Register to use all of site features</p>
