@@ -37,6 +37,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     
     const [status, setStatus] = useState(defaultStatus || "Unresolved");
 
+    
     useEffect(() => {
         if (error && !firstRender) {
             setError(error);

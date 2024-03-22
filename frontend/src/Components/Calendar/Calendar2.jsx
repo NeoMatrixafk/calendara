@@ -20,6 +20,8 @@ import moment from "moment";
 //styles imports
 import "../Calendar/calendar2.css";
 
+
+
 const Calendar = ({ mode }) => {
 
     const navigate = useNavigate();
@@ -50,17 +52,45 @@ const Calendar = ({ mode }) => {
             const userName = localStorage.getItem("userName");
             const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
 
-            const convertedEvents = response.data.map((event) => ({
+            const convertedEvents = response.data.map((event) => {
+                
+                let borderColor;
 
-                title: event.title,
-                start: new Date(event.start),
-                end: new Date(event.end),
-                id: event._id,
-                describe: event.describe,
-                color: event.color,
-                allDay: event.allDay,
+                // Adjust borderColor based on event status
+                switch (event.status.trim()) { // trim() removes leading and trailing spaces
+                    case "Unresolved":
+                        console.log("Setting borderColor to null for unresolved event");
+                        borderColor = null;
+                        break;
+                    case "Completed":
+                        console.log("Setting borderColor to green for completed event");
+                        borderColor = "green";
+                        break;
+                    case "Upcoming":
+                        console.log("Setting borderColor to yellow for upcoming event");
+                        borderColor = "yellow";
+                        break;
+                    case "Overdue":
+                        console.log("Setting borderColor to red for overdue event");
+                        borderColor = "red";
+                        break;
+                    default:
+                        console.log("Unknown status, setting borderColor to red");
+                        borderColor = null; // Default to red if status is not recognized
+                        break;
+                }
 
-            }));
+                return {
+                    title: event.title,
+                    start: new Date(event.start),
+                    end: new Date(event.end),
+                    id: event._id,
+                    describe: event.describe,
+                    color: event.color,
+                    allDay: event.allDay,
+                    borderColor: borderColor // Assign borderColor based on status
+                };
+            });
 
             setEvents(convertedEvents);
 

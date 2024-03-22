@@ -4,7 +4,10 @@ import { Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { auth } from "../Login/firebase";
 
+
+
 const NavbarLoggedIn = (props) => {
+
     const [show, setShow] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
     const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
@@ -15,6 +18,7 @@ const NavbarLoggedIn = (props) => {
     const eventsCount = parseInt(localStorage.getItem("eventsCount")) || 0;
     const navigate = useNavigate();
 
+    
     const fetchEvents = useCallback(async () => {
         try {
             const response = await axios.get(
@@ -29,7 +33,8 @@ const NavbarLoggedIn = (props) => {
 
     const filterEventsByTitle = useCallback(() => {
         const filtered = events.filter((event) =>
-            event.title.toLowerCase().includes(searchQuery.toLowerCase())
+            event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            event.status.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setFilteredEvents(filtered);
     }, [searchQuery, events]);
@@ -343,6 +348,12 @@ const NavbarLoggedIn = (props) => {
                                             >
                                                 <h3>{event.title}</h3>
                                                 <p>
+                                                    <strong>
+                                                        Description:
+                                                    </strong>{" "}
+                                                    {event.describe}
+                                                </p>
+                                                <p>
                                                     <strong>Start:</strong>{" "}
                                                     {new Date(
                                                         event.start
@@ -356,9 +367,9 @@ const NavbarLoggedIn = (props) => {
                                                 </p>
                                                 <p>
                                                     <strong>
-                                                        Description:
+                                                        Status:
                                                     </strong>{" "}
-                                                    {event.describe}
+                                                    {event.status}
                                                 </p>
                                             </div>
                                         ))
