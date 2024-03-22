@@ -27,6 +27,7 @@ router.get("/:id/show", async (req, res) => {
     }
 });
 
+//getting events based on status: unresolved
 router.get("/unresolved/:userName", async (req, res) => {
     const name = req.params.userName;
     const events = await Event.find({ admin: name, status: "Unresolved" });
@@ -38,6 +39,7 @@ router.get("/unresolved/:userName", async (req, res) => {
     }
 });
 
+//getting events based on status: completed, upcoming, overdue
 router.get("/resolved/:userName", async (req, res) => {
     const name = req.params.userName;
 
@@ -49,6 +51,7 @@ router.get("/resolved/:userName", async (req, res) => {
     }
 });
 
+//getting events based on status: completed
 router.get("/resolved/completed/:userName", async (req, res) => {
     const name = req.params.userName;
     const events = await Event.find({ admin: name, status: "Completed" });
@@ -60,6 +63,7 @@ router.get("/resolved/completed/:userName", async (req, res) => {
     }
 });
 
+//getting events based on status: upcoming
 router.get("/resolved/upcoming/:userName", async (req, res) => {
     const name = req.params.userName;
     const events = await Event.find({ admin: name, status: "Upcoming" });
@@ -71,6 +75,7 @@ router.get("/resolved/upcoming/:userName", async (req, res) => {
     }
 });
 
+//getting events based on status: overdue
 router.get("/resolved/overdue/:userName", async (req, res) => {
     const name = req.params.userName;
     const events = await Event.find({ admin: name, status: "Overdue" });

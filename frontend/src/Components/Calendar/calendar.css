@@ -7,10 +7,9 @@
     color: inherit !important; /* Inherit color from parent */
 }
 
-/*.fc-event {
-    border-color: yellow !important;
-    border-width: 3px !important;
-}*/
+.fc-event {
+    border-width: 2px !important;
+}
 
 .fc-toolbar-title {
     color: var(--fc-toolbar-title, default-color);

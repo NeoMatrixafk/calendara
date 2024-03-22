@@ -1,13 +1,19 @@
+//React imports
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
+
 const ProfileLoggedIn = (props) => {
+
+    //States
     const [userName] = useState(localStorage.getItem("userName") || "");
     const [contact] = useState(localStorage.getItem("contact") || "");
     const [email] = useState(localStorage.getItem("email") || "");
     const [eventTitles1Day, setEventTitles1Day] = useState([]);
 
+    //Handling functions
     useEffect(() => {
         const fetchEvents = async () => {
             try {
