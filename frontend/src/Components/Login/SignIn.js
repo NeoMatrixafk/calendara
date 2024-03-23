@@ -562,7 +562,11 @@ const SignIn = (props) => {
                     </div>
                     <Link
                         className="forgot-password-link text-primary mb-4 "
-                        style={{ textDecoration: "none", fontSize: "0.75rem" }}
+                        style={{
+                            textDecoration: "none",
+                            fontSize: "0.75rem",
+                            marginRight: "auto",
+                        }}
                         to="/forgot-password"
                     >
                         Forgot Password?
