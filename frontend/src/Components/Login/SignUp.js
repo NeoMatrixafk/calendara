@@ -1,6 +1,9 @@
 import React, { useState } from "react"; //imports
 import { Button } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+import waveBG from "./wave-auth-bg.svg";
 
 import { auth } from "./firebase";
 import {
@@ -15,7 +18,7 @@ import {
     GithubAuthProvider,
 } from "firebase/auth";
 
-const SignUpForm = (props) => {
+const SignUp = (props) => {
     const [authe, setAuthe] = useState(
         false || window.localStorage.getItem("auth") === "true"
     );
@@ -51,7 +54,7 @@ const SignUpForm = (props) => {
     };
 
     const handleSubmit = async (e) => {
-        // This function runs when Register button is clicked on.
+        // This function runs when Sign Up button is clicked on.
 
         e.preventDefault();
 
@@ -418,122 +421,71 @@ const SignUpForm = (props) => {
     });
 
     return (
-        <>
-            <div className="form-container sign-up">
-                <form
-                    onSubmit={handleSubmit}
-                    style={{
-                        backgroundColor:
-                            props.mode === "light" ? "#fff" : "#36393e",
-                    }}
-                >
-                    <h1
-                        className={`montserrat-regular-400 text-${
-                            props.mode === "light" ? "black" : "white"
-                        }`}
-                        style={{ width: "20rem" }}
-                    >
-                        <b>Create Account</b>
-                    </h1>
-                    <div className="social-icons">
-                        <Button
-                            className={`icon mx-1 text-${
-                                props.mode === "light" ? "white" : "black"
-                            } btn btn-${
-                                props.mode === "light" ? "primary" : "light"
-                            }`}
-                            onClick={handleGoogleSignIn}
-                        >
-                            <i className="bi bi-google"></i>
-                        </Button>
-                        <Button
-                            className={`icon mx-1 text-${
-                                props.mode === "light" ? "white" : "black"
-                            } btn btn-${
-                                props.mode === "light" ? "primary" : "light"
-                            }`}
-                            onClick={handleFacebookSignIn}
-                        >
-                            <i className="bi bi-facebook"></i>
-                        </Button>
-                        <Button
-                            className={`icon mx-1 text-${
-                                props.mode === "light" ? "white" : "black"
-                            } btn btn-${
-                                props.mode === "light" ? "primary" : "light"
-                            }`}
-                            onClick={handleMicrosoftSignIn}
-                        >
-                            <i className="bi bi-microsoft"></i>
-                        </Button>
-                        <Button
-                            className={`icon mx-1 text-${
-                                props.mode === "light" ? "white" : "black"
-                            } btn btn-${
-                                props.mode === "light" ? "primary" : "light"
-                            }`}
-                            onClick={handleTwitterSignIn}
-                        >
-                            <i className="bi bi-twitter-x"></i>
-                        </Button>
-                        <Button
-                            className={`icon mx-1 text-${
-                                props.mode === "light" ? "white" : "black"
-                            } btn btn-${
-                                props.mode === "light" ? "primary" : "light"
-                            }`}
-                            onClick={handleGitHubSignIn}
-                        >
-                            <i className="bi bi-github"></i>
-                        </Button>
-                    </div>
+        <div
+            style={{
+                display: "flex",
+                flex: "1",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                backgroundColor: "#f5f5f5",
+                backgroundImage: `url(${waveBG})`,
+                backgroundSize: "100% auto",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+            }}
+        >
+            <div style={styles.card}>
+                <h2 className="montserrat-regular-400 mb-2 d-flex justify-content-center">
+                    <b>Let's Go!</b>
+                </h2>
+                <form onSubmit={handleSubmit} style={styles.form}>
+                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                        Name
+                    </label>
                     <input
+                        style={styles.input}
                         type="text"
                         id="signup-name"
                         name="name"
                         placeholder="Name"
                         value={data.name}
                         onChange={handleChange}
-                        style={{
-                            backgroundColor:
-                                props.mode === "light" ? "" : "gray",
-                            WebkitTextFillColor:
-                                props.mode === "light" ? "black" : "white",
-                        }}
                         required
                     />
+                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                        Contact
+                    </label>
                     <input
+                        style={styles.input}
                         type="text"
                         id="contact"
                         name="contact"
                         placeholder="Contact"
                         value={data.contact}
                         onChange={handleChange}
-                        style={{
-                            backgroundColor:
-                                props.mode === "light" ? "" : "gray",
-                            WebkitTextFillColor:
-                                props.mode === "light" ? "black" : "white",
-                        }}
                         required
                     />
+                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                        Email
+                    </label>
                     <input
+                        style={styles.input}
                         type="email"
                         id="email"
                         name="email"
                         placeholder="Email"
                         value={data.email}
                         onChange={handleChange}
-                        style={{
-                            backgroundColor:
-                                props.mode === "light" ? "" : "gray",
-                            WebkitTextFillColor:
-                                props.mode === "light" ? "black" : "white",
-                        }}
                         required
                     />
+
+                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                        Password
+                    </label>
                     <div className="input-group w-100">
                         <input
+                            style={styles.password}
                             type={viewPassword ? "password" : "text"}
                             id="signup-password"
                             name="password"
@@ -541,19 +493,19 @@ const SignUpForm = (props) => {
                             value={data.password}
                             onChange={handleChange}
                             className="form-control"
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "gray",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "black" : "white",
-                            }}
                             required
                         />
                         <button
                             type="button"
-                            className={`btn my-2 py-0 btn-${
-                                props.mode === "light" ? "primary" : "dark"
-                            }`}
+                            className=""
+                            style={{
+                                padding: "12px 16px",
+                                marginBottom: "20px",
+                                border: "1px solid #cccccc",
+                                borderRadius: "0 4px 4px 0",
+                                fontSize: "16px",
+                                backgroundColor: "#007bff",
+                            }}
                             onClick={() => toggleViewPassword()}
                         >
                             <i
@@ -566,17 +518,106 @@ const SignUpForm = (props) => {
                             ></i>
                         </button>
                     </div>
-                    <button
-                        className={`btn btn-${
-                            props.mode === "light" ? "primary" : "danger"
-                        } mt-3`}
-                    >
-                        Register
+                    <button className="btn mt-3" style={styles.submitButton}>
+                        Sign Up
                     </button>
+
+                    <div className="d-flex justify-content-center mt-3">
+                        <Button
+                            className="mx-1 btn btn-light"
+                            onClick={handleGoogleSignIn}
+                        >
+                            <i className="bi bi-google"></i>
+                        </Button>
+                        <Button
+                            className="mx-1 btn btn-light"
+                            onClick={handleFacebookSignIn}
+                        >
+                            <i className="bi bi-facebook"></i>
+                        </Button>
+                        <Button
+                            className="mx-1 btn btn-light"
+                            onClick={handleMicrosoftSignIn}
+                        >
+                            <i className="bi bi-microsoft"></i>
+                        </Button>
+                        <Button
+                            className="mx-1 btn btn-light"
+                            onClick={handleTwitterSignIn}
+                        >
+                            <i className="bi bi-twitter-x"></i>
+                        </Button>
+                        <Button
+                            className="mx-1 btn btn-light"
+                            onClick={handleGitHubSignIn}
+                        >
+                            <i className="bi bi-github"></i>
+                        </Button>
+                    </div>
                 </form>
+                <div className="d-flex justify-content-center mt-2">
+                    <Link
+                        className="forgot-password-link text-primary"
+                        style={{ textDecoration: "none" }}
+                        to="/sign-in"
+                    >
+                        Alerady have an account? Sign In!
+                    </Link>
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 
-export default SignUpForm;
+const styles = {
+    card: {
+        width: "400px",
+        padding: "30px 40px",
+        backgroundColor: "#ffffff",
+        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "8px",
+    },
+    description: {
+        fontSize: "16px",
+        color: "#666666",
+        marginBottom: "30px",
+        textAlign: "center",
+    },
+    form: {
+        display: "flex",
+        flexDirection: "column",
+    },
+    input: {
+        padding: "12px 16px",
+        marginBottom: "20px",
+        border: "1px solid #cccccc",
+        borderRadius: "4px",
+        fontSize: "16px",
+    },
+    password: {
+        padding: "12px 16px",
+        marginBottom: "20px",
+        border: "1px solid #cccccc",
+        borderRadius: "4px 0 0 4px",
+        fontSize: "16px",
+    },
+    submitButton: {
+        padding: "12px 16px",
+        backgroundColor: "#007bff",
+        color: "#ffffff",
+        border: "none",
+        borderRadius: "4px",
+        fontSize: "16px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease",
+    },
+    backLink: {
+        marginTop: "20px",
+        textAlign: "center",
+        display: "block",
+        textDecoration: "none",
+        color: "#007bff",
+    },
+};
+
+export default SignUp;
