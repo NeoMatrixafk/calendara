@@ -4,6 +4,8 @@ import SignUpForm from "../Components/Login/SignUpForm";
 import SignInForm from "../Components/Login/SignInForm";
 import ToggleContainer from "../Components/Login/ToggleContainer";
 
+import { Link } from "react-router-dom";
+
 import "../Auth.css";
 
 const Auth = (props) => {
@@ -33,9 +35,29 @@ const Auth = (props) => {
 
     return (
         <>
+            <nav
+                className="navbar navbar-expand-lg sticky-top"
+                style={
+                    props.mode === "light"
+                        ? { backgroundColor: "#fff" }
+                        : { backgroundColor: "#36393e" }
+                }
+            >
+                <div className="container d-flex justify-content-center">
+                    <div className="w-25">
+                        <Link className="navbar-brand p-0 w-50" to="/">
+                            <img
+                                src={`../Images/Logo/calendara_${props.mode}.png`}
+                                className="img-fluid"
+                                alt=""
+                            />
+                        </Link>
+                    </div>
+                </div>
+            </nav>
             <div
                 className="d-flex justify-content-center align-items-center"
-                style={{ height: "100vh" }}
+                style={{ height: "80vh" }}
             >
                 <div className="">
                     <div className="login-container" id="login-container">

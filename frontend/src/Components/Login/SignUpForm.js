@@ -428,9 +428,10 @@ const SignUpForm = (props) => {
                     }}
                 >
                     <h1
-                        className={`text-${
+                        className={`montserrat-regular-400 text-${
                             props.mode === "light" ? "black" : "white"
                         }`}
+                        style={{ width: "20rem" }}
                     >
                         <b>Create Account</b>
                     </h1>

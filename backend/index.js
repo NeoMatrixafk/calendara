@@ -21,6 +21,7 @@ const UploadXLSX = require("./routes/UploadXLSX");
 const SendMail = require("./routes/SendMail");
 const Reminders = require("./routes/Reminders");
 const Categories = require("./routes/Categories");
+const ForgotPassword = require("./routes/ForgotPassword");
 
 // connecting database
 connection();
@@ -43,6 +44,7 @@ app.use("/api/sendmail", SendMail);
 app.use("/api/uploadxlsx", UploadXLSX);
 app.use("/api/reminders", Reminders);
 app.use("/api/categories", Categories);
+app.use("/api/forgotpassword", ForgotPassword);
 
 //starting app
 const port = process.env.PORT || 5000;

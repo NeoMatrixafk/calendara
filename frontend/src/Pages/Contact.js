@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
 const Contact = (props) => {
     const navigate = useNavigate();
 
@@ -59,8 +57,10 @@ const Contact = (props) => {
                         } text-center w-responsive mx-auto mb-5`}
                         style={{ fontSize: "1.5rem" }}
                     >
-                        Do you have any questions?<br /> 
-                        Please do not hesitate to contact us.<br /> 
+                        Do you have any questions?
+                        <br />
+                        Please do not hesitate to contact us.
+                        <br />
                         Our team will come back to you as soon as possible!
                     </p>
                     <div className="row d-flex my-4 justify-content-around">
@@ -136,17 +136,23 @@ const Contact = (props) => {
                                     placeholder="Your message"
                                     value={data.message}
                                     onChange={(e) => {
-                                    handleChange(e);
-                                    setMessageLength(e.target.value.length);
+                                        handleChange(e);
+                                        setMessageLength(e.target.value.length);
                                     }}
                                     style={{
-                                    backgroundColor: props.mode === "dark" ? "#4d4d4d" : "white",
-                                    WebkitTextFillColor: props.mode === "dark" ? "#BEBEBE" : "",
-                                    minHeight: "5rem",
-                                    maxHeight: "10rem",
-                                    position: "relative",
-                                    padding: "0.5rem",
-                                    boxSizing: "border-box",
+                                        backgroundColor:
+                                            props.mode === "dark"
+                                                ? "#4d4d4d"
+                                                : "white",
+                                        WebkitTextFillColor:
+                                            props.mode === "dark"
+                                                ? "#BEBEBE"
+                                                : "",
+                                        minHeight: "5rem",
+                                        maxHeight: "10rem",
+                                        position: "relative",
+                                        padding: "0.5rem",
+                                        boxSizing: "border-box",
                                     }}
                                     maxLength={maxLength}
                                     autoComplete="off"
@@ -154,11 +160,14 @@ const Contact = (props) => {
                                 />
                                 <div
                                     style={{
-                                    position: "absolute",
-                                    bottom: "0.5rem",
-                                    right: "0.5rem",
-                                    fontSize: "0.8rem",
-                                    color: props.mode === "dark" ? "#BEBEBE" : "#333",
+                                        position: "absolute",
+                                        bottom: "0.5rem",
+                                        right: "0.5rem",
+                                        fontSize: "0.8rem",
+                                        color:
+                                            props.mode === "dark"
+                                                ? "#BEBEBE"
+                                                : "#333",
                                     }}
                                 >
                                     {messageLength}/{maxLength}

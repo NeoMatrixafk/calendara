@@ -32,7 +32,7 @@ const SignInForm = (props) => {
         setViewPassword(!viewPassword);
     };
 
-    const showAlert = () => alert("This feature will be added shortly.");
+    // const showAlert = () => alert("This feature will be added shortly.");
 
     const [data, setData] = useState({
         email: "",
@@ -498,7 +498,7 @@ const SignInForm = (props) => {
                     }}
                 >
                     <h1
-                        className={`text-${
+                        className={`montserrat-regular-400 text-${
                             props.mode === "light" ? "black" : "white"
                         }`}
                     >
@@ -609,10 +609,10 @@ const SignInForm = (props) => {
                     </div>
 
                     <Link
-                        className={`text-${
+                        className={`forgot-password-link text-${
                             props.mode === "light" ? "black" : "white"
                         }`}
-                        onClick={showAlert}
+                        to="/forgot-password"
                     >
                         Forgot Your Password?
                     </Link>
