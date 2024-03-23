@@ -568,7 +568,7 @@ const SignIn = (props) => {
                         Forgot Password?
                     </Link>
                     <button className="btn mt-3" style={styles.submitButton}>
-                        Sign Up
+                        Sign In
                     </button>
                     <div className="d-flex justify-content-center mt-3">
                         <Button
