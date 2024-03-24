@@ -231,7 +231,13 @@ const CompletedEvents = (props) => {
                         ))}
                     </ul>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "white" : "#36393e"
+                    }}
+                    className="border-secondary"
+                >
                     <p
                         className={`text-${
                             props.mode === "light" ? "black" : "white"

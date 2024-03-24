@@ -1,3 +1,4 @@
+//React imports
 import React, { useState } from "react";
 import { addEventApi } from "../../Redux/actions";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +8,15 @@ import axios from "axios";
 
 
 const UploadEvents = (props) => {
+
+    //Hooks
     const navigate = useNavigate();
+
+    //States
+    const [csvFile, setCsvFile] = useState(null);
+    const [excelFile, setExcelFile] = useState(null);
+    
+    const userName = localStorage.getItem("userName");
 
     const handleCsvDownload = () => {
         const downloadLink = document.createElement("a");
@@ -24,11 +33,6 @@ const UploadEvents = (props) => {
         downloadLink.download = "xlsx_template.xlsx";
         downloadLink.click();
     };
-
-    const [csvFile, setCsvFile] = useState(null);
-    const [excelFile, setExcelFile] = useState(null);
-
-    const userName = localStorage.getItem("userName");
 
     const handleCSVChange = (e) => {
         setCsvFile(e.target.files[0]);
