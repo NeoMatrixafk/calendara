@@ -12,6 +12,8 @@ const ProfileLoggedIn = (props) => {
     const [contact] = useState(localStorage.getItem("contact") || "");
     const [email] = useState(localStorage.getItem("email") || "");
     const [eventTitles1Day, setEventTitles1Day] = useState([]);
+    const resolvedEventsCount = localStorage.getItem("resolvedEventsCount")
+    const unresolvedEventsCount = localStorage.getItem("unresolvedEventsCount")
 
     //Handling functions
     useEffect(() => {
@@ -244,7 +246,7 @@ const ProfileLoggedIn = (props) => {
                                             }`}
                                             style={{ fontSize: "1.5rem" }}
                                         >
-                                            Events Completed: 5
+                                            Activity - Current Month
                                         </p>
                                     </div>
                                     <div className="col-12">
@@ -256,7 +258,19 @@ const ProfileLoggedIn = (props) => {
                                             }`}
                                             style={{ fontSize: "1.5rem" }}
                                         >
-                                            Events Not Completed: 2
+                                            Resolved Events: {resolvedEventsCount}
+                                        </p>
+                                    </div>
+                                    <div className="col-12">
+                                        <p
+                                            className={`text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                            style={{ fontSize: "1.5rem" }}
+                                        >
+                                            Unresolved Events: {unresolvedEventsCount}
                                         </p>
                                     </div>
                                     <hr />
