@@ -4,10 +4,7 @@ import { Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
 const OverdueEvents = (props) => {
-
     //Hooks
     const navigate = useNavigate();
 
@@ -18,16 +15,20 @@ const OverdueEvents = (props) => {
 
     const userName = localStorage.getItem("userName");
 
-
     useEffect(() => {
         const fetchOverdueEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/events/resolved/overdue/${userName}`);
+                const response = await axios.get(
+                    `http://localhost:55555/api/events/resolved/overdue/${userName}`
+                );
                 const events = response.data;
                 setOverdueEventsCount(events.length);
-                setOverdueEvents(events)
+                setOverdueEvents(events);
             } catch (error) {
-                console.error("Error fetching length of overdue events:", error);
+                console.error(
+                    "Error fetching length of overdue events:",
+                    error
+                );
             }
         };
 
@@ -37,7 +38,9 @@ const OverdueEvents = (props) => {
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
+                const response = await axios.get(
+                    `http://localhost:55555/api/events/${userName}`
+                );
                 const events = response.data;
                 setTotalEventsCount(events.length);
             } catch (error) {
@@ -58,11 +61,13 @@ const OverdueEvents = (props) => {
     ];
 
     const handleEventClick = (eventId) => {
-
-        const clickedEvent = overdueEvents.find(event => event._id === eventId);
-        navigate(`/event/${eventId}/update`, { state: { selectedEvent: clickedEvent, selectedEventId: eventId } })
-        setModalShow(false)
-
+        const clickedEvent = overdueEvents.find(
+            (event) => event._id === eventId
+        );
+        navigate(`/event/${eventId}/update`, {
+            state: { selectedEvent: clickedEvent, selectedEventId: eventId },
+        });
+        setModalShow(false);
     };
 
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";
@@ -164,84 +169,78 @@ const OverdueEvents = (props) => {
                     </div>
                 </div>
             </div>
-            <Modal show={modalShow} onHide={() => setModalShow(false)}>
-            <Modal.Header
-                                    closeVariant={
-                                        props.mode === "dark"
-                                            ? "white"
-                                            : "black"
-                                    }
-                                    closeButton
-                                    className={
-                                        props.mode === "light"
-                                            ? ""
-                                            : "border-secondary"
-                                    }
-                                    style={{
-                                        backgroundColor:
-                                            props.mode === "light"
-                                                ? "white"
-                                                : "#36393e",
-                                    }}
-                                >
-                    <Modal.Title 
+            <Modal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                className="mt-5"
+            >
+                <Modal.Header
+                    closeVariant={props.mode === "dark" ? "white" : "black"}
+                    closeButton
+                    className={props.mode === "light" ? "" : "border-secondary"}
                     style={{
-                        WebkitTextFillColor:
-                            props.mode === "light"
-                                ? ""
-                                : "white",
-                    }}>Overdue Events</Modal.Title>
+                        backgroundColor:
+                            props.mode === "light" ? "white" : "#36393e",
+                    }}
+                >
+                    <Modal.Title
+                        style={{
+                            WebkitTextFillColor:
+                                props.mode === "light" ? "" : "white",
+                        }}
+                    >
+                        Overdue Events
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body
-                                    style={{
-                                        backgroundColor:
-                                            props.mode === "light"
-                                                ? "white"
-                                                : "#36393e",
-                                        height: "25rem",
-                                        overflowY: "auto",
-                                    }}
-                                >
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "white" : "#36393e",
+                        height: "25rem",
+                        overflowY: "auto",
+                    }}
+                >
                     <ul>
-                        {overdueEvents.map((event) => (
+                        {overdueEvents.map((event, index) => (
                             <div
-                            key={event._id}
-                            className={`mt-2    mb-5 text-${
-                                props.mode === "light"
-                                    ? "black"
-                                    : "white"
-                            }`}
-                            onClick={() => handleEventClick(event._id)}
-                        >
-                            <h3>{event.title}</h3>
-                            <p>
-                                <strong>
-                                    Description:
-                                </strong>{" "}
-                                {event.describe}
-                            </p>
-                            <p>
-                                <strong>Start:</strong>{" "}
-                                {new Date(
-                                    event.start
-                                ).toLocaleString()}
-                            </p>
-                            <p>
-                                <strong>End:</strong>{" "}
-                                {new Date(
-                                    event.end
-                                ).toLocaleString()}
-                            </p>
-                            <p>
-                                <strong>
-                                    Status:
-                                </strong>{" "}
-                                {event.status}
-                            </p>
-                        </div>
+                                key={event._id}
+                                className={`my-3 text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                                onClick={() => handleEventClick(event._id)}
+                            >
+                                <h3>{event.title}</h3>
+                                <p>
+                                    <strong>Description:</strong>{" "}
+                                    {event.describe}
+                                </p>
+                                <p>
+                                    <strong>Start:</strong>{" "}
+                                    {new Date(event.start).toLocaleString()}
+                                </p>
+                                <p>
+                                    <strong>End:</strong>{" "}
+                                    {new Date(event.end).toLocaleString()}
+                                </p>
+                                <p>
+                                    <strong>Status:</strong> {event.status}
+                                </p>
+                                {index !== overdueEvents.length - 1 && (
+                                    <hr className="border-bottom" />
+                                )}
+                            </div>
                         ))}
                     </ul>
                 </Modal.Body>
+                <Modal.Footer>
+                    <p
+                        className={`text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                    >
+                        calendara
+                    </p>
+                </Modal.Footer>
             </Modal>
         </>
     );
