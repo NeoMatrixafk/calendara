@@ -28,7 +28,7 @@ const NavbarLoggedOut = (props) => {
                     <div className="d-flex align-items-center"></div>
                     <div className="d-flex align-items-center">
                         <Link
-                            to="/auth"
+                            to="/sign-in"
                             className={`nav-link hover-navlink text-${
                                 props.mode === "light" ? "black" : "white"
                             } mx-2 hover-underline`}

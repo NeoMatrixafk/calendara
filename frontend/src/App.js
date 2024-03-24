@@ -29,7 +29,6 @@ import UploadEvents from "./Components/Calendar/UploadEvents";
 //LoggedOut
 import NavbarLoggedOut from "./Components/Common/NavbarLoggedOut";
 import HomeLoggedOut from "./Pages/HomeLoggedOut";
-import Auth from "./Pages/Auth";
 
 //Universal
 import Footer from "./Components/Common/Footer";
@@ -38,6 +37,13 @@ import DarkMode from "./Logic/DarkMode";
 
 //ForgotPassword
 import ForgotPassword from "./Pages/ForgotPassword";
+
+//Auth
+import SignIn from "./Components/Login/SignIn";
+import SignUp from "./Components/Login/SignUp";
+
+//Dummy
+import DummyPage from "./Pages/DummyPage";
 
 function App() {
     //Hooks
@@ -93,7 +99,9 @@ function App() {
                 }}
             >
                 {location.pathname !== "/forgot-password" &&
-                    shouldRenderNavbarFooter && (
+                    location.pathname !== "/dummy" &&
+                    location.pathname !== "/sign-in" &&
+                    location.pathname !== "/sign-up" && (
                         <>
                             {user || auth ? (
                                 <NavbarLoggedIn
@@ -113,12 +121,12 @@ function App() {
                 <div style={{ flex: 1 }}>
                     <Routes>
                         <Route
-                            path="/auth"
+                            path="/sign-in"
                             element={
                                 user || auth ? (
                                     <Navigate replace to="/home" mode={mode} />
                                 ) : (
-                                    <Auth mode={mode} />
+                                    <SignIn />
                                 )
                             }
                         />
@@ -260,10 +268,17 @@ function App() {
                                     path="/contact"
                                     element={<Contact mode={mode} />}
                                 />
+                                <Route path="/sign-in" element={<SignIn />} />
+                                <Route path="/sign-up" element={<SignUp />} />
 
                                 <Route
                                     path="/forgot-password"
                                     element={<ForgotPassword mode={mode} />}
+                                />
+
+                                <Route
+                                    path="/dummy"
+                                    element={<DummyPage mode={mode} />}
                                 />
                             </>
                         )}
@@ -271,6 +286,9 @@ function App() {
                 </div>
 
                 {location.pathname !== "/forgot-password" &&
+                    location.pathname !== "/dummy" &&
+                    location.pathname !== "/sign-in" &&
+                    location.pathname !== "/sign-up" &&
                     shouldRenderNavbarFooter && <Footer mode={mode} />}
             </div>
         </>
