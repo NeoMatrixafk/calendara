@@ -421,151 +421,170 @@ const SignUp = (props) => {
     });
 
     return (
-        <div
-            style={{
-                display: "flex",
-                flex: "1",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-                backgroundColor: "#f5f5f5",
-                backgroundImage: `url(${waveBG})`,
-                backgroundSize: "100% auto",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-            }}
-        >
-            <div style={styles.card}>
-                <h2 className="montserrat-regular-400 mb-2 d-flex justify-content-center">
-                    <b>Let's Go!</b>
-                </h2>
-                <form onSubmit={handleSubmit} style={styles.form}>
-                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
-                        Name
-                    </label>
-                    <input
-                        style={styles.input}
-                        type="text"
-                        id="signup-name"
-                        name="name"
-                        placeholder="Name"
-                        value={data.name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
-                        Contact
-                    </label>
-                    <input
-                        style={styles.input}
-                        type="text"
-                        id="contact"
-                        name="contact"
-                        placeholder="Contact"
-                        value={data.contact}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
-                        Email
-                    </label>
-                    <input
-                        style={styles.input}
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Email"
-                        value={data.email}
-                        onChange={handleChange}
-                        required
-                    />
+        <>
+            <Link to="/home">
+                <img
+                    src={require("./calendara_auth.png")}
+                    alt="calendara Auth"
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        zIndex: 9999,
+                        height: "7rem",
+                    }}
+                />
+            </Link>
 
-                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
-                        Password
-                    </label>
-                    <div className="input-group w-100">
+            <div
+                style={{
+                    display: "flex",
+                    flex: "1",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                    backgroundColor: "#f5f5f5",
+                    backgroundImage: `url(${waveBG})`,
+                    backgroundSize: "100% auto",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                }}
+            >
+                <div style={styles.card}>
+                    <h2 className="montserrat-regular-400 mb-2 d-flex justify-content-center">
+                        <b>Let's Go!</b>
+                    </h2>
+                    <form onSubmit={handleSubmit} style={styles.form}>
+                        <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                            Name
+                        </label>
                         <input
-                            style={styles.password}
-                            type={viewPassword ? "password" : "text"}
-                            id="signup-password"
-                            name="password"
-                            placeholder="Password"
-                            value={data.password}
+                            style={styles.input}
+                            type="text"
+                            id="signup-name"
+                            name="name"
+                            placeholder="Name"
+                            value={data.name}
                             onChange={handleChange}
-                            className="form-control"
                             required
                         />
-                        <button
-                            type="button"
-                            className=""
-                            style={{
-                                padding: "12px 16px",
-                                marginBottom: "20px",
-                                border: "1px solid #cccccc",
-                                borderRadius: "0 4px 4px 0",
-                                fontSize: "16px",
-                                backgroundColor: "#007bff",
-                            }}
-                            onClick={() => toggleViewPassword()}
-                        >
-                            <i
-                                className={`bi bi-eye${
-                                    viewPassword ? "-slash" : ""
-                                }`}
-                                style={{
-                                    color: "white",
-                                }}
-                            ></i>
-                        </button>
-                    </div>
-                    <button className="btn mt-3" style={styles.submitButton}>
-                        Sign Up
-                    </button>
+                        <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                            Contact
+                        </label>
+                        <input
+                            style={styles.input}
+                            type="text"
+                            id="contact"
+                            name="contact"
+                            placeholder="Contact"
+                            value={data.contact}
+                            onChange={handleChange}
+                            required
+                        />
+                        <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                            Email
+                        </label>
+                        <input
+                            style={styles.input}
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Email"
+                            value={data.email}
+                            onChange={handleChange}
+                            required
+                        />
 
-                    <div className="d-flex justify-content-center mt-3">
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleGoogleSignIn}
+                        <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                            Password
+                        </label>
+                        <div className="input-group w-100">
+                            <input
+                                style={styles.password}
+                                type={viewPassword ? "password" : "text"}
+                                id="signup-password"
+                                name="password"
+                                placeholder="Password"
+                                value={data.password}
+                                onChange={handleChange}
+                                className="form-control"
+                                required
+                            />
+                            <button
+                                type="button"
+                                className=""
+                                style={{
+                                    padding: "12px 16px",
+                                    marginBottom: "20px",
+                                    border: "1px solid #cccccc",
+                                    borderRadius: "0 4px 4px 0",
+                                    fontSize: "16px",
+                                    backgroundColor: "#007bff",
+                                }}
+                                onClick={() => toggleViewPassword()}
+                            >
+                                <i
+                                    className={`bi bi-eye${
+                                        viewPassword ? "-slash" : ""
+                                    }`}
+                                    style={{
+                                        color: "white",
+                                    }}
+                                ></i>
+                            </button>
+                        </div>
+                        <button
+                            className="btn mt-3"
+                            style={styles.submitButton}
                         >
-                            <i className="bi bi-google"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleFacebookSignIn}
+                            Sign Up
+                        </button>
+
+                        <div className="d-flex justify-content-center mt-3">
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleGoogleSignIn}
+                            >
+                                <i className="bi bi-google"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleFacebookSignIn}
+                            >
+                                <i className="bi bi-facebook"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleMicrosoftSignIn}
+                            >
+                                <i className="bi bi-microsoft"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleTwitterSignIn}
+                            >
+                                <i className="bi bi-twitter-x"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleGitHubSignIn}
+                            >
+                                <i className="bi bi-github"></i>
+                            </Button>
+                        </div>
+                    </form>
+                    <div className="d-flex justify-content-center mt-2">
+                        <Link
+                            className="forgot-password-link text-primary"
+                            style={{ textDecoration: "none" }}
+                            to="/sign-in"
                         >
-                            <i className="bi bi-facebook"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleMicrosoftSignIn}
-                        >
-                            <i className="bi bi-microsoft"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleTwitterSignIn}
-                        >
-                            <i className="bi bi-twitter-x"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleGitHubSignIn}
-                        >
-                            <i className="bi bi-github"></i>
-                        </Button>
+                            Alerady have an account? Sign In!
+                        </Link>
                     </div>
-                </form>
-                <div className="d-flex justify-content-center mt-2">
-                    <Link
-                        className="forgot-password-link text-primary"
-                        style={{ textDecoration: "none" }}
-                        to="/sign-in"
-                    >
-                        Alerady have an account? Sign In!
-                    </Link>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

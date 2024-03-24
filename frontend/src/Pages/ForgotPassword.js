@@ -34,33 +34,49 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <div style={styles.card}>
-                <h2 className="montserrat-regular-400 mb-5 d-flex justify-content-center">
-                    <b>Forgot Password?</b>
-                </h2>
-                <p style={styles.description}>
-                    Enter your email address, and we'll send you instructions to
-                    reset your password.
-                </p>
-                <form onSubmit={handleSubmit} style={styles.form}>
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={handleChange}
-                        required
-                        style={styles.input}
-                    />
-                    <button type="submit" style={styles.submitButton}>
-                        Reset Password
-                    </button>
-                </form>
-                <Link to="/sign-in" style={styles.backLink}>
-                    Back to Login
-                </Link>
+        <>
+            <Link to="/home">
+                <img
+                    src={require("../Components/Login/calendara_auth.png")}
+                    alt="calendara Auth"
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        zIndex: 9999,
+                        height: "7rem",
+                    }}
+                />
+            </Link>
+
+            <div style={styles.container}>
+                <div style={styles.card}>
+                    <h2 className="montserrat-regular-400 mb-5 d-flex justify-content-center">
+                        <b>Forgot Password?</b>
+                    </h2>
+                    <p style={styles.description}>
+                        Enter your email address, and we'll send you
+                        instructions to reset your password.
+                    </p>
+                    <form onSubmit={handleSubmit} style={styles.form}>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={handleChange}
+                            required
+                            style={styles.input}
+                        />
+                        <button type="submit" style={styles.submitButton}>
+                            Reset Password
+                        </button>
+                    </form>
+                    <Link to="/sign-in" style={styles.backLink}>
+                        Back to Login
+                    </Link>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
