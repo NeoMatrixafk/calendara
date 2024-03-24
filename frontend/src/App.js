@@ -42,8 +42,7 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import SignIn from "./Components/Login/SignIn";
 import SignUp from "./Components/Login/SignUp";
 
-//Dummy
-import DummyPage from "./Pages/DummyPage";
+
 
 function App() {
     //Hooks
@@ -276,10 +275,6 @@ function App() {
                                     element={<ForgotPassword mode={mode} />}
                                 />
 
-                                <Route
-                                    path="/dummy"
-                                    element={<DummyPage mode={mode} />}
-                                />
                             </>
                         )}
                     </Routes>

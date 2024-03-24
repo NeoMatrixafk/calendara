@@ -29,7 +29,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
     const [firstRender, setFirstRender] = useState(true);
     const { selectedEvent, selectedEventId } = location.state || {};
     const [selectedColor, setSelectedColor] = useState(
-        selectedEvent.color || "#3174ad"
+        selectedEvent.color || "#2196f3"
     ); // Default color from the event or a default color
     const [status, setStatus] = useState(selectedEvent.status || "Unresolved");
 

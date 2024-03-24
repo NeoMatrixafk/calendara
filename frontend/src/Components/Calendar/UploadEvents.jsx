@@ -64,8 +64,9 @@ const UploadEvents = (props) => {
 
             // Optionally, you can handle the response or provide user feedback
             alert("CSV file uploaded and Events are created!");
-            navigate("/events");
+            navigate("/events2");
         } catch (error) {
+            window.alert("Invalid date format!")
             console.error("Error uploading CSV file:", error.response.data);
             // Handle the error as needed
         }
