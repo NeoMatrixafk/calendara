@@ -59,9 +59,37 @@
     background: var(--fc-daygrid-day-frame, default-color);
 }
 .fc-scrollgrid-sync-inner {
-    background-color: gray;
+    background-color: var(--fc-scrollgrid-sync-inner, default-color);
 }
 
 .fc-timegrid-axis-cushion {
     background-color: var(--fc-timegrid-axis-color, default-color)!important;
+}
+
+.fc-list-day-cushion {
+    background-color: var(--fc-list-day-cushion, default-color)!important;
+}
+
+.fc-list-event-title {
+    background-color: var(--fc-list-event-title-and-time, default-color)!important;
+    color: var(--fc-text);
+}
+
+.fc-list-event-time {
+    background-color: var(--fc-list-event-title-and-time, default-color)!important;
+    color: var(--fc-text);
+}
+
+.fc-list-event-graphic {
+    background-color: var(--fc-list-event-title-and-time, default-color)!important;
+}
+
+.fc-list-day-text {
+    color: var(--fc-text);
+    font-weight: normal;
+}
+
+.fc-list-day-side-text {
+    color: var(--fc-text);
+    font-weight: normal;
 }
