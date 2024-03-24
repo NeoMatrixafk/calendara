@@ -490,134 +490,153 @@ const SignIn = (props) => {
     });
 
     return (
-        <div
-            style={{
-                display: "flex",
-                flex: "1",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-                backgroundColor: "#f5f5f5",
-                backgroundImage: `url(${waveBG})`,
-                backgroundSize: "100% auto",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-            }}
-        >
-            <div style={styles.card}>
-                <h2 className="montserrat-regular-400 mb-2 d-flex justify-content-center">
-                    <b>Welcome Back!</b>
-                </h2>
-                <form onSubmit={handleSubmit} style={styles.form}>
-                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
-                        Email
-                    </label>
-                    <input
-                        style={styles.input}
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Email"
-                        value={data.email}
-                        onChange={handleChange}
-                        required
-                    />
-                    <label htmlFor="" style={{ fontSize: "0.75rem" }}>
-                        Password
-                    </label>
-                    <div className="input-group w-100">
+        <>
+            <Link to="/home">
+                <img
+                    src={require("./calendara_auth.png")}
+                    alt="calendara Auth"
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        zIndex: 9999,
+                        height: "7rem",
+                    }}
+                />
+            </Link>
+
+            <div
+                style={{
+                    display: "flex",
+                    flex: "1",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                    backgroundColor: "#f5f5f5",
+                    backgroundImage: `url(${waveBG})`,
+                    backgroundSize: "100% auto",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                }}
+            >
+                <div style={styles.card}>
+                    <h2 className="montserrat-regular-400 mb-2 d-flex justify-content-center">
+                        <b>Welcome Back!</b>
+                    </h2>
+                    <form onSubmit={handleSubmit} style={styles.form}>
+                        <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                            Email
+                        </label>
                         <input
-                            style={styles.password}
-                            type={viewPassword ? "password" : "text"}
-                            id="signup-password"
-                            name="password"
-                            placeholder="Password"
-                            value={data.password}
+                            style={styles.input}
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Email"
+                            value={data.email}
                             onChange={handleChange}
-                            className="form-control"
                             required
                         />
-                        <button
-                            type="button"
-                            className=""
-                            style={{
-                                padding: "12px 16px",
-                                marginBottom: "20px",
-                                border: "1px solid #cccccc",
-                                borderRadius: "0 4px 4px 0",
-                                fontSize: "16px",
-                                backgroundColor: "#007bff",
-                            }}
-                            onClick={() => toggleViewPassword()}
-                        >
-                            <i
-                                className={`bi bi-eye${
-                                    viewPassword ? "-slash" : ""
-                                }`}
+                        <label htmlFor="" style={{ fontSize: "0.75rem" }}>
+                            Password
+                        </label>
+                        <div className="input-group w-100">
+                            <input
+                                style={styles.password}
+                                type={viewPassword ? "password" : "text"}
+                                id="signup-password"
+                                name="password"
+                                placeholder="Password"
+                                value={data.password}
+                                onChange={handleChange}
+                                className="form-control"
+                                required
+                            />
+                            <button
+                                type="button"
+                                className=""
                                 style={{
-                                    color: "white",
+                                    padding: "12px 16px",
+                                    marginBottom: "20px",
+                                    border: "1px solid #cccccc",
+                                    borderRadius: "0 4px 4px 0",
+                                    fontSize: "16px",
+                                    backgroundColor: "#007bff",
                                 }}
-                            ></i>
+                                onClick={() => toggleViewPassword()}
+                            >
+                                <i
+                                    className={`bi bi-eye${
+                                        viewPassword ? "-slash" : ""
+                                    }`}
+                                    style={{
+                                        color: "white",
+                                    }}
+                                ></i>
+                            </button>
+                        </div>
+                        <Link
+                            className="forgot-password-link text-primary mb-4 "
+                            style={{
+                                textDecoration: "none",
+                                fontSize: "0.75rem",
+                                marginRight: "auto",
+                            }}
+                            to="/forgot-password"
+                        >
+                            Forgot Password?
+                        </Link>
+                        <button
+                            className="btn mt-3"
+                            style={styles.submitButton}
+                        >
+                            Sign In
                         </button>
+                        <div className="d-flex justify-content-center mt-3">
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleGoogleSignIn}
+                            >
+                                <i className="bi bi-google"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleFacebookSignIn}
+                            >
+                                <i className="bi bi-facebook"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleMicrosoftSignIn}
+                            >
+                                <i className="bi bi-microsoft"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleTwitterSignIn}
+                            >
+                                <i className="bi bi-twitter-x"></i>
+                            </Button>
+                            <Button
+                                className="mx-1 btn btn-light"
+                                onClick={handleGitHubSignIn}
+                            >
+                                <i className="bi bi-github"></i>
+                            </Button>
+                        </div>
+                    </form>
+                    <div className="d-flex justify-content-center mt-2">
+                        <Link
+                            className="forgot-password-link text-primary"
+                            style={{ textDecoration: "none" }}
+                            to="/sign-up"
+                        >
+                            Don't have an account? Sign Up!
+                        </Link>
                     </div>
-                    <Link
-                        className="forgot-password-link text-primary mb-4 "
-                        style={{
-                            textDecoration: "none",
-                            fontSize: "0.75rem",
-                            marginRight: "auto",
-                        }}
-                        to="/forgot-password"
-                    >
-                        Forgot Password?
-                    </Link>
-                    <button className="btn mt-3" style={styles.submitButton}>
-                        Sign In
-                    </button>
-                    <div className="d-flex justify-content-center mt-3">
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleGoogleSignIn}
-                        >
-                            <i className="bi bi-google"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleFacebookSignIn}
-                        >
-                            <i className="bi bi-facebook"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleMicrosoftSignIn}
-                        >
-                            <i className="bi bi-microsoft"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleTwitterSignIn}
-                        >
-                            <i className="bi bi-twitter-x"></i>
-                        </Button>
-                        <Button
-                            className="mx-1 btn btn-light"
-                            onClick={handleGitHubSignIn}
-                        >
-                            <i className="bi bi-github"></i>
-                        </Button>
-                    </div>
-                </form>
-                <div className="d-flex justify-content-center mt-2">
-                    <Link
-                        className="forgot-password-link text-primary"
-                        style={{ textDecoration: "none" }}
-                        to="/sign-up"
-                    >
-                        Don't have an account? Sign Up!
-                    </Link>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
