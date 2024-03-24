@@ -1,3 +1,4 @@
+//React imports
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
@@ -25,7 +26,10 @@ const schema = yup
 
 const AddEvents = ({ addEventApi, error, mode }) => {
 
+    //Hooks
     const navigate = useNavigate();
+
+    //States
     const [rerender, setRerender] = useState(false);
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
@@ -37,7 +41,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     
     const [status, setStatus] = useState(defaultStatus || "Unresolved");
 
-    
+    //Handling functions
     useEffect(() => {
         if (error && !firstRender) {
             setError(error);
@@ -46,7 +50,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
             setTimeout(navigate("/events2"));
         }
     }, [rerender, error, dbError, firstRender, navigate]);
-    //using form-hook to register event data
+
     const {
         register,
         handleSubmit,
