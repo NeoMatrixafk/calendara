@@ -30,7 +30,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
     const [userName] = useState(localStorage.getItem("userName") || "");
-    const [selectedColor, setSelectedColor] = useState("#3174ad"); // Default color
+    const [selectedColor, setSelectedColor] = useState("#2196f3"); // Default color
 
     const location = useLocation();
     const { defaultTitle, defaultDesc, defaultStartDate, defaultEndDate, defaultStatus } = location.state || {};

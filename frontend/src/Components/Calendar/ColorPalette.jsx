@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CirclePicker } from "react-color";
 
 const ColorPalette = ({ onSelectColor, initialColor }) => {
-    const [color, setColor] = useState(initialColor || "#3174ad"); // Default color
+    const [color, setColor] = useState(initialColor || "#2196f3"); // Default color
 
     const handleChange = (selectedColor) => {
         setColor(selectedColor.hex);

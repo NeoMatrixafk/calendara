@@ -60,19 +60,15 @@ const Calendar = ({ mode }) => {
                 // Adjust borderColor based on event status
                 switch (event.status) {
                     case "Unresolved":
-                        console.log("Setting borderColor to null for unresolved event");
                         borderColor = null;
                         break;
                     case "Completed":
-                        console.log("Setting borderColor to green for completed event");
                         borderColor = "green";
                         break;
                     case "Upcoming":
-                        console.log("Setting borderColor to yellow for upcoming event");
                         borderColor = "yellow";
                         break;
                     case "Overdue":
-                        console.log("Setting borderColor to red for overdue event");
                         borderColor = "red";
                         break;
                     default:
@@ -145,7 +141,7 @@ const Calendar = ({ mode }) => {
             end: defaultEndDate.toISOString(),
             describe: data.describe,
             allDay: data.allDay,
-            status: data.status,
+            status: status,
 
         };
       

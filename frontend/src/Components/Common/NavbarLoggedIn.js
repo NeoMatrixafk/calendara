@@ -292,7 +292,7 @@ const NavbarLoggedIn = (props) => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Search by Event Title or Search..."
+                                                placeholder="Search by Event Title or Status..."
                                                 value={searchQuery}
                                                 onChange={handleSearchChange}
                                                 aria-label="Search Event Title"
