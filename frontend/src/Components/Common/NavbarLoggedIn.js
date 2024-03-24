@@ -88,6 +88,14 @@ const NavbarLoggedIn = (props) => {
         window.location.reload();
     };
 
+    const handleEventClick = (eventId) => {
+
+        const clickedEvent = filteredEvents.find(event => event._id === eventId);
+        navigate(`/event/${eventId}/update`, { state: { selectedEvent: clickedEvent, selectedEventId: eventId } })
+        setShow(false)
+
+    };
+
     return (
         <>
             <nav
@@ -321,7 +329,6 @@ const NavbarLoggedIn = (props) => {
                                         overflowY: "auto",
                                     }}
                                 >
-                                    {/* Add a conditional check for displaying events */}
                                     {searchQuery !== "" ? (
                                         filteredEvents.map((event) => (
                                             <div
@@ -331,6 +338,7 @@ const NavbarLoggedIn = (props) => {
                                                         ? "black"
                                                         : "white"
                                                 }`}
+                                                onClick={() => handleEventClick(event._id)}
                                             >
                                                 <h3>{event.title}</h3>
                                                 <p>
