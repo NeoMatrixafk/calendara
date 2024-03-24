@@ -34,7 +34,9 @@ const renderCustomizedLabel = ({
 const Activity = (props) => {
 
     const [resolvedEvents, setResolvedEvents] = useState();
+    localStorage.setItem("resolvedEventsCount", resolvedEvents);
     const [unresolvedEvents, setUnResolvedEvents] = useState();
+    localStorage.setItem("unresolvedEventsCount", unresolvedEvents);
 
     const userName = localStorage.getItem("userName");
 
