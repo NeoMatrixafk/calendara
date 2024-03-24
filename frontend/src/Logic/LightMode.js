@@ -42,11 +42,11 @@ const LightMode = () => {
     document.documentElement.style.setProperty("--fc-list-day-text", "black");
     document.documentElement.style.setProperty(
         "--fc-button-background",
-        "#606060"
+        "#4d4dff"
     );
     document.documentElement.style.setProperty(
         "--fc-button-active-background",
-        "#909090"
+        "#1a1aff"
     );
     document.documentElement.style.setProperty("--fc-button-color,", "white");
     document.documentElement.style.setProperty(
@@ -56,6 +56,19 @@ const LightMode = () => {
     document.documentElement.style.setProperty(
         "--fc-timegrid-axis-color",
         "white"
+    );
+    document.documentElement.style.setProperty(
+        "--fc-list-day-cushion",
+        "#f2f2f2"
+    );
+    document.documentElement.style.setProperty(
+        "--fc-list-event-title-and-time",
+        "white"
+    );
+    document.documentElement.style.setProperty("--fc-text", "black");
+    document.documentElement.style.setProperty(
+        "--fc-scrollgrid-sync-inner",
+        "#8080ff"
     );
 
     document.documentElement.style.setProperty("--datepicker-color", "white");

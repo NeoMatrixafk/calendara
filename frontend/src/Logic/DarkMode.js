@@ -57,6 +57,19 @@ const DarkMode = () => {
         "--fc-timegrid-axis-color",
         "#36393e"
     );
+    document.documentElement.style.setProperty(
+        "--fc-list-day-cushion",
+        "#606060"
+    );
+    document.documentElement.style.setProperty(
+        "--fc-list-event-title-and-time",
+        "#36383e"
+    );
+    document.documentElement.style.setProperty("--fc-text", "white");
+    document.documentElement.style.setProperty(
+        "--fc-scrollgrid-sync-inner",
+        "gray"
+    );
 
     document.documentElement.style.setProperty("--datepicker-color", "#666B74");
 
