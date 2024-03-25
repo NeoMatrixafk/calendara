@@ -19,8 +19,11 @@ const NavbarLoggedIn = (props) => {
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
+    const [events7daysCount, setEvents7daysCount] = useState(0);
+    const [events3daysCount, setEvents3daysCount] = useState(0);
+    const [events1dayCount, setEvents1dayCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
     const userName = localStorage.getItem("userName");
-    const eventsCount = parseInt(localStorage.getItem("eventsCount")) || 0;
 
     //Handling Functions
     const fetchEvents = useCallback(async () => {
@@ -95,6 +98,56 @@ const NavbarLoggedIn = (props) => {
         setShow(false)
 
     };
+
+    useEffect(() => {
+        async function fetch7daysEventsCount() {
+            try {
+                const response = await axios.get(
+                    `http://localhost:55555/api/reminders/7days/${userName}`
+                );
+                setEvents7daysCount(response.data.length || 0);
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        }
+
+        fetch7daysEventsCount();
+    }, [userName]);
+
+    useEffect(() => {
+        async function fetch3daysEventsCount() {
+            try {
+                const response = await axios.get(
+                    `http://localhost:55555/api/reminders/3days/${userName}`
+                );
+                setEvents3daysCount(response.data.length || 0);
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        }
+
+        fetch3daysEventsCount();
+    }, [userName]);
+
+    useEffect(() => {
+        async function fetch1dayEventsCount() {
+            try {
+                const response = await axios.get(
+                    `http://localhost:55555/api/reminders/1day/${userName}`
+                );
+                setEvents1dayCount(response.data.length || 0);
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        }
+
+        fetch1dayEventsCount();
+    }, [userName]);
+
+    useEffect(() => {
+        const totalCount = events7daysCount + events3daysCount + events1dayCount;
+        setTotalCount(totalCount)
+    }, [events7daysCount, events3daysCount, events1dayCount]);
 
     return (
         <>
@@ -425,7 +478,7 @@ const NavbarLoggedIn = (props) => {
                                         : "warning"
                                 }`}
                             >
-                                {eventsCount}
+                                {totalCount}
                             </span>
                         </Link>
 

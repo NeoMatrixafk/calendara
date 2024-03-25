@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { addEventApi } from "../../Redux/actions";
 import { useNavigate } from "react-router-dom";
+import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import axios from "axios";
 
