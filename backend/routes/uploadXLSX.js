@@ -4,22 +4,22 @@ const multer = require("multer");
 const xlsx = require("xlsx");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-const { parse, isValid, format } = require('date-fns');
-
+const { parse, isValid, format } = require("date-fns");
 
 // Function to parse date with multiple formats
 function parseDate(dateString) {
     // Define an array of possible date formats
     const dateFormats = [
-        'MM/dd/yyyy',
-        'dd-MM-yyyy',
-        'dd/MM/yyyy',
-        'dd.MM.yyyy',
-        'ddMMyyyy',
-        'yyyy/MM/dd',
-        'yyyy.MM.dd',
-        'dd MMM',
-        'dd MMM, yyyy'
+        "MM/dd/yyyy",
+        "dd-MM-yyyy",
+        "dd/MM/yyyy",
+        "dd.MM.yyyy",
+        "ddMMyyyy",
+        "yyyy/MM/dd",
+        "yyyy-MM-dd",
+        "yyyy.MM.dd",
+        "dd MMM",
+        "dd MMM, yyyy",
     ];
 
     // Iterate over the formats and attempt to parse the date
@@ -27,7 +27,7 @@ function parseDate(dateString) {
         const parsedDate = parse(dateString, formatStr, new Date());
         if (isValid(parsedDate)) {
             // Return the parsed date if it's valid
-            return format(parsedDate, 'yyyy-MM-dd');
+            return format(parsedDate, "yyyy-MM-dd");
         }
     }
 
@@ -64,9 +64,10 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
             console.error(errorMessage);
             isError = true;
             // Send response to the client indicating invalid date format
-            return res.status(400).json({ success: false, message: errorMessage });
+            return res
+                .status(400)
+                .json({ success: false, message: errorMessage });
         }
-
 
         console.log(
             `Title: ${title}, StartDate: ${startDate}, EndDate: ${endDate}, Describe: ${describe}`
@@ -81,15 +82,12 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
                     start: `${startDate}T00:00:00.000+00:00`,
                     end: `${endDate}T00:00:30.000+00:00`,
                     describe: describe,
-                    uploaded: true
+                    uploaded: true,
                 }
             );
             console.log(`API Response for ${title}:`, response.data);
         } catch (error) {
-            console.error(
-                `Error making API call for ${title}:`,
-                error.message
-            );
+            console.error(`Error making API call for ${title}:`, error.message);
         }
     });
 
@@ -104,6 +102,5 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
         });
     }
 });
-
 
 module.exports = router;
