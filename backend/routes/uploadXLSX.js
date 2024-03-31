@@ -4,8 +4,36 @@ const multer = require("multer");
 const xlsx = require("xlsx");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const { parse, isValid, format } = require('date-fns');
 
 
+// Function to parse date with multiple formats
+function parseDate(dateString) {
+    // Define an array of possible date formats
+    const dateFormats = [
+        'MM/dd/yyyy',
+        'dd-MM-yyyy',
+        'dd/MM/yyyy',
+        'dd.MM.yyyy',
+        'ddMMyyyy',
+        'yyyy/MM/dd',
+        'yyyy.MM.dd',
+        'dd MMM',
+        'dd MMM, yyyy'
+    ];
+
+    // Iterate over the formats and attempt to parse the date
+    for (const formatStr of dateFormats) {
+        const parsedDate = parse(dateString, formatStr, new Date());
+        if (isValid(parsedDate)) {
+            // Return the parsed date if it's valid
+            return format(parsedDate, 'yyyy-MM-dd');
+        }
+    }
+
+    // If none of the formats match
+    return null;
+}
 
 router.post("/:userName", upload.single("excelFile"), async (req, res) => {
     if (!req.file) {
@@ -22,11 +50,23 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
     const worksheet = workbook.Sheets[sheetName];
     const results = xlsx.utils.sheet_to_json(worksheet);
 
+    let isError = false; // Flag to track if an error has occurred
+
     const apiCalls = results.map(async (row) => {
         const title = row.Title;
-        const startDate = row.Start;
-        const endDate = row.End;
+        let startDate = parseDate(row.Start); // Parse start date
+        let endDate = parseDate(row.End); // Parse end date
         const describe = row.Describe;
+
+        // Check if startDate or endDate is null (indicating invalid date format)
+        if (!startDate || !endDate) {
+            const errorMessage = `Invalid date format for ${title}`;
+            console.error(errorMessage);
+            isError = true;
+            // Send response to the client indicating invalid date format
+            return res.status(400).json({ success: false, message: errorMessage });
+        }
+
 
         console.log(
             `Title: ${title}, StartDate: ${startDate}, EndDate: ${endDate}, Describe: ${describe}`
@@ -41,7 +81,7 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
                     start: `${startDate}T00:00:00.000+00:00`,
                     end: `${endDate}T00:00:30.000+00:00`,
                     describe: describe,
-                    color: "#2196f3",
+                    uploaded: true
                 }
             );
             console.log(`API Response for ${title}:`, response.data);

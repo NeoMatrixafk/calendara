@@ -22,8 +22,9 @@ const EventSchema = new mongoose.Schema({
     },
     describe: { type: String },
     color: { type: String, default: "#2196f3" },
-    allDay: { type: Boolean, default: true},
-    status: { type: String, default: "Unresolved" }
+    allDay: { type: Boolean, default: true },
+    status: { type: String, default: "Unresolved" },
+    uploaded: { type: Boolean, default: false }
 
 });
 

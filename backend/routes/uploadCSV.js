@@ -83,6 +83,7 @@ router.post("/:userName", upload.single("csvFile"), async (req, res) => {
                             start: `${startDate}T00:00:00.000+00:00`,
                             end: `${endDate}T01:00:00.000+00:00`,
                             describe: describe,
+                            uploaded: true
                         }
                     );
                     console.log(`API Response for ${title}:`, response.data);

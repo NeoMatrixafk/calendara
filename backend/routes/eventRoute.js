@@ -3,6 +3,18 @@ const Event = require("../models/Event");
 const handleError = require("../utils/eventErrors");
 
 
+//getting events based on uploaded from server to client
+router.get("/uploaded/:userName", async (req, res) => {
+    const name = req.params.userName;
+    const events = await Event.find({ admin: name, uploaded: true });
+
+    try {
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
 //getting events based on username from server to client
 router.get("/:userName", async (req, res) => {
     const name = req.params.userName;
