@@ -166,6 +166,7 @@ router.post("/", async (req, res) => {
 //     } catch (error) {
 //         console.error("Error sending email:", error);
 //     }
-// }, 60000); // 60000 milliseconds = 1 minute
+// }, 60000);
+// 1 min
 
 module.exports = router;
