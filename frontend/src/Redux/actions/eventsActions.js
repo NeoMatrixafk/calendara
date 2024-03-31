@@ -138,6 +138,7 @@ export const updateEventApi = (values, id) => async (dispatch) => {
             color: values.color,
             allDay: values.allDay,
             status: values.status,
+            uploaded: false
         });
         console.log(result);
         const response = result.data;

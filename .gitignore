@@ -8,4 +8,5 @@
 # misc
 /backend/.env
 
-/frontend/src/Pages/DummyPage.js
+# desktop app
+/desktop

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
@@ -33,19 +35,26 @@ const renderCustomizedLabel = ({
 
 const Activity = (props) => {
 
-    const [resolvedEvents, setResolvedEvents] = useState();
-    localStorage.setItem("resolvedEventsCount", resolvedEvents);
-    const [unresolvedEvents, setUnResolvedEvents] = useState();
-    localStorage.setItem("unresolvedEventsCount", unresolvedEvents);
+    //Hooks
+    const navigate = useNavigate();
+
+    //States
+    const [resolvedEventsCount, setResolvedEventsCount] = useState();
+    localStorage.setItem("resolvedEventsCount", resolvedEventsCount);
+    const [unresolvedEventsCount, setUnResolvedEventsCount] = useState();
+    localStorage.setItem("unresolvedEventsCount", unresolvedEventsCount);
+    const [unresolvedEvents, setUnresolvedEvents] = useState([]);
+    const [modalShow, setModalShow] = useState(false);
 
     const userName = localStorage.getItem("userName");
 
+    //Handling functions
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
                 const response = await axios.get(`http://localhost:55555/api/events/resolved/${userName}`);
                 const events = response.data;
-                setResolvedEvents(events.length);
+                setResolvedEventsCount(events.length);
             } catch (error) {
                 console.error("Error fetching length of resolved events:", error);
             }
@@ -59,7 +68,8 @@ const Activity = (props) => {
             try {
                 const response = await axios.get(`http://localhost:55555/api/events/unresolved/${userName}`);
                 const events = response.data;
-                setUnResolvedEvents(events.length);
+                setUnResolvedEventsCount(events.length);
+                setUnresolvedEvents(events);
             } catch (error) {
                 console.error("Error fetching length of unresolved events:", error);
             }
@@ -68,9 +78,23 @@ const Activity = (props) => {
         fetchTotalEventsData();
     }, [userName]);
 
+    const handlePieClick = () => {
+        setModalShow(true); // Open the modal when pie chart is clicked
+    };
+
+    const handleEventClick = (eventId) => {
+        const clickedEvent = unresolvedEvents.find(
+            (event) => event._id === eventId
+        );
+        navigate(`/event/${eventId}/update`, {
+            state: { selectedEvent: clickedEvent, selectedEventId: eventId },
+        });
+        setModalShow(false);
+    };
+
     const data = [
-        { name: "Group A", value: resolvedEvents },
-        { name: "Group B", value: unresolvedEvents },
+        { name: "Group A", value: resolvedEventsCount },
+        { name: "Group B", value: unresolvedEventsCount },
     ];
 
     const COLORS = ["#00e600", "#ff0000"];
@@ -113,6 +137,7 @@ const Activity = (props) => {
                                 outerRadius={80}
                                 fill="#8884d8"
                                 dataKey="value"
+                                onClick={handlePieClick}
                             >
                                 {data.map((entry, index) => (
                                     <Cell
@@ -166,6 +191,86 @@ const Activity = (props) => {
                     </div>
                 </div>
             </div>
+            <Modal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                size="md"
+                className="mt-5"
+            >
+                <Modal.Header
+                    closeVariant={props.mode === "dark" ? "white" : "black"}
+                    closeButton
+                    className={props.mode === "light" ? "" : "border-secondary"}
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "white" : "#36393e",
+                    }}
+                >
+                    <Modal.Title
+                        style={{
+                            WebkitTextFillColor:
+                                props.mode === "light" ? "" : "white",
+                        }}
+                    >
+                        Unresolved Events
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "white" : "#36393e",
+                        height: "25rem",
+                        overflowY: "auto",
+                    }}
+                >
+                    <ul>
+                        {unresolvedEvents.map((event, index) => (
+                            <div
+                                key={event._id}
+                                className={`my-3 text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                                onClick={() => handleEventClick(event._id)}
+                            >
+                                <h3>{event.title}</h3>
+                                <p>
+                                    <strong>Description:</strong>{" "}
+                                    {event.describe}
+                                </p>
+                                <p>
+                                    <strong>Start:</strong>{" "}
+                                    {new Date(event.start).toLocaleString()}
+                                </p>
+                                <p>
+                                    <strong>End:</strong>{" "}
+                                    {new Date(event.end).toLocaleString()}
+                                </p>
+                                <p>
+                                    <strong>Status:</strong> {event.status}
+                                </p>
+                                {index !== unresolvedEvents.length - 1 && (
+                                    <hr className="border-bottom" />
+                                )}
+                            </div>
+                        ))}
+                    </ul>
+                </Modal.Body>
+                <Modal.Footer
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "white" : "#36393e"
+                    }}
+                    className="border-secondary"
+                >
+                    <p
+                        className={`text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                    >
+                        calendara
+                    </p>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 };

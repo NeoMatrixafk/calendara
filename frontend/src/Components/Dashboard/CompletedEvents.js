@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CompletedEvents = (props) => {
+
     //Hooks
     const navigate = useNavigate();
 
+    //States
     const [completedEventsCount, setCompletedEventsCount] = useState(0);
     const [totalEventsCount, setTotalEventsCount] = useState(0);
     const [completedEvents, setCompletedEvents] = useState([]);
@@ -15,6 +17,7 @@ const CompletedEvents = (props) => {
 
     const userName = localStorage.getItem("userName");
 
+    //Handling Functions
     useEffect(() => {
         const fetchCompletedEventsData = async () => {
             try {
