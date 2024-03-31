@@ -3,17 +3,25 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-
-
 const ProfileLoggedIn = (props) => {
-
     //States
     const [userName] = useState(localStorage.getItem("userName") || "");
     const [contact] = useState(localStorage.getItem("contact") || "");
     const [email] = useState(localStorage.getItem("email") || "");
     const [eventTitles1Day, setEventTitles1Day] = useState([]);
-    const resolvedEventsCount = localStorage.getItem("resolvedEventsCount")
-    const unresolvedEventsCount = localStorage.getItem("unresolvedEventsCount")
+    const resolvedEventsCount = localStorage.getItem("resolvedEventsCount");
+    const unresolvedEventsCount = localStorage.getItem("unresolvedEventsCount");
+
+    const [isEnabled, setIsEnabled] = useState("Enable");
+    localStorage.setItem("isEnabled", false);
+
+    const toggleIsEnabled = () => {
+        if (isEnabled === "Enable") {
+            setIsEnabled("Disable");
+        } else {
+            setIsEnabled("Enable");
+        }
+    };
 
     //Handling functions
     useEffect(() => {
@@ -258,7 +266,8 @@ const ProfileLoggedIn = (props) => {
                                             }`}
                                             style={{ fontSize: "1.5rem" }}
                                         >
-                                            Resolved Events: {resolvedEventsCount}
+                                            Resolved Events:{" "}
+                                            {resolvedEventsCount}
                                         </p>
                                     </div>
                                     <div className="col-12">
@@ -270,7 +279,8 @@ const ProfileLoggedIn = (props) => {
                                             }`}
                                             style={{ fontSize: "1.5rem" }}
                                         >
-                                            Unresolved Events: {unresolvedEventsCount}
+                                            Unresolved Events:{" "}
+                                            {unresolvedEventsCount}
                                         </p>
                                     </div>
                                     <hr />
@@ -300,19 +310,19 @@ const ProfileLoggedIn = (props) => {
                                                     : "white"
                                             }`}
                                         >
-                                            Email: {recipient}
+                                            {isEnabled} email notifications
                                         </p>
 
                                         <button
                                             type="button"
-                                            onClick={sendEmail}
+                                            onClick={toggleIsEnabled}
                                             className={`btn btn-${
                                                 props.mode === "light"
                                                     ? "dark"
                                                     : "light"
                                             }`}
                                         >
-                                            Send Email
+                                            {isEnabled}
                                         </button>
                                     </div>
                                 </div>
