@@ -25,8 +25,15 @@ const HomeMain = (props) => {
                 </p>
             </div>
 
-            <div className="container d-flex justify-content-center my-5">
-                <img src="../Images/Home/home-pic1.png" alt="" />
+            <div
+                className="container d-flex justify-content-center my-5"
+                style={{ width: "75%" }}
+            >
+                <img
+                    src="../Images/Home/home-pic1.png"
+                    alt=""
+                    style={{ maxWidth: "100%" }}
+                />
             </div>
         </>
     );

@@ -9,6 +9,7 @@ const Footer = (props) => {
             <footer
                 className="text-center text-white w-100 h-auto"
                 style={{
+                    minWidth: "100%",
                     backgroundColor:
                         props.mode === "light" ? "#1d2349" : "#212529",
                 }}

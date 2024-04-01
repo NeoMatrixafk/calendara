@@ -141,3 +141,34 @@ input::-webkit-file-upload-button {
 .forgot-password-link:hover {
     text-decoration: underline!important;
 }
+
+
+
+
+@media (max-width: 768px) {
+    .navbar-collapse {
+        display: block;
+        width: 100%;
+    }
+
+    .navbar-nav {
+        text-align: center; /* Align menu items to center */
+    }
+
+    .nav-item {
+        display: block;
+        margin-bottom: 10px; /* Adjust spacing between menu items */
+    }
+
+    .navbar-toggler {
+        height: auto; /* Adjust height of the toggler button */
+    }
+}
+
+
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        display: none !important;
+    }
+}
