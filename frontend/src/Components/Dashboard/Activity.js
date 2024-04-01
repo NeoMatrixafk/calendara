@@ -4,7 +4,6 @@ import { Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 // these are the values and color of activity section in the dashboard
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -34,7 +33,6 @@ const renderCustomizedLabel = ({
 };
 
 const Activity = (props) => {
-
     //Hooks
     const navigate = useNavigate();
 
@@ -52,11 +50,16 @@ const Activity = (props) => {
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/events/resolved/${userName}`);
+                const response = await axios.get(
+                    `http://localhost:55555/api/events/resolved/${userName}`
+                );
                 const events = response.data;
                 setResolvedEventsCount(events.length);
             } catch (error) {
-                console.error("Error fetching length of resolved events:", error);
+                console.error(
+                    "Error fetching length of resolved events:",
+                    error
+                );
             }
         };
 
@@ -66,12 +69,17 @@ const Activity = (props) => {
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
-                const response = await axios.get(`http://localhost:55555/api/events/unresolved/${userName}`);
+                const response = await axios.get(
+                    `http://localhost:55555/api/events/unresolved/${userName}`
+                );
                 const events = response.data;
                 setUnResolvedEventsCount(events.length);
                 setUnresolvedEvents(events);
             } catch (error) {
-                console.error("Error fetching length of unresolved events:", error);
+                console.error(
+                    "Error fetching length of unresolved events:",
+                    error
+                );
             }
         };
 
@@ -101,7 +109,7 @@ const Activity = (props) => {
 
     return (
         <>
-            <div className="container">
+            <div className="container d-flex justify-content-center">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div
@@ -119,15 +127,15 @@ const Activity = (props) => {
                     </div>
                     <div className="col-12 d-flex justify-content-center mt-3">
                         <p
-                            className={`p-0 text-${
+                            className={`p-0 dashboard-chart-h text-${
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
                             Activity - Current Month
                         </p>
                     </div>
-                    <div className="col-12 p-0">
-                        <PieChart width={306} height={400}>
+                    <div className="">
+                        <PieChart width={300} height={400}>
                             <Pie
                                 data={data}
                                 cx={153}
@@ -258,7 +266,7 @@ const Activity = (props) => {
                 <Modal.Footer
                     style={{
                         backgroundColor:
-                            props.mode === "light" ? "white" : "#36393e"
+                            props.mode === "light" ? "white" : "#36393e",
                     }}
                     className="border-secondary"
                 >

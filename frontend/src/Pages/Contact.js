@@ -63,12 +63,12 @@ const Contact = (props) => {
                         <br />
                         Our team will come back to you as soon as possible!
                     </p>
-                    <div className="row d-flex my-4 justify-content-around">
+                    <div className="row d-flex justify-content-around">
                         <form
                             id="contact-form"
                             name="contact-form"
                             onSubmit={handleSubmit}
-                            className="col-8 w-50"
+                            className="col-lg-6 col-md-8"
                         >
                             <input
                                 type="text"
@@ -184,7 +184,7 @@ const Contact = (props) => {
                             </button>
                         </form>
 
-                        <div className="col-3 text-center my-3">
+                        <div className="col-lg-6 col-md-8 text-center my-5">
                             <ul
                                 className={`list-unstyled text-${
                                     props.mode === "dark" ? "light" : "dark"
@@ -221,101 +221,6 @@ const Contact = (props) => {
                 </section>
             </div>
             <br />
-            <div className="container my-4">
-                <h4
-                    className={`text-${
-                        props.mode === "dark" ? "light" : "dark"
-                    }`}
-                    style={{ marginLeft: "1.1rem" }}
-                >
-                    Or contact/follow us on social media
-                </h4>
-                <section className="mb-4 my-3">
-                    <a
-                        className={`btn btn-${
-                            props.mode === "dark" ? "dark" : "success"
-                        } btn-floating m-1 mx-3 btn-shadow-${
-                            props.mode === "dark" ? "white" : "green"
-                        }`}
-                        href="https://www.facebook.com/"
-                        role="button"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <i className="bi bi-facebook"></i>
-                    </a>
-
-                    <a
-                        className={`btn btn-${
-                            props.mode === "dark" ? "dark" : "success"
-                        } btn-floating m-1 mx-3 btn-shadow-${
-                            props.mode === "dark" ? "white" : "green"
-                        }`}
-                        href="https://www.whatsapp.com/"
-                        role="button"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <i className="bi bi-whatsapp"></i>
-                    </a>
-
-                    <a
-                        className={`btn btn-${
-                            props.mode === "dark" ? "dark" : "success"
-                        } btn-floating m-1 mx-3 btn-shadow-${
-                            props.mode === "dark" ? "white" : "green"
-                        }`}
-                        href="https://www.instagram.com/"
-                        role="button"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <i className="bi bi-instagram"></i>
-                    </a>
-
-                    <a
-                        className={`btn btn-${
-                            props.mode === "dark" ? "dark" : "success"
-                        } btn-floating m-1 mx-3 btn-shadow-${
-                            props.mode === "dark" ? "white" : "green"
-                        }`}
-                        href="https://www.twitter.com/"
-                        role="button"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <i className="bi bi-twitter-x"></i>
-                    </a>
-
-                    <a
-                        className={`btn btn-${
-                            props.mode === "dark" ? "dark" : "success"
-                        } btn-floating m-1 mx-3 btn-shadow-${
-                            props.mode === "dark" ? "white" : "green"
-                        }`}
-                        href="https://www.linkedin.com/"
-                        role="button"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <i className="bi bi-linkedin"></i>
-                    </a>
-
-                    <a
-                        className={`btn btn-${
-                            props.mode === "dark" ? "dark" : "success"
-                        } btn-floating m-1 mx-3 btn-shadow-${
-                            props.mode === "dark" ? "white" : "green"
-                        }`}
-                        href="https://www.discord.com/"
-                        role="button"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <i className="bi bi-discord"></i>
-                    </a>
-                </section>
-            </div>
         </>
     );
 };

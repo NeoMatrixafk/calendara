@@ -46,64 +46,32 @@
     height: 100vh;
     overflow: hidden; /* Hide overflow to prevent double scrollbars */
 }
-  
-.categories-side {
-    width: 20%;
-    overflow-y: auto; /* Enable vertical scrolling for the sidebar */
+
+@media (max-width: 768px) {
+    .categories-side {
+        width: 60%!important;
+        overflow-y: auto; /* Enable vertical scrolling for the sidebar */
+    }
+
+    .categories h1 {
+        font-size: 1.25rem
+    }
+
+    .event-text {
+        font-size: 0.80rem!important
+    }
 }
-  
+
+@media (min-width: 769px) {
+    .categories-side {
+        width: 15%;
+        overflow-y: auto; /* Enable vertical scrolling for the sidebar */
+    }
+}
+
 .categories-main {
     flex-grow: 1; /* Allow the main content to grow and take up remaining space */
     overflow-y: auto; /* Enable vertical scrolling for the main content */
-}
-
-.rbc-toolbar-label  {
-    color: var(--rbc-toolbar-label-color, default-color);
-    font-size: 2rem;
-    text-transform: uppercase;
-}
-
-.rbc-header {
-    color: var(--rbc-header-color, default-color);
-}
-
-.rbc-label {
-    color: var(--rbc-header-color, default-color);
-}
-
-.rbc-header span {
-    color: var(--rbc-header-color, default-color);
-    letter-spacing: 0.10rem;
-    font-size: 1.15rem;
-}
-
-.rbc-date-cell {
-    color: var(--rbc-date-cell-color, default-color)
-}
-
-.rbc-off-range-bg {
-    background: var(--rbc-off-range-bg-color, default-color)!important;
-}
-
-.rbc-today {
-    background: var(--rbc-today-color, default-color)!important;
-}
-
-.rbc-btn-group {
-    background-color: var(--rbc-btn-group-color, default-color);
-    border-radius: 5px
-}
-
-.rbc-btn-group button {
-    color: var(--rbc-btn-text-color, default-color)!important;
-}
-
-.rbc-btn-group button:hover {
-    background: var(--rbc-btn-hover-color)!important;
-}
-
-.rbc-active {
-    background-color: var(--rbc-active-color, default-color)!important;
 }
 
 .react-datepicker__input-container>input {
@@ -144,7 +112,6 @@ input::-webkit-file-upload-button {
 
 
 
-
 @media (max-width: 768px) {
     .navbar-collapse {
         display: block;
@@ -152,23 +119,29 @@ input::-webkit-file-upload-button {
     }
 
     .navbar-nav {
-        text-align: center; /* Align menu items to center */
+        text-align: center;
     }
 
     .nav-item {
         display: block;
-        margin-bottom: 10px; /* Adjust spacing between menu items */
+        margin-bottom: 10px;
     }
 
     .navbar-toggler {
-        height: auto; /* Adjust height of the toggler button */
+        height: auto;
     }
 }
 
-
-
-@media (max-width: 991.98px) {
+@media (max-width: 768px) {
     .navbar-collapse {
-        display: none !important;
+        display: none!important;
+    }
+
+    .navbar-brand {
+        width: 40%!important;
+    }
+
+    .dashboard-chart-heading {
+        font-size: 1.5rem
     }
 }

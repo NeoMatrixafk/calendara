@@ -10,10 +10,19 @@ const HomeConclusion = (props) => {
                         props.mode === "light" ? "black" : "white"
                     }`}
                 >
-                    <div className="row">
-                        <div className="col-12">
-                            <p className="fw-bold" style={{ fontSize: "3rem" }}>
-                                So why wait? Join us now!
+                    <div className="container d-flex justify-content-center">
+                        <div className="">
+                            <p
+                                className="inline fw-bold home-conclusion-text"
+                                style={{ fontSize: "2.5rem" }}
+                            >
+                                So why wait?
+                            </p>
+                            <p
+                                className="inline fw-bold home-conclusion-text"
+                                style={{ fontSize: "2.5rem" }}
+                            >
+                                Join us now!
                             </p>
                         </div>
                     </div>

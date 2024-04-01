@@ -25,7 +25,12 @@ const HomeServices = (props) => {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-12 text-center">
-                    <p className="fw-bold" style={{ fontSize: "2.5rem" }}>
+                    <p
+                        className={`fw-bold text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                        style={{ fontSize: "2.5rem" }}
+                    >
                         Our Services
                     </p>
                 </div>

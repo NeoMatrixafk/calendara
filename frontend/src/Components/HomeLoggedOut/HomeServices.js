@@ -1,5 +1,4 @@
 import React from "react";
-
 import HomeServicesCard from "./HomeServicesCard";
 
 const HomeServices = (props) => {
@@ -21,51 +20,32 @@ const HomeServices = (props) => {
             imgUrl: "../Images/Home/eventReminders.png",
         },
     };
+
     return (
-        <>
-            <div className="container">
-                <div
-                    className={`container d-flex justify-content-center text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    <div className="row">
-                        <div className="col-12">
-                            <p
-                                className="fw-bold"
-                                style={{ fontSize: "2.5rem" }}
-                            >
-                                Our Services
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="container d-flex justify-content-center">
-                    <div className="row">
-                        <div className="col-6">
-                            <HomeServicesCard
-                                mode={props.mode}
-                                service={servicesTexts.service1}
-                            />
-                            <HomeServicesCard
-                                mode={props.mode}
-                                service={servicesTexts.service3}
-                            />
-                        </div>
-                        <div className="col-6">
-                            <HomeServicesCard
-                                mode={props.mode}
-                                service={servicesTexts.service2}
-                            />
-                            <HomeServicesCard
-                                mode={props.mode}
-                                service={servicesTexts.service4}
-                            />
-                        </div>
-                    </div>
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-12 text-center">
+                    <p
+                        className={`fw-bold text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                        style={{ fontSize: "2.5rem" }}
+                    >
+                        Our Services
+                    </p>
                 </div>
             </div>
-        </>
+            <div className="row justify-content-center">
+                {Object.values(servicesTexts).map((service, index) => (
+                    <div
+                        key={index}
+                        className="col-lg-6 mb-4 d-flex justify-content-center"
+                    >
+                        <HomeServicesCard mode={props.mode} service={service} />
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 

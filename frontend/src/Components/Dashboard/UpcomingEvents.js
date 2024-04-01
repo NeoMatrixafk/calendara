@@ -76,7 +76,7 @@ const UpcomingEvents = (props) => {
 
     return (
         <>
-            <div className="container">
+            <div className="container d-flex justify-content-center">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div
@@ -94,15 +94,15 @@ const UpcomingEvents = (props) => {
                     </div>
                     <div className="col-12 d-flex justify-content-center mt-3">
                         <p
-                            className={`p-0 text-${
+                            className={`p-0 dashboard-chart-heading text-${
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
                             To be Resolved - Upcoming
                         </p>
                     </div>
-                    <div className="col-12 p-0">
-                        <PieChart width={306} height={400}>
+                    <div className="">
+                        <PieChart width={300} height={400}>
                             <Pie
                                 dataKey="value"
                                 data={data}
@@ -233,7 +233,7 @@ const UpcomingEvents = (props) => {
                 <Modal.Footer
                     style={{
                         backgroundColor:
-                            props.mode === "light" ? "white" : "#36393e"
+                            props.mode === "light" ? "white" : "#36393e",
                     }}
                     className="border-secondary"
                 >

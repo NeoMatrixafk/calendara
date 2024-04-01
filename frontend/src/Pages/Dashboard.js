@@ -5,8 +5,6 @@ import CompletedEvents from "../Components/Dashboard/CompletedEvents";
 import OverdueEvents from "../Components/Dashboard/OverdueEvents";
 import UpcomingEvents from "../Components/Dashboard/UpcomingEvents";
 
-
-
 const Dashboard = (props) => {
     return (
         <>
@@ -20,20 +18,19 @@ const Dashboard = (props) => {
                 </h1>
             </div>
             <div className="container">
-                <div className="row">
-                    <div className="col-3 d-flex justify-content-center">
+                <div className="row gx-lg-5 gx-md-4 gx-3">
+                    <div className="col-lg-3 col-md-6 mb-5 d-flex justify-content-center">
                         <Activity mode={props.mode} />
                     </div>
-                    <div className="col-3 d-flex justify-content-center">
+                    <div className="col-lg-3 col-md-6 mb-5 d-flex justify-content-center">
                         <CompletedEvents mode={props.mode} />
                     </div>
-                    <div className="col-3 d-flex justify-content-center">
+                    <div className="col-lg-3 col-md-6 mb-5 d-flex justify-content-center">
                         <OverdueEvents mode={props.mode} />
                     </div>
-                    <div className="col-3 d-flex justify-content-center">
+                    <div className="col-lg-3 col-md-6 mb-5 d-flex justify-content-center">
                         <UpcomingEvents mode={props.mode} />
                     </div>
-                    <div className="my-5"></div>
                 </div>
             </div>
         </>

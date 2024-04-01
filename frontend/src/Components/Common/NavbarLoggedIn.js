@@ -159,7 +159,7 @@ const NavbarLoggedIn = (props) => {
                     props.mode === "light" ? "" : "secondary"
                 } shadow`}
                 style={{
-                    minWidth: "100%",
+                    width: "100%",
                     backgroundColor:
                         props.mode === "light" ? "#fff" : "#36393e",
                 }}
@@ -171,6 +171,7 @@ const NavbarLoggedIn = (props) => {
                                 <img
                                     src={`/Images/Logo/calendara_${props.mode}.png`}
                                     className="img-fluid"
+                                    style={{ maxWidth: "100%" }}
                                     alt=""
                                     onError={(e) =>
                                         console.error("Image failed to load", e)
@@ -207,7 +208,6 @@ const NavbarLoggedIn = (props) => {
                                                 : "white"
                                         }`}
                                         style={{ fontSize: "1.10rem" }}
-                                        aria-current="page"
                                         to="/home"
                                     >
                                         Home
@@ -221,7 +221,6 @@ const NavbarLoggedIn = (props) => {
                                                 : "white"
                                         }`}
                                         style={{ fontSize: "1.10rem" }}
-                                        aria-current="page"
                                         to="/dashboard"
                                     >
                                         Dashboard
@@ -235,7 +234,6 @@ const NavbarLoggedIn = (props) => {
                                                 : "white"
                                         }`}
                                         style={{ fontSize: "1.10rem" }}
-                                        aria-current="page"
                                         to="/categories"
                                     >
                                         Categories
@@ -682,53 +680,456 @@ const NavbarLoggedIn = (props) => {
                 id="offcanvasExample"
                 aria-labelledby="offcanvasExampleLabel"
             >
-                <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasExampleLabel">
-                        Menu
+                <div
+                    className="offcanvas-header"
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "#fff" : "#36393e",
+                    }}
+                >
+                    <h5
+                        className={`offcanvas-title text-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
+                        id="offcanvasExampleLabel"
+                    >
+                        Hey {userName}!
                     </h5>
                     <button
                         type="button"
-                        className="btn-close text-reset"
+                        className={`btn-close text-${
+                            props.mode === "dark" ? "light" : "dark"
+                        }`}
                         onClick={() => setShowOffcanvas(false)}
                     ></button>
                 </div>
-                <div className="offcanvas-body">
+                <div
+                    className="offcanvas-body pt-5"
+                    style={{
+                        backgroundColor:
+                            props.mode === "light" ? "#fff" : "#36393e",
+                    }}
+                >
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item mx-2">
+                        <li className="nav-item" style={{ margin: "auto" }}>
+                            <Dropdown
+                                show={showProfileDropdown}
+                                onMouseEnter={() =>
+                                    setShowProfileDropdown(true)
+                                }
+                                onMouseLeave={() =>
+                                    setShowProfileDropdown(false)
+                                }
+                            >
+                                <Dropdown.Toggle
+                                    id="profile-dropdown"
+                                    className={`nav-link hover-navlink text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    } mx-2`}
+                                    style={{
+                                        background: "transparent",
+                                        borderColor: "transparent",
+                                        letterSpacing: "0.10rem",
+                                        height: "3rem",
+                                    }}
+                                    onClick={() => {
+                                        setShowProfileDropdown(
+                                            !showProfileDropdown
+                                        );
+                                    }}
+                                >
+                                    <img
+                                        src={
+                                            localStorage.getItem(
+                                                "userProfileImage"
+                                            ) ||
+                                            "Images/Misc/defaultProfile.jpg"
+                                        }
+                                        alt="user profile"
+                                        style={{
+                                            width: "5rem",
+                                            borderRadius: "2.5rem",
+                                        }}
+                                        className="me-1"
+                                    />
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu
+                                    style={{
+                                        backgroundColor:
+                                            props.mode === "light"
+                                                ? ""
+                                                : "#36393e",
+                                    }}
+                                >
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            setShowProfileDropdown(false);
+                                            navigate("/profile");
+                                        }}
+                                        className={`dropdown-hover-${
+                                            props.mode
+                                        } text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{
+                                            background: "transparent",
+                                        }}
+                                    >
+                                        View Profile
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            setShowProfileDropdown(false);
+                                            navigate("/profile/update-profile");
+                                        }}
+                                        className={`dropdown-hover-${
+                                            props.mode
+                                        } text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{
+                                            background: "transparent",
+                                        }}
+                                    >
+                                        Update Profile
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                        onClick={handleLogout}
+                                        className={`dropdown-hover-${
+                                            props.mode
+                                        } text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{
+                                            background: "transparent",
+                                        }}
+                                    >
+                                        Logout
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </li>
+                        <li>
+                            <div className="nav-item d-flex justify-content-center me-3">
+                                <input
+                                    className="form-check-input invisible"
+                                    onClick={props.toggleMode}
+                                    type="checkbox"
+                                    id="flexSwitchCheckDefault"
+                                />
+                                <label
+                                    className="d-flex align-items-center"
+                                    style={{ fontSize: "1.50rem" }}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        onClick={props.toggleMode}
+                                        style={{ display: "none" }}
+                                        id="toggle-mode"
+                                        name="toggle-mode-checkbox"
+                                    />
+                                    <div className="container d-flex align-items-center">
+                                        {props.mode === "light" ? (
+                                            <i
+                                                className="bi bi-sun icon-shadow-yellow"
+                                                style={{ color: "black" }}
+                                            ></i>
+                                        ) : (
+                                            <i
+                                                className="bi bi-moon icon-shadow-white"
+                                                style={{ color: "white" }}
+                                            ></i>
+                                        )}
+                                    </div>
+                                </label>
+                            </div>
+                        </li>
+                        <li style={{ margin: "auto" }}>
+                            <Link
+                                className={`nav-link hover-navlink text-${
+                                    props.mode === "light" ? "black" : "white"
+                                } mx-2 hover-underline`}
+                                style={{ fontSize: "1.10rem" }}
+                                onClick={handleShow}
+                            >
+                                Search
+                            </Link>
+
+                            <Modal
+                                show={show}
+                                onHide={handleClose}
+                                size="lg"
+                                className="mt-5"
+                            >
+                                <Modal.Header
+                                    closeVariant={
+                                        props.mode === "dark"
+                                            ? "white"
+                                            : "black"
+                                    }
+                                    closeButton
+                                    className={
+                                        props.mode === "light"
+                                            ? ""
+                                            : "border-secondary"
+                                    }
+                                    style={{
+                                        backgroundColor:
+                                            props.mode === "light"
+                                                ? "white"
+                                                : "#36393e",
+                                    }}
+                                >
+                                    <Modal.Title className="w-75">
+                                        <div className="input-group input-group-lg">
+                                            <span
+                                                className="input-group-text"
+                                                style={{
+                                                    backgroundColor:
+                                                        props.mode === "light"
+                                                            ? "white"
+                                                            : "#666B74",
+                                                    WebkitTextFillColor:
+                                                        props.mode === "light"
+                                                            ? ""
+                                                            : "white",
+                                                }}
+                                            >
+                                                <i className="bi bi-search"></i>{" "}
+                                            </span>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Search by Event Title or Status..."
+                                                value={searchQuery}
+                                                onChange={handleSearchChange}
+                                                aria-label="Search Event Title"
+                                                style={{
+                                                    backgroundColor:
+                                                        props.mode === "light"
+                                                            ? "white"
+                                                            : "#666B74",
+                                                    WebkitTextFillColor:
+                                                        props.mode === "light"
+                                                            ? ""
+                                                            : "#e6e6e6",
+                                                }}
+                                            />
+                                        </div>
+                                    </Modal.Title>
+                                </Modal.Header>
+
+                                <Modal.Body
+                                    style={{
+                                        backgroundColor:
+                                            props.mode === "light"
+                                                ? "white"
+                                                : "#36393e",
+                                        height: "25rem",
+                                        overflowY: "auto",
+                                    }}
+                                >
+                                    {searchQuery !== "" ? (
+                                        filteredEvents.map((event) => (
+                                            <div
+                                                key={event._id}
+                                                className={`mt-2    mb-5 text-${
+                                                    props.mode === "light"
+                                                        ? "black"
+                                                        : "white"
+                                                }`}
+                                                onClick={() =>
+                                                    handleEventClick(event._id)
+                                                }
+                                            >
+                                                <h3>{event.title}</h3>
+                                                <p>
+                                                    <strong>
+                                                        Description:
+                                                    </strong>{" "}
+                                                    {event.describe}
+                                                </p>
+                                                <p>
+                                                    <strong>Start:</strong>{" "}
+                                                    {new Date(
+                                                        event.start
+                                                    ).toLocaleString()}
+                                                </p>
+                                                <p>
+                                                    <strong>End:</strong>{" "}
+                                                    {new Date(
+                                                        event.end
+                                                    ).toLocaleString()}
+                                                </p>
+                                                <p>
+                                                    <strong>Status:</strong>{" "}
+                                                    {event.status}
+                                                </p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p
+                                            className={`text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "light"
+                                            }`}
+                                        >
+                                            Enter a search query to find events
+                                            by title or status.
+                                        </p>
+                                    )}
+                                </Modal.Body>
+
+                                <Modal.Footer
+                                    className={
+                                        props.mode === "light"
+                                            ? ""
+                                            : "border-secondary"
+                                    }
+                                    style={{
+                                        backgroundColor:
+                                            props.mode === "light"
+                                                ? "white"
+                                                : "#36393e",
+                                    }}
+                                >
+                                    <p
+                                        className={`text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                    >
+                                        calendara
+                                    </p>
+                                </Modal.Footer>
+                            </Modal>
+                        </li>
+                        <li className="nav-item">
                             <Link
                                 className={`nav-link hover-underline text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
                                 style={{ fontSize: "1.10rem" }}
-                                aria-current="page"
                                 to="/home"
                             >
                                 Home
                             </Link>
                         </li>
-                        <li className="nav-item mx-2">
+                        <li className="nav-item">
                             <Link
                                 className={`nav-link hover-underline text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
                                 style={{ fontSize: "1.10rem" }}
-                                aria-current="page"
                                 to="/dashboard"
                             >
                                 Dashboard
                             </Link>
                         </li>
-                        <li className="nav-item mx-2">
+                        <li className="nav-item">
                             <Link
                                 className={`nav-link hover-underline text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
                                 style={{ fontSize: "1.10rem" }}
-                                aria-current="page"
                                 to="/categories"
                             >
                                 Categories
                             </Link>
+                        </li>
+                        <li
+                            className="nav-item dropdown"
+                            style={{ margin: "auto" }}
+                        >
+                            <Dropdown
+                                show={showCalendarDropdown}
+                                onMouseEnter={() =>
+                                    setShowCalendarDropdown(true)
+                                }
+                                onMouseLeave={() =>
+                                    setShowCalendarDropdown(false)
+                                }
+                            >
+                                <Dropdown.Toggle
+                                    id="profile-dropdown"
+                                    className={`nav-link hover-navlink text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    } mx-2`}
+                                    style={{
+                                        background: "transparent",
+                                        borderColor: "transparent",
+                                        letterSpacing: "0.10rem",
+                                        height: "3rem",
+                                        fontSize: "1.10rem",
+                                    }}
+                                    onClick={() => {
+                                        setShowCalendarDropdown(
+                                            !showCalendarDropdown
+                                        );
+                                    }}
+                                >
+                                    Calendar
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu
+                                    style={{
+                                        backgroundColor:
+                                            props.mode === "light"
+                                                ? ""
+                                                : "#36393e",
+                                    }}
+                                >
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            setShowCalendarDropdown(false);
+                                            navigate("/add-event");
+                                        }}
+                                        className={`dropdown-hover-${
+                                            props.mode
+                                        } text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{
+                                            background: "transparent",
+                                        }}
+                                    >
+                                        Add Event
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                        onClick={() => {
+                                            setShowCalendarDropdown(false);
+                                            navigate("/events2");
+                                        }}
+                                        className={`dropdown-hover-${
+                                            props.mode
+                                        } text-${
+                                            props.mode === "light"
+                                                ? "black"
+                                                : "white"
+                                        }`}
+                                        style={{
+                                            background: "transparent",
+                                        }}
+                                    >
+                                        Calendar
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </li>
                     </ul>
                 </div>

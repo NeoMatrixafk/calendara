@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CompletedEvents = (props) => {
-
     //Hooks
     const navigate = useNavigate();
 
@@ -79,7 +78,7 @@ const CompletedEvents = (props) => {
 
     return (
         <>
-            <div className="container">
+            <div className="container d-flex justify-content-center">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div
@@ -97,15 +96,15 @@ const CompletedEvents = (props) => {
                     </div>
                     <div className="col-12 d-flex justify-content-center mt-3">
                         <p
-                            className={`p-0 text-${
+                            className={`p-0 dashboard-chart-heading text-${
                                 props.mode === "light" ? "black" : "white"
                             }`}
                         >
                             Resolved - Completed
                         </p>
                     </div>
-                    <div className="col-12 p-0">
-                        <PieChart width={306} height={400}>
+                    <div className="">
+                        <PieChart width={300} height={400}>
                             <Pie
                                 dataKey="value"
                                 data={data}
@@ -237,7 +236,7 @@ const CompletedEvents = (props) => {
                 <Modal.Footer
                     style={{
                         backgroundColor:
-                            props.mode === "light" ? "white" : "#36393e"
+                            props.mode === "light" ? "white" : "#36393e",
                     }}
                     className="border-secondary"
                 >
