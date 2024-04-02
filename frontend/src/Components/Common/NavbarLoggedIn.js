@@ -188,8 +188,25 @@ const NavbarLoggedIn = (props) => {
                             aria-expanded="false"
                             aria-label="Toggle navigation"
                             onClick={() => setShowOffcanvas(!showOffcanvas)}
+                            style={{
+                                color:
+                                    props.mode === "light" ? "gray" : "white",
+                                border: "none",
+                            }}
                         >
-                            <span className="navbar-toggler-icon"></span>
+                            <span
+                                className="navbar-toggler-icon"
+                                style={{
+                                    filter:
+                                        props.mode === "light"
+                                            ? "invert(0)"
+                                            : "invert(1)",
+                                    color:
+                                        props.mode === "light"
+                                            ? "gray"
+                                            : "white",
+                                }}
+                            ></span>
                         </button>
 
                         <div
@@ -580,6 +597,7 @@ const NavbarLoggedIn = (props) => {
                                         <Dropdown.Item
                                             onClick={() => {
                                                 setShowProfileDropdown(false);
+                                                setShowOffcanvas(false);
                                                 navigate("/profile");
                                             }}
                                             className={`dropdown-hover-${
@@ -598,6 +616,7 @@ const NavbarLoggedIn = (props) => {
                                         <Dropdown.Item
                                             onClick={() => {
                                                 setShowProfileDropdown(false);
+                                                setShowOffcanvas(false);
                                                 navigate(
                                                     "/profile/update-profile"
                                                 );
@@ -697,8 +716,8 @@ const NavbarLoggedIn = (props) => {
                     </h5>
                     <button
                         type="button"
-                        className={`btn-close text-${
-                            props.mode === "dark" ? "light" : "dark"
+                        className={`btn-close btn-close-${
+                            props.mode === "light" ? "black" : "white"
                         }`}
                         onClick={() => setShowOffcanvas(false)}
                     ></button>
@@ -767,6 +786,7 @@ const NavbarLoggedIn = (props) => {
                                     <Dropdown.Item
                                         onClick={() => {
                                             setShowProfileDropdown(false);
+                                            setShowOffcanvas(false);
                                             navigate("/profile");
                                         }}
                                         className={`dropdown-hover-${
@@ -785,6 +805,7 @@ const NavbarLoggedIn = (props) => {
                                     <Dropdown.Item
                                         onClick={() => {
                                             setShowProfileDropdown(false);
+                                            setShowOffcanvas(false);
                                             navigate("/profile/update-profile");
                                         }}
                                         className={`dropdown-hover-${

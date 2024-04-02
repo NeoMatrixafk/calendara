@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AccountSettings = ({ mode }) => {
+    const [isEnabled, setIsEnabled] = useState("Enable");
+    localStorage.setItem("isEnabled", false);
+
+    const toggleIsEnabled = () => {
+        if (isEnabled === "Enable") {
+            setIsEnabled("Disable");
+        } else {
+            setIsEnabled("Enable");
+        }
+    };
     return (
         <>
             <div className="container my-5">
@@ -21,6 +31,29 @@ const AccountSettings = ({ mode }) => {
                         >
                             Update Profile
                         </Link>
+                    </h3>
+                </div>
+                <div className="my-5">
+                    <h3>
+                        <div>
+                            <p
+                                className={`text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                {isEnabled} email notifications
+                            </p>
+
+                            <button
+                                type="button"
+                                onClick={toggleIsEnabled}
+                                className={`btn btn-${
+                                    mode === "light" ? "dark" : "light"
+                                }`}
+                            >
+                                {isEnabled}
+                            </button>
+                        </div>
                     </h3>
                 </div>
                 <div className="my-5">

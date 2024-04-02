@@ -138,3 +138,66 @@ input::-webkit-file-upload-button {
         font-size: 1.5rem
     }
 }
+
+@media (max-width: 991px) {
+    .profile-username {
+        font-size: 1.25rem!important
+    }
+
+    .profile-contact {
+        font-size: 1rem!important
+    }
+
+    .profile-email {
+        font-size: 1rem!important
+    }
+
+    .profile-dashboard {
+        font-size: 1rem!important
+    }
+
+    .profile-btn {
+        font-size: 90%;
+    }
+
+    .profile-analysis {
+        width: 100%!important
+    }
+
+    .user-bg {
+        height: 10rem!important;
+    }
+
+    .user-pfp {
+        margin-top: 2rem!important;
+    }
+    .user-pfp-img {
+        width: 10rem!important;
+        border-radius: 5rem!important;
+
+    }
+
+    .profile-empty-col {
+        margin-top: 30%;
+    }
+
+    .profile-row-padding {
+        padding-top: 0!important;
+        padding-bottom: 0!important;
+    }
+}
+
+@media (max-width: 991px) {
+    .desktop-only {
+        display: none!important;
+    }
+
+    .input-field {
+        width: 100%!important
+    }
+
+    .auth-logo {
+        width: 50%!important;
+        margin-left: 25%!important;
+    }
+}

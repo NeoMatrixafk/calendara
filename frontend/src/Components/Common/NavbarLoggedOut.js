@@ -121,7 +121,9 @@ const NavbarLoggedOut = (props) => {
                     </h5>
                     <button
                         type="button"
-                        className="btn-close text-reset"
+                        className={`btn-close btn-close-${
+                            props.mode === "light" ? "black" : "white"
+                        }`}
                         onClick={() => setShowOffcanvas(false)}
                     ></button>
                 </div>
