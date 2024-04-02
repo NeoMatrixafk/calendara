@@ -10,16 +10,16 @@ const connection = require("./db");
 //importing routes
 const UserRoutes = require("./routes/users");
 const AuthRoutes = require("./routes/auth");
-const EventRoute = require("./routes/EventRoute");
+const EventRoute = require("./routes/eventRoute");
 const GetData = require("./routes/getData");
 const UpdateData = require("./routes/updateData");
-const ContactUs = require("./routes/contactUs");
+const ContactUs = require("./routes/contactus");
 const ProfilePic = require("./routes/profilePic");
 const ProfileBgPic = require("./routes/profileBgPic");
-const UploadCSV = require("./routes/UploadCSV");
-const UploadXLSX = require("./routes/UploadXLSX");
+const UploadCSV = require("./routes/uploadCSV");
+const UploadXLSX = require("./routes/uploadXLSX");
 const SendMail = require("./routes/sendMail");
-const Reminders = require("./routes/reminders");
+const Reminders = require("./routes/Reminders");
 const Categories = require("./routes/categories");
 const ForgotPassword = require("./routes/forgotPassword");
 
