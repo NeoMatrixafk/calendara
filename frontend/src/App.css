@@ -175,3 +175,17 @@ input::-webkit-file-upload-button {
         width: 100%!important
     }
 }
+
+
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none!important;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-logo {
+        width: 50%!important;
+        margin-left: 25%!important;
+    }
+}

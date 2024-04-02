@@ -420,6 +420,8 @@ const SignUp = (props) => {
         }
     });
 
+    const isMobile = window.innerWidth <= 768;
+
     return (
         <>
             <Link to="/home">
@@ -431,8 +433,8 @@ const SignUp = (props) => {
                         top: 0,
                         left: 0,
                         zIndex: 9999,
-                        height: "7rem",
                     }}
+                    className="auth-logo w-25"
                 />
             </Link>
 
@@ -444,7 +446,7 @@ const SignUp = (props) => {
                     alignItems: "center",
                     height: "100vh",
                     backgroundColor: "#f5f5f5",
-                    backgroundImage: `url(${waveBG})`,
+                    backgroundImage: !isMobile ? `url(${waveBG})` : "",
                     backgroundSize: "100% auto",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
