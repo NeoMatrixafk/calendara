@@ -19,7 +19,7 @@ const ProfileBgPic = require("./routes/profile_bg_pic");
 const UploadCSV = require("./routes/upload_csv");
 const UploadXLSX = require("./routes/upload_xlsx");
 const SendMail = require("./routes/send_mail");
-const Reminders = require("./routes/reminders");
+const Reminders = require("./routes/reminders_");
 const Categories = require("./routes/categories");
 const ForgotPassword = require("./routes/forgot_password");
 
