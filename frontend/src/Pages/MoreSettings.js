@@ -34,7 +34,7 @@ const MoreSettings = ({ mode }) => {
                             password below (checked box means disbaled
                             notifications).
                         </p>
-                        <div className="container" style={{ width: "50%" }}>
+                        <div className="container input-field w-50">
                             <div className="form-check">
                                 <input
                                     className="form-check-input"
@@ -134,7 +134,7 @@ const MoreSettings = ({ mode }) => {
                             Enter your details below to send a request to
                             download your data.
                         </p>
-                        <div className="container" style={{ width: "50%" }}>
+                        <div className="container input-field w-50">
                             <div className="my-3">
                                 <input
                                     type="text"

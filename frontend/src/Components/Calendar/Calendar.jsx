@@ -20,10 +20,7 @@ import moment from "moment";
 //styles imports
 import "../Calendar/calendar.css";
 
-
-
 const Calendar = ({ mode }) => {
-
     //Hooks
     const navigate = useNavigate();
     const { register, handleSubmit, control } = useForm();
@@ -33,7 +30,7 @@ const Calendar = ({ mode }) => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedEventId, setSelectedEventId] = useState(null);
     const [modalMode, setModalMode] = useState(null);
-    const [ status, setStatus] = useState("Unresolved");
+    const [status, setStatus] = useState("Unresolved");
 
     const [defaultTitle, setDefaultTitle] = useState(null);
     const [defaultDesc, setDefaultDesc] = useState(null);
@@ -47,14 +44,13 @@ const Calendar = ({ mode }) => {
     }, []);
 
     const fetchEvents = async () => {
-
         try {
-
             const userName = localStorage.getItem("userName");
-            const response = await axios.get(`http://localhost:55555/api/events/${userName}`);
+            const response = await axios.get(
+                `http://localhost:55555/api/events/${userName}`
+            );
 
             const convertedEvents = response.data.map((event) => {
-                
                 let borderColor;
 
                 // Adjust borderColor based on event status
@@ -72,7 +68,9 @@ const Calendar = ({ mode }) => {
                         borderColor = "red";
                         break;
                     default:
-                        console.log("Unknown status, setting borderColor to null");
+                        console.log(
+                            "Unknown status, setting borderColor to null"
+                        );
                         borderColor = null;
                         break;
                 }
@@ -85,374 +83,358 @@ const Calendar = ({ mode }) => {
                     describe: event.describe,
                     color: event.color,
                     allDay: event.allDay,
-                    borderColor: borderColor // Assign borderColor based on status
+                    borderColor: borderColor, // Assign borderColor based on status
                 };
             });
 
             setEvents(convertedEvents);
-
         } catch (error) {
-
             console.error("Error fetching events:", error);
-
         }
     };
 
     const handleDateSelect = (arg) => {
-
         const newEvent = {
-
             title: "No Title",
             start: arg.start,
             end: arg.end,
             allDay: arg.allDay,
-
         };
 
         setSelectedEvent({
-
             title: "No Title",
             start: arg.start,
             end: arg.end,
             describe: "",
             allDay: arg.allDay,
-
         });
 
         setDefaultStartDate(new Date(arg.start));
         setDefaultEndDate(new Date(arg.end));
         setModalMode("create");
         setEvents((prevEvents) => [...prevEvents, newEvent]);
-
     };
 
     const handleCreateEvent = async (data) => {
+        try {
+            const admin = localStorage.getItem("userName");
+            const title = data.title || "No Title";
 
-    try {
-        
-        const admin = localStorage.getItem("userName");
-        const title = data.title || "No Title"
-        
-        const eventData = {
-            
-            admin: admin,
-            title: title,
-            start: defaultStartDate.toISOString(),
-            end: defaultEndDate.toISOString(),
-            describe: data.describe,
-            allDay: data.allDay,
-            status: status,
+            const eventData = {
+                admin: admin,
+                title: title,
+                start: defaultStartDate.toISOString(),
+                end: defaultEndDate.toISOString(),
+                describe: data.describe,
+                allDay: data.allDay,
+                status: status,
+            };
 
-        };
-      
-        const response = await axios.post("http://localhost:55555/api/events", eventData);
-      
-        const newEvent = {
+            const response = await axios.post(
+                "http://localhost:55555/api/events",
+                eventData
+            );
 
-            title: response.data.title,
-            start: new Date(response.data.start),
-            end: new Date(response.data.end),
-            id: response.data._id,
-            describe: response.data.describe,
-            color: response.data.color,
-            allDay: response.data.allDay,
-            status: response.data.status
-            
-        };
-        
-        setEvents([...events, newEvent]);
-        setModalMode("create");
-        fetchEvents();
-        handleCloseModal();
-        console.log("Event created successfully:", response.data);
-        window.alert("Event created successfully!");
-        navigate("/events2");
+            const newEvent = {
+                title: response.data.title,
+                start: new Date(response.data.start),
+                end: new Date(response.data.end),
+                id: response.data._id,
+                describe: response.data.describe,
+                color: response.data.color,
+                allDay: response.data.allDay,
+                status: response.data.status,
+            };
 
-    } catch (error) {
-
-      console.error("Error creating event:", error);
-
+            setEvents([...events, newEvent]);
+            setModalMode("create");
+            fetchEvents();
+            handleCloseModal();
+            console.log("Event created successfully:", response.data);
+            window.alert("Event created successfully!");
+            navigate("/events2");
+        } catch (error) {
+            console.error("Error creating event:", error);
         }
     };
 
-    const handleChange = (event) => { //To show entered values in add event modal to add event page
+    const handleChange = (event) => {
+        //To show entered values in add event modal to add event page
 
         const { name, value } = event.target;
 
         if (name === "title") {
-
             setDefaultTitle(value);
-
         } else if (name === "describe") {
-
             setDefaultDesc(value);
-
         } else if (name === "status") {
-
             setStatus(value);
             setDefaultStatus(value);
-
         }
-
     };
- 
+
     const handleEventClick = async (arg) => {
-
         try {
-
             const eventId = arg.event.id;
             setSelectedEventId(eventId);
 
-            const response = await axios.get(`http://localhost:55555/api/events/${eventId}/show`);
+            const response = await axios.get(
+                `http://localhost:55555/api/events/${eventId}/show`
+            );
 
             if (arg.event.allDay === true) {
-
                 setSelectedEvent({
-
                     ...response.data,
                     start: moment(response.data.start).format("ddd DD MMM YY"),
                     end: moment(response.data.end).format("ddd DD MMM YY"),
-
                 });
-
             } else {
-
                 setSelectedEvent({
-
                     ...response.data,
                     start: moment(response.data.start).format(
                         "ddd DD MMM YY LT"
                     ),
                     end: moment(response.data.end).format("ddd DD MMM YY LT"),
-
                 });
-
             }
 
-      setModalMode("view");
-
-    } catch (error) {
-        
-        console.error('Error fetching event details:', error);
-    
+            setModalMode("view");
+        } catch (error) {
+            console.error("Error fetching event details:", error);
         }
     };
 
     const handleMoreOptions = () => {
-        
-        navigate('/add-event', { state: { defaultDesc, defaultTitle, defaultStartDate, defaultEndDate, defaultStatus } });
-
+        navigate("/add-event", {
+            state: {
+                defaultDesc,
+                defaultTitle,
+                defaultStartDate,
+                defaultEndDate,
+                defaultStatus,
+            },
+        });
     };
 
     const handleUpdateEvent = async () => {
-        
-        navigate(`/event/${selectedEventId}/update`, { state: { selectedEvent, selectedEventId }});
-
+        navigate(`/event/${selectedEventId}/update`, {
+            state: { selectedEvent, selectedEventId },
+        });
     };
 
     const handleEventResize = async (arg) => {
-
         try {
+            const eventToUpdate = events.find(
+                (event) => event.id === arg.event.id
+            );
 
-            const eventToUpdate = events.find((event) => event.id === arg.event.id);
-    
             if (eventToUpdate) {
                 // Check if it's a resize within the day grid or time grid
                 const isAllDay = arg.event.allDay;
                 const start = arg.event.start;
                 const end = arg.event.end;
-    
+
                 if (!isAllDay && isMultiDayEvent(start, end)) {
                     // Prevent resizing by resetting the event's start and end times to their original values
                     arg.revert();
-
                 } else {
                     // Update the event normally for other cases
                     if (isAllDay) {
-
                         eventToUpdate.start = start;
                         eventToUpdate.end = end;
-
                     } else {
-
-                        eventToUpdate.start.setHours(start.getHours(), start.getMinutes());
-                        eventToUpdate.end.setHours(end.getHours(), end.getMinutes());
-
-                    }
-    
-                    setEvents((prevEvents) =>
-                        prevEvents.map((event) => (event.id === eventToUpdate.id ? eventToUpdate : event))
-                    );
-    
-                    await axios.put(
-                        `http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate
+                        eventToUpdate.start.setHours(
+                            start.getHours(),
+                            start.getMinutes()
                         );
-    
-                    window.alert("Event updated successfully!");
+                        eventToUpdate.end.setHours(
+                            end.getHours(),
+                            end.getMinutes()
+                        );
+                    }
 
+                    setEvents((prevEvents) =>
+                        prevEvents.map((event) =>
+                            event.id === eventToUpdate.id
+                                ? eventToUpdate
+                                : event
+                        )
+                    );
+
+                    await axios.put(
+                        `http://localhost:55555/api/events/${eventToUpdate.id}/update`,
+                        eventToUpdate
+                    );
+
+                    window.alert("Event updated successfully!");
                 }
             }
-
         } catch (error) {
-
             console.error("Error updating event:", error);
-
         }
     };
-    
+
     const isMultiDayEvent = (start, end) => {
         // Check if the event spans multiple days
         return start.toDateString() !== end.toDateString();
-
     };
-    
+
     const handleEventDrop = async (arg) => {
-
         try {
-
-            const eventToUpdate = events.find(event => event.id === arg.event.id);
+            const eventToUpdate = events.find(
+                (event) => event.id === arg.event.id
+            );
 
             if (eventToUpdate) {
-
                 const isAllDay = arg.event.allDay;
                 const start = arg.event.start;
                 const end = arg.event.end || start;
 
                 if (isAllDay !== eventToUpdate.allDay) {
-
-                    if (!isAllDay) { // If the event is moved from all-day to a specific time slot
+                    if (!isAllDay) {
+                        // If the event is moved from all-day to a specific time slot
 
                         const startDate = new Date(start);
                         const endDate = end ? new Date(end) : new Date(start);
                         eventToUpdate.start = startDate;
                         eventToUpdate.end = endDate;
                         eventToUpdate.allDay = false;
-
-                    } else { // If the event is moved from a specific time slot to all-day
+                    } else {
+                        // If the event is moved from a specific time slot to all-day
 
                         const startDate = new Date(start);
-                        const endDate = end ? new Date(end) : new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1);
+                        const endDate = end
+                            ? new Date(end)
+                            : new Date(
+                                  startDate.getFullYear(),
+                                  startDate.getMonth(),
+                                  startDate.getDate() + 1
+                              );
                         eventToUpdate.start = startDate;
                         eventToUpdate.end = endDate;
                         eventToUpdate.allDay = true;
-
                     }
-                } else {// If the event is dragged within the same view, update its start and end dates
+                } else {
+                    // If the event is dragged within the same view, update its start and end dates
 
                     eventToUpdate.start = start;
                     eventToUpdate.end = end;
-                    
                 }
 
-                setEvents(prevEvents => prevEvents.map(event =>
-                    event.id === eventToUpdate.id ? eventToUpdate : event
-                ));
+                setEvents((prevEvents) =>
+                    prevEvents.map((event) =>
+                        event.id === eventToUpdate.id ? eventToUpdate : event
+                    )
+                );
 
-                await axios.put(`http://localhost:55555/api/events/${eventToUpdate.id}/update`, eventToUpdate);
+                await axios.put(
+                    `http://localhost:55555/api/events/${eventToUpdate.id}/update`,
+                    eventToUpdate
+                );
 
                 window.alert("Event updated successfully!");
             }
         } catch (error) {
-
-            console.error('Error updating event:', error);
-
+            console.error("Error updating event:", error);
         }
     };
-    
+
     const handleDeleteEvent = async () => {
-
         try {
-
             if (selectedEvent && selectedEvent._id) {
-
                 const eventId = selectedEvent._id;
-                await axios.delete(`http://localhost:55555/api/events/${eventId}/delete`);
+                await axios.delete(
+                    `http://localhost:55555/api/events/${eventId}/delete`
+                );
 
                 setEvents(events.filter((event) => event.id !== eventId));
 
                 handleCloseModal();
                 window.alert("Event deleted successfully!");
-
             }
         } catch (error) {
-
             console.error("Error deleting event:", error);
-
         }
     };
 
     const handleCloseModal = () => {
-        
         fetchEvents();
         setSelectedEvent(null);
         setDefaultTitle(null);
         setDefaultStartDate(null);
         setDefaultEndDate(null);
         setModalMode(null);
-
     };
-
 
     return (
         <>
             <div className="container my-5">
-                <FullCalendar
-                    plugins={[
-                        dayGridPlugin,
-                        timeGridPlugin,
-                        interactionPlugin,
-                        listPlugin,
-                        multiMonthPlugin,
-                    ]}
-                    //Properties
-                    locale='en'
-                    initialView={"dayGridMonth"}
-                    themeSystem="bootstrap5"
-                    height={"100vh"}
-                    selectable="true"
-                    selectMirror="true"
-                    eventMaxStack={2}
-                    dayMaxEvents="true"
-                    dayMaxEventRows={3}
-                    editable={true}
-                    navLinks="true"
-                    eventResizableFromStart={true}
-                    nowIndicator="true"
-                    headerToolbar={{
-                        start: "today prev,next",
-                        center: "title",
-                        end: "dayGridMonth,timeGridWeek,timeGridDay,multiMonthYear,listMonth",
-                    }}
-                    views={{
-                        dayGridMonth: {
-                            titleFormat: { month: "long", year: "numeric" },
-                        },
-                        timeGridWeek: {
-                            titleFormat: { month: "long", year: "numeric" },
-                        },
-                    }}
-                    buttonText={{
-                        today: "Today",
-                        month: "Month",
-                        week: "Week",
-                        day: "Day",
-                        multiMonthYear: "Year",
-                        listMonth: "Schedule",
-                    }}
-                    eventTimeFormat={{
-                        hour: "numeric",
-                        minute: "2-digit",
-                        meridiem: "short",
-                        //omitZeroMinute: false, // Include zero minutes
-                        //hour12: false, // Use 24-hour format
-                    }}
-                    
-                    events={events}
-                    select={handleDateSelect}
-                    eventClick={handleEventClick}
-                    eventResize={handleEventResize}
-                    eventDrop={handleEventDrop}
-                />
+                <div className="row">
+                    <div className="col">
+                        <FullCalendar
+                            plugins={[
+                                dayGridPlugin,
+                                timeGridPlugin,
+                                interactionPlugin,
+                                listPlugin,
+                                multiMonthPlugin,
+                            ]}
+                            //Properties
+                            locale="en"
+                            initialView={"dayGridMonth"}
+                            themeSystem="bootstrap5"
+                            height={"100vh"}
+                            selectable="true"
+                            selectMirror="true"
+                            eventMaxStack={2}
+                            dayMaxEvents="true"
+                            dayMaxEventRows={3}
+                            editable={true}
+                            navLinks="true"
+                            eventResizableFromStart={true}
+                            nowIndicator="true"
+                            headerToolbar={{
+                                start: "today prev,next",
+                                center: "title",
+                                end: "dayGridMonth,timeGridWeek,timeGridDay,multiMonthYear,listMonth",
+                            }}
+                            views={{
+                                dayGridMonth: {
+                                    titleFormat: {
+                                        month: "long",
+                                        year: "numeric",
+                                    },
+                                },
+                                timeGridWeek: {
+                                    titleFormat: {
+                                        month: "long",
+                                        year: "numeric",
+                                    },
+                                },
+                            }}
+                            buttonText={{
+                                today: "Today",
+                                month: "Month",
+                                week: "Week",
+                                day: "Day",
+                                multiMonthYear: "Year",
+                                listMonth: "Schedule",
+                            }}
+                            eventTimeFormat={{
+                                hour: "numeric",
+                                minute: "2-digit",
+                                meridiem: "short",
+                                //omitZeroMinute: false, // Include zero minutes
+                                //hour12: false, // Use 24-hour format
+                            }}
+                            events={events}
+                            select={handleDateSelect}
+                            eventClick={handleEventClick}
+                            eventResize={handleEventResize}
+                            eventDrop={handleEventDrop}
+                        />
+                    </div>
+                </div>
 
                 {selectedEvent && modalMode === "view" && (
                     <Modal
@@ -718,51 +700,72 @@ const Calendar = ({ mode }) => {
                                 </div>
 
                                 <div className="mb-3">
-                                <label
-                                    className={`form-label text-${
-                                        mode === "light" ? "black" : "white"
-                                    }`}
-                                >
-                                    Status:
-                                </label>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        id="completed"
-                                        name="status"
-                                        value="Completed"
-                                        checked={status === "Completed"}
-                                        onChange={handleChange}
-                                    />
-                                    <label htmlFor="completed" className={`form-label ms-2 me-4 text-${
+                                    <label
+                                        className={`form-label text-${
                                             mode === "light" ? "black" : "white"
-                                        }`}>Completed</label>
+                                        }`}
+                                    >
+                                        Status:
+                                    </label>
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            id="completed"
+                                            name="status"
+                                            value="Completed"
+                                            checked={status === "Completed"}
+                                            onChange={handleChange}
+                                        />
+                                        <label
+                                            htmlFor="completed"
+                                            className={`form-label ms-2 me-4 text-${
+                                                mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                        >
+                                            Completed
+                                        </label>
 
-                                    <input
-                                        type="radio"
-                                        id="overdue"
-                                        name="status"
-                                        value="Overdue"
-                                        checked={status === "Overdue"}
-                                        onChange={handleChange}
-                                    />
-                                    <label htmlFor="overdue" className={`form-label ms-2 me-4 text-${
-                                            mode === "light" ? "black" : "white"
-                                        }`}>Overdue</label>
+                                        <input
+                                            type="radio"
+                                            id="overdue"
+                                            name="status"
+                                            value="Overdue"
+                                            checked={status === "Overdue"}
+                                            onChange={handleChange}
+                                        />
+                                        <label
+                                            htmlFor="overdue"
+                                            className={`form-label ms-2 me-4 text-${
+                                                mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                        >
+                                            Overdue
+                                        </label>
 
-                                    <input
-                                        type="radio"
-                                        id="upcoming"
-                                        name="status"
-                                        value="Upcoming"
-                                        checked={status === "Upcoming"}
-                                        onChange={handleChange}
-                                    />
-                                    <label htmlFor="upcoming" className={`form-label ms-2 me-4 text-${
-                                            mode === "light" ? "black" : "white"
-                                        }`}>Upcoming</label>
+                                        <input
+                                            type="radio"
+                                            id="upcoming"
+                                            name="status"
+                                            value="Upcoming"
+                                            checked={status === "Upcoming"}
+                                            onChange={handleChange}
+                                        />
+                                        <label
+                                            htmlFor="upcoming"
+                                            className={`form-label ms-2 me-4 text-${
+                                                mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                        >
+                                            Upcoming
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
 
                                 <div className="mb-3">
                                     <label
@@ -825,7 +828,6 @@ const Calendar = ({ mode }) => {
                         </Modal.Footer>
                     </Modal>
                 )}
-
             </div>
         </>
     );

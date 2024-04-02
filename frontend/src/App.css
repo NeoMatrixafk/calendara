@@ -145,3 +145,33 @@ input::-webkit-file-upload-button {
         font-size: 1.5rem
     }
 }
+
+@media (max-width: 768px) {
+    .profile-username {
+        font-size: 1.5rem!important
+    }
+
+    .profile-contact {
+        font-size: 1.25rem!important
+    }
+
+    .profile-email {
+        font-size: 1.25rem!important
+    }
+
+    .profile-dashboard {
+        font-size: 1.10rem!important
+    }
+
+    .profile-btn {
+        font-size: 90%;
+    }
+
+    .profile-analysis {
+        width: 100%!important
+    }
+
+    .input-field {
+        width: 100%!important
+    }
+}

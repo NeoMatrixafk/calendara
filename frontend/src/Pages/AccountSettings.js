@@ -32,10 +32,7 @@ const AccountSettings = ({ mode }) => {
                         Update Password
                     </h3>
                     <div className="container my-5">
-                        <div
-                            className="container mt-3"
-                            style={{ width: "50%" }}
-                        >
+                        <div className="container mt-3 input-field w-50">
                             <div className="mb-3">
                                 <input
                                     type="text"
@@ -124,7 +121,7 @@ const AccountSettings = ({ mode }) => {
                             Delete."
                         </p>
                     </div>
-                    <div className="container" style={{ width: "50%" }}>
+                    <div className="container input-field w-50">
                         <div className="input-group mt-3">
                             <input
                                 type="text"

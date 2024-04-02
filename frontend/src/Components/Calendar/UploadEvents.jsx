@@ -6,10 +6,7 @@ import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import axios from "axios";
 
-
-
 const UploadEvents = (props) => {
-
     //Hooks
     const navigate = useNavigate();
 
@@ -75,9 +72,8 @@ const UploadEvents = (props) => {
 
             // Show modal after successful upload
             setShowModal(true);
-
         } catch (error) {
-            window.alert("Invalid date format!")
+            window.alert("Invalid date format!");
             console.error("Error uploading CSV file:", error.response.data);
             // Handle the error as needed
         }
@@ -97,21 +93,22 @@ const UploadEvents = (props) => {
     const handleUploadButtonClick = async () => {
         // Update the 'uploaded' field for each event
         try {
-            await Promise.all(events.map(async (event) => {
-                await axios.put(
-                    `http://localhost:55555/api/events/${event._id}/update`,
-                    { uploaded: false }
-                );
-            }));
+            await Promise.all(
+                events.map(async (event) => {
+                    await axios.put(
+                        `http://localhost:55555/api/events/${event._id}/update`,
+                        { uploaded: false }
+                    );
+                })
+            );
         } catch (error) {
             console.error("Error updating uploaded status for events:", error);
         }
-    
+
         setShowModal(false);
         alert("CSV/XLSX file uploaded and Events are created!");
         navigate("/events2");
     };
-    
 
     const handleXlsxUpload = async () => {
         if (!excelFile) {
@@ -142,7 +139,6 @@ const UploadEvents = (props) => {
 
             // Show modal after successful upload
             setShowModal(true);
-            
         } catch (error) {
             console.error("Error uploading XLSX file:", error.response.data);
             // Handle the error as needed
@@ -187,7 +183,7 @@ const UploadEvents = (props) => {
                     Download .xlsx template
                 </button>
             </div>
-            <div className="container my-5" style={{ width: "50%" }}>
+            <div className="container my-5 input-field w-50">
                 <input
                     className={`form-control ${
                         props.mode === "light" ? "" : "border-secondary"
@@ -205,15 +201,15 @@ const UploadEvents = (props) => {
                 />
                 <button
                     type="submit"
-                    className="btn btn-success btn-lg mt-3"
+                    className="btn btn-success btn-lg mt-3 profile-btn"
                     onClick={handleCsvUpload}
                 >
                     Upload .csv
                 </button>
             </div>
             <div
-                className="container mb-5"
-                style={{ width: "50%", marginTop: "7rem" }}
+                className="container mb-5 input-field w-50"
+                style={{ marginTop: "7rem" }}
             >
                 <input
                     className={`form-control ${
@@ -232,7 +228,7 @@ const UploadEvents = (props) => {
                 />
                 <button
                     type="submit"
-                    className="btn btn-success btn-lg mt-3"
+                    className="btn btn-success btn-lg mt-3 profile-btn"
                     onClick={handleXlsxUpload}
                 >
                     Upload .xlsx
@@ -268,9 +264,11 @@ const UploadEvents = (props) => {
                     )}
                 </Modal.Body>
 
-
                 <Modal.Footer>
-                    <button className="btn btn-primary" onClick={handleUploadButtonClick}>
+                    <button
+                        className="btn btn-primary"
+                        onClick={handleUploadButtonClick}
+                    >
                         Upload
                     </button>
                 </Modal.Footer>

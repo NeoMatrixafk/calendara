@@ -2,10 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-
-
 const UpdateProfile = (props) => {
-
     //States
     const [profileImageData, setProfileImageData] = useState("");
     const [profileImagePreview, setProfileImagePreview] = useState(null);
@@ -13,7 +10,8 @@ const UpdateProfile = (props) => {
 
     const [backgroundImageData, setBackgroundImageData] = useState("");
     const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
-    const [backgroundSuccessMessage, setBackgroundSuccessMessage] = useState(null);
+    const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
+        useState(null);
 
     const [newUserContact, setNewUserContact] = useState("");
 
@@ -122,11 +120,13 @@ const UpdateProfile = (props) => {
             const contact = localStorage.getItem("contact");
             const url = `http://localhost:55555/api/updatedata/updateusercontact/${contact}`;
 
-            const response = await axios.put(url, { newUserContact: newUserContact });
+            const response = await axios.put(url, {
+                newUserContact: newUserContact,
+            });
 
             if (response.status === 200) {
                 console.log("UserContact updated successfully");
-                window.alert("UserContact Updated Successfully!")
+                window.alert("UserContact Updated Successfully!");
                 localStorage.setItem("contact", newUserContact);
                 window.location.reload();
                 // Handle success
@@ -147,7 +147,7 @@ const UpdateProfile = (props) => {
                 >
                     Update Profile Picture
                 </h3>
-                <div className="container mt-3" style={{ width: "50%" }}>
+                <div className="container mt-3 input-field w-50">
                     <div className="input-group mb-3">
                         <input
                             type="file"
@@ -216,7 +216,7 @@ const UpdateProfile = (props) => {
                 >
                     Update Background Picture
                 </h3>
-                <div className="container mt-3" style={{ width: "50%" }}>
+                <div className="container mt-3 input-field w-50">
                     <div className="input-group mb-3">
                         <input
                             type="file"
@@ -284,7 +284,7 @@ const UpdateProfile = (props) => {
                 >
                     Update User Name
                 </h3>
-                <div className="container mt-3" style={{ width: "50%" }}>
+                <div className="container mt-3 input-field w-50">
                     <p
                         style={{ fontSize: "1.25rem" }}
                         className={`text-${
@@ -325,7 +325,7 @@ const UpdateProfile = (props) => {
                 >
                     Update Contact Number
                 </h3>
-                <div className="container mt-3" style={{ width: "50%" }}>
+                <div className="container mt-3 input-field w-50">
                     <p
                         style={{ fontSize: "1.25rem" }}
                         className={`text-${
@@ -370,7 +370,7 @@ const UpdateProfile = (props) => {
                 >
                     Update Email
                 </h3>
-                <div className="container mt-3" style={{ width: "50%" }}>
+                <div className="container mt-3 input-field w-50">
                     <p
                         style={{ fontSize: "1.25rem" }}
                         className={`text-${

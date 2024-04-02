@@ -853,6 +853,39 @@ const NavbarLoggedIn = (props) => {
                                 </label>
                             </div>
                         </li>
+                        <li className="nav-item d-flex justify-content-center me-3 mt-3">
+                            <input
+                                className="form-check-input invisible"
+                                onClick={props.toggleMode}
+                                type="checkbox"
+                                id="flexSwitchCheckDefault"
+                            />
+                            <label
+                                className="d-flex align-items-center"
+                                style={{ fontSize: "1.50rem" }}
+                            >
+                                <input
+                                    type="checkbox"
+                                    onClick={props.toggleMode}
+                                    style={{ display: "none" }}
+                                    id="toggle-mode"
+                                    name="toggle-mode-checkbox"
+                                />
+                                <div className="container d-flex align-items-center">
+                                    {props.mode === "light" ? (
+                                        <i
+                                            className="bi bi-sun icon-shadow-yellow"
+                                            style={{ color: "black" }}
+                                        ></i>
+                                    ) : (
+                                        <i
+                                            className="bi bi-moon icon-shadow-white"
+                                            style={{ color: "white" }}
+                                        ></i>
+                                    )}
+                                </div>
+                            </label>
+                        </li>
                         <li style={{ margin: "auto" }}>
                             <Link
                                 className={`nav-link hover-navlink text-${
@@ -1095,6 +1128,7 @@ const NavbarLoggedIn = (props) => {
                                     <Dropdown.Item
                                         onClick={() => {
                                             setShowCalendarDropdown(false);
+                                            setShowOffcanvas(false);
                                             navigate("/add-event");
                                         }}
                                         className={`dropdown-hover-${
@@ -1113,6 +1147,7 @@ const NavbarLoggedIn = (props) => {
                                     <Dropdown.Item
                                         onClick={() => {
                                             setShowCalendarDropdown(false);
+                                            setShowOffcanvas(false);
                                             navigate("/events2");
                                         }}
                                         className={`dropdown-hover-${

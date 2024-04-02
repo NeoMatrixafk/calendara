@@ -127,7 +127,7 @@ const ProfileLoggedIn = (props) => {
                                                     "userProfileImage"
                                                 ) || props.defaultProfileImg
                                             }
-                                            className="img-fluid"
+                                            className="img-fluid user-pfp"
                                             alt="user profile pic"
                                             style={{
                                                 width: "14rem",
@@ -157,21 +157,21 @@ const ProfileLoggedIn = (props) => {
                                 style={{ marginTop: "43rem" }}
                             >
                                 <p
-                                    className="montserrat-regular-400"
+                                    className="montserrat-regular-400 profile-username"
                                     style={{ fontSize: "2.5rem" }}
                                 >
                                     Name: {userName}
                                 </p>
                                 <br />
                                 <p
-                                    className="montserrat-regular-400"
+                                    className="montserrat-regular-400 profile-contact"
                                     style={{ fontSize: "2rem" }}
                                 >
                                     Contact: {contact}
                                 </p>
                                 <br />
                                 <p
-                                    className="montserrat-regular-400"
+                                    className="montserrat-regular-400 profile-email"
                                     style={{ fontSize: "2rem" }}
                                 >
                                     Email: {email}
@@ -202,7 +202,7 @@ const ProfileLoggedIn = (props) => {
                         >
                             <Link
                                 to="/profile/upload-events"
-                                className={`btn btn-lg mt-3 btn-${
+                                className={`btn btn-lg mt-3 profile-btn btn-${
                                     props.mode === "light" ? "primary" : "light"
                                 }`}
                             >
@@ -210,7 +210,7 @@ const ProfileLoggedIn = (props) => {
                             </Link>
                             <Link
                                 to="/profile/account-settings"
-                                className={`btn btn-lg btn-${
+                                className={`btn btn-lg profile-btn btn-${
                                     props.mode === "dark" ? "light" : "primary"
                                 }
                                 `}
@@ -219,7 +219,7 @@ const ProfileLoggedIn = (props) => {
                             </Link>
                             <Link
                                 to="/profile/more-settings"
-                                className={`btn btn-lg btn-${
+                                className={`btn btn-lg profile-btn btn-${
                                     props.mode === "dark" ? "light" : "primary"
                                 }
                                 `}
@@ -227,7 +227,7 @@ const ProfileLoggedIn = (props) => {
                                 More Settings
                             </Link>
                             <button
-                                className="btn btn-lg btn-danger mb-5"
+                                className="btn btn-lg btn-danger profile-btn mb-5"
                                 onClick={handleLogout}
                             >
                                 Sign Out
@@ -236,7 +236,7 @@ const ProfileLoggedIn = (props) => {
                         <div className="col d-flex align-items-center justify-content-center mb-5">
                             <div className="container">
                                 <div
-                                    className="row mx-0 rounded w-75"
+                                    className="row mx-0 rounded profile-analysis w-75"
                                     style={{
                                         backgroundColor:
                                             props.mode === "light"
@@ -247,7 +247,7 @@ const ProfileLoggedIn = (props) => {
                                 >
                                     <div className="col-12 mt-3">
                                         <p
-                                            className={`text-${
+                                            className={`profile-dashboard text-${
                                                 props.mode === "light"
                                                     ? "black"
                                                     : "white"
@@ -259,7 +259,7 @@ const ProfileLoggedIn = (props) => {
                                     </div>
                                     <div className="col-12">
                                         <p
-                                            className={`text-${
+                                            className={`profile-dashboard text-${
                                                 props.mode === "light"
                                                     ? "black"
                                                     : "white"
@@ -272,7 +272,7 @@ const ProfileLoggedIn = (props) => {
                                     </div>
                                     <div className="col-12">
                                         <p
-                                            className={`text-${
+                                            className={`profile-dashboard text-${
                                                 props.mode === "light"
                                                     ? "black"
                                                     : "white"
@@ -287,7 +287,7 @@ const ProfileLoggedIn = (props) => {
                                     <div className="col-12 mb-3 d-flex justify-content-center">
                                         <Link
                                             to="/dashboard"
-                                            className={`text-${
+                                            className={`profile-dashboard text-${
                                                 props.mode === "light"
                                                     ? "success"
                                                     : "warning"
