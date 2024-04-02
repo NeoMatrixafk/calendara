@@ -8,7 +8,7 @@ const cors = require("cors");
 const connection = require("./db");
 
 //importing routes
-const UserRoutes = require("./routes/Users");
+const UserRoutes = require("./routes/users");
 const AuthRoutes = require("./routes/Auth");
 const EventRoute = require("./routes/EventRoute");
 const GetData = require("./routes/GetData");
