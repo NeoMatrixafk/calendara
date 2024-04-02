@@ -8,20 +8,20 @@ const cors = require("cors");
 const connection = require("./db");
 
 //importing routes
-const UserRoutes = require("./routes/Users");
-const AuthRoutes = require("./routes/Auth");
-const EventRoute = require("./routes/EventRoute");
-const GetData = require("./routes/GetData");
-const UpdateData = require("./routes/UpdateData");
-const ContactUs = require("./routes/ContactUs");
-const ProfilePic = require("./routes/ProfilePic");
-const ProfileBgPic = require("./routes/ProfileBgPic");
-const UploadCSV = require("./routes/UploadCSV");
-const UploadXLSX = require("./routes/UploadXLSX");
-const SendMail = require("./routes/SendMail");
-const Reminders = require("./routes/Reminders");
-const Categories = require("./routes/Categories");
-const ForgotPassword = require("./routes/ForgotPassword");
+const UserRoutes = require("./routes/users");
+const AuthRoutes = require("./routes/auth");
+const EventRoute = require("./routes/event_route");
+const GetData = require("./routes/get_data");
+const UpdateData = require("./routes/update_data");
+const ContactUs = require("./routes/contact_us");
+const ProfilePic = require("./routes/profile_pic");
+const ProfileBgPic = require("./routes/profile_bg_pic");
+const UploadCSV = require("./routes/upload_csv");
+const UploadXLSX = require("./routes/upload_xlsx");
+const SendMail = require("./routes/send_mail");
+const Reminders = require("./routes/reminders_");
+const Categories = require("./routes/categories");
+const ForgotPassword = require("./routes/forgot_password");
 
 // connecting database
 connection();

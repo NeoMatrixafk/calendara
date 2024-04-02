@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Event = require("../models/Event");
+const Event = require("../models/event_");
 const handleError = require("../utils/eventErrors");
 
 
