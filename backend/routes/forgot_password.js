@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Forgotpassword } = require("../models/forgotPassword");
+const { Forgotpassword } = require("../models/forgot_password");
 
 // Posting the forgot password request from the client to the server
 router.post("/", async (req, res) => {

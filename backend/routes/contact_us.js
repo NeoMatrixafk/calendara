@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { ContactUs } = require("../models/contactus");
+const { ContactUs } = require("../models/contact_us");
 
 
 //posting contactus form from client to server

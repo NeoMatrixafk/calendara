@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const { Profilepic } = require("../models/profilePic");
+const { Profilebgpic } = require("../models/profile_bg_pic");
 
 
-//posting profile picture from client to server
+//posting background picture from client to server
 router.post("/", async (req, res) => {
     try {
-        await new Profilepic({ ...req.body }).save();
+        await new Profilebgpic({ ...req.body }).save();
         res.status(201).send({
             success: true,
             message: "Image uploaded successfully.",
@@ -19,37 +19,33 @@ router.post("/", async (req, res) => {
     }
 });
 
-//getting profile picture from server to client according to email
+//getting background picture from server to client according to email
 router.get("/:email", async (req, res) => {
     const email = req.params.email;
 
     try {
-        const imageBody = await Profilepic.findOne({ email: email });
-        if (!imageBody) {
+        const bgimageBody = await Profilebgpic.findOne({ email: email });
+        if (!bgimageBody) {
             console.log(
                 `No document found for email: ${email}. Nothing to get.`
             );
             res.status(200).json("No document found. Nothing to get.");
             return;
         }
-        res.status(200).json(imageBody);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send({
-            success: false,
-            message: "Internal Server Error.",
-        });
+        res.status(200).json(bgimageBody);
+    } catch (err) {
+        handleError(err, res);
     }
 });
 
-//deleting profile picture on server according to email
+//deleting background picture from server according to email
 router.delete("/:email", async (req, res) => {
     const email = req.params.email;
 
     try {
-        const imageBody = await Profilepic.findOne({ email: email });
+        const bgimageBody = await Profilebgpic.findOne({ email: email });
 
-        if (!imageBody) {
+        if (!bgimageBody) {
             console.log(
                 `No document found for email: ${email}. Nothing to delete.`
             );
@@ -57,14 +53,10 @@ router.delete("/:email", async (req, res) => {
             return;
         }
 
-        await imageBody.deleteOne();
+        await bgimageBody.deleteOne();
         res.status(200).json("Image has been deleted");
-    } catch (error) {
-        console.error(error);
-        res.status(500).send({
-            success: false,
-            message: "Internal Server Error.",
-        });
+    } catch (err) {
+        handleError(err, res);
     }
 });
 
