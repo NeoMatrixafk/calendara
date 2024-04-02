@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Profilebgpic } = require("../models/Profilebgpic");
+const { Profilebgpic } = require("../models/profileBgPic");
 
 
 //posting background picture from client to server

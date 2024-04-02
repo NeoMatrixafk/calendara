@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Profilepic } = require("../models/Profilepic");
+const { Profilepic } = require("../models/profilePic");
 
 
 //posting profile picture from client to server

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../models/User");
+const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 
 //posting account details from client to server

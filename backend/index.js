@@ -9,19 +9,19 @@ const connection = require("./db");
 
 //importing routes
 const UserRoutes = require("./routes/users");
-const AuthRoutes = require("./routes/Auth");
+const AuthRoutes = require("./routes/auth");
 const EventRoute = require("./routes/EventRoute");
-const GetData = require("./routes/GetData");
-const UpdateData = require("./routes/UpdateData");
-const ContactUs = require("./routes/ContactUs");
-const ProfilePic = require("./routes/ProfilePic");
-const ProfileBgPic = require("./routes/ProfileBgPic");
+const GetData = require("./routes/getData");
+const UpdateData = require("./routes/updateData");
+const ContactUs = require("./routes/contactUs");
+const ProfilePic = require("./routes/profilePic");
+const ProfileBgPic = require("./routes/profileBgPic");
 const UploadCSV = require("./routes/UploadCSV");
 const UploadXLSX = require("./routes/UploadXLSX");
-const SendMail = require("./routes/SendMail");
-const Reminders = require("./routes/Reminders");
-const Categories = require("./routes/Categories");
-const ForgotPassword = require("./routes/ForgotPassword");
+const SendMail = require("./routes/sendMail");
+const Reminders = require("./routes/reminders");
+const Categories = require("./routes/categories");
+const ForgotPassword = require("./routes/forgotPassword");
 
 // connecting database
 connection();
