@@ -34,3 +34,4 @@ const validate = (data) => {
 
 
 module.exports = { User, validate };
+

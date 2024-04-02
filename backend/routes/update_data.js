@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../models/User");
+const { User } = require("../models/user");
 
 
 
@@ -33,3 +33,4 @@ router.put("/updateusercontact/:userContact", async (req, res) => {
 
 
 module.exports = router;
+

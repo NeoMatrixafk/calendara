@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     message: { type: String, required: true },
 });
 
-const Contactus = mongoose.model("Contactus", userSchema);
+const ContactUs = mongoose.model("ContactUs", userSchema);
 
 
-module.exports = { Contactus };
+module.exports = { ContactUs };
