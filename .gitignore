@@ -3,7 +3,7 @@
 /frontend/node_modules
 /backend/package-lock.json
 /frontend/package-lock.json
-/frontend/src/Components/Login/firebaseConfig.js
+/frontend/.env
 
 # misc
 /backend/.env
