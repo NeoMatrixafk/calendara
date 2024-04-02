@@ -112,12 +112,7 @@ input::-webkit-file-upload-button {
 
 
 
-@media (max-width: 768px) {
-    .navbar-collapse {
-        display: block;
-        width: 100%;
-    }
-
+@media (max-width: 991px) {
     .navbar-nav {
         text-align: center;
     }
@@ -130,9 +125,7 @@ input::-webkit-file-upload-button {
     .navbar-toggler {
         height: auto;
     }
-}
 
-@media (max-width: 768px) {
     .navbar-collapse {
         display: none!important;
     }
@@ -143,49 +136,5 @@ input::-webkit-file-upload-button {
 
     .dashboard-chart-heading {
         font-size: 1.5rem
-    }
-}
-
-@media (max-width: 768px) {
-    .profile-username {
-        font-size: 1.5rem!important
-    }
-
-    .profile-contact {
-        font-size: 1.25rem!important
-    }
-
-    .profile-email {
-        font-size: 1.25rem!important
-    }
-
-    .profile-dashboard {
-        font-size: 1.10rem!important
-    }
-
-    .profile-btn {
-        font-size: 90%;
-    }
-
-    .profile-analysis {
-        width: 100%!important
-    }
-
-    .input-field {
-        width: 100%!important
-    }
-}
-
-
-@media (max-width: 768px) {
-    .desktop-only {
-        display: none!important;
-    }
-}
-
-@media (max-width: 768px) {
-    .auth-logo {
-        width: 50%!important;
-        margin-left: 25%!important;
     }
 }
