@@ -112,7 +112,7 @@ input::-webkit-file-upload-button {
 
 
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     .navbar-nav {
         text-align: center;
     }
@@ -139,7 +139,7 @@ input::-webkit-file-upload-button {
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     .profile-username {
         font-size: 1.25rem!important
     }
@@ -187,7 +187,7 @@ input::-webkit-file-upload-button {
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
     .desktop-only {
         display: none!important;
     }
@@ -199,5 +199,11 @@ input::-webkit-file-upload-button {
     .auth-logo {
         width: 50%!important;
         margin-left: 25%!important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .navbar-search {
+        margin-left: auto!important;
     }
 }

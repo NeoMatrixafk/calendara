@@ -86,7 +86,7 @@ const NavbarLoggedIn = (props) => {
         localStorage.removeItem("contact");
         localStorage.removeItem("userProfileImage");
         localStorage.removeItem("userBGImage");
-        navigate("/");
+        window.location.reload();
     };
 
     const handleEventClick = (eventId) => {
@@ -112,8 +112,6 @@ const NavbarLoggedIn = (props) => {
         }
 
         fetch7daysEventsCount();
-        const interval = setInterval(fetch7daysEventsCount, 10000); // Fetch every 10 secs
-        return () => clearInterval(interval); // Cleanup
     }, [userName]);
 
     useEffect(() => {
@@ -129,8 +127,6 @@ const NavbarLoggedIn = (props) => {
         }
 
         fetch3daysEventsCount();
-        const interval = setInterval(fetch3daysEventsCount, 10000); // Fetch every 10 secs
-        return () => clearInterval(interval); // Cleanup
     }, [userName]);
 
     useEffect(() => {
@@ -146,16 +142,12 @@ const NavbarLoggedIn = (props) => {
         }
 
         fetch1dayEventsCount();
-        const interval = setInterval(fetch1dayEventsCount, 10000); // Fetch every 10 secs
-        return () => clearInterval(interval); // Cleanup
     }, [userName]);
 
     useEffect(() => {
         const totalCount =
             events7daysCount + events3daysCount + events1dayCount;
         setTotalCount(totalCount);
-        const interval = setInterval(setTotalCount(totalCount), 10000); // Fetch every 10 secs
-        return () => clearInterval(interval); // Cleanup
     }, [events7daysCount, events3daysCount, events1dayCount]);
 
     const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -174,12 +166,16 @@ const NavbarLoggedIn = (props) => {
             >
                 <div className="container-fluid">
                     <div className="container d-flex justify-content-between">
-                        <div className="navbar-brand w-25">
+                        <div className="navbar-brand d-flex align-items-center p-0 m-0 justify-content-center w-25">
                             <Link className="p-0" to="/home">
                                 <img
-                                    src={`../Images/Logo/calendara_${props.mode}.png`}
+                                    src={`/Images/Logo/calendara_${props.mode}.png`}
                                     className="img-fluid"
-                                    style={{ maxWidth: "auto" }}
+                                    style={{
+                                        maxWidth: "100%",
+                                        minWidth: "5rem",
+                                        height: "auto",
+                                    }}
                                     alt=""
                                     onError={(e) =>
                                         console.error("Image failed to load", e)
@@ -220,10 +216,14 @@ const NavbarLoggedIn = (props) => {
                         <div
                             className="collapse navbar-collapse"
                             id="navbarSupportedContent"
+                            style={{ marginRight: "auto" }}
                         >
                             <ul
                                 className="navbar-nav me-auto mb-2 mb-lg-0"
-                                style={{ marginLeft: "5rem" }}
+                                style={{
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                }}
                             >
                                 <li className="nav-item mx-2">
                                     <Link
@@ -347,7 +347,10 @@ const NavbarLoggedIn = (props) => {
                                     </Dropdown>
                                 </li>
 
-                                <li style={{ marginLeft: "5rem" }}>
+                                <li
+                                    className="navbar-search"
+                                    style={{ marginLeft: "5rem" }}
+                                >
                                     <Link
                                         className={`nav-link hover-navlink text-${
                                             props.mode === "light"
@@ -914,31 +917,6 @@ const NavbarLoggedIn = (props) => {
                                     )}
                                 </div>
                             </label>
-                        </li>
-                        <li className="mt-2" style={{ marginLeft: "1.4rem" }}>
-                            <Link
-                                to="/reminders"
-                                className="me-4 position-relative"
-                                type="button"
-                            >
-                                <i
-                                    className={`bi bi-bell text-${
-                                        props.mode === "light"
-                                            ? "black"
-                                            : "white"
-                                    }`}
-                                    style={{ fontSize: "1.5rem" }}
-                                ></i>
-                                <span
-                                    className={`badge position-absolute text-bg-${
-                                        props.mode === "light"
-                                            ? "danger"
-                                            : "warning"
-                                    }`}
-                                >
-                                    {totalCount}
-                                </span>
-                            </Link>
                         </li>
                         <li style={{ margin: "auto" }}>
                             <Link
