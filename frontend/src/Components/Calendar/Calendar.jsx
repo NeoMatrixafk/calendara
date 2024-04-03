@@ -41,6 +41,8 @@ const Calendar = ({ mode }) => {
     //Handling Functions
     useEffect(() => {
         fetchEvents();
+        const interval = setInterval(fetchEvents, 10000); // Fetch every 10 secs
+        return () => clearInterval(interval); // Cleanup
     }, []);
 
     const fetchEvents = async () => {
@@ -432,6 +434,7 @@ const Calendar = ({ mode }) => {
                             eventClick={handleEventClick}
                             eventResize={handleEventResize}
                             eventDrop={handleEventDrop}
+                            fetchEvents={fetchEvents}
                         />
                     </div>
                 </div>

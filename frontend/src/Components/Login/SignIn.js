@@ -493,7 +493,7 @@ const SignIn = (props) => {
 
     return (
         <>
-            <Link to="/home">
+            <Link to="/">
                 <img
                     src={require("./calendara_auth.png")}
                     alt="calendara Auth"
