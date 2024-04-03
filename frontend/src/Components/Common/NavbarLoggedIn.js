@@ -177,9 +177,9 @@ const NavbarLoggedIn = (props) => {
                         <div className="navbar-brand w-25">
                             <Link className="p-0" to="/home">
                                 <img
-                                    src={`/Images/Logo/calendara_${props.mode}.png`}
+                                    src={`../Images/Logo/calendara_${props.mode}.png`}
                                     className="img-fluid"
-                                    style={{ maxWidth: "100%" }}
+                                    style={{ maxWidth: "auto" }}
                                     alt=""
                                     onError={(e) =>
                                         console.error("Image failed to load", e)
@@ -914,6 +914,31 @@ const NavbarLoggedIn = (props) => {
                                     )}
                                 </div>
                             </label>
+                        </li>
+                        <li className="mt-2" style={{ marginLeft: "1.4rem" }}>
+                            <Link
+                                to="/reminders"
+                                className="me-4 position-relative"
+                                type="button"
+                            >
+                                <i
+                                    className={`bi bi-bell text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    }`}
+                                    style={{ fontSize: "1.5rem" }}
+                                ></i>
+                                <span
+                                    className={`badge position-absolute text-bg-${
+                                        props.mode === "light"
+                                            ? "danger"
+                                            : "warning"
+                                    }`}
+                                >
+                                    {totalCount}
+                                </span>
+                            </Link>
                         </li>
                         <li style={{ margin: "auto" }}>
                             <Link
