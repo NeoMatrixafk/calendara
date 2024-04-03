@@ -79,7 +79,10 @@ const HomeMain = (props) => {
                                 className={`home-main-p text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
-                                style={{ textAlign: "center" }}
+                                style={{
+                                    textAlign: "center",
+                                    fontSize: "2.5rem",
+                                }}
                             >
                                 Hey there! Welcome to calendara - your one stop
                                 event-tracking and event-management destination!
