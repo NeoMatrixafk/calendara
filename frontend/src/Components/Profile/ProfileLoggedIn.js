@@ -1,8 +1,12 @@
 //React imports
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfileLoggedIn = (props) => {
+
+    //Hooks
+    const navigate = useNavigate();
+
     //States
     const [userName] = useState(localStorage.getItem("userName") || "");
     const [contact] = useState(localStorage.getItem("contact") || "");
@@ -24,7 +28,7 @@ const ProfileLoggedIn = (props) => {
         localStorage.removeItem("eventsCount");
         localStorage.removeItem("selectedColor");
 
-        window.location.reload();
+        navigate("/");
     };
 
     const defaultBackgroundImage = `/Images/Logo/calendara_${props.mode}.png`;

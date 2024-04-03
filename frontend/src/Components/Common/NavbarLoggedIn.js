@@ -86,7 +86,7 @@ const NavbarLoggedIn = (props) => {
         localStorage.removeItem("contact");
         localStorage.removeItem("userProfileImage");
         localStorage.removeItem("userBGImage");
-        window.location.reload();
+        navigate("/");
     };
 
     const handleEventClick = (eventId) => {
