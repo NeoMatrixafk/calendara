@@ -1,0 +1,72 @@
+.home-title-animation {
+    animation: flowAnimation 2s forwards;
+    display: grid;
+    place-items: center;
+    height: 78vh;
+}
+
+@keyframes flowAnimation {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 991px) {
+    .home-title-animation {
+        animation-duration: 1.5s;
+        height: 70vh!important;
+    }
+
+    .home-main-headline {
+        font-size: 3.5rem!important;
+    }
+
+    .home-main-p {
+        margin-top: 2rem;
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+}
+  
+.home-calendar {
+    animation: slideInFromBottom 1s ease-out;
+}
+
+
+.animated {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  
+  .animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .visible {
+    animation: bounce 1s;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(-20px);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }

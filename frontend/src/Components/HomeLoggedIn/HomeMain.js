@@ -1,17 +1,42 @@
-import React from "react";
-import "./HomeAnimation.css";
+import { useEffect, useState, useRef } from "react";
+import "../HomeCommon/HomeAnimation.css";
+import HomeCalendarImage from "../HomeCommon/HomeCalendarImage";
 
 const HomeMain = (props) => {
-    console.log(props.mode);
+    const [isIntersecting, setIsIntersecting] = useState(false);
+    const animatedRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setIsIntersecting(true);
+                    entry.target.classList.add("animate");
+                } else {
+                    setIsIntersecting(false);
+                    entry.target.classList.remove("animate");
+                }
+            });
+        });
+
+        observer.observe(animatedRef.current);
+
+        // Cleanup observer when component unmounts
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <>
-            <div className="container home-title-animation">
-                <div className="row">
-                    <div className="col-lg-8 col-md-10 col-sm-12 mx-auto">
+            <div
+                className="container home-title-animation"
+                style={{ minHeight: "78vh" }}
+            >
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-12">
                         <p
-                            className="mt-5 fw-bold text-center montserrat-regular-400 home-main-headline"
+                            className="fw-bold text-center montserrat-regular-400 home-main-headline"
                             style={{
-                                fontSize: "4.5rem",
+                                fontSize: "5rem",
                                 color:
                                     props.mode === "light" ? "black" : "white",
                             }}
@@ -22,7 +47,7 @@ const HomeMain = (props) => {
                             className={`text-center montserrat-regular-400 text-${
                                 props.mode === "light" ? "black" : "white"
                             }`}
-                            style={{ fontSize: "1.5rem" }}
+                            style={{ fontSize: "2rem" }}
                         >
                             All the tools you need to track your events in one
                             place!
@@ -32,14 +57,32 @@ const HomeMain = (props) => {
             </div>
 
             <div
-                className="container d-flex justify-content-center my-5"
-                style={{ width: "75%" }}
+                ref={animatedRef}
+                className={`box container d-flex justify-content-center home-calendar animated ${
+                    isIntersecting ? "animate" : ""
+                }`}
             >
-                <img
-                    src="../Images/Home/home-pic1.png"
-                    alt=""
-                    style={{ maxWidth: "150%" }}
-                />
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6 col-12">
+                            <HomeCalendarImage mode={props.mode} />
+                        </div>
+                        <div className="col-md-6 col-12 d-flex align-items-center">
+                            <p
+                                className={`home-main-p text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                                style={{
+                                    textAlign: "center",
+                                    fontSize: "2.5rem",
+                                }}
+                            >
+                                Hey there! Welcome to calendara - your one stop
+                                event-tracking and event-management destination!
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     );
