@@ -10,7 +10,7 @@ const HomeAccordion = (props) => {
         },
         {
             question: "Is the calendara accessible on mobile devices?",
-            answer: "Currently, calendara is optimized for desktop use. However, we are actively working on a mobile version using React Native to provide a seamless mobile experience. The mobile version will be available soon.",
+            answer: "Currently, calendara is optimized for desktop use and mobile using the website/web-app. However, we are actively working on a mobile app using React Native to provide a seamless mobile experience. It will be available soon.",
         },
     ];
 

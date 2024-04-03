@@ -26,7 +26,7 @@ const HomeServices = (props) => {
             <div className="row justify-content-center">
                 <div className="col-12 text-center">
                     <p
-                        className={`fw-bold text-${
+                        className={`text-${
                             props.mode === "light" ? "black" : "white"
                         }`}
                         style={{ fontSize: "2.5rem" }}

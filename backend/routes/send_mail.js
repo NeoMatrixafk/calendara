@@ -17,6 +17,10 @@ const targetTime = new Date("2024-03-31T23:39:00");
 const currentTime = new Date();
 const delay = targetTime.getTime() - currentTime.getTime() - 5 * 60 * 1000;
 
+const event = {
+    title: "Your Event Title Here",
+};
+
 if (delay > 0) {
     setTimeout(async () => {
         try {

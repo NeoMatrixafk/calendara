@@ -1,16 +1,47 @@
-import React from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import HomeAdImage from "../HomeCommon/HomeAdImage";
 
 const HomeAd = (props) => {
+    const [isIntersecting, setIsIntersecting] = useState(false);
+    const animatedRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.intersectionRatio > 0) {
+                        setIsIntersecting(true);
+                        entry.target.classList.add("animate");
+                    } else {
+                        setIsIntersecting(false);
+                        entry.target.classList.remove("animate");
+                    }
+                });
+            },
+            // Options for the observer
+            {
+                root: null,
+            }
+        );
+
+        observer.observe(animatedRef.current);
+
+        // Cleanup observer when component unmounts
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <div className="container my-5">
+        <div
+            ref={animatedRef}
+            className={`box container my-5 d-flex justify-content-center home-calendar animated ${
+                isIntersecting ? "animate slideInFromBottom" : ""
+            }`}
+            style={{ minHeight: "100vh" }}
+        >
             <div className="row">
                 <div className="col-lg-6 col-md-12 my-3 d-flex justify-content-center align-items-center">
-                    <img
-                        src="../Images/Home/home-rating.png"
-                        alt=""
-                        className="img-fluid"
-                    />
+                    <HomeAdImage mode={props.mode} />
                 </div>
                 <div className="col-lg-6 col-md-12 my-3 d-flex justify-content-center align-items-center">
                     <div
@@ -18,11 +49,13 @@ const HomeAd = (props) => {
                             props.mode === "light" ? "black" : "white"
                         }`}
                     >
-                        <h3 className="mb-4">calendara</h3>
-                        <p className="fw-bold" style={{ fontSize: "2.5rem" }}>
+                        <p style={{ fontSize: "1.75rem" }} className="mb-4">
+                            calendara
+                        </p>
+                        <p style={{ fontSize: "2.5rem" }}>
                             Your one stop destination
                         </p>
-                        <p>
+                        <p style={{ fontSize: "1.25rem" }}>
                             For all your events and their rightful, timely and
                             reliable tracking and management
                         </p>

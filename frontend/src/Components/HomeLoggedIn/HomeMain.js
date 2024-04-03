@@ -71,9 +71,6 @@ const HomeMain = (props) => {
             >
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 col-12">
-                            <HomeCalendarImage mode={props.mode} />
-                        </div>
                         <div className="col-md-6 col-12 d-flex align-items-center">
                             <p
                                 className={`home-main-p text-${
@@ -87,6 +84,9 @@ const HomeMain = (props) => {
                                 Hey there! Welcome to calendara - your one stop
                                 event-tracking and event-management destination!
                             </p>
+                        </div>
+                        <div className="col-md-6 col-12">
+                            <HomeCalendarImage mode={props.mode} />
                         </div>
                     </div>
                 </div>
