@@ -40,8 +40,25 @@ const NavbarLoggedOut = (props) => {
                             aria-expanded="false"
                             aria-label="Toggle navigation"
                             onClick={() => setShowOffcanvas(!showOffcanvas)}
+                            style={{
+                                color:
+                                    props.mode === "light" ? "gray" : "white",
+                                border: "none",
+                            }}
                         >
-                            <span className="navbar-toggler-icon"></span>
+                            <span
+                                className="navbar-toggler-icon"
+                                style={{
+                                    filter:
+                                        props.mode === "light"
+                                            ? "invert(0)"
+                                            : "invert(1)",
+                                    color:
+                                        props.mode === "light"
+                                            ? "gray"
+                                            : "white",
+                                }}
+                            ></span>
                         </button>
 
                         <div
