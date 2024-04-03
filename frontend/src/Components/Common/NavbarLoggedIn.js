@@ -112,6 +112,8 @@ const NavbarLoggedIn = (props) => {
         }
 
         fetch7daysEventsCount();
+        const interval = setInterval(fetch7daysEventsCount, 10000); // Fetch every 10 secs
+        return () => clearInterval(interval); // Cleanup
     }, [userName]);
 
     useEffect(() => {
@@ -127,6 +129,8 @@ const NavbarLoggedIn = (props) => {
         }
 
         fetch3daysEventsCount();
+        const interval = setInterval(fetch3daysEventsCount, 10000); // Fetch every 10 secs
+        return () => clearInterval(interval); // Cleanup
     }, [userName]);
 
     useEffect(() => {
@@ -142,12 +146,16 @@ const NavbarLoggedIn = (props) => {
         }
 
         fetch1dayEventsCount();
+        const interval = setInterval(fetch1dayEventsCount, 10000); // Fetch every 10 secs
+        return () => clearInterval(interval); // Cleanup
     }, [userName]);
 
     useEffect(() => {
         const totalCount =
             events7daysCount + events3daysCount + events1dayCount;
         setTotalCount(totalCount);
+        const interval = setInterval(setTotalCount(totalCount), 10000); // Fetch every 10 secs
+        return () => clearInterval(interval); // Cleanup
     }, [events7daysCount, events3daysCount, events1dayCount]);
 
     const [showOffcanvas, setShowOffcanvas] = useState(false);
