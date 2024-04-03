@@ -7,17 +7,24 @@ const HomeMain = (props) => {
     const animatedRef = useRef(null);
 
     useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setIsIntersecting(true);
-                    entry.target.classList.add("animate");
-                } else {
-                    setIsIntersecting(false);
-                    entry.target.classList.remove("animate");
-                }
-            });
-        });
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.intersectionRatio > 0) {
+                        setIsIntersecting(true);
+                        entry.target.classList.add("animate");
+                    } else {
+                        setIsIntersecting(false);
+                        entry.target.classList.remove("animate");
+                    }
+                });
+            },
+            // Options for the observer
+            {
+                root: null,
+                threshold: 0.1,
+            }
+        );
 
         observer.observe(animatedRef.current);
 
@@ -72,10 +79,7 @@ const HomeMain = (props) => {
                                 className={`home-main-p text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
-                                style={{
-                                    textAlign: "center",
-                                    fontSize: "2.5rem",
-                                }}
+                                style={{ textAlign: "center" }}
                             >
                                 Hey there! Welcome to calendara - your one stop
                                 event-tracking and event-management destination!
