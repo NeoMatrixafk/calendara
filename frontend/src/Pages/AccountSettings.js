@@ -2,14 +2,26 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AccountSettings = ({ mode }) => {
-    const [isEnabled, setIsEnabled] = useState("Enable");
-    localStorage.setItem("isEnabled", false);
+    const [isEnabled, setIsEnabled] = useState(localStorage.getItem("isEnabled") === "true");
+    const username = localStorage.getItem("userName");
+    const email = localStorage.getItem("email")
 
     const toggleIsEnabled = () => {
-        if (isEnabled === "Enable") {
-            setIsEnabled("Disable");
-        } else {
-            setIsEnabled("Enable");
+        const newIsEnabled = !isEnabled;
+        setIsEnabled(newIsEnabled);
+        localStorage.setItem("isEnabled", newIsEnabled);
+        
+        if (newIsEnabled) {
+            fetch(`http://localhost:55555/api/sendmail/${username}/${email}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to send email');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending email:', error);
+                    // You might want to display an error message to the user
+                });
         }
     };
     return (
@@ -41,7 +53,7 @@ const AccountSettings = ({ mode }) => {
                                     mode === "light" ? "black" : "white"
                                 }`}
                             >
-                                {isEnabled} email notifications
+                                {isEnabled ? "Disable" : "Enable"} email notifications
                             </p>
 
                             <button
@@ -51,7 +63,7 @@ const AccountSettings = ({ mode }) => {
                                     mode === "light" ? "dark" : "light"
                                 }`}
                             >
-                                {isEnabled}
+                                {isEnabled ? "Disable" : "Enable"}
                             </button>
                         </div>
                     </h3>
