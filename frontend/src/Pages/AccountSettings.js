@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AccountSettings = ({ mode }) => {
+    
     const [isEnabled, setIsEnabled] = useState(localStorage.getItem("isEnabled") === "true");
     const username = localStorage.getItem("userName");
     const email = localStorage.getItem("email")

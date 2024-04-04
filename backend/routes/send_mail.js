@@ -23,7 +23,7 @@ router.get("/:username/:email", async (req, res) => {
         const currentTime = new Date();
         for (const event of eventsData) {
             const eventStartTime = new Date(event.start);
-            const delay = eventStartTime.getTime() - currentTime.getTime() - 19 * 60 * 1000;
+            const delay = eventStartTime.getTime() - currentTime.getTime() - 18 * 60 * 1000;
             if (delay > 0) {
                 setTimeout(async () => {
                     try {
@@ -67,7 +67,7 @@ router.get("/:username/:email", async (req, res) => {
                                     <body>
                                         <div class="container">
                                             <img src="https://github.com/ayush-sharma11/calendara/blob/master/frontend/public/Images/Logo/calendara_light.png?raw=true" alt="Calendara Logo">
-                                            <p>Hello User,</p>
+                                            <p>Hello ${username},</p>
                                             <p>This is a reminder about your following upcoming events within 24 hours:</p>
                                             <ul>
                                                 <b>${event.title}</b>
