@@ -207,3 +207,23 @@ input::-webkit-file-upload-button {
         margin-left: auto!important;
     }
 }
+
+.about-pics {
+    width: 27.5rem !important;
+    transition: width 0.3s ease;
+}
+
+.about-pics:hover {
+    width: 30rem !important;
+}
+
+@media (max-width: 991px) {
+    .about-pics {
+        width: 75%!important;
+    }
+
+    .about-img-div {
+        display: grid!important;
+        place-items: center!important;
+    }
+}
