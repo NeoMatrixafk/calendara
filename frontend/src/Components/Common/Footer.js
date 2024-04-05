@@ -53,9 +53,9 @@ const Footer = (props) => {
                         />
                     </section>
 
-                    <section className="my-4">
+                    <section>
                         <div className="row">
-                            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <div className="col-4 col-md-3 my-3">
                                 <h5 className="text-uppercase ">About Us</h5>
 
                                 <ul className="list-unstyled mb-0 my-3">
@@ -86,7 +86,7 @@ const Footer = (props) => {
                                 </ul>
                             </div>
 
-                            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <div className="col-4 col-md-3 my-3">
                                 <h5 className="text-uppercase ">Help</h5>
 
                                 <ul className="list-unstyled mb-0 my-3">
@@ -109,7 +109,7 @@ const Footer = (props) => {
                                 </ul>
                             </div>
 
-                            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <div className="col-4 col-md-3 my-3">
                                 <h5 className="text-uppercase ">Policy</h5>
 
                                 <ul className="list-unstyled mb-0 my-3">
@@ -132,7 +132,7 @@ const Footer = (props) => {
                                 </ul>
                             </div>
 
-                            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <div className="col-12 col-md-3 my-3">
                                 <h5 className="text-uppercase ">Our Address</h5>
 
                                 <ul className="list-unstyled  mb-0 my-3">
