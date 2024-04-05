@@ -5,12 +5,12 @@ const HomeMain = (props) => {
         <>
             <div
                 className="container home-title-animation"
-                style={{ minHeight: "90vh" }}
+                style={{ minHeight: "85vh", marginBottom: "5rem" }}
             >
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-12">
                         <p
-                            className="fw-bold text-center montserrat-regular-400 home-main-headline"
+                            className="fw-bold text-center montserrat-regular-400 mb-5 home-main-headline"
                             style={{
                                 fontSize: "4.5rem",
                                 color:
@@ -23,7 +23,7 @@ const HomeMain = (props) => {
                             className={`text-center montserrat-regular-400 text-${
                                 props.mode === "light" ? "black" : "white"
                             }`}
-                            style={{ fontSize: "2rem" }}
+                            style={{ fontSize: "1.75rem" }}
                         >
                             All the tools you need to track your events in one
                             place!
