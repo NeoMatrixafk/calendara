@@ -454,7 +454,7 @@ const NavbarLoggedIn = (props) => {
                                                 filteredEvents.map((event) => (
                                                     <div
                                                         key={event._id}
-                                                        className={`mt-2    mb-5 text-${
+                                                        className={`mt-2 mb-5 text-${
                                                             props.mode ===
                                                             "light"
                                                                 ? "black"
@@ -466,7 +466,22 @@ const NavbarLoggedIn = (props) => {
                                                             )
                                                         }
                                                     >
-                                                        <h3>{event.title}</h3>
+                                                        <div className="d-flex align-items-center">
+                                                            <div
+                                                                className="me-2"
+                                                                style={{
+                                                                    width: "1.25rem",
+                                                                    height: "1.25rem",
+                                                                    borderRadius:
+                                                                        "50%",
+                                                                    backgroundColor:
+                                                                        event.color,
+                                                                }}
+                                                            ></div>
+                                                            <h3 className="my-0">
+                                                                {event.title}
+                                                            </h3>
+                                                        </div>
                                                         <p>
                                                             <strong>
                                                                 Description:
@@ -1024,7 +1039,21 @@ const NavbarLoggedIn = (props) => {
                                                     handleEventClick(event._id)
                                                 }
                                             >
-                                                <h3>{event.title}</h3>
+                                                <div className="d-flex align-items-center">
+                                                    <div
+                                                        className="me-2"
+                                                        style={{
+                                                            width: "1.25rem",
+                                                            height: "1.25rem",
+                                                            borderRadius: "50%",
+                                                            backgroundColor:
+                                                                event.color,
+                                                        }}
+                                                    ></div>
+                                                    <h3 className="my-0">
+                                                        {event.title}
+                                                    </h3>
+                                                </div>
                                                 <p>
                                                     <strong>
                                                         Description:

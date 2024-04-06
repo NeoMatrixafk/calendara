@@ -2,7 +2,6 @@
     animation: flowAnimation 2s forwards;
     display: grid;
     place-items: center;
-    height: 78vh;
 }
 
 @keyframes flowAnimation {
@@ -21,7 +20,7 @@
     }
 
     .home-main-headline {
-        font-size: 3.5rem!important;
+        font-size: 3.25rem!important;
     }
 
     .home-main-p {
@@ -71,3 +70,34 @@
         transform: translateY(0);
     }
 }
+
+
+@keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-left {
+    animation: slideInLeft 0.5s forwards;
+  }
+  
+  .animate-right {
+    animation: slideInRight 0.5s forwards;
+  }

@@ -1,65 +1,67 @@
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 import HomeAdImage from "../HomeCommon/HomeAdImage";
 
 const HomeAd = (props) => {
-    const [isIntersecting, setIsIntersecting] = useState(false);
-    const animatedRef = useRef(null);
+    const [refLeft, inViewLeft] = useInView({
+        threshold: 0.25,
+        triggerOnce: true,
+    });
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.intersectionRatio > 0) {
-                        setIsIntersecting(true);
-                        entry.target.classList.add("animate");
-                    } else {
-                        setIsIntersecting(false);
-                        entry.target.classList.remove("animate");
-                    }
-                });
-            },
-            // Options for the observer
-            {
-                root: null,
-            }
-        );
-
-        observer.observe(animatedRef.current);
-
-        // Cleanup observer when component unmounts
-        return () => observer.disconnect();
-    }, []);
+    const [refRight, inViewRight] = useInView({
+        threshold: 0.25,
+        triggerOnce: true,
+    });
 
     return (
         <div
-            ref={animatedRef}
-            className={`box container my-5 d-flex justify-content-center home-calendar animated ${
-                isIntersecting ? "animate slideInFromBottom" : ""
-            }`}
-            style={{ minHeight: "100vh" }}
+            className="d-flex align-items-center justify-content-center"
+            style={{ minHeight: "100vh", marginTop: "5rem" }}
         >
             <div className="row">
-                <div className="col-lg-6 col-md-12 my-3 d-flex justify-content-center align-items-center">
-                    <HomeAdImage mode={props.mode} />
-                </div>
-                <div className="col-lg-6 col-md-12 my-3 d-flex justify-content-center align-items-center">
+                <div className="col-lg-6 col-md-12 d-flex justify-content-center align-items-center">
                     <div
-                        className={`text-${
-                            props.mode === "light" ? "black" : "white"
+                        ref={refLeft}
+                        className={`container home d-flex justify-content-center animated ${
+                            inViewLeft ? "animate-left" : ""
                         }`}
                     >
-                        <p style={{ fontSize: "1.75rem" }} className="mb-4">
+                        <HomeAdImage mode={props.mode} />
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-12 d-flex justify-content-center align-items-center">
+                    <div
+                        ref={refRight}
+                        className={`container home animated ${
+                            inViewRight ? "animate-right" : ""
+                        }`}
+                    >
+                        <p
+                            className={`my-0 text-${
+                                props.mode === "light" ? "black" : "white"
+                            }`}
+                            style={{ fontSize: "1.75rem" }}
+                        >
                             calendara
                         </p>
-                        <p style={{ fontSize: "2.5rem" }}>
+                        <p
+                            className={`my-0 text-${
+                                props.mode === "light" ? "black" : "white"
+                            }`}
+                            style={{ fontSize: "2.5rem" }}
+                        >
                             Your one stop destination
                         </p>
-                        <p style={{ fontSize: "1.25rem" }}>
+                        <p
+                            className={`text-${
+                                props.mode === "light" ? "black" : "white"
+                            }`}
+                            style={{ fontSize: "1.25rem" }}
+                        >
                             For all your events and their rightful, timely and
                             reliable tracking and management
                         </p>
-                        <div className="mt-3">
+                        <div>
                             <Link
                                 to="/faq"
                                 className={`btn btn-${

@@ -4,10 +4,10 @@ const HomeCalendarImage = ({ mode }) => {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 data-name="Layer 1"
-                viewBox="0 0 579.23228 563.50586"
+                viewBox="0 50 580 520"
                 style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "90%",
+                    height: "90%",
                     objectFit: "cover",
                 }}
             >
