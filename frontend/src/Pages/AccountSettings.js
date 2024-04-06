@@ -1,30 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const AccountSettings = ({ mode }) => {
     
     const [isEnabled, setIsEnabled] = useState(localStorage.getItem("isEnabled") === "true");
     const username = localStorage.getItem("userName");
-    const email = localStorage.getItem("email")
+    const email = localStorage.getItem("email");
+    const intervalRef = useRef(null); // Reference to store the interval ID
 
+    useEffect(() => {
+        const sendMail = async () => {
+            try {
+                const response = await fetch(`http://localhost:55555/api/sendmail/${username}/${email}`);
+                if (!response.ok) {
+                    throw new Error("Failed to send email");
+                }
+            } catch (error) {
+                console.error("Error sending email:", error);
+            }
+        };
+
+        const handleInterval = () => {
+            if (isEnabled) {
+                sendMail(); // Send initial email when enabling
+                intervalRef.current = setInterval(sendMail, 1000); // Send emails periodically
+            } else {
+                clearInterval(intervalRef.current); // Clear interval when disabling
+            }
+        };
+
+        handleInterval(); // Call handleInterval isEnabled changes
+
+    }, [isEnabled, username, email]);
+
+    useEffect(() => {
+        if (!isEnabled) {
+            clearInterval(intervalRef.current);
+        }
+    }, [isEnabled]);
+    
     const toggleIsEnabled = () => {
         const newIsEnabled = !isEnabled;
         setIsEnabled(newIsEnabled);
         localStorage.setItem("isEnabled", newIsEnabled);
-        
-        if (newIsEnabled) {
-            fetch(`http://localhost:55555/api/sendmail/${username}/${email}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to send email');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error sending email:', error);
-                    // You might want to display an error message to the user
-                });
-        }
     };
+    
     return (
         <>
             <div className="container my-5">
