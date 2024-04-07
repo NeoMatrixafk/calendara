@@ -35,7 +35,7 @@ function parseDate(dateString) {
     return null;
 }
 
-router.post("/:userName", upload.single("excelFile"), async (req, res) => {
+router.post("/:email", upload.single("excelFile"), async (req, res) => {
     if (!req.file) {
         return res.status(400).send("No file was uploaded.");
     }
@@ -43,7 +43,7 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
     // Now you can access the Excel file data using req.file.buffer
     const excelFileData = req.file.buffer;
 
-    const userName = req.params.userName;
+    const email = req.params.email;
 
     const workbook = xlsx.read(excelFileData, { type: "buffer" });
     const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
@@ -77,7 +77,7 @@ router.post("/:userName", upload.single("excelFile"), async (req, res) => {
             const response = await axios.post(
                 `http://localhost:55555/api/events`,
                 {
-                    admin: userName,
+                    admin: email,
                     title: title,
                     start: `${startDate}T00:00:00.000+00:00`,
                     end: `${endDate}T00:00:30.000+00:00`,

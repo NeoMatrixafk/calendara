@@ -86,7 +86,7 @@ router.get("/:username/:email", async (req, res) => {
         const { username, email } = req.params;
         const withinbeforeTime = "11 mins";
         const beforeTime = 11 * 60 * 1000;
-        const eventsResponse = await fetch(`http://localhost:55555/api/events/${username}`);
+        const eventsResponse = await fetch(`http://localhost:55555/api/events/${email}`);
         const eventsData = await eventsResponse.json();
 
         const currentTime = new Date();

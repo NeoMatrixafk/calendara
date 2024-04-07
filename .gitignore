@@ -7,6 +7,3 @@
 # misc
 /frontend/.env
 /backend/.env
-
-# desktop app
-/desktop

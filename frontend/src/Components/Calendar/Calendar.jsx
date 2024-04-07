@@ -47,9 +47,9 @@ const Calendar = ({ mode }) => {
 
     const fetchEvents = async () => {
         try {
-            const userName = localStorage.getItem("userName");
+            const email = localStorage.getItem("email");
             const response = await axios.get(
-                `http://localhost:55555/api/events/${userName}`
+                `http://localhost:55555/api/events/${email}`
             );
 
             const convertedEvents = response.data.map((event) => {
@@ -119,7 +119,7 @@ const Calendar = ({ mode }) => {
 
     const handleCreateEvent = async (data) => {
         try {
-            const admin = localStorage.getItem("userName");
+            const admin = localStorage.getItem("email");
             const title = data.title || "No Title";
 
             const eventData = {

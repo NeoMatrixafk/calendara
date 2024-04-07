@@ -27,6 +27,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
     const [dbError, setError] = useState(false);
     const [firstRender, setFirstRender] = useState(true);
     const [userName] = useState(localStorage.getItem("userName") || "");
+    const [email] = useState(localStorage.getItem("email") || "");
     const [selectedColor, setSelectedColor] = useState("#2196f3"); // Default color
 
     const location = useLocation();
@@ -76,6 +77,7 @@ const AddEvents = ({ addEventApi, error, mode }) => {
             return;
         }
 
+        values.admin = email;
         values.color = selectedColor;
         values.status = status;
 

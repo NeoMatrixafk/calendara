@@ -44,14 +44,14 @@ const Activity = (props) => {
     const [unresolvedEvents, setUnresolvedEvents] = useState([]);
     const [modalShow, setModalShow] = useState(false);
 
-    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     //Handling functions
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/events/resolved/${userName}`
+                    `http://localhost:55555/api/events/resolved/${email}`
                 );
                 const events = response.data;
                 setResolvedEventsCount(events.length);
@@ -64,13 +64,13 @@ const Activity = (props) => {
         };
 
         fetchTotalEventsData();
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/events/unresolved/${userName}`
+                    `http://localhost:55555/api/events/unresolved/${email}`
                 );
                 const events = response.data;
                 setUnResolvedEventsCount(events.length);
@@ -84,7 +84,7 @@ const Activity = (props) => {
         };
 
         fetchTotalEventsData();
-    }, [userName]);
+    }, [email]);
 
     const handlePieClick = () => {
         setModalShow(true); // Open the modal when pie chart is clicked

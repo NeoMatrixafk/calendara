@@ -4,15 +4,15 @@ const handleError = require("../utils/eventErrors");
 
 
 
-router.get("/upcoming/:userName", async (req, res) => {
+router.get("/upcoming/:email", async (req, res) => {
 
-    const name = req.params.userName;
+    const email = req.params.email;
 
     try {
         const currentDate = new Date();
         // Find events for the given userName that occur after the current date and time
         const events = await Event.find({
-            admin: name,
+            admin: email,
             start: { $gte: currentDate },
         });
 
@@ -26,9 +26,9 @@ router.get("/upcoming/:userName", async (req, res) => {
 });
 
 
-router.get("/7days/:userName", async (req, res) => {
+router.get("/7days/:email", async (req, res) => {
 
-    const name = req.params.userName;
+    const email = req.params.email;
 
     try {
         // Calculate the start of the date three days from now (midnight)
@@ -40,7 +40,7 @@ router.get("/7days/:userName", async (req, res) => {
 
         // Find events for the given userName that occur on the date three days from now
         const events = await Event.find({
-            admin: name,
+            admin: email,
             start: { $gte: sevenDaysLaterStart, $lte: sevenDaysLaterEnd },
         });
 
@@ -53,9 +53,9 @@ router.get("/7days/:userName", async (req, res) => {
     }
 });
 
-router.get("/3days/:userName", async (req, res) => {
+router.get("/3days/:email", async (req, res) => {
 
-    const name = req.params.userName;
+    const email = req.params.email;
 
     try {
         // Calculate the start of the date three days from now (midnight)
@@ -67,7 +67,7 @@ router.get("/3days/:userName", async (req, res) => {
 
         // Find events for the given userName that occur on the date three days from now
         const events = await Event.find({
-            admin: name,
+            admin: email,
             start: { $gte: threeDaysLaterStart, $lte: threeDaysLaterEnd },
         });
 
@@ -80,9 +80,9 @@ router.get("/3days/:userName", async (req, res) => {
     }
 });
 
-router.get("/1day/:userName", async (req, res) => {
+router.get("/1day/:email", async (req, res) => {
 
-    const name = req.params.userName;
+    const email = req.params.emali;
 
     try {
         // Calculate the start of the date three days from now (midnight)
@@ -94,7 +94,7 @@ router.get("/1day/:userName", async (req, res) => {
 
         // Find events for the given userName that occur on the date three days from now
         const events = await Event.find({
-            admin: name,
+            admin: email,
             start: { $gte: oneDayLaterStart, $lte: oneDayLaterEnd },
         });
 

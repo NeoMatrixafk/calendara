@@ -21,19 +21,20 @@ const NavbarLoggedIn = (props) => {
     const [events1dayCount, setEvents1dayCount] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     //Handling Functions
     const fetchEvents = useCallback(async () => {
         try {
             const response = await axios.get(
-                `http://localhost:55555/api/events/${userName}`
+                `http://localhost:55555/api/events/${email}`
             );
             setEvents(response.data);
             setFilteredEvents(response.data);
         } catch (error) {
             console.error("Error fetching events:", error);
         }
-    }, [userName]);
+    }, [email]);
 
     const filterEventsByTitle = useCallback(() => {
         const filtered = events.filter(
@@ -86,7 +87,7 @@ const NavbarLoggedIn = (props) => {
         localStorage.removeItem("contact");
         localStorage.removeItem("userProfileImage");
         localStorage.removeItem("userBGImage");
-        window.location.reload();
+        navigate("/");
     };
 
     const handleEventClick = (eventId) => {
@@ -103,7 +104,7 @@ const NavbarLoggedIn = (props) => {
         async function fetch7daysEventsCount() {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/reminders/7days/${userName}`
+                    `http://localhost:55555/api/reminders/7days/${email}`
                 );
                 setEvents7daysCount(response.data.length || 0);
             } catch (error) {
@@ -114,13 +115,13 @@ const NavbarLoggedIn = (props) => {
         fetch7daysEventsCount();
         const interval = setInterval(fetch7daysEventsCount, 1000); // Fetch every 1 sec
         return () => clearInterval(interval); // Cleanup
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         async function fetch3daysEventsCount() {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/reminders/3days/${userName}`
+                    `http://localhost:55555/api/reminders/3days/${email}`
                 );
                 setEvents3daysCount(response.data.length || 0);
             } catch (error) {
@@ -131,13 +132,13 @@ const NavbarLoggedIn = (props) => {
         fetch3daysEventsCount();
         const interval = setInterval(fetch3daysEventsCount, 1000); // Fetch every 1 sec
         return () => clearInterval(interval); // Cleanup
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         async function fetch1dayEventsCount() {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/reminders/1day/${userName}`
+                    `http://localhost:55555/api/reminders/1day/${email}`
                 );
                 setEvents1dayCount(response.data.length || 0);
             } catch (error) {
@@ -148,7 +149,7 @@ const NavbarLoggedIn = (props) => {
         fetch1dayEventsCount();
         const interval = setInterval(fetch1dayEventsCount, 1000); // Fetch every 1 sec
         return () => clearInterval(interval); // Cleanup
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         const totalCount =

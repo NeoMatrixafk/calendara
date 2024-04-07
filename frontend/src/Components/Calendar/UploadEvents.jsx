@@ -17,7 +17,7 @@ const UploadEvents = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [events, setEvents] = useState([]);
 
-    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     const handleCsvDownload = () => {
         const downloadLink = document.createElement("a");
@@ -55,7 +55,7 @@ const UploadEvents = (props) => {
         try {
             // Upload the CSV file to the server
             const uploadResponse = await axios.post(
-                `http://localhost:55555/api/uploadcsv/${userName}`,
+                `http://localhost:55555/api/uploadcsv/${email}`,
                 formData,
                 {
                     headers: {
@@ -82,7 +82,7 @@ const UploadEvents = (props) => {
     const fetchEvents = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:55555/api/events/uploaded/${userName}`
+                `http://localhost:55555/api/events/uploaded/${email}`
             );
             setEvents(response.data);
         } catch (error) {
@@ -122,7 +122,7 @@ const UploadEvents = (props) => {
         try {
             // Upload the Excel file to the server
             const uploadResponse = await axios.post(
-                `http://localhost:55555/api/uploadxlsx/${userName}`,
+                `http://localhost:55555/api/uploadxlsx/${email}`,
                 formData,
                 {
                     headers: {
