@@ -1,8 +1,7 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+const router = require("express").Router();
 const nodemailer = require("nodemailer");
 const axios = require("axios");
+
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -75,7 +74,7 @@ const sendReminderEmail = async (event, withinbeforeTime) => {
         };
         await transporter.sendMail(mailOptions);
         console.log("Email has been sent");
-        eventTimeouts.delete(event._id); // Remove the timeout reference from the Map
+        eventTimeouts.delete(event._id);
     } catch (error) {
         console.error("Error sending email:", error);
         throw error;
@@ -83,10 +82,10 @@ const sendReminderEmail = async (event, withinbeforeTime) => {
 };
 
 const checkAndSendReminders = async () => {
-    try {
-        const withinbeforeTime = "2 mins";
-        const beforeTime = 2 * 60 * 1000;
-        const eventsResponse = await axios.get(`http://localhost:55555/api/events`);
+    try {   
+        const withinbeforeTime = "23 mins";
+        const beforeTime = 23 * 60 * 1000;
+        const eventsResponse = await axios.get(`http://localhost:54545/api/events`);
 
         if (eventsResponse.status === 200) {
             const eventsData = eventsResponse.data;
@@ -119,13 +118,17 @@ const checkAndSendReminders = async () => {
     }
 };
 
-
-const app = express();
-app.use(cors());
-// Run the checkAndSendReminders function every 1  sec
-setInterval(checkAndSendReminders, 1000);
-
-const port = 55554 || 3000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+router.get('/runReminders', async (req, res) => {
+    try {
+        await checkAndSendReminders();
+        res.status(200).send('Reminders checked and sent successfully');
+    } catch (error) {
+        console.error('Error running reminders:', error);
+        res.status(500).send('Internal server error');
+    }
 });
+
+module.exports = {
+    router,
+    checkAndSendReminders
+};

@@ -1,6 +1,7 @@
 //React imports
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../Login/firebase";
 
 const ProfileLoggedIn = (props) => {
 
@@ -15,8 +16,23 @@ const ProfileLoggedIn = (props) => {
     const resolvedEventsCount = localStorage.getItem("resolvedEventsCount");
     const unresolvedEventsCount = localStorage.getItem("unresolvedEventsCount");
 
+
+    const handleSignOut = async () => {
+        try {
+            await auth.signOut();
+            localStorage.removeItem("auth");
+            console.log("User signed out successfully");
+            navigate("/");
+            // Perform any additional actions after sign out if needed
+        } catch (error) {
+            console.error("Error signing out:", error);
+            // Display an appropriate error message to the user
+        }
+    };
+
     const handleLogout = () => {
         localStorage.removeItem("token");
+        handleSignOut();
         localStorage.removeItem("userName");
         localStorage.removeItem("contact");
         localStorage.removeItem("email");
