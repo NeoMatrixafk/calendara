@@ -72,6 +72,7 @@ const NavbarLoggedIn = (props) => {
             await auth.signOut();
             localStorage.removeItem("auth");
             console.log("User signed out successfully");
+            navigate("/");
             // Perform any additional actions after sign out if needed
         } catch (error) {
             console.error("Error signing out:", error);
