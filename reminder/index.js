@@ -25,7 +25,7 @@ app.use("/api/events", EventRoute);
 app.use(router);
 
 // Start the server
-const PORT = 54545 || 3000; // Adjusted this line to use the environment port if available
+const PORT = process.env.PORT || 3000; // Adjusted this line to use the environment port if available
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

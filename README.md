@@ -11,8 +11,11 @@ An event calendar using MERN stack for college project.
 * [MongoDB: Compass](https://www.mongodb.com/try/download/compass)
 * [MongoDB: Community Server](https://www.mongodb.com/try/download/community)
 * [Git](https://git-scm.com/)
+* [Firebase](https://console.firebase.google.com/)
 
 ### Installation 🔧
+
+Check the respective .env.example files in each folder before proceeding.
 
 Local installation:
 
@@ -47,6 +50,17 @@ $ cd frontend
 $ npm install
 
 ```
+---
+
+**Reminder system setup:**
+```bash
+# Change directory to the reminder path
+$ cd reminder
+
+# Install dependencies
+$ npm install
+
+```
 ## Deployment 📦
 
 ```bash
@@ -57,6 +71,10 @@ $ npm start
 
 # Open another terminal in project path and run
 $ cd frontend
+$ npm start
+
+# Open another terminal in project path and run
+$ cd reminder
 $ npm start
 ```
 Open [http://localhost:4444](http://localhost:4444) to view it in your browser.
