@@ -72,7 +72,7 @@ const OverdueEvents = (props) => {
 
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";
 
-    const COLORS = ["#ff0000", totalEventsColor];
+    const COLORS = ["#dc3545", totalEventsColor];
 
     return (
         <div className="container d-flex justify-content-center">

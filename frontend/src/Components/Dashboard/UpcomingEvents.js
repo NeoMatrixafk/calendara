@@ -72,7 +72,7 @@ const UpcomingEvents = (props) => {
 
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";
 
-    const COLORS = ["#daa520", totalEventsColor];
+    const COLORS = ["#ffc107", totalEventsColor];
 
     return (
         <>

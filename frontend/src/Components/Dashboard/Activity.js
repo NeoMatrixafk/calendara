@@ -105,7 +105,7 @@ const Activity = (props) => {
         { name: "Group B", value: unresolvedEventsCount },
     ];
 
-    const COLORS = ["#00e600", "#ff0000"];
+    const COLORS = ["#28a745", "#dc3545"];
 
     return (
         <>
