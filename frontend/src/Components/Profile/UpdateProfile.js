@@ -13,6 +13,7 @@ const UpdateProfile = (props) => {
     const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
         useState(null);
 
+    const [newUserName, setNewUserName] = useState("");
     const [newUserContact, setNewUserContact] = useState("");
 
     //Handling functions
@@ -112,6 +113,28 @@ const UpdateProfile = (props) => {
             }
         } else {
             alert("Please upload an image!");
+        }
+    };
+
+    const updateUserName = async () => {
+        try {
+            const userName = localStorage.getItem("userName");
+            const url = `http://localhost:55555/api/updatedata/updateusername/${userName}`;
+
+            const response = await axios.put(url, {
+                newUserName: newUserName,
+            });
+
+            if (response.status === 200) {
+                console.log("UserName updated successfully");
+                window.alert("UserName Updated Successfully!");
+                localStorage.setItem("userName", newUserName);
+                window.location.reload();
+                // Handle success
+            }
+        } catch (error) {
+            console.error("Error updating user name:", error);
+            // Handle error
         }
     };
 
@@ -305,12 +328,15 @@ const UpdateProfile = (props) => {
                                 WebkitTextFillColor:
                                     props.mode === "light" ? "" : "#e6e6e6",
                             }}
+                            value={newUserName}
+                            onChange={(e) => setNewUserName(e.target.value)}
                             placeholder="New User Name"
                         />
                         <button
                             className={`btn btn-${
                                 props.mode === "light" ? "primary" : "warning"
                             }`}
+                            onClick={updateUserName}
                         >
                             Update
                         </button>
@@ -356,47 +382,6 @@ const UpdateProfile = (props) => {
                                 props.mode === "light" ? "primary" : "warning"
                             }`}
                             onClick={updateUserContact}
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="container my-5">
-                <h3
-                    className={`text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    Update Email
-                </h3>
-                <div className="container mt-3 input-field w-50">
-                    <p
-                        style={{ fontSize: "1.25rem" }}
-                        className={`text-${
-                            props.mode === "light" ? "black" : "white"
-                        }`}
-                    >
-                        Current Email: {localStorage.getItem("email")}
-                    </p>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className={`form-control ${
-                                props.mode === "light" ? "" : "border-secondary"
-                            }`}
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "#4d4d4d",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "" : "#e6e6e6",
-                            }}
-                            placeholder="New Email"
-                        />
-                        <button
-                            className={`btn btn-${
-                                props.mode === "light" ? "primary" : "warning"
-                            }`}
                         >
                             Update
                         </button>

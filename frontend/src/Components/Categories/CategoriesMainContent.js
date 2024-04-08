@@ -3,7 +3,7 @@ import axios from "axios";
 
 const CategoriesMainContent = (props) => {
     const selectedColor = localStorage.getItem("selectedColor") || "#ffeb3b";
-    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     const [events, setEvents] = useState([]);
 
@@ -14,8 +14,9 @@ const CategoriesMainContent = (props) => {
                 // Encode the selectedColor value to ensure it's properly formatted for  URL
                 const encodedColor = encodeURIComponent(selectedColor);
                 const response = await axios.get(
-                    `http://localhost:55555/api/categories/${userName}/${encodedColor}`
+                    `http://localhost:55555/api/categories/${email}/${encodedColor}`
                 );
+                console.log(response.data)
                 setEvents(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);
@@ -23,7 +24,7 @@ const CategoriesMainContent = (props) => {
         }
 
         fetchEvents();
-    }, [selectedColor, userName]);
+    }, [selectedColor, email]);
 
     return (
         <>

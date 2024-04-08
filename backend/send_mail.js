@@ -1,7 +1,8 @@
+require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const nodemailer = require("nodemailer");
-const router = express.Router();
-const fetch = require("node-fetch");
+const axios = require("axios");
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -16,7 +17,7 @@ const transporter = nodemailer.createTransport({
 
 const eventTimeouts = new Map();
 
-const sendReminderEmail = async (username, email, event, eventId, withinbeforeTime) => {
+const sendReminderEmail = async (event, withinbeforeTime) => {
     try {
         console.log(`Sending email for event: ${event.title}`);
         const mailOptions = {
@@ -24,7 +25,7 @@ const sendReminderEmail = async (username, email, event, eventId, withinbeforeTi
                 name: "calendara Support",
                 address: process.env.EMAIL_USER,
             },
-            to: email,
+            to: `${event.admin}`,
             subject: "calendara Reminder Email",
             html: `
                 <html>
@@ -59,7 +60,7 @@ const sendReminderEmail = async (username, email, event, eventId, withinbeforeTi
                     <body>
                         <div class="container">
                             <img src="https://github.com/ayush-sharma11/calendara/blob/master/frontend/public/Images/Logo/calendara_light.png?raw=true" alt="Calendara Logo">
-                            <p>Hello ${username},</p>
+                            <p>Hello User,</p>
                             <p>This is a reminder about your following upcoming events within ${withinbeforeTime}:</p>
                             <ul>
                                 <b>${event.title}</b>
@@ -74,46 +75,57 @@ const sendReminderEmail = async (username, email, event, eventId, withinbeforeTi
         };
         await transporter.sendMail(mailOptions);
         console.log("Email has been sent");
-        eventTimeouts.delete(eventId); // Remove the timeout reference from the Map
+        eventTimeouts.delete(event._id); // Remove the timeout reference from the Map
     } catch (error) {
         console.error("Error sending email:", error);
         throw error;
     }
 };
 
-router.get("/:username/:email", async (req, res) => {
+const checkAndSendReminders = async () => {
     try {
-        const { username, email } = req.params;
-        const withinbeforeTime = "11 mins";
-        const beforeTime = 11 * 60 * 1000;
-        const eventsResponse = await fetch(`http://localhost:55555/api/events/${username}`);
-        const eventsData = await eventsResponse.json();
+        const withinbeforeTime = "2 mins";
+        const beforeTime = 2 * 60 * 1000;
+        const eventsResponse = await axios.get(`http://localhost:55555/api/events`);
 
-        const currentTime = new Date();
-        for (const event of eventsData) {
-            const eventStartTime = new Date(event.start);
-            const delay = eventStartTime.getTime() - currentTime.getTime() - beforeTime;
-            if (delay > 0) {
-                if (!eventTimeouts.has(event.id)) {
-                    eventTimeouts.set(event.id, setTimeout(async () => {
-                        try {
-                            await sendReminderEmail(username, email, event, event.id, withinbeforeTime);
-                        } catch (error) {
-                            // Handle error
-                        }
-                    }, delay));
+        if (eventsResponse.status === 200) {
+            const eventsData = eventsResponse.data;
+
+            const currentTime = new Date();
+            for (const event of eventsData) {
+                const eventStartTime = new Date(event.start);
+                const delay = eventStartTime.getTime() - currentTime.getTime() - beforeTime;
+                if (delay > 0) {
+                    if (!eventTimeouts.has(event._id)) {
+                        eventTimeouts.set(event._id, setTimeout(async () => {
+                            try {
+                                await sendReminderEmail(event, withinbeforeTime);
+                            } catch (error) {
+                                console.error("Error sending reminder email:", error);
+                            }
+                        }, delay));
+                    } else {
+                        console.log(`Timeout already set for event ${event.title}`);
+                    }
                 } else {
-                    console.log(`Timeout already set for event ${event.title}`);
+                    console.log("Target time for event", event.title, "has already passed");
                 }
-            } else {
-                console.log("Target time for event", event.title, "has already passed");
             }
+        } else {
+            console.error('Error fetching events:', eventsResponse.status, eventsResponse.data);
         }
-        res.status(200).json({ message: "Reminder emails will be sent shortly for upcoming events." });
     } catch (error) {
         console.error("Error fetching events:", error);
-        res.status(500).json({ error: "Internal server error" });
     }
-});
+};
 
-module.exports = router;
+
+const app = express();
+app.use(cors());
+// Run the checkAndSendReminders function every 1  sec
+setInterval(checkAndSendReminders, 1000);
+
+const port = 55554 || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

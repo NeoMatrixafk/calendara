@@ -5,13 +5,13 @@ const Reminders = (props) => {
     const [events7days, setEvents7days] = useState([]);
     const [events3days, setEvents3days] = useState([]);
     const [events1day, setEvents1day] = useState([]);
-    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     useEffect(() => {
         async function fetch7daysEvents() {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/reminders/7days/${userName}`
+                    `http://localhost:55555/api/reminders/7days/${email}`
                 );
                 setEvents7days(response.data);
                 console.log(response.data)
@@ -21,13 +21,13 @@ const Reminders = (props) => {
         }
 
         fetch7daysEvents();
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         async function fetch3daysEvents() {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/reminders/3days/${userName}`
+                    `http://localhost:55555/api/reminders/3days/${email}`
                 );
                 setEvents3days(response.data);
             } catch (error) {
@@ -36,13 +36,13 @@ const Reminders = (props) => {
         }
 
         fetch3daysEvents();
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         async function fetch1dayEvents() {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/reminders/1day/${userName}`
+                    `http://localhost:55555/api/reminders/1day/${email}`
                 );
                 setEvents1day(response.data);
             } catch (error) {
@@ -51,7 +51,7 @@ const Reminders = (props) => {
         }
 
         fetch1dayEvents();
-    }, [userName]);
+    }, [email]);
 
     return (
         <>

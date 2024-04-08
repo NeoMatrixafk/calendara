@@ -13,13 +13,13 @@ const OverdueEvents = (props) => {
     const [overdueEvents, setOverdueEvents] = useState([]);
     const [modalShow, setModalShow] = useState(false);
 
-    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     useEffect(() => {
         const fetchOverdueEventsData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/events/resolved/overdue/${userName}`
+                    `http://localhost:55555/api/events/resolved/overdue/${email}`
                 );
                 const events = response.data;
                 setOverdueEventsCount(events.length);
@@ -33,13 +33,13 @@ const OverdueEvents = (props) => {
         };
 
         fetchOverdueEventsData();
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/events/${userName}`
+                    `http://localhost:55555/api/events/${email}`
                 );
                 const events = response.data;
                 setTotalEventsCount(events.length);
@@ -49,7 +49,7 @@ const OverdueEvents = (props) => {
         };
 
         fetchTotalEventsData();
-    }, [userName]);
+    }, [email]);
 
     const handlePieClick = () => {
         setModalShow(true); // Open the modal when pie chart is clicked

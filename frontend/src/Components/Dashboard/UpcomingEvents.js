@@ -13,13 +13,13 @@ const UpcomingEvents = (props) => {
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [modalShow, setModalShow] = useState(false);
 
-    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
 
     useEffect(() => {
         const fetchUpcomingEventsData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/events/resolved/upcoming/${userName}`
+                    `http://localhost:55555/api/events/resolved/upcoming/${email}`
                 );
                 const events = response.data;
                 setUpcomingEventsCount(events.length);
@@ -33,13 +33,13 @@ const UpcomingEvents = (props) => {
         };
 
         fetchUpcomingEventsData();
-    }, [userName]);
+    }, [email]);
 
     useEffect(() => {
         const fetchTotalEventsData = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:55555/api/events/${userName}`
+                    `http://localhost:55555/api/events/${email}`
                 );
                 const events = response.data;
                 setTotalEventsCount(events.length);
@@ -49,7 +49,7 @@ const UpcomingEvents = (props) => {
         };
 
         fetchTotalEventsData();
-    }, [userName]);
+    }, [email]);
 
     const handlePieClick = () => {
         setModalShow(true); // Open the modal when pie chart is clicked
