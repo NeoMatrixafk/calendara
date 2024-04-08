@@ -210,7 +210,18 @@ const CompletedEvents = (props) => {
                                 }`}
                                 onClick={() => handleEventClick(event._id)}
                             >
-                                <h3>{event.title}</h3>
+                                <div className="d-flex align-items-center">
+                                    <div
+                                        className="me-2"
+                                        style={{
+                                            width: "1.25rem",
+                                            height: "1.25rem",
+                                            borderRadius: "50%",
+                                            backgroundColor: event.color,
+                                        }}
+                                    ></div>
+                                    <h3 className="my-0">{event.title}</h3>
+                                </div>
                                 <p>
                                     <strong>Description:</strong>{" "}
                                     {event.describe}
@@ -238,7 +249,9 @@ const CompletedEvents = (props) => {
                         backgroundColor:
                             props.mode === "light" ? "white" : "#36393e",
                     }}
-                    className="border-secondary"
+                    className={`border-${
+                        props.mode === "light" ? "" : "secondary"
+                    }`}
                 >
                     <p
                         className={`text-${
