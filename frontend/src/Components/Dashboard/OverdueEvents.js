@@ -72,7 +72,7 @@ const OverdueEvents = (props) => {
 
     const totalEventsColor = props.mode === "light" ? "#e6e6e6" : "#474b52";
 
-    const COLORS = ["#ff0000", totalEventsColor];
+    const COLORS = ["#dc3545", totalEventsColor];
 
     return (
         <div className="container d-flex justify-content-center">
@@ -203,7 +203,18 @@ const OverdueEvents = (props) => {
                                 }`}
                                 onClick={() => handleEventClick(event._id)}
                             >
-                                <h3>{event.title}</h3>
+                                <div className="d-flex align-items-center">
+                                    <div
+                                        className="me-2"
+                                        style={{
+                                            width: "1.25rem",
+                                            height: "1.25rem",
+                                            borderRadius: "50%",
+                                            backgroundColor: event.color,
+                                        }}
+                                    ></div>
+                                    <h3 className="my-0">{event.title}</h3>
+                                </div>
                                 <p>
                                     <strong>Description:</strong>{" "}
                                     {event.describe}
@@ -231,7 +242,9 @@ const OverdueEvents = (props) => {
                         backgroundColor:
                             props.mode === "light" ? "white" : "#36393e",
                     }}
-                    className="border-secondary"
+                    className={`border-${
+                        props.mode === "light" ? "" : "secondary"
+                    }`}
                 >
                     <p
                         className={`text-${
