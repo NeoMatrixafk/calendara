@@ -3,6 +3,16 @@ const Event = require("../models/event_");
 const handleError = require("../utils/eventErrors");
 
 
+router.get("/", async (req, res) => {
+    const events = await Event.find({});
+
+    try {
+        res.status(200).json(events);
+    } catch (err) {
+        handleError(err, res);
+    }
+});
+
 //getting events based on uploaded from server to client
 router.get("/uploaded/:email", async (req, res) => {
     const email = req.params.email;
@@ -15,7 +25,7 @@ router.get("/uploaded/:email", async (req, res) => {
     }
 });
 
-//getting events based on username from server to client
+//getting events based on email from server to client
 router.get("/:email", async (req, res) => {
     const email = req.params.email;
     const events = await Event.find({ admin: email });
