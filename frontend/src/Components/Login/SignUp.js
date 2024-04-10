@@ -1,7 +1,7 @@
 import React, { useState } from "react"; //imports
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import waveBG from "./wave-auth-bg.svg";
 
@@ -19,6 +19,10 @@ import {
 } from "firebase/auth";
 
 const SignUp = (props) => {
+
+    //Hooks
+    const navigate = useNavigate();
+
     const [authe, setAuthe] = useState(
         false || window.localStorage.getItem("auth") === "true"
     );
@@ -127,11 +131,8 @@ const SignUp = (props) => {
                 localStorage.setItem("userBGImage", response2.data.bgimageData);
                 console.log(bgimageData);
             }
-
-            window.location.reload();
-
             console.log("User signed in successfully");
-            window.location.reload();
+            navigate("/")
         } catch (error) {
             console.error("Error:", error);
         }

@@ -83,8 +83,6 @@ const sendReminderEmail = async (event, withinbeforeTime) => {
 
 const checkAndSendReminders = async () => {
     try {   
-        const withinbeforeTime = "23 mins";
-        const beforeTime = 23 * 60 * 1000;
         const eventsResponse = await axios.get(`http://localhost:54545/api/events`);
 
         if (eventsResponse.status === 200) {
@@ -92,6 +90,8 @@ const checkAndSendReminders = async () => {
 
             const currentTime = new Date();
             for (const event of eventsData) {
+                const withinbeforeTime = "23 mins";
+                const beforeTime = 23 * 60 * 1000;
                 const eventStartTime = new Date(event.start);
                 const delay = eventStartTime.getTime() - currentTime.getTime() - beforeTime;
                 if (delay > 0) {
