@@ -140,6 +140,30 @@ router.put("/:id/update", async (req, res) => {
     }
 });
 
+
+router.put("/:email", async (req, res) => {
+    const email = req.params.email;
+    try {
+        // Find all events associated with the provided email
+        const events = await Event.find({ admin: email });
+
+        if (events.length > 0) {
+            // Update reminder for all events
+            await Promise.all(events.map(async (event) => {
+                Object.assign(event, req.body);
+                await event.save();
+            }));
+
+            res.status(200).json({ message: "Events updated successfully" });
+        } else {
+            res.status(404).json({ error: "No events found for the provided email" });
+        }
+    } catch (err) {
+        console.error(err);
+        handleError(err, res);
+    }
+});
+
 //deleting events from client to server
 router.delete("/:id/delete", async (req, res) => {
     const id = req.params.id;
