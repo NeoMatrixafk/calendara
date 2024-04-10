@@ -1,5 +1,5 @@
 //React imports
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, Dropdown } from "react-bootstrap";
 import axios from "axios";
@@ -161,6 +161,19 @@ const NavbarLoggedIn = (props) => {
     }, [events7daysCount, events3daysCount, events1dayCount]);
 
     const [showOffcanvas, setShowOffcanvas] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 991) {
+                setShowOffcanvas(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     return (
         <>
@@ -759,7 +772,7 @@ const NavbarLoggedIn = (props) => {
                     ></button>
                 </div>
                 <div
-                    className="offcanvas-body pt-5"
+                    className="offcanvas-body pt-3"
                     style={{
                         backgroundColor:
                             props.mode === "light" ? "#fff" : "#36393e",
@@ -943,6 +956,32 @@ const NavbarLoggedIn = (props) => {
                                 </div>
                             </label>
                         </li>
+
+                        <li className="d-flex justify-content-center align-items-center">
+                            <Link
+                                to="/reminders"
+                                className="me-4 position-relative"
+                                type="button"
+                            >
+                                <i
+                                    className={`bi bi-bell text-${
+                                        props.mode === "light"
+                                            ? "black"
+                                            : "white"
+                                    }`}
+                                    style={{ fontSize: "1.5rem" }}
+                                ></i>
+                                <span
+                                    className={`badge position-absolute text-bg-${
+                                        props.mode === "light"
+                                            ? "danger"
+                                            : "warning"
+                                    }`}
+                                >
+                                    {totalCount}
+                                </span>
+                            </Link>
+                        </li>
                         <li style={{ margin: "auto" }}>
                             <Link
                                 className={`nav-link hover-navlink text-${
@@ -1119,7 +1158,7 @@ const NavbarLoggedIn = (props) => {
                                 </Modal.Footer>
                             </Modal>
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item d-flex justify-content-center">
                             <Link
                                 className={`nav-link hover-underline text-${
                                     props.mode === "light" ? "black" : "white"
@@ -1130,7 +1169,7 @@ const NavbarLoggedIn = (props) => {
                                 Home
                             </Link>
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item d-flex justify-content-center">
                             <Link
                                 className={`nav-link hover-underline text-${
                                     props.mode === "light" ? "black" : "white"
@@ -1141,7 +1180,7 @@ const NavbarLoggedIn = (props) => {
                                 Dashboard
                             </Link>
                         </li>
-                        <li className="nav-item">
+                        <li className="nav-item d-flex justify-content-center">
                             <Link
                                 className={`nav-link hover-underline text-${
                                     props.mode === "light" ? "black" : "white"

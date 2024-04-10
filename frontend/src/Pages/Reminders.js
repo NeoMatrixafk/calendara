@@ -14,7 +14,7 @@ const Reminders = (props) => {
                     `http://localhost:55555/api/reminders/7days/${email}`
                 );
                 setEvents7days(response.data);
-                console.log(response.data)
+                console.log(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);
             }
@@ -63,10 +63,10 @@ const Reminders = (props) => {
                 <h1>Reminders</h1>
                 <div className="container">
                     <div className="row">
-                        <div className="col-4">
+                        <div className="col-md-4 col-12">
                             <div className="container my-5">
-                                <h2 className="my-4">Within 7 Days</h2>
-                                {events7days.map((event) => (
+                                <h2 className="my-4">Within 1 Day</h2>
+                                {events1day.map((event) => (
                                     <li
                                         key={event._id}
                                         style={{ listStyleType: "none" }}
@@ -93,13 +93,7 @@ const Reminders = (props) => {
                                 ))}
                             </div>
                         </div>
-                        <div
-                            className="col-4"
-                            style={{
-                                borderRight: "1px solid gray",
-                                borderLeft: "1px solid gray",
-                            }}
-                        >
+                        <div className="col-md-4 col-12 reminder-mid-col">
                             <div className="container my-5">
                                 <h2 className="my-4">Within 3 Days</h2>
                                 {events3days.map((event) => (
@@ -129,10 +123,10 @@ const Reminders = (props) => {
                                 ))}
                             </div>
                         </div>
-                        <div className="col-4">
+                        <div className="col-md-4 col-12">
                             <div className="container my-5">
-                                <h2 className="my-4">Within 1 Day</h2>
-                                {events1day.map((event) => (
+                                <h2 className="my-4">Within 7 Days</h2>
+                                {events7days.map((event) => (
                                     <li
                                         key={event._id}
                                         style={{ listStyleType: "none" }}

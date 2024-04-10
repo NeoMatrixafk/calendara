@@ -449,7 +449,7 @@ const SignUp = (props) => {
                     backgroundImage: !isMobile ? `url(${waveBG})` : "",
                     backgroundSize: "100% auto",
                     backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
+                    backgroundPosition: "bottom",
                 }}
             >
                 <div style={styles.card}>

@@ -47,7 +47,7 @@
     overflow: hidden; /* Hide overflow to prevent double scrollbars */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     .categories-side {
         width: 60%!important;
         overflow-y: auto; /* Enable vertical scrolling for the sidebar */
@@ -112,7 +112,7 @@ input::-webkit-file-upload-button {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 991.9px) {
     .navbar-nav {
         text-align: center;
     }
@@ -139,7 +139,7 @@ input::-webkit-file-upload-button {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991.9px) {
     .profile-username {
         font-size: 1.25rem!important
     }
@@ -187,7 +187,7 @@ input::-webkit-file-upload-button {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 410px) {
     .desktop-only {
         display: none!important;
     }
@@ -197,8 +197,7 @@ input::-webkit-file-upload-button {
     }
 
     .auth-logo {
-        width: 50%!important;
-        margin-left: 25%!important;
+        width: 100%
     }
 }
 
@@ -217,7 +216,7 @@ input::-webkit-file-upload-button {
     width: 30rem !important;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 911.9px) {
     .about-pics {
         width: 75%!important;
     }
@@ -225,5 +224,12 @@ input::-webkit-file-upload-button {
     .about-img-div {
         display: grid!important;
         place-items: center!important;
+    }
+}
+
+@media (min-width: 991px) {
+    .reminder-mid-col {
+        border-right: 1px solid gray;
+        border-left: 1px solid gray;
     }
 }
