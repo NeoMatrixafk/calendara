@@ -233,3 +233,15 @@ input::-webkit-file-upload-button {
         border-left: 1px solid gray;
     }
 }
+
+@media (min-width: 470px) {
+    .auth-logo {
+        width: 25%;
+    }
+}
+
+@media (max-width: 469px) {
+    .auth-logo {
+        width: 50%;
+    }
+}

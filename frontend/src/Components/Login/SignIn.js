@@ -503,7 +503,7 @@ const SignIn = (props) => {
                         left: 0,
                         zIndex: 9999,
                     }}
-                    className="auth-logo w-25"
+                    className="auth-logo"
                 />
             </Link>
 
