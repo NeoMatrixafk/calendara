@@ -38,11 +38,11 @@ const ProfileLoggedIn = (props) => {
         localStorage.removeItem("email");
         localStorage.removeItem("userProfileImage");
         localStorage.removeItem("userBGImage");
-        localStorage.removeItem("completedEventsCount");
+        localStorage.removeItem("resolvedEventsCount");
         localStorage.removeItem("categoryColor");
-        localStorage.removeItem("overdueEventsCount");
-        localStorage.removeItem("eventsCount");
+        localStorage.removeItem("unresolvedEventsCount");
         localStorage.removeItem("selectedColor");
+        localStorage.removeItem("isEnabled");
 
         navigate("/");
     };

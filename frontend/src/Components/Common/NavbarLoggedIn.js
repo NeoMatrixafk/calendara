@@ -84,10 +84,15 @@ const NavbarLoggedIn = (props) => {
         localStorage.removeItem("token");
         handleSignOut();
         localStorage.removeItem("userName");
-        localStorage.removeItem("email");
         localStorage.removeItem("contact");
+        localStorage.removeItem("email");
         localStorage.removeItem("userProfileImage");
         localStorage.removeItem("userBGImage");
+        localStorage.removeItem("resolvedEventsCount");
+        localStorage.removeItem("categoryColor");
+        localStorage.removeItem("unresolvedEventsCount");
+        localStorage.removeItem("selectedColor");
+        localStorage.removeItem("isEnabled");
         navigate("/");
     };
 

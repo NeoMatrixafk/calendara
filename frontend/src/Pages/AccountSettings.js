@@ -1,20 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
+
 const AccountSettings = ({ mode }) => {
     
-    const [isEnabled, setIsEnabled] = useState(localStorage.getItem("isEnabled") === "false" ? false : true);
+    const [isEnabled, setIsEnabled] = useState(true);
+
+    useEffect(() => {
+        const fetchReminderStatus = async () => {
+            try {
+                const email = localStorage.getItem("email");
+                const response = await axios.get(`http://localhost:55555/api/getData/${email}`);
+                const reminderStatus = response.data.reminder;
+                console.log(reminderStatus)
+                setIsEnabled(reminderStatus);
+                localStorage.setItem("isEnabled", reminderStatus.toString());
+            } catch (error) {
+                console.error("Error fetching reminder status:", error);
+                // Handle error
+            }
+        };
+
+        fetchReminderStatus();
+    }, []);
 
     const toggleIsEnabled = async () => {
         const newIsEnabled = !isEnabled;
         setIsEnabled(newIsEnabled);
-        localStorage.setItem("isEnabled", newIsEnabled);
+        localStorage.setItem("isEnabled", newIsEnabled.toString());
 
         try {
             // Make PUT request to update reminder for all events using email
             const email = localStorage.getItem("email");
             await axios.put(`http://localhost:55555/api/events/${email}`, { reminder: newIsEnabled });
+            await axios.put(`http://localhost:55555/api/getData/${email}`, { reminder: newIsEnabled });
         } catch (error) {
             console.error("Error updating events:", error);
             // Handle error

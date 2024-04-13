@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     contact: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    reminder: { type: Boolean, default: true}
 });
 
 //creating jwt token for authentication

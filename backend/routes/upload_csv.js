@@ -46,36 +46,31 @@ router.post("/:email", upload.single("csvFile"), async (req, res) => {
 
     const email = req.params.email;
 
-    const results = [];
     const stream = streamifier.createReadStream(Buffer.from(csvFileData));
 
     let isError = false; // Flag to track if an error has occurred
+    const errors = [];
 
     stream
         .pipe(csv())
-        .on("data", (data) => results.push(data))
-        .on("end", async () => {
-            const apiCalls = results.map(async (row) => {
-                const title = row.Title;
-                let startDate = parseDate(row.Start);
-                let endDate = parseDate(row.End);
-                const describe = row.Describe;
-
-                // Check if startDate or endDate is null (indicating invalid date format)
-                if (!startDate || !endDate) {
-                    const errorMessage = `Invalid date format for ${title}`;
-                    console.error(errorMessage);
-                    isError = true;
-                    // Send response to the client indicating invalid date format
-                    return res
-                        .status(400)
-                        .json({ success: false, message: errorMessage });
-                }
-
+        .on("data", async (row) => {
+            const title = row.Title;
+            let startDate = parseDate(row.Start);
+            let endDate = parseDate(row.End);
+            const describe = row.Describe;
+    
+            // Check if startDate or endDate is null (indicating invalid date format)
+            if (!startDate || !endDate) {
+                const errorMessage = `Invalid date format for ${title}`;
+                console.error(errorMessage);
+                isError = true;
+                // Collect errors
+                errors.push({ title, message: errorMessage });
+            } else {
                 console.log(
                     `Title: ${title}, StartDate: ${startDate}, EndDate: ${endDate}, Describe: ${describe}`
                 );
-
+    
                 try {
                     const response = await axios.post(
                         `http://localhost:55555/api/events`,
@@ -94,25 +89,28 @@ router.post("/:email", upload.single("csvFile"), async (req, res) => {
                         `Error making API call for ${title}:`,
                         error.message
                     );
+                    // Collect errors
+                    errors.push({ title, message: error.message });
                 }
-            });
-
-            try {
-                await Promise.all(apiCalls);
-                if (!isError) {
-                    res.json({
-                        success: true,
-                        message: "API calls completed.",
-                    });
-                }
-            } catch (error) {
-                console.error("Error in Promise.all:", error);
-                res.status(500).json({
+            }
+        })
+        .on("end", async () => {
+            // If there are errors, send a response with the errors
+            if (errors.length > 0) {
+                return res.status(400).json({
                     success: false,
-                    message: "Error in API calls.",
+                    errors: errors,
                 });
             }
+            
+            // If no errors occurred, send a success response
+            res.json({
+                success: true,
+                message: "API calls completed.",
+            });
         });
-});
+
+    })
+
 
 module.exports = router;
