@@ -73,9 +73,33 @@ const UploadEvents = (props) => {
             // Show modal after successful upload
             setShowModal(true);
         } catch (error) {
-            window.alert("Invalid date format!");
+            let invalidEventTitles = []; // Array to store invalid event titles
+
+            // Check if error response contains data and message
+            if (error.response && error.response.data && error.response.data.errors) {
+                const errorData = error.response.data.errors;
+
+                // Extract titles of invalid events from error response
+                invalidEventTitles = errorData.map(error => error.title);
+            }
+
+            if (invalidEventTitles.length > 0) {
+                // Alert for each invalid event
+                invalidEventTitles.forEach(title => {
+                    window.alert(`Invalid date format for event: ${title}`);
+                });
+            } else {
+                // If no errors found, show generic error message
+                window.alert("Error uploading CSV file. Please try again.");
+            }
+
             console.error("Error uploading CSV file:", error.response.data);
-            // Handle the error as needed
+
+            // Fetch events after upload
+            await fetchEvents();
+
+            // Show the modal with the successfully uploaded events
+            setShowModal(true);
         }
     };
 
@@ -139,11 +163,36 @@ const UploadEvents = (props) => {
 
             // Show modal after successful upload
             setShowModal(true);
-        } catch (error) {
-            console.error("Error uploading XLSX file:", error.response.data);
-            // Handle the error as needed
-        }
-    };
+            } catch (error) {
+                let invalidEventTitles = []; // Array to store invalid event titles
+    
+                // Check if error response contains data and message
+                if (error.response && error.response.data && error.response.data.errors) {
+                    const errorData = error.response.data.errors;
+    
+                    // Extract titles of invalid events from error response
+                    invalidEventTitles = errorData.map(error => error.title);
+                }
+    
+                if (invalidEventTitles.length > 0) {
+                    // Alert for each invalid event
+                    invalidEventTitles.forEach(title => {
+                        window.alert(`Invalid date format for event: ${title}`);
+                    });
+                } else {
+                    // If no errors found, show generic error message
+                    window.alert("Error uploading CSV file. Please try again.");
+                }
+    
+                console.error("Error uploading CSV file:", error.response.data);
+    
+                // Fetch events after upload
+                await fetchEvents();
+    
+                // Show the modal with the successfully uploaded events
+                setShowModal(true);
+            }
+        };
 
     return (
         <>
