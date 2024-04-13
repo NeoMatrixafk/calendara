@@ -10,7 +10,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import ColorPalette from "./ColorPalette";
 
-
 //validate event inputs
 const schema = yup
     .object({
@@ -23,7 +22,6 @@ const schema = yup
     .required();
 
 const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
-
     //Hooks
     const navigate = useNavigate();
     const location = useLocation();
@@ -60,9 +58,7 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
             title: selectedEvent.title,
             start: new Date(selectedEvent.start),
             end: selectedEvent.end ? new Date(selectedEvent.end) : "",
-            describe: selectedEvent.describe
-                ? selectedEvent.describe
-                : " ",
+            describe: selectedEvent.describe ? selectedEvent.describe : " ",
             color: selectedEvent.color || "#3174ad",
             allDay: selectedEvent.allDay,
             status: status,
@@ -191,18 +187,21 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                         </div>
 
                         <div className="mb-3" style={{ zIndex: "100" }}>
-        
-                            <label htmlFor="allDay" className={`form-label me-4 text-${
-                      mode === "light" ? "black" : "white"
-                    }`}>All Day:</label>
+                            <label
+                                htmlFor="allDay"
+                                className={`form-label me-4 text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                All Day:
+                            </label>
 
-                                <input
-                                    type="checkbox"
-                                    {...register("allDay")}
-                                    id="allDay"
-                                    className={`form-check-input`} 
-                                />
-
+                            <input
+                                type="checkbox"
+                                {...register("allDay")}
+                                id="allDay"
+                                className={`form-check-input`}
+                            />
                         </div>
 
                         <div className="mb-4" style={{ zIndex: "100" }}>
@@ -269,13 +268,14 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                         </div>
 
                         <div className="mb-4">
-                                <label
-                                    className={`form-label text-${
-                                        mode === "light" ? "black" : "white"
-                                    }`}
-                                >
-                                    Status:
-                                </label>
+                            <label
+                                className={`form-label text-${
+                                    mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Status:
+                            </label>
+                            <div>
                                 <div>
                                     <input
                                         type="radio"
@@ -287,10 +287,17 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                             setStatus(e.target.value)
                                         }
                                     />
-                                    <label htmlFor="completed" className={`form-label ms-2 me-4 text-${
-                                        mode === "light" ? "black" : "white"
-                                    }`}>Completed</label>
+                                    <label
+                                        htmlFor="completed"
+                                        className={`form-label ms-2 me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        Completed
+                                    </label>
+                                </div>
 
+                                <div>
                                     <input
                                         type="radio"
                                         id="overdue"
@@ -301,10 +308,17 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                             setStatus(e.target.value)
                                         }
                                     />
-                                    <label htmlFor="overdue" className={`form-label ms-2 me-4 text-${
-                                        mode === "light" ? "black" : "white"
-                                    }`}>Overdue</label>
+                                    <label
+                                        htmlFor="overdue"
+                                        className={`form-label ms-2 me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        Overdue
+                                    </label>
+                                </div>
 
+                                <div>
                                     <input
                                         type="radio"
                                         id="upcoming"
@@ -315,11 +329,17 @@ const UpdateEvent = ({ updateEventApi, event, error, mode }) => {
                                             setStatus(e.target.value)
                                         }
                                     />
-                                    <label htmlFor="upcoming" className={`form-label ms-2 me-4 text-${
-                                        mode === "light" ? "black" : "white"
-                                    }`}>Upcoming</label>
+                                    <label
+                                        htmlFor="upcoming"
+                                        className={`form-label ms-2 me-4 text-${
+                                            mode === "light" ? "black" : "white"
+                                        }`}
+                                    >
+                                        Upcoming
+                                    </label>
                                 </div>
                             </div>
+                        </div>
 
                         <div className="mb-4">
                             <label

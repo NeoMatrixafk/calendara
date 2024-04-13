@@ -36,93 +36,181 @@ const Categories = (props) => {
         );
     };
 
+    const [status, setStatus] = useState("overdue");
+
     return (
         <>
-            {/* SIDEBAR */}
-            <div className="categories d-flex my-5">
-                <div className="categories-side">
-                    <div className="container">
-                        <h1
-                            className={`mb-3 text-center text-${
-                                props.mode === "light" ? "black" : "white"
-                            }`}
-                        >
-                            Categories
-                        </h1>
-                        <div className="row justify-content-center">
-                            {categoryColors.map((colorValue, index) => {
-                                if (colorValue !== 0) {
-                                    return (
-                                        <div
-                                            key={index}
-                                            className="col-12 mb-3"
-                                        >
-                                            <button
-                                                className="btn w-100"
-                                                style={{
-                                                    backgroundColor: colorValue,
-                                                    color:
-                                                        props.mode === "light"
-                                                            ? "black"
-                                                            : "white",
-                                                    height: "2.5rem",
-                                                    fontSize: "0.8rem",
-                                                }}
-                                                onClick={() =>
-                                                    handleCheckboxClick(
-                                                        colorValue
-                                                    )
+            <div
+                className={`container my-5 text-${
+                    props.mode === "light" ? "black" : "white"
+                }`}
+            >
+                <div className="row">
+                    <div className="col-sm-12 col-md-6">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-6">
+                                    <h3 className="d-flex justify-content-center">
+                                        By Colors
+                                    </h3>
+                                    <div className="">
+                                        {categoryColors.map(
+                                            (colorValue, index) => {
+                                                if (colorValue !== 0) {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="mb-3 d-flex justify-content-center"
+                                                        >
+                                                            <button
+                                                                className="btn w-75"
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        colorValue,
+                                                                    color:
+                                                                        props.mode ===
+                                                                        "light"
+                                                                            ? "black"
+                                                                            : "white",
+                                                                    height: "2.5rem",
+                                                                    fontSize:
+                                                                        "0.8rem",
+                                                                }}
+                                                                onClick={() =>
+                                                                    handleCheckboxClick(
+                                                                        colorValue
+                                                                    )
+                                                                }
+                                                            >
+                                                                <div className="form-check d-flex justify-content-center align-items-center">
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="checkbox"
+                                                                        checked={
+                                                                            selectedColor ===
+                                                                            colorValue
+                                                                        }
+                                                                    />
+                                                                </div>
+                                                            </button>
+                                                        </div>
+                                                    );
                                                 }
-                                            >
-                                                <div className="form-check d-flex justify-content-center align-items-center">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        checked={
-                                                            selectedColor ===
-                                                            colorValue
-                                                        }
-                                                    />
-                                                </div>
-                                            </button>
-                                        </div>
-                                    );
-                                }
 
-                                return null;
-                            })}
+                                                return null;
+                                            }
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <h3 className="d-flex justify-content-center">
+                                        By Status
+                                    </h3>
+                                    <div className="mb-4">
+                                        <label className="form-label">
+                                            Status:
+                                        </label>
+                                        <div>
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="completed"
+                                                    name="status"
+                                                    value="Completed"
+                                                    checked={
+                                                        status === "Completed"
+                                                    }
+                                                    onChange={(e) =>
+                                                        setStatus(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <label
+                                                    htmlFor="completed"
+                                                    className="form-label ms-2 me-4"
+                                                >
+                                                    Completed
+                                                </label>
+                                            </div>
+
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="overdue"
+                                                    name="status"
+                                                    value="Overdue"
+                                                    checked={
+                                                        status === "Overdue"
+                                                    }
+                                                    onChange={(e) =>
+                                                        setStatus(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <label
+                                                    htmlFor="overdue"
+                                                    className="form-label ms-2 me-4"
+                                                >
+                                                    Overdue
+                                                </label>
+                                            </div>
+
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    id="upcoming"
+                                                    name="status"
+                                                    value="Upcoming"
+                                                    checked={
+                                                        status === "Upcoming"
+                                                    }
+                                                    onChange={(e) =>
+                                                        setStatus(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <label
+                                                    htmlFor="upcoming"
+                                                    className="form-label ms-2 me-4"
+                                                >
+                                                    Upcoming
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                {/* MAIN CONTENT */}
-                <div
-                    className={`container mb-5 ms-1 text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    <h1>Events</h1>
-                    <div className="container my-5">
-                        {events.map((event) => (
-                            <li
-                                key={event._id}
-                                style={{ listStyleType: "none" }}
-                            >
-                                <h4>Title: {event.title}</h4>
-                                <p className="event-text">
-                                    <strong>Start:</strong>{" "}
-                                    {new Date(event.start).toLocaleString()}
-                                </p>
-                                <p className="event-text">
-                                    <strong>End:</strong>{" "}
-                                    {new Date(event.end).toLocaleString()}
-                                </p>
-                                <p className="event-text">
-                                    <strong>Description:</strong>{" "}
-                                    {event.describe}
-                                </p>
-                            </li>
-                        ))}
+                    <div className="col-sm-12 col-md-6">
+                        <div className="">
+                            <h3 className="d-flex justify-content-center">
+                                Events
+                            </h3>
+                            {events.map((event) => (
+                                <li
+                                    key={event._id}
+                                    style={{ listStyleType: "none" }}
+                                >
+                                    <h4>Title: {event.title}</h4>
+                                    <p className="event-text">
+                                        <strong>Start:</strong>{" "}
+                                        {new Date(event.start).toLocaleString()}
+                                    </p>
+                                    <p className="event-text">
+                                        <strong>End:</strong>{" "}
+                                        {new Date(event.end).toLocaleString()}
+                                    </p>
+                                    <p className="event-text">
+                                        <strong>Description:</strong>{" "}
+                                        {event.describe}
+                                    </p>
+                                </li>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
