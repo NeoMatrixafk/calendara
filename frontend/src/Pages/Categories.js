@@ -12,23 +12,31 @@ const Categories = (props) => {
 
     const email = localStorage.getItem("email");
 
+    const [status, setStatus] = useState(null);
+
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
         async function fetchEvents() {
             try {
-                const encodedColor = encodeURIComponent(selectedColor);
-                const response = await axios.get(
-                    `http://localhost:55555/api/categories/${email}/${encodedColor}`
-                );
+                let url = `http://localhost:55555/api/categories/${email}?`;
+                if (selectedColor) {
+                    const encodedColor = encodeURIComponent(selectedColor);
+                    url += `color=${encodedColor}&`;
+                }
+                if (status) {
+                    url += `status=${status}`;
+                }
+                const response = await axios.get(url);
                 setEvents(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);
             }
         }
-
         fetchEvents();
-    }, [selectedColor, email]);
+    }, [selectedColor, status, email]);
+    
+    
 
     const handleCheckboxClick = (colorValue) => {
         setSelectedColor((prevColor) =>
@@ -36,7 +44,10 @@ const Categories = (props) => {
         );
     };
 
-    const [status, setStatus] = useState("overdue");
+    const handleStatusChange = (value) => {
+        setStatus((prevStatus) => (prevStatus === value ? null : value));
+    };
+    
 
     return (
         <>
@@ -111,6 +122,16 @@ const Categories = (props) => {
                                             Status:
                                         </label>
                                         <div>
+                                            <input
+                                                type="radio"
+                                                id="clearStatus"
+                                                name="status"
+                                                checked={!status} // checked if status is null
+                                                onChange={() => setStatus(null)} // set status to null when clicked
+                                            />
+                                            <label htmlFor="clearStatus" className="form-label ms-2 me-4">
+                                                None
+                                            </label>
                                             <div>
                                                 <input
                                                     type="radio"
@@ -120,11 +141,7 @@ const Categories = (props) => {
                                                     checked={
                                                         status === "Completed"
                                                     }
-                                                    onChange={(e) =>
-                                                        setStatus(
-                                                            e.target.value
-                                                        )
-                                                    }
+                                                    onChange={() => handleStatusChange("Completed")}
                                                 />
                                                 <label
                                                     htmlFor="completed"
@@ -143,11 +160,7 @@ const Categories = (props) => {
                                                     checked={
                                                         status === "Overdue"
                                                     }
-                                                    onChange={(e) =>
-                                                        setStatus(
-                                                            e.target.value
-                                                        )
-                                                    }
+                                                    onChange={() => handleStatusChange("Overdue")}
                                                 />
                                                 <label
                                                     htmlFor="overdue"
@@ -166,11 +179,7 @@ const Categories = (props) => {
                                                     checked={
                                                         status === "Upcoming"
                                                     }
-                                                    onChange={(e) =>
-                                                        setStatus(
-                                                            e.target.value
-                                                        )
-                                                    }
+                                                    onChange={() => handleStatusChange("Upcoming")}
                                                 />
                                                 <label
                                                     htmlFor="upcoming"

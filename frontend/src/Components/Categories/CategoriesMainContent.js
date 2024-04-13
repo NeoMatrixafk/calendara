@@ -9,22 +9,25 @@ const CategoriesMainContent = (props) => {
 
     useEffect(() => {
         async function fetchEvents() {
-            
             try {
-                // Encode the selectedColor value to ensure it's properly formatted for  URL
-                const encodedColor = encodeURIComponent(selectedColor);
-                const response = await axios.get(
-                    `http://localhost:55555/api/categories/${email}/${encodedColor}`
-                );
-                console.log(response.data)
+                let url = `http://localhost:55555/api/categories/${email}?`;
+                if (selectedColor) {
+                    const encodedColor = encodeURIComponent(selectedColor);
+                    url += `color=${encodedColor}&`;
+                }
+                if (status) {
+                    url += `status=${status}`;
+                }
+                const response = await axios.get(url);
                 setEvents(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);
             }
         }
-
         fetchEvents();
-    }, [selectedColor, email]);
+    }, [selectedColor, status, email]);
+    
+    
 
     return (
         <>
