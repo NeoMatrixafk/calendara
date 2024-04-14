@@ -23,7 +23,7 @@ import "../Calendar/calendar.css";
 const Calendar = ({ mode }) => {
     //Hooks
     const navigate = useNavigate();
-    const { register, handleSubmit, control } = useForm();
+    const { register, handleSubmit, control, reset } = useForm();
 
     //States
     const [events, setEvents] = useState([]);
@@ -125,8 +125,8 @@ const Calendar = ({ mode }) => {
             const eventData = {
                 admin: admin,
                 title: title,
-                start: defaultStartDate.toISOString(),
-                end: defaultEndDate.toISOString(),
+                start: data.start || defaultStartDate.toISOString(),
+                end: data.end || defaultEndDate.toISOString(),
                 describe: data.describe,
                 allDay: data.allDay,
                 status: status,
@@ -365,7 +365,10 @@ const Calendar = ({ mode }) => {
         setDefaultTitle(null);
         setDefaultStartDate(null);
         setDefaultEndDate(null);
+        setStatus(null);
+        setDefaultStatus(null);
         setModalMode(null);
+        reset();
     };
 
     return (
@@ -434,7 +437,6 @@ const Calendar = ({ mode }) => {
                             eventClick={handleEventClick}
                             eventResize={handleEventResize}
                             eventDrop={handleEventDrop}
-                            fetchEvents={fetchEvents}
                         />
                     </div>
                 </div>

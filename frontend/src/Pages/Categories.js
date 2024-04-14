@@ -101,6 +101,7 @@ const Categories = (props) => {
                                                                             selectedColor ===
                                                                             colorValue
                                                                         }
+                                                                        onChange={() => handleCheckboxClick(colorValue)}
                                                                     />
                                                                 </div>
                                                             </button>
