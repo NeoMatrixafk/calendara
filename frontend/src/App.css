@@ -239,3 +239,9 @@ input::-webkit-file-upload-button {
         width: 50%;
     }
 }
+
+@media (min-width: 768px) {
+    .categories-right-col {
+        border-left: 1px solid gray
+    }
+}

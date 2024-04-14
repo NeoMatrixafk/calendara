@@ -42,7 +42,8 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import SignIn from "./Components/Login/SignIn";
 import SignUp from "./Components/Login/SignUp";
 
-
+//EasterEgg
+import EasterEgg from "./Pages/EasterEgg";
 
 function App() {
     //Hooks
@@ -228,6 +229,11 @@ function App() {
                                     path="*"
                                     element={<Error404 mode={mode} />}
                                 />
+
+                                <Route
+                                    path="ee"
+                                    element={<EasterEgg mode={mode} />}
+                                />
                             </>
                         ) : (
                             <>
@@ -274,7 +280,6 @@ function App() {
                                     path="/forgot-password"
                                     element={<ForgotPassword mode={mode} />}
                                 />
-
                             </>
                         )}
                     </Routes>

@@ -136,9 +136,22 @@ const Footer = (props) => {
                                 <h5 className="text-uppercase ">Our Address</h5>
 
                                 <ul className="list-unstyled  mb-0 my-3">
-                                    Ramrao Adik Institue of Technology, DY Patil
-                                    Deemed to be University, Nerul, Navi Mumbai,
-                                    Maharashtra, 400706
+                                    Ramrao Adik Institue of Technology,{" "}
+                                    <span>
+                                        <Link
+                                            to="ee"
+                                            className={`text-${
+                                                props.mode === "light"
+                                                    ? "black"
+                                                    : "white"
+                                            }`}
+                                            style={{ textDecoration: "none" }}
+                                        >
+                                            DY
+                                        </Link>
+                                    </span>{" "}
+                                    Patil Deemed to be University, Nerul, Navi
+                                    Mumbai, Maharashtra, 400706
                                 </ul>
                             </div>
                         </div>

@@ -35,8 +35,6 @@ const Categories = (props) => {
         }
         fetchEvents();
     }, [selectedColor, status, email]);
-    
-    
 
     const handleCheckboxClick = (colorValue) => {
         setSelectedColor((prevColor) =>
@@ -47,7 +45,6 @@ const Categories = (props) => {
     const handleStatusChange = (value) => {
         setStatus((prevStatus) => (prevStatus === value ? null : value));
     };
-    
 
     return (
         <>
@@ -101,7 +98,11 @@ const Categories = (props) => {
                                                                             selectedColor ===
                                                                             colorValue
                                                                         }
-                                                                        onChange={() => handleCheckboxClick(colorValue)}
+                                                                        onChange={() =>
+                                                                            handleCheckboxClick(
+                                                                                colorValue
+                                                                            )
+                                                                        }
                                                                     />
                                                                 </div>
                                                             </button>
@@ -130,7 +131,10 @@ const Categories = (props) => {
                                                 checked={!status} // checked if status is null
                                                 onChange={() => setStatus(null)} // set status to null when clicked
                                             />
-                                            <label htmlFor="clearStatus" className="form-label ms-2 me-4">
+                                            <label
+                                                htmlFor="clearStatus"
+                                                className="form-label ms-2 me-4"
+                                            >
                                                 None
                                             </label>
                                             <div>
@@ -142,7 +146,11 @@ const Categories = (props) => {
                                                     checked={
                                                         status === "Completed"
                                                     }
-                                                    onChange={() => handleStatusChange("Completed")}
+                                                    onChange={() =>
+                                                        handleStatusChange(
+                                                            "Completed"
+                                                        )
+                                                    }
                                                 />
                                                 <label
                                                     htmlFor="completed"
@@ -161,7 +169,11 @@ const Categories = (props) => {
                                                     checked={
                                                         status === "Overdue"
                                                     }
-                                                    onChange={() => handleStatusChange("Overdue")}
+                                                    onChange={() =>
+                                                        handleStatusChange(
+                                                            "Overdue"
+                                                        )
+                                                    }
                                                 />
                                                 <label
                                                     htmlFor="overdue"
@@ -180,7 +192,11 @@ const Categories = (props) => {
                                                     checked={
                                                         status === "Upcoming"
                                                     }
-                                                    onChange={() => handleStatusChange("Upcoming")}
+                                                    onChange={() =>
+                                                        handleStatusChange(
+                                                            "Upcoming"
+                                                        )
+                                                    }
                                                 />
                                                 <label
                                                     htmlFor="upcoming"
@@ -195,8 +211,8 @@ const Categories = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-sm-12 col-md-6">
-                        <div className="">
+                    <div className="col-sm-12 col-md-6 categories-right-col">
+                        <div className="ms-3">
                             <h3 className="d-flex justify-content-center">
                                 Events
                             </h3>
