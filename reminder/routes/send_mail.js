@@ -90,8 +90,8 @@ const checkAndSendReminders = async () => {
 
             const currentTime = new Date();
             for (const event of eventsData) {
-                const withinbeforeTime = "23 mins";
-                const beforeTime = 23 * 60 * 1000;
+                const withinbeforeTime = "1 hr";
+                const beforeTime = 60 * 60 * 1000;
                 const eventStartTime = new Date(event.start);
                 const delay = eventStartTime.getTime() - currentTime.getTime() - beforeTime;
                 if (delay > 0) {

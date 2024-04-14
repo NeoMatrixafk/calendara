@@ -1,5 +1,5 @@
 //React imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const UpdateProfile = (props) => {
@@ -10,13 +10,19 @@ const UpdateProfile = (props) => {
 
     const [backgroundImageData, setBackgroundImageData] = useState("");
     const [backgroundImagePreview, setBackgroundImagePreview] = useState(null);
-    const [backgroundSuccessMessage, setBackgroundSuccessMessage] =
-        useState(null);
+    const [backgroundSuccessMessage, setBackgroundSuccessMessage] = useState(null);
 
     const [newUserName, setNewUserName] = useState("");
     const [newUserContact, setNewUserContact] = useState("");
 
+    const [authenticated, setAuthenticated] = useState(false);
+
     //Handling functions
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem("auth") === "true";
+        setAuthenticated(isAuthenticated);
+    }, []);
+
     const handleProfileImageChange = (e) => {
         const file = e.target.files[0];
 
@@ -163,230 +169,315 @@ const UpdateProfile = (props) => {
     return (
         <>
             <div className="container my-5">
-                <h3
-                    className={`text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    Update Profile Picture
-                </h3>
-                <div className="container mt-3 input-field w-50">
-                    <div className="input-group mb-3">
-                        <input
-                            type="file"
-                            className={`form-control ${
-                                props.mode === "light" ? "" : "border-secondary"
-                            }`}
-                            id="inputGroupFile"
-                            accept="image/*"
-                            onChange={handleProfileImageChange}
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "#4d4d4d",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "" : "#e6e6e6",
-                            }}
-                            required
-                        />
-                    </div>
-                    {profileImagePreview && (
-                        <div className="mt-5 d-flex justify-content-center">
-                            <p
-                                className={`m-0 d-flex align-items-center me-5 text-${
+
+                {!authenticated && (
+
+                    <>
+                        <div className="container my-5">
+                            <h3
+                                className={`text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
-                                style={{ fontSize: "1.5rem" }}
                             >
-                                Selected Image Preview:
-                            </p>
-                            <img
-                                src={profileImagePreview}
-                                alt="Selected Preview"
-                                style={{
-                                    width: "14rem",
-                                    borderRadius: "7rem",
-                                }}
-                            />
+                                Update Profile Picture
+                            </h3>
+                            <div className="container mt-3 input-field w-50">
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="file"
+                                        className={`form-control ${
+                                            props.mode === "light" ? "" : "border-secondary"
+                                        }`}
+                                        id="inputGroupFile"
+                                        accept="image/*"
+                                        onChange={handleProfileImageChange}
+                                        style={{
+                                            backgroundColor:
+                                                props.mode === "light" ? "" : "#4d4d4d",
+                                            WebkitTextFillColor:
+                                                props.mode === "light" ? "" : "#e6e6e6",
+                                        }}
+                                        required
+                                    />
+                                </div>
+                                {profileImagePreview && (
+                                    <div className="mt-5 d-flex justify-content-center">
+                                        <p
+                                            className={`m-0 d-flex align-items-center me-5 text-${
+                                                props.mode === "light" ? "black" : "white"
+                                            }`}
+                                            style={{ fontSize: "1.5rem" }}
+                                        >
+                                            Selected Image Preview:
+                                        </p>
+                                        <img
+                                            src={profileImagePreview}
+                                            alt="Selected Preview"
+                                            style={{
+                                                width: "14rem",
+                                                borderRadius: "7rem",
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                                {successProfileMesage && (
+                                    <div
+                                        className={`alert alert-${
+                                            props.mode === "light" ? "primary" : "warning"
+                                        } mt-3`}
+                                        role="alert"
+                                    >
+                                        {successProfileMesage}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="container d-flex justify-content-center mt-5">
+                                <button
+                                    className={`btn btn-${
+                                        props.mode === "light" ? "primary" : "warning"
+                                    }`}
+                                    onClick={storeProfileImage}
+                                >
+                                    Update Profile Image
+                                </button>
+                            </div>
                         </div>
-                    )}
-                    {successProfileMesage && (
-                        <div
-                            className={`alert alert-${
-                                props.mode === "light" ? "primary" : "warning"
-                            } mt-3`}
-                            role="alert"
-                        >
-                            {successProfileMesage}
-                        </div>
-                    )}
-                </div>
-                <div className="container d-flex justify-content-center mt-5">
-                    <button
-                        className={`btn btn-${
-                            props.mode === "light" ? "primary" : "warning"
-                        }`}
-                        onClick={storeProfileImage}
-                    >
-                        Update Profile Image
-                    </button>
-                </div>
-            </div>
-            <div className="container my-5">
-                <h3
-                    className={`text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    Update Background Picture
-                </h3>
-                <div className="container mt-3 input-field w-50">
-                    <div className="input-group mb-3">
-                        <input
-                            type="file"
-                            className={`form-control ${
-                                props.mode === "light" ? "" : "border-secondary"
-                            }`}
-                            id="inputGroupFile"
-                            accept="image/*"
-                            onChange={handleBackgroundImageChange}
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "#4d4d4d",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "" : "#e6e6e6",
-                            }}
-                            required
-                        />
-                    </div>
-                    {backgroundImagePreview && (
-                        <div className="mt-5 d-flex justify-content-center">
-                            <p
-                                className={`m-0 d-flex align-items-center me-5 text-${
+                        <div className="container my-5">
+                            <h3
+                                className={`text-${
                                     props.mode === "light" ? "black" : "white"
                                 }`}
-                                style={{ fontSize: "1.5rem" }}
                             >
-                                Selected Image Preview:
-                            </p>
-                            <img
-                                src={backgroundImagePreview}
-                                alt="Selected Preview"
-                                style={{
-                                    width: "14rem",
-                                }}
-                            />
+                                Update Background Picture
+                            </h3>
+                            <div className="container mt-3 input-field w-50">
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="file"
+                                        className={`form-control ${
+                                            props.mode === "light" ? "" : "border-secondary"
+                                        }`}
+                                        id="inputGroupFile"
+                                        accept="image/*"
+                                        onChange={handleBackgroundImageChange}
+                                        style={{
+                                            backgroundColor:
+                                                props.mode === "light" ? "" : "#4d4d4d",
+                                            WebkitTextFillColor:
+                                                props.mode === "light" ? "" : "#e6e6e6",
+                                        }}
+                                        required
+                                    />
+                                </div>
+                                {backgroundImagePreview && (
+                                    <div className="mt-5 d-flex justify-content-center">
+                                        <p
+                                            className={`m-0 d-flex align-items-center me-5 text-${
+                                                props.mode === "light" ? "black" : "white"
+                                            }`}
+                                            style={{ fontSize: "1.5rem" }}
+                                        >
+                                            Selected Image Preview:
+                                        </p>
+                                        <img
+                                            src={backgroundImagePreview}
+                                            alt="Selected Preview"
+                                            style={{
+                                                width: "14rem",
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                                {backgroundSuccessMessage && (
+                                    <div
+                                        className={`alert alert-${
+                                            props.mode === "light" ? "primary" : "warning"
+                                        } mt-3`}
+                                        role="alert"
+                                    >
+                                        {backgroundSuccessMessage}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="container d-flex justify-content-center mt-5">
+                                <button
+                                    className={`btn btn-${
+                                        props.mode === "light" ? "primary" : "warning"
+                                    }`}
+                                    onClick={storeBackgroundImage}
+                                >
+                                    Update Background Image
+                                </button>
+                            </div>
                         </div>
-                    )}
-                    {backgroundSuccessMessage && (
-                        <div
-                            className={`alert alert-${
-                                props.mode === "light" ? "primary" : "warning"
-                            } mt-3`}
-                            role="alert"
-                        >
-                            {backgroundSuccessMessage}
+                        <div className="container my-5">
+                            <h3
+                                className={`text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Update User Name
+                            </h3>
+                            <div className="container mt-3 input-field w-50">
+                                <p
+                                    style={{ fontSize: "1.25rem" }}
+                                    className={`text-${
+                                        props.mode === "light" ? "black" : "white"
+                                    }`}
+                                >
+                                    Current User Name: {localStorage.getItem("userName")}
+                                </p>
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="text"
+                                        className={`form-control ${
+                                            props.mode === "light" ? "" : "border-secondary"
+                                        }`}
+                                        style={{
+                                            backgroundColor:
+                                                props.mode === "light" ? "" : "#4d4d4d",
+                                            WebkitTextFillColor:
+                                                props.mode === "light" ? "" : "#e6e6e6",
+                                        }}
+                                        value={newUserName}
+                                        onChange={(e) => setNewUserName(e.target.value)}
+                                        placeholder="New User Name"
+                                    />
+                                    <button
+                                        className={`btn btn-${
+                                            props.mode === "light" ? "primary" : "warning"
+                                        }`}
+                                        onClick={updateUserName}
+                                    >
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    )}
-                </div>
-                <div className="container d-flex justify-content-center mt-5">
-                    <button
-                        className={`btn btn-${
-                            props.mode === "light" ? "primary" : "warning"
-                        }`}
-                        onClick={storeBackgroundImage}
-                    >
-                        Update Background Image
-                    </button>
-                </div>
-            </div>
-            <div className="container my-5">
-                <h3
-                    className={`text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    Update User Name
-                </h3>
-                <div className="container mt-3 input-field w-50">
-                    <p
-                        style={{ fontSize: "1.25rem" }}
-                        className={`text-${
-                            props.mode === "light" ? "black" : "white"
-                        }`}
-                    >
-                        Current User Name: {localStorage.getItem("userName")}
-                    </p>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className={`form-control ${
-                                props.mode === "light" ? "" : "border-secondary"
-                            }`}
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "#4d4d4d",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "" : "#e6e6e6",
-                            }}
-                            value={newUserName}
-                            onChange={(e) => setNewUserName(e.target.value)}
-                            placeholder="New User Name"
-                        />
-                        <button
-                            className={`btn btn-${
-                                props.mode === "light" ? "primary" : "warning"
-                            }`}
-                            onClick={updateUserName}
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="container my-5">
-                <h3
-                    className={`text-${
-                        props.mode === "light" ? "black" : "white"
-                    }`}
-                >
-                    Update Contact Number
-                </h3>
-                <div className="container mt-3 input-field w-50">
-                    <p
-                        style={{ fontSize: "1.25rem" }}
-                        className={`text-${
-                            props.mode === "light" ? "black" : "white"
-                        }`}
-                    >
-                        Current Contact Number:{" "}
-                        {localStorage.getItem("contact")}
-                    </p>
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className={`form-control ${
-                                props.mode === "light" ? "" : "border-secondary"
-                            }`}
-                            style={{
-                                backgroundColor:
-                                    props.mode === "light" ? "" : "#4d4d4d",
-                                WebkitTextFillColor:
-                                    props.mode === "light" ? "" : "#e6e6e6",
-                            }}
-                            value={newUserContact}
-                            onChange={(e) => setNewUserContact(e.target.value)}
-                            placeholder="New Contact Number"
-                        />
-                        <button
-                            className={`btn btn-${
-                                props.mode === "light" ? "primary" : "warning"
-                            }`}
-                            onClick={updateUserContact}
-                        >
-                            Update
-                        </button>
-                    </div>
-                </div>
+                        <div className="container my-5">
+                            <h3
+                                className={`text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Update Contact Number
+                            </h3>
+                            <div className="container mt-3 input-field w-50">
+                                <p
+                                    style={{ fontSize: "1.25rem" }}
+                                    className={`text-${
+                                        props.mode === "light" ? "black" : "white"
+                                    }`}
+                                >
+                                    Current Contact Number:{" "}
+                                    {localStorage.getItem("contact")}
+                                </p>
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="text"
+                                        className={`form-control ${
+                                            props.mode === "light" ? "" : "border-secondary"
+                                        }`}
+                                        style={{
+                                            backgroundColor:
+                                                props.mode === "light" ? "" : "#4d4d4d",
+                                            WebkitTextFillColor:
+                                                props.mode === "light" ? "" : "#e6e6e6",
+                                        }}
+                                        value={newUserContact}
+                                        onChange={(e) => setNewUserContact(e.target.value)}
+                                        placeholder="New Contact Number"
+                                    />
+                                    <button
+                                        className={`btn btn-${
+                                            props.mode === "light" ? "primary" : "warning"
+                                        }`}
+                                        onClick={updateUserContact}
+                                    >
+                                        Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+
+                )}
+                        
+                {authenticated && (
+
+                    <>
+                        <div className="container my-5">
+                            <h3
+                                className={`text-${
+                                    props.mode === "light" ? "black" : "white"
+                                }`}
+                            >
+                                Update Background Picture
+                            </h3>
+                            <div className="container mt-3 input-field w-50">
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="file"
+                                        className={`form-control ${
+                                            props.mode === "light" ? "" : "border-secondary"
+                                        }`}
+                                        id="inputGroupFile"
+                                        accept="image/*"
+                                        onChange={handleBackgroundImageChange}
+                                        style={{
+                                            backgroundColor:
+                                                props.mode === "light" ? "" : "#4d4d4d",
+                                            WebkitTextFillColor:
+                                                props.mode === "light" ? "" : "#e6e6e6",
+                                        }}
+                                        required
+                                    />
+                                </div>
+                                {backgroundImagePreview && (
+                                    <div className="mt-5 d-flex justify-content-center">
+                                        <p
+                                            className={`m-0 d-flex align-items-center me-5 text-${
+                                                props.mode === "light" ? "black" : "white"
+                                            }`}
+                                            style={{ fontSize: "1.5rem" }}
+                                        >
+                                            Selected Image Preview:
+                                        </p>
+                                        <img
+                                            src={backgroundImagePreview}
+                                            alt="Selected Preview"
+                                            style={{
+                                                width: "14rem",
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                                {backgroundSuccessMessage && (
+                                    <div
+                                        className={`alert alert-${
+                                            props.mode === "light" ? "primary" : "warning"
+                                        } mt-3`}
+                                        role="alert"
+                                    >
+                                        {backgroundSuccessMessage}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="container d-flex justify-content-center mt-5">
+                                <button
+                                    className={`btn btn-${
+                                        props.mode === "light" ? "primary" : "warning"
+                                    }`}
+                                    onClick={storeBackgroundImage}
+                                >
+                                    Update Background Image
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                
+                )}
+            
             </div>
         </>
     );
