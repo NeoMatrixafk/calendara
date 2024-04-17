@@ -1,9 +1,7 @@
 //React imports
 import React, { useState } from "react";
-import { addEventApi } from "../../Redux/actions";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-import { connect } from "react-redux";
 import axios from "axios";
 
 const UploadEvents = (props) => {
@@ -13,6 +11,8 @@ const UploadEvents = (props) => {
     //States
     const [csvFile, setCsvFile] = useState(null);
     const [excelFile, setExcelFile] = useState(null);
+    const [csvUploaded, setCsvUploaded] = useState(false);
+    const [excelUploaded, setExcelUploaded] = useState(false);
 
     const [showModal, setShowModal] = useState(false);
     const [events, setEvents] = useState([]);
@@ -43,66 +43,6 @@ const UploadEvents = (props) => {
         setExcelFile(e.target.files[0]);
     };
 
-    const handleCsvUpload = async () => {
-        if (!csvFile) {
-            alert("Please select a CSV file.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("csvFile", csvFile);
-
-        try {
-            // Upload the CSV file to the server
-            const uploadResponse = await axios.post(
-                `http://localhost:55555/api/uploadcsv/${email}`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-
-            // Log the response from the server (API calls completion message)
-            console.log(uploadResponse.data);
-
-            // Fetch events after successful upload
-            await fetchEvents();
-
-            // Show modal after successful upload
-            setShowModal(true);
-        } catch (error) {
-            let invalidEventTitles = []; // Array to store invalid event titles
-
-            // Check if error response contains data and message
-            if (error.response && error.response.data && error.response.data.errors) {
-                const errorData = error.response.data.errors;
-
-                // Extract titles of invalid events from error response
-                invalidEventTitles = errorData.map(error => error.title);
-            }
-
-            if (invalidEventTitles.length > 0) {
-                // Alert for each invalid event
-                invalidEventTitles.forEach(title => {
-                    window.alert(`Invalid date format for event: ${title}`);
-                });
-            } else {
-                // If no errors found, show generic error message
-                window.alert("Error uploading CSV file. Please try again.");
-            }
-
-            console.error("Error uploading CSV file:", error.response.data);
-
-            // Fetch events after upload
-            await fetchEvents();
-
-            // Show the modal with the successfully uploaded events
-            setShowModal(true);
-        }
-    };
-
     const fetchEvents = async () => {
         try {
             const response = await axios.get(
@@ -114,24 +54,55 @@ const UploadEvents = (props) => {
         }
     };
 
-    const handleUploadButtonClick = async () => {
-        // Update the 'uploaded' field for each event
-        try {
-            await Promise.all(
-                events.map(async (event) => {
-                    await axios.put(
-                        `http://localhost:55555/api/events/${event._id}/update`,
-                        { uploaded: false }
-                    );
-                })
-            );
-        } catch (error) {
-            console.error("Error updating uploaded status for events:", error);
+    const handleCsvUpload = async () => {
+        if (!csvFile) {
+            alert("Please select a CSV file.");
+            return;
         }
 
-        setShowModal(false);
-        alert("CSV/XLSX file uploaded and Events are created!");
-        navigate("/events2");
+        const formData = new FormData();
+        formData.append("csvFile", csvFile);
+
+        try {
+            // Upload the CSV file to the server
+            await axios.post(
+                `http://localhost:55555/api/uploadcsv/${email}`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            // Fetch events after successful upload
+            await fetchEvents();
+
+            // Show modal after successful upload
+            setShowModal(true);
+            setCsvUploaded(true); // Set upload status to true after successful upload
+            setCsvFile(null); // Reset file input
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.invalidEvents) {
+                const invalidEvents = error.response.data.invalidEvents;
+                invalidEvents.forEach((invalidEvent) => {
+                    window.alert(`Invalid date format for event: ${invalidEvent.title}`);
+                });
+            } else {
+                // If no invalidEvents found in the response, show generic error message
+                window.alert("Error uploading CSV file. Please try again.");
+            }
+    
+            // Log the error
+            console.error("Error uploading CSV file:", error);
+
+            // Fetch events even if upload fails to update the UI
+            await fetchEvents();
+
+            // Show the modal regardless of upload success or failure
+            setShowModal(true);
+            setCsvUploaded(true); // Set upload status to true after successful upload
+            setCsvFile(null); // Reset file input
+        }
     };
 
     const handleXlsxUpload = async () => {
@@ -163,6 +134,8 @@ const UploadEvents = (props) => {
 
             // Show modal after successful upload
             setShowModal(true);
+            setExcelUploaded(true); // Set upload status to true after successful upload
+            setExcelFile(null); // Reset file input
             } catch (error) {
                 let invalidEventTitles = []; // Array to store invalid event titles
     
@@ -181,18 +154,52 @@ const UploadEvents = (props) => {
                     });
                 } else {
                     // If no errors found, show generic error message
-                    window.alert("Error uploading CSV file. Please try again.");
+                    window.alert("Error uploading XLSX file. Please try again.");
                 }
     
-                console.error("Error uploading CSV file:", error.response.data);
+                console.error("Error uploading XlSX file:", error.response.data);
     
                 // Fetch events after upload
                 await fetchEvents();
     
                 // Show the modal with the successfully uploaded events
                 setShowModal(true);
+                setExcelUploaded(true); // Set upload status to true after successful upload
+                setExcelFile(null); // Reset file input
             }
         };
+
+    const handleHideModal = async () => {
+        try {
+            await axios.delete("http://localhost:55555/api/events/deleteUploaded");
+            setCsvFile(null);
+            setExcelFile(null);
+            setEvents([]);
+            setShowModal(false);
+        } catch (error) {
+            console.error("Error deleting uploaded events:", error);
+        }
+    };
+
+    const handleUploadButtonClick = async () => {
+        // Update the 'uploaded' field for each event
+        try {
+            await Promise.all(
+                events.map(async (event) => {
+                    await axios.put(
+                        `http://localhost:55555/api/events/${event._id}/update`,
+                        { uploaded: false }
+                    );
+                })
+            );
+        } catch (error) {
+            console.error("Error updating uploaded status for events:", error);
+        }
+    
+        setShowModal(false);
+        alert("CSV/XLSX file uploaded and Events are created!");
+        navigate("/events2");
+    };
 
     return (
         <>
@@ -252,8 +259,9 @@ const UploadEvents = (props) => {
                     type="submit"
                     className="btn btn-success btn-lg mt-3 profile-btn"
                     onClick={handleCsvUpload}
+                    disabled={csvUploaded} // Disable the button if CSV is already uploaded
                 >
-                    Upload .csv
+                    {csvUploaded ? "CSV Uploaded" : "Upload .csv"}
                 </button>
             </div>
             <div
@@ -279,11 +287,12 @@ const UploadEvents = (props) => {
                     type="submit"
                     className="btn btn-success btn-lg mt-3 profile-btn"
                     onClick={handleXlsxUpload}
+                    disabled={excelUploaded} // Disable the button if Excel is already uploaded
                 >
-                    Upload .xlsx
+                    {excelUploaded ? "Excel Uploaded" : "Upload .xlsx"}
                 </button>
             </div>
-            <Modal show={showModal} onHide={() => handleUploadButtonClick()}>
+            <Modal show={showModal} onHide={() => handleHideModal()}>
                 <Modal.Header closeButton>
                     <Modal.Title>Uploaded Events</Modal.Title>
                 </Modal.Header>
@@ -326,13 +335,4 @@ const UploadEvents = (props) => {
     );
 };
 
-function mapStateToProps({ event, error }) {
-    return {
-        error,
-        // event
-    };
-}
-
-export default connect(mapStateToProps, (dispatch) => ({
-    addEventApi: (values) => addEventApi(values)(dispatch),
-}))(UploadEvents);
+export default UploadEvents;
