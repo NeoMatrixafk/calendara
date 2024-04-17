@@ -3,6 +3,7 @@ const Event = require("../models/event_");
 const handleError = require("../utils/eventErrors");
 
 
+//getting events from server to client
 router.get("/", async (req, res) => {
     const events = await Event.find({});
 
@@ -110,7 +111,7 @@ router.get("/resolved/overdue/:email", async (req, res) => {
 });
 
 
-//posting events based from server to client
+//posting events from server to client
 router.post("/", async (req, res) => {
     try {
         const newEvent = new Event(req.body);
@@ -121,7 +122,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-//updating events based from client to server
+//updating events based on id from client to server
 router.put("/:id/update", async (req, res) => {
     const id = req.params.id;
     try {
@@ -140,7 +141,7 @@ router.put("/:id/update", async (req, res) => {
     }
 });
 
-
+//updating events based on email from client to server
 router.put("/:email", async (req, res) => {
     const email = req.params.email;
     try {
@@ -164,7 +165,7 @@ router.put("/:email", async (req, res) => {
     }
 });
 
-//deleting events from client to server
+//deleting events based on id from client to server
 router.delete("/:id/delete", async (req, res) => {
     const id = req.params.id;
     const event = await Event.findById({ _id: id });
@@ -176,5 +177,25 @@ router.delete("/:id/delete", async (req, res) => {
     }
 });
 
+// DELETE route to delete all events with uploaded: true
+router.delete("/deleteUploaded", async (req, res) => {
+    try {
+        // Find all events with uploaded: true
+        const eventsToDelete = await Event.find({ uploaded: true });
+
+        // Check if any events are found
+        if (eventsToDelete.length > 0) {
+            // Delete all found events
+            await Event.deleteMany({ uploaded: true });
+            res.status(200).json({ message: "All uploaded events have been deleted" });
+        } else {
+            // If no events are found with uploaded: true
+            res.status(404).json({ message: "No uploaded events found to delete" });
+        }
+    } catch (err) {
+        // Handle errors
+        handleError(err, res);
+    }
+});
 
 module.exports = router;
