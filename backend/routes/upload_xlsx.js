@@ -78,12 +78,15 @@ router.post('/:email', upload.single('excelFile'), async (req, res) => {
         for (let i = 1; i < jsonData.length; i++) {
             const row = jsonData[i];
 
-            // Skip if the row is empty or contains only whitespace
-            if (row.every(cell => !cell.trim())) {
+            // Remove empty items and trim the row
+            const trimmedRow = row.filter(cell => cell.trim() !== '');
+
+            // Skip if the row is empty after trimming
+            if (trimmedRow.length === 0) {
                 continue; // Skip empty rows
             }
 
-            const [title, start, end, describe] = row;
+            const [title, start, end, describe] = trimmedRow;
 
             // Check for empty cells
             if (!title || !start || !end || !describe) {
@@ -109,6 +112,7 @@ router.post('/:email', upload.single('excelFile'), async (req, res) => {
                 describe: describe.trim(),
                 uploaded: true
             });
+            console.log(events)
         }
 
         // Save valid events to the database
