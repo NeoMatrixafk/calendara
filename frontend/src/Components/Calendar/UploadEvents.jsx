@@ -116,7 +116,7 @@ const UploadEvents = (props) => {
 
         try {
             // Upload the Excel file to the server
-            const uploadResponse = await axios.post(
+            await axios.post(
                 `http://localhost:55555/api/uploadxlsx/${email}`,
                 formData,
                 {
@@ -126,9 +126,6 @@ const UploadEvents = (props) => {
                 }
             );
 
-            // Log the response from the server (API calls completion message)
-            console.log(uploadResponse.data);
-
             // Fetch events after successful upload
             await fetchEvents();
 
@@ -137,32 +134,23 @@ const UploadEvents = (props) => {
             setExcelUploaded(true); // Set upload status to true after successful upload
             setExcelFile(null); // Reset file input
             } catch (error) {
-                let invalidEventTitles = []; // Array to store invalid event titles
-    
-                // Check if error response contains data and message
-                if (error.response && error.response.data && error.response.data.errors) {
-                    const errorData = error.response.data.errors;
-    
-                    // Extract titles of invalid events from error response
-                    invalidEventTitles = errorData.map(error => error.title);
-                }
-    
-                if (invalidEventTitles.length > 0) {
-                    // Alert for each invalid event
-                    invalidEventTitles.forEach(title => {
-                        window.alert(`Invalid date format for event: ${title}`);
+                if (error.response && error.response.data && error.response.data.invalidEvents) {
+                    const invalidEvents = error.response.data.invalidEvents;
+                    invalidEvents.forEach((invalidEvent) => {
+                        window.alert(`Invalid date format for event: ${invalidEvent.title}`);
                     });
                 } else {
-                    // If no errors found, show generic error message
+                    // If no invalidEvents found in the response, show generic error message
                     window.alert("Error uploading XLSX file. Please try again.");
                 }
+        
+                // Log the error
+                console.error("Error uploading XLSX file:", error);
     
-                console.error("Error uploading XlSX file:", error.response.data);
-    
-                // Fetch events after upload
+                // Fetch events even if upload fails to update the UI
                 await fetchEvents();
     
-                // Show the modal with the successfully uploaded events
+                // Show the modal regardless of upload success or failure
                 setShowModal(true);
                 setExcelUploaded(true); // Set upload status to true after successful upload
                 setExcelFile(null); // Reset file input
