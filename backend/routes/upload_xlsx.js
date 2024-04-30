@@ -1,115 +1,133 @@
-const router = require("express").Router();
-const axios = require("axios");
-const multer = require("multer");
-const xlsx = require("xlsx");
+const express = require('express');
+const router = express.Router();
+const multer = require('multer');
+const moment = require('moment')
+const Event = require('../models/event_'); // Assuming you have a model for events
+const xlsx = require('xlsx');
+
+
+// Multer storage configuration
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-const { parse, isValid, format } = require("date-fns");
+
+// Multer file filter for accepting only CSV files
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        cb(null, true);
+    } else {
+        cb(new Error('Only XLSX files are allowed'), false);
+    }
+};
+
+// Multer upload instance
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+// Define supported date formats
+const dateFormats = [
+    "MM/DD/YYYY",
+    "DD-MM-YYYY",
+    "DD/MM/YYYY",
+    "DD.MM.YYYY",
+    "DDMMYYYY",
+    "YYYY/MM/DD",
+    "YYYY-MM-DD",
+    "YYYY.MM.DD",
+    "DD MMM",
+    "DD MMM, YYYY",
+];
 
 // Function to parse date with multiple formats
-function parseDate(dateString) {
-    // Define an array of possible date formats
-    const dateFormats = [
-        "MM/dd/yyyy",
-        "dd-MM-yyyy",
-        "dd/MM/yyyy",
-        "dd.MM.yyyy",
-        "ddMMyyyy",
-        "yyyy/MM/dd",
-        "yyyy-MM-dd",
-        "yyyy.MM.dd",
-        "dd MMM",
-        "dd MMM, yyyy",
-    ];
-
-    // Iterate over the formats and attempt to parse the date
-    for (const formatStr of dateFormats) {
-        const parsedDate = parse(dateString, formatStr, new Date());
-        if (isValid(parsedDate)) {
-            // Return the parsed date if it's valid
-            return format(parsedDate, "yyyy-MM-dd");
+const parseDate = (dateString) => {
+    for (const format of dateFormats) {
+        const trimmedDateString = dateString.trim(); // Trim the date string
+        const parsedDate = moment(trimmedDateString, format, true); // Use moment.js library for date parsing
+        if (parsedDate.isValid()) {
+            return parsedDate.toISOString(); // Convert to ISO format (YYYY-MM-DDTHH:mm:ss.SSSZ)
         }
     }
+    return null; // Return null if none of the formats are valid
+};
 
-    // If none of the formats match
-    return null;
-}
-
-router.post("/:email", upload.single("excelFile"), async (req, res) => {
+// POST route for uploading XLSX file
+router.post('/:email', upload.single('excelFile'), async (req, res) => {
     try {
         if (!req.file) {
-            return res.status(400).send("No file was uploaded.");
+            return res.status(400).json({ error: 'No XLSX file uploaded' });
         }
-
-        // Now you can access the Excel file data using req.file.buffer
-        const excelFileData = req.file.buffer;
 
         const email = req.params.email;
+        const buffer = req.file.buffer; // Get file buffer
 
-        const workbook = xlsx.read(excelFileData, { type: "buffer" });
+        let workbook;
+        try {
+            // Parse XLSX file
+            workbook = xlsx.read(buffer, { type: 'buffer' });
+        } catch (error) {
+            console.error('Error parsing XLSX file:', error);
+            return res.status(400).json({ error: 'Error parsing XLSX file' });
+        }
+
         const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
-        const worksheet = workbook.Sheets[sheetName];
-        const results = xlsx.utils.sheet_to_json(worksheet);
+        const sheet = workbook.Sheets[sheetName];
+        // Convert sheet to JSON data
+        const jsonData = xlsx.utils.sheet_to_json(sheet, { header: 1 });
 
-        let isError = false; // Flag to track if an error has occurred
-        const errors = [];
+        const events = [];
+        const invalidEvents = []; // Array to store invalid events
 
-        for (const row of results) {
-            const title = row.Title;
-            let startDate = parseDate(row.Start); // Parse start date
-            let endDate = parseDate(row.End); // Parse end date
-            const describe = row.Describe;
+        // Iterate over rows starting from index 1 to skip header row
+        for (let i = 1; i < jsonData.length; i++) {
+            const row = jsonData[i];
 
-            // Check if startDate or endDate is null (indicating invalid date format)
-            if (!startDate || !endDate) {
-                const errorMessage = `Invalid date format for ${title}`;
-                console.error(errorMessage);
-                isError = true;
-                // Collect errors
-                errors.push({ title, message: errorMessage });
-            } else {
-                console.log(
-                    `Title: ${title}, StartDate: ${startDate}, EndDate: ${endDate}, Describe: ${describe}`
-                );
-    
-                try {
-                    const response = await axios.post(
-                        `http://localhost:55555/api/events`,
-                        {
-                            admin: email,
-                            title: title,
-                            start: `${startDate}T00:00:00.000+00:00`,
-                            end: `${endDate}T01:00:00.000+00:00`,
-                            describe: describe,
-                            uploaded: true,
-                        }
-                    );
-                    console.log(`API Response for ${title}:`, response.data);
-                } catch (error) {
-                    console.error(
-                        `Error making API call for ${title}:`,
-                        error.message
-                    );
-                    // Collect errors
-                    errors.push({ title, message: error.message });
-                }
+            // Remove empty items and trim the row
+            const trimmedRow = row.filter(cell => cell.trim() !== '');
+
+            // Skip if the row is empty after trimming
+            if (trimmedRow.length === 0) {
+                continue; // Skip empty rows
             }
+
+            const [title, start, end, describe] = trimmedRow;
+
+            // Check for empty cells
+            if (!title || !start || !end || !describe) {
+                invalidEvents.push({ title: 'Missing fields' });
+                continue;
+            }
+
+            // Parse dates with multiple formats
+            const startDate = parseDate(start.trim());
+            const endDate = parseDate(end.trim());
+
+            // Check if startDate or endDate are not valid dates
+            if (!moment(startDate).isValid() || !moment(endDate).isValid()) {
+                invalidEvents.push({ title }); // Store invalid event title
+                continue; // Skip this event
+            }
+
+            events.push({
+                admin: email, // Using email as admin
+                title: title.trim(),
+                start: startDate,
+                end: endDate,
+                describe: describe.trim(),
+                uploaded: true
+            });
+            console.log(events)
         }
 
-        if (errors.length > 0) {
-            // Send a single response containing all error messages
-            res.status(400).json({ success: false, errors: errors });
-        } else {
-            res.json({ success: true, message: "API calls completed." });
+        // Save valid events to the database
+        await Event.insertMany(events);
+
+        if (invalidEvents.length > 0) {
+            // If there are invalid events, send them back to the frontend
+            return res.status(400).json({ error: 'Invalid events with incorrect date formats', invalidEvents });
         }
+
+        res.status(201).json({ message: 'Events uploaded successfully' })
     } catch (error) {
-        console.error("Error in processing:", error);
-        res.status(400).json({
-            success: false,
-            message: "Error in processing.",
-        });
+        console.error('Error uploading XLSX file:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 
 module.exports = router;
