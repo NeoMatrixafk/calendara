@@ -140,11 +140,7 @@ const Footer = (props) => {
                                     <span>
                                         <Link
                                             to="ee"
-                                            className={`text-${
-                                                props.mode === "light"
-                                                    ? "black"
-                                                    : "white"
-                                            }`}
+                                            className="text-white"
                                             style={{ textDecoration: "none" }}
                                         >
                                             DY

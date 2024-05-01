@@ -1,43 +1,41 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
+import eeImage from "../Components/EE/eeImage.jpeg";
+import eeSound from "../Components/EE/eeSound.m4a";
 
 const EasterEgg = (props) => {
-    const [autoplay, setAutoplay] = useState(false);
+    const audioRef = useRef(null);
 
     useEffect(() => {
-        // Set autoplay to true when the component mounts
-        setAutoplay(true);
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
     }, []);
 
     return (
         <>
             <h1
-                className={`mt-5 d-flex justify-content-center text-${
+                className={`my-5 d-flex justify-content-center text-${
                     props.mode === "light" ? "black" : "white"
                 }`}
             >
-                comgrats! u rchd the beloved pookie lebon page
+                What is bro doing here? 🗣️⁉️
             </h1>
-            <div
-                className="d-flex justify-content-center align-items-center"
-                style={{ height: "80vh" }}
-            >
-                <iframe
-                    width="800"
-                    height="450"
-                    src={`https://www.youtube.com/embed/Tdi-B_8ScBE${
-                        autoplay ? "?autoplay=1" : ""
-                    }`}
-                    frameBorder="0"
-                    title="YouTube Video"
-                    allowFullScreen
-                ></iframe>
+            <div className="d-flex justify-content-center align-items-center">
+                <img
+                    src={eeImage}
+                    alt=""
+                    style={{ width: "25rem", borderRadius: "7.5rem" }}
+                />
             </div>
             <p
                 className={`my-5 d-flex justify-content-center text-${
                     props.mode === "light" ? "black" : "white"
                 }`}
             >
-                +5 calendara points for you 🥰📆
+                <audio ref={audioRef} controls autoPlay>
+                    <source src={eeSound} type="audio/mpeg" />
+                    What the sigma?
+                </audio>
             </p>
         </>
     );
