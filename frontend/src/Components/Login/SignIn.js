@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 
 import waveBG from "./wave-auth-bg.svg";
+import defaultProfileImg from "./defaultProfile.jpg";
 
 import { auth } from "./firebase";
 import {
@@ -166,8 +167,8 @@ const SignIn = (props) => {
 
             const email = result.user.email;
             const name = result.user.displayName;
-            const contact = result.user.phoneNumber;
-            const profilePic = result.user.photoURL;
+            const contact = result.user.phoneNumber || "";
+            const profilePic = result.user.photoURL || defaultProfileImg;
 
             console.log(contact);
             console.log(profilePic);
@@ -209,8 +210,9 @@ const SignIn = (props) => {
 
             const email = user.email;
             const name = user.displayName;
-            const contact = user.phoneNumber;
-            const profilePic = user.photoURL;
+
+            const contact = user.phoneNumber || "";
+            const profilePic = user.photoURL || defaultProfileImg;
 
             localStorage.setItem("email", email);
             localStorage.setItem("userName", name);
@@ -244,7 +246,7 @@ const SignIn = (props) => {
             const email = result.user.email;
             const name = result.user.displayName;
             const contact = result.user.phoneNumber;
-            const profilePic = result.user.photoURL;
+            const profilePic = result.user.photoURL || defaultProfileImg;
 
             localStorage.setItem("email", email);
             localStorage.setItem("userName", name);
@@ -285,7 +287,7 @@ const SignIn = (props) => {
                     const email = user.email;
                     const name = user.displayName;
                     const contact = user.phoneNumber || "";
-                    const profilePic = user.photoURL || "";
+                    const profilePic = user.photoURL || defaultProfileImg;
 
                     localStorage.setItem("email", email);
                     localStorage.setItem("userName", name);
@@ -398,10 +400,12 @@ const SignIn = (props) => {
                     // Retrieve and store user information
                     const email = user.email;
                     const name = user.displayName;
-                    const profilePic = user.photoURL || "";
+                    const contact = user.phoneNumber || "";
+                    const profilePic = user.photoURL || defaultProfileImg;
 
                     localStorage.setItem("email", email);
                     localStorage.setItem("userName", name);
+                    localStorage.setItem("contact", contact);
                     localStorage.setItem("userProfileImage", profilePic);
 
                     window.location.reload();
