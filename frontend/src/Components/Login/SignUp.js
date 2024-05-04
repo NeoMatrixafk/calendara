@@ -1,7 +1,7 @@
 import React, { useState } from "react"; //imports
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import waveBG from "./wave-auth-bg.svg";
 import defaultProfileImg from "./defaultProfile.jpg";
