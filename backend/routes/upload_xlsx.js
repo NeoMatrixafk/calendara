@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const moment = require('moment')
 const Event = require('../models/event_'); // Assuming you have a model for events
-const xlsx = require('xlsx');
+const ExcelJS = require('exceljs')
 
 
 // Multer storage configuration
@@ -60,22 +60,48 @@ router.post('/:email', upload.single('excelFile'), async (req, res) => {
         let workbook;
         try {
             // Parse XLSX file
-            workbook = xlsx.read(buffer, { type: 'buffer' });
+            workbook = new ExcelJS.Workbook();
+            await workbook.xlsx.load(buffer);
         } catch (error) {
             console.error('Error parsing XLSX file:', error);
             return res.status(400).json({ error: 'Error parsing XLSX file' });
         }
 
-        const sheetName = workbook.SheetNames[0]; // Assuming data is in the first sheet
-        const sheet = workbook.Sheets[sheetName];
-        // Convert sheet to JSON data
-        const jsonData = xlsx.utils.sheet_to_json(sheet, { header: 1 });
+        const sheet = workbook.worksheets[0]; // Assuming data is in the first sheet
+        const expectedHeaders = ['title', 'start', 'end', 'describe'];
+        let headerRow = null;
+
+        // Find the header row
+        sheet.eachRow((row, rowNumber) => {
+            const rowValues = row.values.slice(1); // Remove the first empty cell
+            const headersMatch = rowValues.every((header, index) => header && header.toLowerCase() === expectedHeaders[index]);
+
+            if (headersMatch) {
+                headerRow = row;
+            }
+        });
+
+        if (!headerRow) {
+            return res.status(400).json({ error: 'Invalid header row in the XLSX file' });
+        }
+
+        const jsonData = [];
+        const headerRowIndex = headerRow.number; // Get the row number of the header row
+
+        // Iterate over rows starting from the row after the header row
+        sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+            if (rowNumber > headerRowIndex) {
+                const rowValues = row.values.slice(1); // Remove the first item which is empty
+                jsonData.push(rowValues);
+                console.log(jsonData)
+            }
+        });
 
         const events = [];
         const invalidEvents = []; // Array to store invalid events
 
-        // Iterate over rows starting from index 1 to skip header row
-        for (let i = 1; i < jsonData.length; i++) {
+        // Iterate over rows excluding header row
+        for (let i = 0; i < jsonData.length; i++) {
             const row = jsonData[i];
 
             // Remove empty items and trim the row

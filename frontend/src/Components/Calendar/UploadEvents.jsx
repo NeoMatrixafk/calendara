@@ -139,6 +139,8 @@ const UploadEvents = (props) => {
                     invalidEvents.forEach((invalidEvent) => {
                         window.alert(`Invalid date format for event: ${invalidEvent.title}`);
                     });
+                } else if (error.response.data.error === 'Invalid header row in the XLSX file') {
+                    window.alert('Cannot find header row in the XLSX file.');
                 } else {
                     // If no invalidEvents found in the response, show generic error message
                     window.alert("Error uploading XLSX file. Please try again.");
@@ -163,10 +165,10 @@ const UploadEvents = (props) => {
             setCsvFile(null);
             setExcelFile(null);
             setEvents([]);
-            setShowModal(false);
         } catch (error) {
             console.error("Error deleting uploaded events:", error);
         }
+        setShowModal(false);
     };
 
     const handleUploadButtonClick = async () => {
